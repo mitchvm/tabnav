@@ -1,0 +1,127 @@
+[
+    // move to previous cell in markdown table
+    { 
+        "keys": ["shift+tab"],
+        "command": "markdown_table_move_reverse",
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+        ]
+    },
+    // move to next cell in markdown table
+    { 
+        "keys": ["tab"],
+        "command": "markdown_table_move_forward",
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+        ]
+    },
+    // move to cell above in markdown table
+    { 
+        "keys": ["shift+enter"],
+        "command": "markdown_table_move_up",
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+        ]
+    },
+    // move to cell below in markdown table
+    { 
+        "keys": ["enter"],
+        "command": "markdown_table_move_down_or_newline",
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+        ]
+    },
+    // select previous cell in markdown table
+    { 
+        "keys": ["ctrl+;"],
+        "command": "markdown_table_select_reverse",
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+        ]
+    },
+    // select next cell in markdown table
+    { 
+        "keys": ["ctrl+'"],
+        "command": "markdown_table_select_forward",
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+        ]
+    },
+    // select cell above in markdown table
+    { 
+        "keys": ["ctrl+["],
+        "command": "markdown_table_select_up",
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+        ]
+    },
+    // select cell below in markdown table
+    { 
+        "keys": ["ctrl+/"],
+        "command": "markdown_table_select_down",
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+        ]
+    },
+    // trim whitespace from selections
+    {
+        "keys": ["alt+w"],
+        "command": "trim_whitespace_from_selection"
+    }
+]
