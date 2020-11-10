@@ -6,7 +6,7 @@ import logging
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.WARNING)
-log.setLevel(logging.DEBUG)
+# log.setLevel(logging.DEBUG)
 
 class Direction:
 	FORWARD = (0,1)
@@ -213,7 +213,7 @@ class TableNavigator:
 		zero-width regions (i.e. cursors) are replaced with new cursors at the
 		"end" of their current cell, based on how that cell's region was
 		constructed. If False, any zero-width regions (cursors) are not moved.
-		
+
 		Returns True if the selections changed, or False otherwise.
 		'''
 		selections = list(self.view.sel())
@@ -277,7 +277,13 @@ class TableNavigator:
 			# Special case when moving vertically with only a single cursor
 			return self._single_cursor_vertical_move(selections[0].b, dr)
 		try:
-			new_cells = self._get_next_cells(direction)
+			if dc > 0: # When moving forwards, go to the end of the cell
+				offset = -1
+			elif dc < 0: # When moving reverse, go to the beginning of the cell
+				offset = 0
+			else: # Otherwise, maintain the cell's offset (default behaviour)
+				offset = None
+			new_cells = self._get_next_cells(direction, offset)
 		except Exception as e:
 			log.debug(e)
 			new_cells = None
@@ -288,6 +294,24 @@ class TableNavigator:
 			self.view.show(self.view.sel())
 			return True
 		return False
+
+
+	def add_next_cell(self, direction=Direction.FORWARD):
+		'''Adds a cursor to the next cell in the given direction.
+
+		Returns True if the selections changed, or False otherwise.
+		'''
+		initial_selections = list(self.view.sel())
+		try:
+			new_cells = self._get_next_cells(direction)
+		except Exception as e:
+			log.debug(e)
+			new_cells = None
+		if new_cells is not None:
+			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
+			self.view.sel().add_all(cursors)
+			self.view.show(self.view.sel())
+		return len(initial_selections) != len(self.view.sel())
 
 
 	def select_next_cell(self, direction=Direction.FORWARD):
@@ -307,7 +331,24 @@ class TableNavigator:
 		return False
 
 
-	def _get_next_cells(self, direction):
+
+	def extend_cell_selection(self, direction=Direction.FORWARD):
+		'''Adds the next cell in the given direction to the selection.
+
+		Returns True if the selections chnaged, or False otherwise.
+		'''
+		initial_selections = list(self.view.sel())
+		try:
+			new_cells = self._get_next_cells(direction)
+		except Error as e:
+			log.debug(e)
+		if new_cells is not None:
+			self.view.sel().add_all(new_cells)
+			self.view.show(self.view.sel())
+		return len(initial_selections) != len(self.view.sel())
+
+
+	def _get_next_cells(self, direction, offset = None):
 		new_cells = []
 		dr, dc = direction
 		selections = list(self.view.sel())
@@ -328,13 +369,11 @@ class TableNavigator:
 				log.debug(e.err)
 				# Stop at the last cell in the direction of movement
 				next_cell = current_cell
-			if dr != 0: # When moving vertically, try to maintain cursor offset
-				offset = point - current_cell.begin()
-			elif dc > 0: # When moving forwards, go to the end of the cell
-				offset = -1
+			if offset is None: # if not specified, maintain the current cursor's offset within the cell
+				cell_offset = point - current_cell.begin()
 			else:
-				offset = 0 # When moving backwards, go to the start of the cell
-			next_cell.add_cursor_offset(offset)
+				cell_offset = offset
+			next_cell.add_cursor_offset(cell_offset)
 			new_cells.append(next_cell)
 		return new_cells
 
@@ -390,6 +429,7 @@ class MarkdownTableView(TableView):
 	def __init__(self, view, cell_direction = 1):
 		super().__init__(view, re.compile(r'\|?(?P<content>.*?)(?=\|)'), re.compile(r'\|(?P<content>.+)$'), cell_direction)
 
+# Move cells:
 
 class MarkdownTableMoveCommand(sublime_plugin.TextCommand):
 	def run(self, edit, move_direction, cell_direction = 1, move_cursors = True):
@@ -403,18 +443,22 @@ class MarkdownTableMoveCommand(sublime_plugin.TextCommand):
 
 class MarkdownTableMoveForwardCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.FORWARD, 1, True)
 
 class MarkdownTableMoveReverseCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.REVERSE, -1, True)
 
 class MarkdownTableMoveUpCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.UP, -1, False)
 		
 class MarkdownTableMoveDownCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.DOWN, -1, False)
 		
 class MarkdownTableMoveDownOrNewlineCommand(sublime_plugin.TextCommand):
@@ -431,6 +475,40 @@ class MarkdownTableMoveDownOrNewlineCommand(sublime_plugin.TextCommand):
 			log.debug("No table cells were moved. Inserting lines.")
 			self.view.run_command("run_macro_file", args={"file":"res://Packages/Default/Add Line.sublime-macro"})
 
+# Add cells
+
+class MarkdownTableAddCommand(sublime_plugin.TextCommand):
+	def run(self, edit, move_direction, cell_direction = 1, move_cursors = False):
+		log.debug("%s triggered", self.__class__.__name__)
+		table = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		try:
+			if not table.split_and_move_current_cells(move_cursors):
+				table.add_next_cell(move_direction)
+		except CursorNotInTableError as e:
+			log.warning(e.err)
+
+class MarkdownTableAddForwardCommand(MarkdownTableAddCommand):
+	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
+		super().run(edit, Direction.FORWARD, 1, False)
+
+class MarkdownTableAddReverseCommand(MarkdownTableAddCommand):
+	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
+		super().run(edit, Direction.REVERSE, -1, False)
+
+class MarkdownTableAddUpCommand(MarkdownTableAddCommand):
+	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
+		super().run(edit, Direction.UP, -1, False)
+		
+class MarkdownTableAddDownCommand(MarkdownTableAddCommand):
+	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
+		super().run(edit, Direction.DOWN, -1, False)
+
+# Select cells
+
 class MarkdownTableSelectCommand(sublime_plugin.TextCommand):
 	def run(self, edit, move_direction, cell_direction = 1):
 		log.debug("%s triggered", self.__class__.__name__)
@@ -443,19 +521,57 @@ class MarkdownTableSelectCommand(sublime_plugin.TextCommand):
 
 class MarkdownTableSelectForwardCommand(MarkdownTableSelectCommand):
 	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.FORWARD, 1)
 
 class MarkdownTableSelectReverseCommand(MarkdownTableSelectCommand):
 	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.REVERSE, -1)
 
 class MarkdownTableSelectUpCommand(MarkdownTableSelectCommand):
 	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.UP, -1)
 		
 class MarkdownTableSelectDownCommand(MarkdownTableSelectCommand):
 	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.DOWN, -1)
+
+# Extend selection
+
+class MarkdownTableExtendSelectionCommand(sublime_plugin.TextCommand):
+	def run(self, edit, move_direction, cell_direction = 1):
+		log.debug("%s triggered", self.__class__.__name__)
+		table = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		try:
+			if not table.split_and_select_current_cells():
+				table.extend_cell_selection(move_direction)
+		except CursorNotInTableError as e:
+			log.warning(e.err)		
+
+class MarkdownTableExtendSelectionForwardCommand(MarkdownTableExtendSelectionCommand):
+	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
+		super().run(edit, Direction.FORWARD, 1)
+
+class MarkdownTableExtendSelectionReverseCommand(MarkdownTableExtendSelectionCommand):
+	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
+		super().run(edit, Direction.REVERSE, -1)
+
+class MarkdownTableExtendSelectionUpCommand(MarkdownTableExtendSelectionCommand):
+	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
+		super().run(edit, Direction.UP, -1)
+		
+class MarkdownTableExtendSelectionDownCommand(MarkdownTableExtendSelectionCommand):
+	def run(self, edit):
+		log.warning("%s triggered", self.__class__.__name__)
+		super().run(edit, Direction.DOWN, -1)
+
+# Other
 
 class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
