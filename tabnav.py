@@ -265,90 +265,7 @@ class TableNavigator:
 		return selection_changed
 
 
-	def move_next_cell(self, direction=Direction.FORWARD):
-		'''Moves all cursurs to the next cell in the given direction.
-
-		Returns True if the selections changed, or False otherwise.
-		'''
-		moved = False
-		selections = list(self.view.sel())
-		dr, dc = direction
-		if len(selections) == 1 and dr != 0:
-			# Special case when moving vertically with only a single cursor
-			return self._single_cursor_vertical_move(selections[0].b, dr)
-		try:
-			if dc > 0: # When moving forwards, go to the end of the cell
-				offset = -1
-			elif dc < 0: # When moving reverse, go to the beginning of the cell
-				offset = 0
-			else: # Otherwise, maintain the cell's offset (default behaviour)
-				offset = None
-			new_cells = self._get_next_cells(direction, offset)
-		except Exception as e:
-			log.debug(e)
-			new_cells = None
-		if new_cells is not None:
-			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
-			self.view .sel().clear()
-			self.view.sel().add_all(cursors)
-			self.view.show(self.view.sel())
-			return True
-		return False
-
-
-	def add_next_cell(self, direction=Direction.FORWARD):
-		'''Adds a cursor to the next cell in the given direction.
-
-		Returns True if the selections changed, or False otherwise.
-		'''
-		initial_selections = list(self.view.sel())
-		try:
-			new_cells = self._get_next_cells(direction)
-		except Exception as e:
-			log.debug(e)
-			new_cells = None
-		if new_cells is not None:
-			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
-			self.view.sel().add_all(cursors)
-			self.view.show(self.view.sel())
-		return len(initial_selections) != len(self.view.sel())
-
-
-	def select_next_cell(self, direction=Direction.FORWARD):
-		'''Selects the contents of the next cell in the given direction.
-
-		Returns True if the selections chnaged, or False otherwise.
-		'''
-		try:
-			new_cells = self._get_next_cells(direction)
-		except Error as e:
-			log.debug(e)
-		if new_cells is not None:
-			self.view .sel().clear()
-			self.view.sel().add_all(new_cells)
-			self.view.show(self.view.sel())
-			return True
-		return False
-
-
-
-	def extend_cell_selection(self, direction=Direction.FORWARD):
-		'''Adds the next cell in the given direction to the selection.
-
-		Returns True if the selections chnaged, or False otherwise.
-		'''
-		initial_selections = list(self.view.sel())
-		try:
-			new_cells = self._get_next_cells(direction)
-		except Error as e:
-			log.debug(e)
-		if new_cells is not None:
-			self.view.sel().add_all(new_cells)
-			self.view.show(self.view.sel())
-		return len(initial_selections) != len(self.view.sel())
-
-
-	def _get_next_cells(self, direction, offset = None):
+	def get_next_cells(self, direction, offset = None):
 		new_cells = []
 		dr, dc = direction
 		selections = list(self.view.sel())
@@ -360,7 +277,7 @@ class TableNavigator:
 			r, ic = self._table.table_coords(point)
 			current_cell = self._table[(r, ic)]
 			try:
-				next_cell = self._get_next_cell(r, ic, dr, dc)
+				next_cell = self.get_next_cell(r, ic, dr, dc)
 			except ColumnIndexError as e:
 				# In a properly-formatted table, this shouldn't happen, so log it as a warning
 				log.warning(e.err)
@@ -378,7 +295,7 @@ class TableNavigator:
 		return new_cells
 
 
-	def _get_next_cell(self, r, ic, dr, dc):
+	def get_next_cell(self, r, ic, dr, dc):
 		target_row = r + dr
 		target_col = ic + dc
 		if target_col < 0: # direction == REVERSE
@@ -397,14 +314,14 @@ class TableNavigator:
 		return cell
 
 
-	def _single_cursor_vertical_move(self, point, dr):
+	def single_cursor_vertical_move(self, point, dr):
 		# If moving vertically with only a single cursor, continue moving out of the table
 		try:
 			r, ic = self._table.table_coords(point)
 		except ColumnIndexError as e:
 			raise CursorNotInTableError(point)
 		try:
-			new_cell = self._get_next_cell(r, ic, dr, 0)
+			new_cell = self.get_next_cell(r, ic, dr, 0)
 			current_cell = self._table[(r, ic)]
 			new_cell.add_cursor_offset(point - current_cell.begin())
 			self.view.sel().clear()
@@ -434,12 +351,43 @@ class MarkdownTableView(TableView):
 class MarkdownTableMoveCommand(sublime_plugin.TextCommand):
 	def run(self, edit, move_direction, cell_direction = 1, move_cursors = True):
 		log.debug("%s triggered", self.__class__.__name__)
-		table = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		tabnav = TableNavigator(MarkdownTableView(self.view, cell_direction))
 		try:
-			if not table.split_and_move_current_cells(move_cursors):
-				table.move_next_cell(move_direction)
+			if not tabnav.split_and_move_current_cells(move_cursors):
+				self.move_next_cell(tabnav, move_direction)
 		except CursorNotInTableError as e:
 			log.warning(e.err)
+
+	def move_next_cell(self, tabnav, move_direction):
+		'''Moves all cursurs to the next cell in the given direction.
+
+		Returns True if the selections changed, or False otherwise.
+		'''
+		moved = False
+		selections = list(self.view.sel())
+		dr, dc = move_direction
+		if len(selections) == 1 and dr != 0:
+			# Special case when moving vertically with only a single cursor
+			return tabnav.single_cursor_vertical_move(selections[0].b, dr)
+		try:
+			if dc > 0: # When moving forwards, go to the end of the cell
+				offset = -1
+			elif dc < 0: # When moving reverse, go to the beginning of the cell
+				offset = 0
+			else: # Otherwise, maintain the cell's offset (default behaviour)
+				offset = None
+			new_cells = tabnav.get_next_cells(move_direction, offset)
+		except Exception as e:
+			log.debug(e)
+			new_cells = None
+		if new_cells is not None:
+			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
+			self.view .sel().clear()
+			self.view.sel().add_all(cursors)
+			self.view.show(self.view.sel())
+			return True
+		return False
+
 
 class MarkdownTableMoveForwardCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
@@ -461,13 +409,13 @@ class MarkdownTableMoveDownCommand(MarkdownTableMoveCommand):
 		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.DOWN, -1, False)
 		
-class MarkdownTableMoveDownOrNewlineCommand(sublime_plugin.TextCommand):
+class MarkdownTableMoveDownOrNewlineCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
 		log.debug("%s triggered", self.__class__.__name__)
-		table = TableNavigator(MarkdownTableView(self.view, -1))
+		tabnav = TableNavigator(MarkdownTableView(self.view, -1))
 		try:
-			moved = table.split_and_move_current_cells(move_cursors = False) \
-				    or table.move_next_cell(direction=Direction.DOWN)
+			moved = tabnav.split_and_move_current_cells(move_cursors = False) \
+				    or super().move_next_cell(tabnav, Direction.DOWN)
 		except CursorNotInTableError as e:
 			log.warning(e.err)
 			moved = False
@@ -480,12 +428,30 @@ class MarkdownTableMoveDownOrNewlineCommand(sublime_plugin.TextCommand):
 class MarkdownTableAddCommand(sublime_plugin.TextCommand):
 	def run(self, edit, move_direction, cell_direction = 1, move_cursors = False):
 		log.debug("%s triggered", self.__class__.__name__)
-		table = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		tabnav = TableNavigator(MarkdownTableView(self.view, cell_direction))
 		try:
-			if not table.split_and_move_current_cells(move_cursors):
-				table.add_next_cell(move_direction)
+			if not tabnav.split_and_move_current_cells(move_cursors):
+				self.add_next_cell(tabnav, move_direction)
 		except CursorNotInTableError as e:
 			log.warning(e.err)
+
+	def add_next_cell(self, tabnav, move_direction):
+		'''Adds a cursor to the next cell in the given direction.
+
+		Returns True if the selections changed, or False otherwise.
+		'''
+		initial_selections = list(self.view.sel())
+		try:
+			new_cells = tabnav.get_next_cells(move_direction)
+		except Exception as e:
+			log.debug(e)
+			new_cells = None
+		if new_cells is not None:
+			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
+			self.view.sel().add_all(cursors)
+			self.view.show(self.view.sel())
+		return len(initial_selections) != len(self.view.sel())
+
 
 class MarkdownTableAddForwardCommand(MarkdownTableAddCommand):
 	def run(self, edit):
@@ -512,12 +478,29 @@ class MarkdownTableAddDownCommand(MarkdownTableAddCommand):
 class MarkdownTableSelectCommand(sublime_plugin.TextCommand):
 	def run(self, edit, move_direction, cell_direction = 1):
 		log.debug("%s triggered", self.__class__.__name__)
-		table = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		tabnav = TableNavigator(MarkdownTableView(self.view, cell_direction))
 		try:
-			if not table.split_and_select_current_cells():
-				table.select_next_cell(move_direction)
+			if not tabnav.split_and_select_current_cells():
+				self.select_next_cell(tabnav, move_direction)
 		except CursorNotInTableError as e:
 			log.warning(e.err)		
+
+	def select_next_cell(self, tabnav, move_direction):
+		'''Selects the contents of the next cell in the given direction.
+
+		Returns True if the selections chnaged, or False otherwise.
+		'''
+		try:
+			new_cells = tabnav.get_next_cells(move_direction)
+		except Error as e:
+			log.debug(e)
+		if new_cells is not None:
+			self.view .sel().clear()
+			self.view.sel().add_all(new_cells)
+			self.view.show(self.view.sel())
+			return True
+		return False
+
 
 class MarkdownTableSelectForwardCommand(MarkdownTableSelectCommand):
 	def run(self, edit):
@@ -544,12 +527,28 @@ class MarkdownTableSelectDownCommand(MarkdownTableSelectCommand):
 class MarkdownTableExtendSelectionCommand(sublime_plugin.TextCommand):
 	def run(self, edit, move_direction, cell_direction = 1):
 		log.debug("%s triggered", self.__class__.__name__)
-		table = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		tabnav = TableNavigator(MarkdownTableView(self.view, cell_direction))
 		try:
-			if not table.split_and_select_current_cells():
-				table.extend_cell_selection(move_direction)
+			if not tabnav.split_and_select_current_cells():
+				self.extend_cell_selection(tabnav, move_direction)
 		except CursorNotInTableError as e:
 			log.warning(e.err)		
+
+	def extend_cell_selection(self, tabnav, move_direction):
+		'''Adds the next cell in the given direction to the selection.
+
+		Returns True if the selections chnaged, or False otherwise.
+		'''
+		initial_selections = list(self.view.sel())
+		try:
+			new_cells = tabnav.get_next_cells(move_direction)
+		except Error as e:
+			log.debug(e)
+		if new_cells is not None:
+			self.view.sel().add_all(new_cells)
+			self.view.show(self.view.sel())
+		return len(initial_selections) != len(self.view.sel())
+
 
 class MarkdownTableExtendSelectionForwardCommand(MarkdownTableExtendSelectionCommand):
 	def run(self, edit):
