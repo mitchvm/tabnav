@@ -42,8 +42,10 @@ class CursorNotInTableError(Exception):
 
 
 class TableCell(sublime.Region):
-	def __init__(self, a, b):
+	def __init__(self, row, col, a, b):
 		super().__init__(a, b)
+		self._row = row
+		self._col = col
 		self._cursor_offsets = set()
 
 	def intersects(self, region):
@@ -69,6 +71,14 @@ class TableCell(sublime.Region):
 		'''
 		return self.begin() == other.begin() and self.end() == other.end()
 
+	@property
+	def row(self):
+		return self._row
+
+	@property
+	def col(self):
+		return self._col	
+	
 	def add_cursor_offset(self, offset):
 		self._cursor_offsets.add(offset)
 
@@ -104,6 +114,37 @@ class TableRow:
 	def __str__(self):
 		return '{0:>3}: [{1}]'.format(self._row, ', '.join(['{0}'.format(c) for c in self._cells]))
 
+
+class TableColumn:
+	def __init__(self, initial_cell):
+		self._index = initial_cell.col
+		self._minRow = initial_cell.row
+		self._maxRow = initial_cell.row
+		self._cells = [initial_cell]
+
+	def __len__(self):
+		return len(self._cells)
+
+	def __iter__(self):
+		return iter(self._cells)
+
+	def add(self, cell):
+		if cell.col != self._index:
+			raise Exception("Cell is not in column {0}".format(self._index))
+		if cell.row < self._minRow:
+			self._minRow = cell.row
+		if cell.row > self._maxRow:
+			self._maxRow = cell.row
+		self._cells.append(cell)
+
+	def contains(self, cell):
+		if cell.col != self._index:
+			return False
+		if self._minRow <= cell.row and cell.row <= self._maxRow:
+			return True 
+		return False
+
+
 class TableView:
 	'''Parses and caches row-like lines from the current view.
 
@@ -123,6 +164,10 @@ class TableView:
 			return self.cell(r, ic)
 		except TypeError:
 			return self.row(key)
+
+	@property
+	def rows(self):
+		return list(self._rows.values())
 
 	def row(self, r):
 		'''Gets the list of cells on the row with the given index.'''
@@ -171,11 +216,13 @@ class TableView:
 		# The cell_pattern returns all cells _before_ the final delimiter, as well as a zero-width match immediately before the final delimiter as the last match
 		cells = []
 		cell_end = -1
+		index = -1
 		for cell_match in self._cell_pattern.finditer(line_content):
 			if cell_end == cell_match.start(1):
 				# cell_match is on the final, zero-width match before the final delimiter. This is not a table cell.
 				break
-			cell = self._regex_group_to_region(r, cell_match, 'content')
+			index = index + 1
+			cell = self._regex_group_to_region(r, index, cell_match, 'content')
 			if self.view.rowcol(cell.a)[0] != r:
 				raise RowOutOfFileBounds(r)
 			cells.append(cell)
@@ -184,17 +231,18 @@ class TableView:
 			raise RowNotInTableError(r)
 		eol_match = self._eol_pattern.search(line_content, cell_end)
 		if eol_match:
-			cells.append(self._regex_group_to_region(r, eol_match, 'content'))
+			index = index + 1
+			cells.append(self._regex_group_to_region(r, index, eol_match, 'content'))
 		row = TableRow(r, cells)
 		return row
 
-	def _regex_group_to_region(self, row, match, group):
+	def _regex_group_to_region(self, row, index, match, group):
 		start_point = self.view.text_point(row, match.start(group))
 		end_point = self.view.text_point(row, match.end(group))
 		if self._cell_direction > 0:
-			return TableCell(start_point, end_point)
+			return TableCell(row, index, start_point, end_point)
 		else:
-			return TableCell(end_point, start_point)
+			return TableCell(row, index, end_point, start_point)
 
 
 class TableNavigator:
@@ -339,6 +387,31 @@ class TableNavigator:
 		except RowOutOfFileBounds as e:
 			log.debug(e.err)
 			return False # Leave the current selection, and don't consider a move.
+
+
+	def get_table_column(self, seed_cell):
+		column = TableColumn(seed_cell)
+		# Get all cells above current row:
+		for r in range(seed_cell.row-1, -1, -1):
+			try:
+				column.add(self._table[(r, seed_cell.col)])
+			except ColumnIndexError as e:
+				log.warning(e.err)
+				# jump past this cell and keep going
+			except RowNotInTableError:
+				break # at the start of the table
+		# Get all cells below current row:
+		r = seed_cell.row
+		while(True):
+			r = r + 1
+			try:
+				column.add(self._table[(r, seed_cell.col)])
+			except ColumnIndexError as e:
+				log.warning(e.err)
+				# jump past this cell and keep going
+			except (RowNotInTableError, RowOutOfFileBounds):
+				break
+		return column
 
 
 
@@ -569,6 +642,40 @@ class MarkdownTableExtendSelectionDownCommand(MarkdownTableExtendSelectionComman
 	def run(self, edit):
 		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.DOWN, -1)
+
+
+# Select row cells
+
+class MarkdownTableSelectRowCommand(sublime_plugin.TextCommand):
+	def run(self, edit, cell_direction = 1):
+		log.debug("%s triggered", self.__class__.__name__)
+		table = MarkdownTableView(self.view, cell_direction)
+		cells = [cell for row in table.rows for cell in row]
+		if len(cells) > 0:
+			self.view.sel().clear()
+			self.view.sel().add_all(cells)
+
+
+# Select column cells
+
+class MarkdownTableSelectColumnCommand(sublime_plugin.TextCommand):
+	def run(self, edit, cell_direction = 1):
+		log.debug("%s triggered", self.__class__.__name__)
+		table = MarkdownTableView(self.view, cell_direction)
+		tabnav = TableNavigator(table)
+		tabnav.split_and_select_current_cells()
+		columns = []
+		for region in self.view.sel():
+			cell = table.cell_at_point(region.b)
+			containing_columns = [col for col in columns if col.contains(cell)]
+			if len(containing_columns) > 0:
+				continue # This cell is already contained in a previously captured column
+			columns.append(tabnav.get_table_column(cell))
+		cells = [cell for col in columns for cell in col]
+		if len(cells) > 0:
+			self.view.sel().clear()
+			self.view.sel().add_all(cells)
+
 
 # Other
 
