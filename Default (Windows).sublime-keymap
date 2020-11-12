@@ -269,6 +269,21 @@
             { "key": "overlay_visible", "operator": "equal", "operand": false },
         ]
     },
+    // select all table cells
+    { 
+        "keys": ["ctrl+alt+shift+s"],
+        "command": "markdown_table_select_all",
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
+            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+        ]
+    },
     // trim whitespace from selections
     {
         "keys": ["alt+w"],

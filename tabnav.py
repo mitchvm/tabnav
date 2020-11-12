@@ -99,6 +99,10 @@ class TableRow:
 		self._row = rownum
 		self._cells = cells
 
+	@property
+	def row(self):
+		return self._row
+
 	def __getitem__(self, key):
 		try:
 			return self._cells[key]
@@ -568,7 +572,7 @@ class MarkdownTableSelectCommand(sublime_plugin.TextCommand):
 		except Error as e:
 			log.debug(e)
 		if new_cells is not None:
-			self.view .sel().clear()
+			self.view.sel().clear()
 			self.view.sel().add_all(new_cells)
 			self.view.show(self.view.sel())
 			return True
@@ -676,6 +680,27 @@ class MarkdownTableSelectColumnCommand(sublime_plugin.TextCommand):
 			self.view.sel().clear()
 			self.view.sel().add_all(cells)
 
+
+# Select all table cells
+
+class MarkdownTableSelectAllCommand(sublime_plugin.TextCommand):
+	def run(self, edit, cell_direction = 1):
+		log.debug("%s triggered", self.__class__.__name__)
+		table = MarkdownTableView(self.view, cell_direction)
+		tabnav = TableNavigator(table)
+		tabnav.split_and_select_current_cells()
+		columns = []
+		# Expand the first column in each disjoint table to parse all rows of all selected tables
+		for row in (table_row.row for table_row in table.rows):
+			cell = table[(row, 0)] 
+			containing_columns = [col for col in columns if col.contains(cell)]
+			if len(containing_columns) > 0:
+				continue # This cell is already contained in a previously captured column
+			columns.append(tabnav.get_table_column(cell))
+		cells = [cell for row in table.rows for cell in row]
+		if len(cells) > 0:
+			self.view.sel().clear()
+			self.view.sel().add_all(cells)
 
 # Other
 
