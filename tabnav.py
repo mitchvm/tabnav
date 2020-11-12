@@ -425,17 +425,23 @@ class MarkdownTableView(TableView):
 
 # Move cells:
 
-class MarkdownTableMoveCommand(sublime_plugin.TextCommand):
-	def run(self, edit, move_direction, cell_direction = 1, move_cursors = True):
+class MarkdownTableCommand(sublime_plugin.TextCommand):
+	def run(self, edit, cell_direction = 1):
 		log.debug("%s triggered", self.__class__.__name__)
-		tabnav = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		self.table = MarkdownTableView(self.view, cell_direction)
+		self.tabnav = TableNavigator(self.table)
+
+
+class MarkdownTableMoveCommand(MarkdownTableCommand):
+	def run(self, edit, move_direction, cell_direction = 1, move_cursors = False):
+		super().run(edit, cell_direction)
 		try:
-			if not tabnav.split_and_move_current_cells(move_cursors):
-				self.move_next_cell(tabnav, move_direction)
+			if not self.tabnav.split_and_move_current_cells(move_cursors):
+				self.move_next_cell(move_direction)
 		except CursorNotInTableError as e:
 			log.warning(e.err)
 
-	def move_next_cell(self, tabnav, move_direction):
+	def move_next_cell(self, move_direction):
 		'''Moves all cursurs to the next cell in the given direction.
 
 		Returns True if the selections changed, or False otherwise.
@@ -445,7 +451,7 @@ class MarkdownTableMoveCommand(sublime_plugin.TextCommand):
 		dr, dc = move_direction
 		if len(selections) == 1 and dr != 0:
 			# Special case when moving vertically with only a single cursor
-			return tabnav.single_cursor_vertical_move(selections[0].b, dr)
+			return self.tabnav.single_cursor_vertical_move(selections[0].b, dr)
 		try:
 			if dc > 0: # When moving forwards, go to the end of the cell
 				offset = -1
@@ -453,7 +459,7 @@ class MarkdownTableMoveCommand(sublime_plugin.TextCommand):
 				offset = 0
 			else: # Otherwise, maintain the cell's offset (default behaviour)
 				offset = None
-			new_cells = tabnav.get_next_cells(move_direction, offset)
+			new_cells = self.tabnav.get_next_cells(move_direction, offset)
 		except Exception as e:
 			log.debug(e)
 			new_cells = None
@@ -468,31 +474,25 @@ class MarkdownTableMoveCommand(sublime_plugin.TextCommand):
 
 class MarkdownTableMoveForwardCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.FORWARD, 1, True)
 
 class MarkdownTableMoveReverseCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.REVERSE, -1, True)
 
 class MarkdownTableMoveUpCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.UP, -1, False)
 		
 class MarkdownTableMoveDownCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.DOWN, -1, False)
 		
 class MarkdownTableMoveDownOrNewlineCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
-		log.debug("%s triggered", self.__class__.__name__)
-		tabnav = TableNavigator(MarkdownTableView(self.view, -1))
 		try:
-			moved = tabnav.split_and_move_current_cells(move_cursors = False) \
-				    or super().move_next_cell(tabnav, Direction.DOWN)
+			moved = self.tabnav.split_and_move_current_cells(move_cursors = False) \
+				    or super().move_next_cell(self.tabnav, Direction.DOWN)
 		except CursorNotInTableError as e:
 			log.warning(e.err)
 			moved = False
@@ -502,24 +502,23 @@ class MarkdownTableMoveDownOrNewlineCommand(MarkdownTableMoveCommand):
 
 # Add cells
 
-class MarkdownTableAddCommand(sublime_plugin.TextCommand):
+class MarkdownTableAddCommand(MarkdownTableCommand):
 	def run(self, edit, move_direction, cell_direction = 1, move_cursors = False):
-		log.debug("%s triggered", self.__class__.__name__)
-		tabnav = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		super().run(edit, cell_direction)
 		try:
-			if not tabnav.split_and_move_current_cells(move_cursors):
-				self.add_next_cell(tabnav, move_direction)
+			if not self.tabnav.split_and_move_current_cells(move_cursors):
+				self.add_next_cell(move_direction)
 		except CursorNotInTableError as e:
 			log.warning(e.err)
 
-	def add_next_cell(self, tabnav, move_direction):
+	def add_next_cell(self, move_direction):
 		'''Adds a cursor to the next cell in the given direction.
 
 		Returns True if the selections changed, or False otherwise.
 		'''
 		initial_selections = list(self.view.sel())
 		try:
-			new_cells = tabnav.get_next_cells(move_direction)
+			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Exception as e:
 			log.debug(e)
 			new_cells = None
@@ -532,43 +531,38 @@ class MarkdownTableAddCommand(sublime_plugin.TextCommand):
 
 class MarkdownTableAddForwardCommand(MarkdownTableAddCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.FORWARD, 1, False)
 
 class MarkdownTableAddReverseCommand(MarkdownTableAddCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.REVERSE, -1, False)
 
 class MarkdownTableAddUpCommand(MarkdownTableAddCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.UP, -1, False)
 		
 class MarkdownTableAddDownCommand(MarkdownTableAddCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.DOWN, -1, False)
 
 # Select cells
 
-class MarkdownTableSelectCommand(sublime_plugin.TextCommand):
+class MarkdownTableSelectCommand(MarkdownTableCommand):
 	def run(self, edit, move_direction, cell_direction = 1):
-		log.debug("%s triggered", self.__class__.__name__)
-		tabnav = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		super().run(edit, cell_direction)
 		try:
-			if not tabnav.split_and_select_current_cells():
-				self.select_next_cell(tabnav, move_direction)
+			if not self.tabnav.split_and_select_current_cells():
+				self.select_next_cell(move_direction)
 		except CursorNotInTableError as e:
 			log.warning(e.err)		
 
-	def select_next_cell(self, tabnav, move_direction):
+	def select_next_cell(self, move_direction):
 		'''Selects the contents of the next cell in the given direction.
 
 		Returns True if the selections chnaged, or False otherwise.
 		'''
 		try:
-			new_cells = tabnav.get_next_cells(move_direction)
+			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Error as e:
 			log.debug(e)
 		if new_cells is not None:
@@ -581,44 +575,39 @@ class MarkdownTableSelectCommand(sublime_plugin.TextCommand):
 
 class MarkdownTableSelectForwardCommand(MarkdownTableSelectCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.FORWARD, 1)
 
 class MarkdownTableSelectReverseCommand(MarkdownTableSelectCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.REVERSE, -1)
 
 class MarkdownTableSelectUpCommand(MarkdownTableSelectCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.UP, -1)
 		
 class MarkdownTableSelectDownCommand(MarkdownTableSelectCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.DOWN, -1)
 
 # Extend selection
 
-class MarkdownTableExtendSelectionCommand(sublime_plugin.TextCommand):
+class MarkdownTableExtendSelectionCommand(MarkdownTableCommand):
 	def run(self, edit, move_direction, cell_direction = 1):
-		log.debug("%s triggered", self.__class__.__name__)
-		tabnav = TableNavigator(MarkdownTableView(self.view, cell_direction))
+		super().run(edit, cell_direction)
 		try:
-			if not tabnav.split_and_select_current_cells():
-				self.extend_cell_selection(tabnav, move_direction)
+			if not self.tabnav.split_and_select_current_cells():
+				self.extend_cell_selection(move_direction)
 		except CursorNotInTableError as e:
 			log.warning(e.err)		
 
-	def extend_cell_selection(self, tabnav, move_direction):
+	def extend_cell_selection(self, move_direction):
 		'''Adds the next cell in the given direction to the selection.
 
 		Returns True if the selections chnaged, or False otherwise.
 		'''
 		initial_selections = list(self.view.sel())
 		try:
-			new_cells = tabnav.get_next_cells(move_direction)
+			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Error as e:
 			log.debug(e)
 		if new_cells is not None:
@@ -629,32 +618,27 @@ class MarkdownTableExtendSelectionCommand(sublime_plugin.TextCommand):
 
 class MarkdownTableExtendSelectionForwardCommand(MarkdownTableExtendSelectionCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.FORWARD, 1)
 
 class MarkdownTableExtendSelectionReverseCommand(MarkdownTableExtendSelectionCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.REVERSE, -1)
 
 class MarkdownTableExtendSelectionUpCommand(MarkdownTableExtendSelectionCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.UP, -1)
 		
 class MarkdownTableExtendSelectionDownCommand(MarkdownTableExtendSelectionCommand):
 	def run(self, edit):
-		log.warning("%s triggered", self.__class__.__name__)
 		super().run(edit, Direction.DOWN, -1)
 
 
 # Select row cells
 
-class MarkdownTableSelectRowCommand(sublime_plugin.TextCommand):
+class MarkdownTableSelectRowCommand(MarkdownTableCommand):
 	def run(self, edit, cell_direction = 1):
-		log.debug("%s triggered", self.__class__.__name__)
-		table = MarkdownTableView(self.view, cell_direction)
-		cells = [cell for row in table.rows for cell in row]
+		super().run(edit, cell_direction)
+		cells = [cell for row in self.table.rows for cell in row]
 		if len(cells) > 0:
 			self.view.sel().clear()
 			self.view.sel().add_all(cells)
@@ -662,19 +646,17 @@ class MarkdownTableSelectRowCommand(sublime_plugin.TextCommand):
 
 # Select column cells
 
-class MarkdownTableSelectColumnCommand(sublime_plugin.TextCommand):
+class MarkdownTableSelectColumnCommand(MarkdownTableCommand):
 	def run(self, edit, cell_direction = 1):
-		log.debug("%s triggered", self.__class__.__name__)
-		table = MarkdownTableView(self.view, cell_direction)
-		tabnav = TableNavigator(table)
-		tabnav.split_and_select_current_cells()
+		super().run(edit, cell_direction)
+		self.tabnav.split_and_select_current_cells()
 		columns = []
 		for region in self.view.sel():
-			cell = table.cell_at_point(region.b)
+			cell = self.table.cell_at_point(region.b)
 			containing_columns = [col for col in columns if col.contains(cell)]
 			if len(containing_columns) > 0:
 				continue # This cell is already contained in a previously captured column
-			columns.append(tabnav.get_table_column(cell))
+			columns.append(self.tabnav.get_table_column(cell))
 		cells = [cell for col in columns for cell in col]
 		if len(cells) > 0:
 			self.view.sel().clear()
@@ -683,21 +665,19 @@ class MarkdownTableSelectColumnCommand(sublime_plugin.TextCommand):
 
 # Select all table cells
 
-class MarkdownTableSelectAllCommand(sublime_plugin.TextCommand):
+class MarkdownTableSelectAllCommand(MarkdownTableCommand):
 	def run(self, edit, cell_direction = 1):
-		log.debug("%s triggered", self.__class__.__name__)
-		table = MarkdownTableView(self.view, cell_direction)
-		tabnav = TableNavigator(table)
-		tabnav.split_and_select_current_cells()
+		super().run(edit, cell_direction)
+		self.tabnav.split_and_select_current_cells()
 		columns = []
 		# Expand the first column in each disjoint table to parse all rows of all selected tables
-		for row in (table_row.row for table_row in table.rows):
-			cell = table[(row, 0)] 
+		for row in (table_row.row for table_row in self.table.rows):
+			cell = self.table[(row, 0)] 
 			containing_columns = [col for col in columns if col.contains(cell)]
 			if len(containing_columns) > 0:
 				continue # This cell is already contained in a previously captured column
-			columns.append(tabnav.get_table_column(cell))
-		cells = [cell for row in table.rows for cell in row]
+			columns.append(self.tabnav.get_table_column(cell))
+		cells = [cell for row in self.table.rows for cell in row]
 		if len(cells) > 0:
 			self.view.sel().clear()
 			self.view.sel().add_all(cells)
