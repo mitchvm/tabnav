@@ -6,7 +6,7 @@ import logging
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.WARNING)
-# log.setLevel(logging.DEBUG)
+log.setLevel(logging.DEBUG)
 
 class Direction:
 	FORWARD = (0,1)
@@ -155,10 +155,10 @@ class TableView:
 	Note that a view can contain multiple, disjoint tables. This class
 	makes no effort to distinguish between separate tables.
 	'''
-	def __init__(self, view, cell_pattern, eol_pattern, cell_direction = 1):
+	def __init__(self, view, cell_pattern, eol_pattern, cell_direction=1):
 		self.view = view
-		self._cell_pattern = cell_pattern
-		self._eol_pattern = eol_pattern
+		self._cell_pattern = re.compile(cell_pattern)
+		self._eol_pattern = re.compile(eol_pattern)
 		self._cell_direction = cell_direction
 		self._parse_selected_rows()
 
@@ -258,7 +258,7 @@ class TableNavigator:
 		return self._table.view
 
 
-	def split_and_move_current_cells(self, move_cursors = True):
+	def split_and_move_current_cells(self, move_cursors=True):
 		'''Puts a cursor in each of the cells spanned by the current selection.
 
 		If move_cursors is True, then all regions in the selection, including 
@@ -280,7 +280,7 @@ class TableNavigator:
 				r = self.view.rowcol(point)[0]
 				line_cells = list(cell for cell in self._table[r] if cell.intersects(region))
 				if len(line_cells) == 0:
-					# This happens if the cursor is immediately after the final pipe in a Markdown table, for example
+					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
 					raise CursorNotInTableError(region.begin())
 				if len(line_cells) > 1 or line_cells[0].b != point:
 					selection_changed = True
@@ -305,7 +305,7 @@ class TableNavigator:
 			r = self.view.rowcol(region.begin())[0]
 			line_cells = list(cell for cell in self._table[r] if cell.intersects(region))
 			if len(line_cells) == 0: 
-				# This happens if the cursor is immediately after the final pipe in a Markdown table, for example
+				# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
 				raise CursorNotInTableError(region.begin())
 			if len(line_cells) > 1 or line_cells[0] != region:
 				selection_changed = True
@@ -317,7 +317,7 @@ class TableNavigator:
 		return selection_changed
 
 
-	def get_next_cells(self, direction, offset = None):
+	def get_next_cells(self, direction, offset=None):
 		new_cells = []
 		dr, dc = direction
 		selections = list(self.view.sel())
@@ -418,29 +418,64 @@ class TableNavigator:
 		return column
 
 
-
-class MarkdownTableView(TableView):
-	def __init__(self, view, cell_direction = 1):
-		super().__init__(view, re.compile(r'\|?(?P<content>.*?)(?=\|)'), re.compile(r'\|(?P<content>.+)$'), cell_direction)
-
-
 #### Commands ####
 
-class MarkdownTableCommand(sublime_plugin.TextCommand):
+class TabnavCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		raise NotImplementedError("The base MarkdownTableCommand is not meant a runnable command.")
+		raise NotImplementedError("The base TabnavCommand is not a runnable command.")
 
-	def init_table(self, cell_direction = 1):
+	def init_table(self, cell_direction=1, context=None):
 		log.debug("%s triggered", self.__class__.__name__)
-		self.table = MarkdownTableView(self.view, cell_direction)
+		settings = sublime.load_settings("tabnav.sublime-settings")
+		contexts = settings.get("contexts", {})
+		if context is None:
+			point = self.view.sel()[0].a
+			max_context = None
+			for key in contexts:
+				config = contexts[key]
+				try:
+					selector = config['selector']
+				except KeyError:
+					raise Exception("Context '{0}' has no 'selector' defined.".format(key))
+				score = self.view.score_selector(point, selector)
+				except_selector = config.get('except_selector', None)
+				if except_selector is not None:
+					except_score = self.view.score_selector(point, except_selector)
+					if except_score >= score:
+						log.warning("except_selector '%s' overules the selector '%s'", except_selector, selector)
+						continue
+				if score == 0:
+					continue
+				if max_context is None or score > max_context[1]:
+					max_context = (key, score)
+			if max_context is None:
+				raise Exception("Can't execute command '{0}'. No tabnav context matches the current scope, '{1}'".format(self.__class__.__name__, self.view.scope_name(point)))
+			else:
+				context = max_context[0]
+		try:
+			context_config = contexts[context]
+		except KeyError:
+			raise Exception("Context '{0}' not found in tabnav settings.".format(context))
+		try:
+			cell_pattern = context_config['cell_pattern']
+		except KeyError:
+			raise Exception("Context '{0}' does not have a cell_pattern regex pattern defined.".format(context))
+		try:
+			eol_pattern = context_config['eol_pattern']
+		except KeyError:
+			raise Exception("Context '{0}' does not have a eol_pattern regex pattern defined.".format(context))
+		log.debug("Initializing tabnav command using context %s", context)
+		log.debug("cell_pattern: %s", cell_pattern)
+		log.debug("eol_pattern: %s", eol_pattern)
+		self.table = TableView(self.view, cell_pattern, eol_pattern, cell_direction)
 		self.tabnav = TableNavigator(self.table)
 
 
 # Move cells:
 
-class MarkdownTableMoveCommand(MarkdownTableCommand):
-	def run(self, edit, move_direction, cell_direction = 1, move_cursors = False):
-		self.init_table(cell_direction)
+class TabnavMoveCursorCommand(TabnavCommand):
+	def run(self, edit, move_direction, cell_direction=1, move_cursors=False, context=None):
+		self.init_table(cell_direction, context)
 		try:
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.move_next_cell(move_direction)
@@ -478,27 +513,27 @@ class MarkdownTableMoveCommand(MarkdownTableCommand):
 		return False
 
 
-class MarkdownTableMoveForwardCommand(MarkdownTableMoveCommand):
-	def run(self, edit):
-		super().run(edit, Direction.FORWARD, 1, True)
+class TabnavMoveCursorForwardCommand(TabnavMoveCursorCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.FORWARD, 1, True, context=context)
 
-class MarkdownTableMoveReverseCommand(MarkdownTableMoveCommand):
-	def run(self, edit):
-		super().run(edit, Direction.REVERSE, -1, True)
+class TabnavMoveCursorReverseCommand(TabnavMoveCursorCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.REVERSE, -1, True, context=context)
 
-class MarkdownTableMoveUpCommand(MarkdownTableMoveCommand):
-	def run(self, edit):
-		super().run(edit, Direction.UP, -1, False)
+class TabnavMoveCursorUpCommand(TabnavMoveCursorCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.UP, -1, False, context=context)
 		
-class MarkdownTableMoveDownCommand(MarkdownTableMoveCommand):
-	def run(self, edit):
-		super().run(edit, Direction.DOWN, -1, False)
+class TabnavMoveCursorDownCommand(TabnavMoveCursorCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.DOWN, -1, False, context=context)
 		
-class MarkdownTableMoveDownOrNewlineCommand(MarkdownTableMoveCommand):
-	def run(self, edit):
-		self.init_table()
+class TabnavMoveCursorDownOrNewlineCommand(TabnavMoveCursorCommand):
+	def run(self, edit, context=None):
+		self.init_table(context=context)
 		try:
-			moved = self.tabnav.split_and_move_current_cells(move_cursors = False) \
+			moved = self.tabnav.split_and_move_current_cells(move_cursors=False) \
 				    or super().move_next_cell(Direction.DOWN)
 		except CursorNotInTableError as e:
 			log.warning(e.err)
@@ -509,9 +544,9 @@ class MarkdownTableMoveDownOrNewlineCommand(MarkdownTableMoveCommand):
 
 # Add cells
 
-class MarkdownTableAddCommand(MarkdownTableCommand):
-	def run(self, edit, move_direction, cell_direction = 1, move_cursors = False):
-		self.init_table(cell_direction)
+class TabnavAddCursorCommand(TabnavCommand):
+	def run(self, edit, move_direction, cell_direction=1, move_cursors=False, context=None):
+		self.init_table(cell_direction, context)
 		try:
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.add_next_cell(move_direction)
@@ -536,36 +571,36 @@ class MarkdownTableAddCommand(MarkdownTableCommand):
 		return len(initial_selections) != len(self.view.sel())
 
 
-class MarkdownTableAddForwardCommand(MarkdownTableAddCommand):
-	def run(self, edit):
-		super().run(edit, Direction.FORWARD, 1, False)
+class TabnavAddCursorForwardCommand(TabnavAddCursorCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.FORWARD, 1, False, context=context)
 
-class MarkdownTableAddReverseCommand(MarkdownTableAddCommand):
-	def run(self, edit):
-		super().run(edit, Direction.REVERSE, -1, False)
+class TabnavAddCursorReverseCommand(TabnavAddCursorCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.REVERSE, -1, False, context=context)
 
-class MarkdownTableAddUpCommand(MarkdownTableAddCommand):
-	def run(self, edit):
-		super().run(edit, Direction.UP, -1, False)
+class TabnavAddCursorUpCommand(TabnavAddCursorCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.UP, -1, False, context=context)
 		
-class MarkdownTableAddDownCommand(MarkdownTableAddCommand):
-	def run(self, edit):
-		super().run(edit, Direction.DOWN, -1, False)
+class TabnavAddCursorDownCommand(TabnavAddCursorCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.DOWN, -1, False, context=context)
 
 # Select cells
 
-class MarkdownTableSelectCurrentCommand(MarkdownTableCommand):
-	def run(self, edit, cell_direction = 1):
-		self.init_table(cell_direction)
+class TabnavSelectCurrentCommand(TabnavCommand):
+	def run(self, edit, cell_direction=1, context=None):
+		self.init_table(cell_direction, context)
 		try:
 			self.tabnav.split_and_select_current_cells()
 		except CursorNotInTableError as e:
 			log.warning(e.err)
 
 
-class MarkdownTableSelectNextCommand(MarkdownTableCommand):
-	def run(self, edit, move_direction, cell_direction = 1):
-		self.init_table(cell_direction)
+class TabnavSelectNextCommand(TabnavCommand):
+	def run(self, edit, move_direction, cell_direction=1, context=None):
+		self.init_table(cell_direction, context)
 		try:
 			if not self.tabnav.split_and_select_current_cells():
 				self.select_next_cell(move_direction)
@@ -589,27 +624,27 @@ class MarkdownTableSelectNextCommand(MarkdownTableCommand):
 		return False
 
 
-class MarkdownTableSelectForwardCommand(MarkdownTableSelectNextCommand):
-	def run(self, edit):
-		super().run(edit, Direction.FORWARD, 1)
+class TabnavSelectForwardCommand(TabnavSelectNextCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.FORWARD, 1, context=context)
 
-class MarkdownTableSelectReverseCommand(MarkdownTableSelectNextCommand):
-	def run(self, edit):
-		super().run(edit, Direction.REVERSE, -1)
+class TabnavSelectReverseCommand(TabnavSelectNextCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.REVERSE, -1, context=context)
 
-class MarkdownTableSelectUpCommand(MarkdownTableSelectNextCommand):
-	def run(self, edit):
-		super().run(edit, Direction.UP, -1)
+class TabnavSelectUpCommand(TabnavSelectNextCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.UP, -1, context=context)
 		
-class MarkdownTableSelectDownCommand(MarkdownTableSelectNextCommand):
-	def run(self, edit):
-		super().run(edit, Direction.DOWN, -1)
+class TabnavSelectDownCommand(TabnavSelectNextCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.DOWN, -1, context=context)
 
 # Extend selection
 
-class MarkdownTableExtendSelectionCommand(MarkdownTableCommand):
-	def run(self, edit, move_direction, cell_direction = 1):
-		self.init_table(cell_direction)
+class TabnavExtendSelectionCommand(TabnavCommand):
+	def run(self, edit, move_direction, cell_direction=1, context=None):
+		self.init_table(cell_direction, context)
 		try:
 			if not self.tabnav.split_and_select_current_cells():
 				self.extend_cell_selection(move_direction)
@@ -632,28 +667,28 @@ class MarkdownTableExtendSelectionCommand(MarkdownTableCommand):
 		return len(initial_selections) != len(self.view.sel())
 
 
-class MarkdownTableExtendSelectionForwardCommand(MarkdownTableExtendSelectionCommand):
-	def run(self, edit):
-		super().run(edit, Direction.FORWARD, 1)
+class TabnavExtendSelectionForwardCommand(TabnavExtendSelectionCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.FORWARD, 1, context=context)
 
-class MarkdownTableExtendSelectionReverseCommand(MarkdownTableExtendSelectionCommand):
-	def run(self, edit):
-		super().run(edit, Direction.REVERSE, -1)
+class TabnavExtendSelectionReverseCommand(TabnavExtendSelectionCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.REVERSE, -1, context=context)
 
-class MarkdownTableExtendSelectionUpCommand(MarkdownTableExtendSelectionCommand):
-	def run(self, edit):
-		super().run(edit, Direction.UP, -1)
+class TabnavExtendSelectionUpCommand(TabnavExtendSelectionCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.UP, -1, context=context)
 		
-class MarkdownTableExtendSelectionDownCommand(MarkdownTableExtendSelectionCommand):
-	def run(self, edit):
-		super().run(edit, Direction.DOWN, -1)
+class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.DOWN, -1, context=context)
 
 
 # Select row cells
 
-class MarkdownTableSelectRowCommand(MarkdownTableCommand):
-	def run(self, edit, cell_direction = 1):
-		self.init_table(cell_direction)
+class TabnavSelectRowCommand(TabnavCommand):
+	def run(self, edit, cell_direction=1, context=None):
+		self.init_table(cell_direction, context)
 		cells = [cell for row in self.table.rows for cell in row]
 		if len(cells) > 0:
 			self.view.sel().clear()
@@ -662,9 +697,9 @@ class MarkdownTableSelectRowCommand(MarkdownTableCommand):
 
 # Select column cells
 
-class MarkdownTableSelectColumnCommand(MarkdownTableCommand):
-	def run(self, edit, cell_direction = 1):
-		self.init_table(cell_direction)
+class TabnavSelectColumnCommand(TabnavCommand):
+	def run(self, edit, cell_direction=1, context=None):
+		self.init_table(cell_direction, context)
 		self.tabnav.split_and_select_current_cells()
 		columns = []
 		for region in self.view.sel():
@@ -681,9 +716,9 @@ class MarkdownTableSelectColumnCommand(MarkdownTableCommand):
 
 # Select all table cells
 
-class MarkdownTableSelectAllCommand(MarkdownTableCommand):
-	def run(self, edit, cell_direction = 1):
-		self.init_table()
+class TabnavSelectAllCommand(TabnavCommand):
+	def run(self, edit, cell_direction=1, context=None):
+		self.init_table(cell_direction, context)
 		self.tabnav.split_and_select_current_cells()
 		columns = []
 		# Expand the first column in each disjoint table to parse all rows of all selected tables

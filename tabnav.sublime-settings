@@ -1,0 +1,12 @@
+{
+	"contexts":
+	{
+		"markdown": 
+		{
+			"selector": "text.html.markdown",
+			"except_selector": "markup.raw",
+			"cell_pattern": "\\|?(?P<content>.*?)(?=\\|)",
+			"eol_pattern": "\\|(?P<content>.+)$"
+		}
+	}
+}

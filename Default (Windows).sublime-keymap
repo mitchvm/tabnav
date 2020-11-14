@@ -2,7 +2,8 @@
     // move to previous cell in markdown table
     { 
         "keys": ["shift+tab"],
-        "command": "markdown_table_move_reverse",
+        "command": "tabnav_move_cursor_reverse",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -20,7 +21,8 @@
     // move to next cell in markdown table
     { 
         "keys": ["tab"],
-        "command": "markdown_table_move_forward",
+        "command": "tabnav_move_cursor_forward",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -38,7 +40,8 @@
     // move to cell above in markdown table
     { 
         "keys": ["shift+enter"],
-        "command": "markdown_table_move_up",
+        "command": "tabnav_move_cursor_up",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -56,7 +59,8 @@
     // move to cell below in markdown table
     { 
         "keys": ["enter"],
-        "command": "markdown_table_move_down_or_newline",
+        "command": "tabnav_move_cursor_down_or_newline",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -74,7 +78,8 @@
     // add previous cell in markdown table
     { 
         "keys": ["ctrl+alt+;"],
-        "command": "markdown_table_add_reverse",
+        "command": "tabnav_add_cursor_reverse",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -92,7 +97,8 @@
     // add next cell in markdown table
     { 
         "keys": ["ctrl+alt+'"],
-        "command": "markdown_table_add_forward",
+        "command": "tabnav_add_cursor_forward",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -110,7 +116,8 @@
     // add cell above in markdown table
     { 
         "keys": ["ctrl+alt+["],
-        "command": "markdown_table_add_up",
+        "command": "tabnav_add_cursor_up",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -128,7 +135,8 @@
     // add cell below in markdown table
     { 
         "keys": ["ctrl+alt+/"],
-        "command": "markdown_table_add_down",
+        "command": "tabnav_add_cursor_down",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -146,7 +154,8 @@
     // select previous cell in markdown table
     { 
         "keys": ["ctrl+;"],
-        "command": "markdown_table_select_reverse",
+        "command": "tabnav_select_reverse",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -164,7 +173,8 @@
     // select next cell in markdown table
     { 
         "keys": ["ctrl+'"],
-        "command": "markdown_table_select_forward",
+        "command": "tabnav_select_forward",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -182,7 +192,8 @@
     // select cell above in markdown table
     { 
         "keys": ["ctrl+["],
-        "command": "markdown_table_select_up",
+        "command": "tabnav_select_up",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -200,7 +211,8 @@
     // select cell below in markdown table
     { 
         "keys": ["ctrl+/"],
-        "command": "markdown_table_select_down",
+        "command": "tabnav_select_down",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -218,7 +230,8 @@
     // extend selection to previous cell in markdown table
     { 
         "keys": ["ctrl+shift+;"],
-        "command": "markdown_table_extend_selection_reverse",
+        "command": "tabnav_extend_selection_reverse",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -236,7 +249,8 @@
     // extend selection to next cell in markdown table
     { 
         "keys": ["ctrl+shift+'"],
-        "command": "markdown_table_extend_selection_forward",
+        "command": "tabnav_extend_selection_forward",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -254,7 +268,8 @@
     // extend selection to cell above in markdown table
     { 
         "keys": ["ctrl+shift+["],
-        "command": "markdown_table_extend_selection_up",
+        "command": "tabnav_extend_selection_up",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -272,7 +287,8 @@
     // extend selection to cell below in markdown table
     { 
         "keys": ["ctrl+shift+/"],
-        "command": "markdown_table_extend_selection_down",
+        "command": "tabnav_extend_selection_down",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -290,7 +306,8 @@
     // select row cells
     { 
         "keys": ["ctrl+shift+l"],
-        "command": "markdown_table_select_row",
+        "command": "tabnav_select_row",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -308,7 +325,8 @@
     // select column cells
     { 
         "keys": ["ctrl+shift+c"],
-        "command": "markdown_table_select_column",
+        "command": "tabnav_select_column",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
@@ -326,7 +344,8 @@
     // select all table cells
     { 
         "keys": ["ctrl+alt+shift+s"],
-        "command": "markdown_table_select_all",
+        "command": "tabnav_select_all",
+        "args": {"context": "markdown"},
         "context":
         [
             { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
