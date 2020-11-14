@@ -7,6 +7,21 @@
 			"except_selector": "markup.raw",
 			"cell_pattern": "\\|?(?P<content>.*?)(?=\\|)",
 			"eol_pattern": "\\|(?P<content>.+)$"
-		}
+		},
+		"csv": 
+		{
+			"selector": "text.advanced_csv",
+			// Because CSV cells can be optionally quoted, and double-quotes themselves can also
+			// be contained in the cell (escaped by double-double-quote), the matching gets a bit
+			// tricky. If the cell starts with a quote (after optional whitespace), then it needs
+			// to end with either a single quote, or three quotes, and again followed by optional
+			// whitespace.
+			// Match one of three scenarios within the <content> group:
+			// 1) Empty cell
+			// 2) Unquoted content
+			// 3) Quoted content
+			"cell_pattern": "\\,?(?P<content>(?:.{0})|(?:\\s*[^\"]+?)|(?:\\s*\"(?:\"{2}|[^\"])*?\"\\s*))(?=\\,)",
+			"eol_pattern": "\\,(?P<content>(?:.{0})|(?:\\s*[^\"]+?)|(?:\\s*\"(?:\"{2}|[^\"])*?\"\\s*))$"
+		},
 	}
 }

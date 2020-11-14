@@ -1,4 +1,7 @@
 [
+
+    // #### Markdown ####
+
     // move to previous cell in markdown table
     { 
         "keys": ["shift+tab"],
@@ -303,7 +306,7 @@
             { "key": "setting.tabnav_kb_extend_down_markdown" },
         ]
     },
-    // select row cells
+    // select row cells in markdown table
     { 
         "keys": ["ctrl+shift+l"],
         "command": "tabnav_select_row",
@@ -322,7 +325,7 @@
             { "key": "setting.tabnav_kb_select_row_markdown" },
         ]
     },
-    // select column cells
+    // select column cells in markdown table
     { 
         "keys": ["ctrl+shift+c"],
         "command": "tabnav_select_column",
@@ -341,7 +344,7 @@
             { "key": "setting.tabnav_kb_select_column_markdown" },
         ]
     },
-    // select all table cells
+    // select all table cells in markdown table
     { 
         "keys": ["ctrl+alt+shift+s"],
         "command": "tabnav_select_all",
@@ -360,6 +363,337 @@
             { "key": "setting.tabnav_kb_select_table_markdown" },
         ]
     },
+    
+    // #### CSV ####
+
+    // move to previous cell in CSV
+    { 
+        "keys": ["shift+tab"],
+        "command": "tabnav_move_cursor_reverse",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_move_reverse" },
+            { "key": "setting.tabnav_kb_move_reverse_csv" },
+        ]
+    },
+    // move to next cell in CSV
+    { 
+        "keys": ["tab"],
+        "command": "tabnav_move_cursor_forward",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_move_forward" },
+            { "key": "setting.tabnav_kb_move_forward_csv" },
+        ]
+    },
+    // move to cell above in CSV
+    { 
+        "keys": ["shift+enter"],
+        "command": "tabnav_move_cursor_up",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_move_up" },
+            { "key": "setting.tabnav_kb_move_up_csv" },
+        ]
+    },
+    // move to cell below in CSV
+    { 
+        "keys": ["enter"],
+        "command": "tabnav_move_cursor_down_or_newline",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_move_down" },
+            { "key": "setting.tabnav_kb_move_down_csv" },
+        ]
+    },
+    // add previous cell in CSV
+    { 
+        "keys": ["ctrl+alt+;"],
+        "command": "tabnav_add_cursor_reverse",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_add_reverse" },
+            { "key": "setting.tabnav_kb_add_reverse_csv" },
+        ]
+    },
+    // add next cell in CSV
+    { 
+        "keys": ["ctrl+alt+'"],
+        "command": "tabnav_add_cursor_forward",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_add_forward" },
+            { "key": "setting.tabnav_kb_add_forward_csv" },
+        ]
+    },
+    // add cell above in CSV
+    { 
+        "keys": ["ctrl+alt+["],
+        "command": "tabnav_add_cursor_up",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_add_up" },
+            { "key": "setting.tabnav_kb_add_up_csv" },
+        ]
+    },
+    // add cell below in CSV
+    { 
+        "keys": ["ctrl+alt+/"],
+        "command": "tabnav_add_cursor_down",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_add_down" },
+            { "key": "setting.tabnav_kb_add_down_csv" },
+        ]
+    },
+    // select previous cell in CSV
+    { 
+        "keys": ["ctrl+;"],
+        "command": "tabnav_select_reverse",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_select_reverse" },
+            { "key": "setting.tabnav_kb_select_reverse_csv" },
+        ]
+    },
+    // select next cell in CSV
+    { 
+        "keys": ["ctrl+'"],
+        "command": "tabnav_select_forward",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_select_forward" },
+            { "key": "setting.tabnav_kb_select_forward_csv" },
+        ]
+    },
+    // select cell above in CSV
+    { 
+        "keys": ["ctrl+["],
+        "command": "tabnav_select_up",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_select_up" },
+            { "key": "setting.tabnav_kb_select_up_csv" },
+        ]
+    },
+    // select cell below in CSV
+    { 
+        "keys": ["ctrl+/"],
+        "command": "tabnav_select_down",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_select_down" },
+            { "key": "setting.tabnav_kb_select_down_csv" },
+        ]
+    },
+    // extend selection to previous cell in CSV
+    { 
+        "keys": ["ctrl+shift+;"],
+        "command": "tabnav_extend_selection_reverse",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_extend_reverse" },
+            { "key": "setting.tabnav_kb_extend_reverse_csv" },
+        ]
+    },
+    // extend selection to next cell in CSV
+    { 
+        "keys": ["ctrl+shift+'"],
+        "command": "tabnav_extend_selection_forward",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_extend_forward" },
+            { "key": "setting.tabnav_kb_extend_forward_csv" },
+        ]
+    },
+    // extend selection to cell above in CSV
+    { 
+        "keys": ["ctrl+shift+["],
+        "command": "tabnav_extend_selection_up",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_extend_up" },
+            { "key": "setting.tabnav_kb_extend_up_csv" },
+        ]
+    },
+    // extend selection to cell below in CSV
+    { 
+        "keys": ["ctrl+shift+/"],
+        "command": "tabnav_extend_selection_down",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_extend_down" },
+            { "key": "setting.tabnav_kb_extend_down_csv" },
+        ]
+    },
+    // select row cells in CSV
+    { 
+        "keys": ["ctrl+shift+l"],
+        "command": "tabnav_select_row",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_select_row" },
+            { "key": "setting.tabnav_kb_select_row_csv" },
+        ]
+    },
+    // select column cells in CSV
+    { 
+        "keys": ["ctrl+shift+c"],
+        "command": "tabnav_select_column",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_select_column" },
+            { "key": "setting.tabnav_kb_select_column_csv" },
+        ]
+    },
+    // select all table cells in CSV
+    { 
+        "keys": ["ctrl+alt+shift+s"],
+        "command": "tabnav_select_all",
+        "args": {"context": "csv"},
+        "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "setting.tabnav_kb_select_table" },
+            { "key": "setting.tabnav_kb_select_table_csv" },
+        ]
+    },
+    
+    
+
+    // #### Other keybindings ####
+
     // trim whitespace from selections
     {
         "keys": ["alt+w"],
