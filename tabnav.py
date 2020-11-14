@@ -423,18 +423,24 @@ class MarkdownTableView(TableView):
 	def __init__(self, view, cell_direction = 1):
 		super().__init__(view, re.compile(r'\|?(?P<content>.*?)(?=\|)'), re.compile(r'\|(?P<content>.+)$'), cell_direction)
 
-# Move cells:
+
+#### Commands ####
 
 class MarkdownTableCommand(sublime_plugin.TextCommand):
-	def run(self, edit, cell_direction = 1):
+	def run(self, edit):
+		raise NotImplementedError("The base MarkdownTableCommand is not meant a runnable command.")
+
+	def init_table(self, cell_direction = 1):
 		log.debug("%s triggered", self.__class__.__name__)
 		self.table = MarkdownTableView(self.view, cell_direction)
 		self.tabnav = TableNavigator(self.table)
 
 
+# Move cells:
+
 class MarkdownTableMoveCommand(MarkdownTableCommand):
 	def run(self, edit, move_direction, cell_direction = 1, move_cursors = False):
-		super().run(edit, cell_direction)
+		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.move_next_cell(move_direction)
@@ -490,9 +496,10 @@ class MarkdownTableMoveDownCommand(MarkdownTableMoveCommand):
 		
 class MarkdownTableMoveDownOrNewlineCommand(MarkdownTableMoveCommand):
 	def run(self, edit):
+		self.init_table()
 		try:
 			moved = self.tabnav.split_and_move_current_cells(move_cursors = False) \
-				    or super().move_next_cell(self.tabnav, Direction.DOWN)
+				    or super().move_next_cell(Direction.DOWN)
 		except CursorNotInTableError as e:
 			log.warning(e.err)
 			moved = False
@@ -504,7 +511,7 @@ class MarkdownTableMoveDownOrNewlineCommand(MarkdownTableMoveCommand):
 
 class MarkdownTableAddCommand(MarkdownTableCommand):
 	def run(self, edit, move_direction, cell_direction = 1, move_cursors = False):
-		super().run(edit, cell_direction)
+		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.add_next_cell(move_direction)
@@ -547,9 +554,18 @@ class MarkdownTableAddDownCommand(MarkdownTableAddCommand):
 
 # Select cells
 
-class MarkdownTableSelectCommand(MarkdownTableCommand):
+class MarkdownTableSelectCurrentCommand(MarkdownTableCommand):
+	def run(self, edit, cell_direction = 1):
+		self.init_table(cell_direction)
+		try:
+			self.tabnav.split_and_select_current_cells()
+		except CursorNotInTableError as e:
+			log.warning(e.err)
+
+
+class MarkdownTableSelectNextCommand(MarkdownTableCommand):
 	def run(self, edit, move_direction, cell_direction = 1):
-		super().run(edit, cell_direction)
+		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_select_current_cells():
 				self.select_next_cell(move_direction)
@@ -573,19 +589,19 @@ class MarkdownTableSelectCommand(MarkdownTableCommand):
 		return False
 
 
-class MarkdownTableSelectForwardCommand(MarkdownTableSelectCommand):
+class MarkdownTableSelectForwardCommand(MarkdownTableSelectNextCommand):
 	def run(self, edit):
 		super().run(edit, Direction.FORWARD, 1)
 
-class MarkdownTableSelectReverseCommand(MarkdownTableSelectCommand):
+class MarkdownTableSelectReverseCommand(MarkdownTableSelectNextCommand):
 	def run(self, edit):
 		super().run(edit, Direction.REVERSE, -1)
 
-class MarkdownTableSelectUpCommand(MarkdownTableSelectCommand):
+class MarkdownTableSelectUpCommand(MarkdownTableSelectNextCommand):
 	def run(self, edit):
 		super().run(edit, Direction.UP, -1)
 		
-class MarkdownTableSelectDownCommand(MarkdownTableSelectCommand):
+class MarkdownTableSelectDownCommand(MarkdownTableSelectNextCommand):
 	def run(self, edit):
 		super().run(edit, Direction.DOWN, -1)
 
@@ -593,7 +609,7 @@ class MarkdownTableSelectDownCommand(MarkdownTableSelectCommand):
 
 class MarkdownTableExtendSelectionCommand(MarkdownTableCommand):
 	def run(self, edit, move_direction, cell_direction = 1):
-		super().run(edit, cell_direction)
+		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_select_current_cells():
 				self.extend_cell_selection(move_direction)
@@ -637,7 +653,7 @@ class MarkdownTableExtendSelectionDownCommand(MarkdownTableExtendSelectionComman
 
 class MarkdownTableSelectRowCommand(MarkdownTableCommand):
 	def run(self, edit, cell_direction = 1):
-		super().run(edit, cell_direction)
+		self.init_table(cell_direction)
 		cells = [cell for row in self.table.rows for cell in row]
 		if len(cells) > 0:
 			self.view.sel().clear()
@@ -648,7 +664,7 @@ class MarkdownTableSelectRowCommand(MarkdownTableCommand):
 
 class MarkdownTableSelectColumnCommand(MarkdownTableCommand):
 	def run(self, edit, cell_direction = 1):
-		super().run(edit, cell_direction)
+		self.init_table(cell_direction)
 		self.tabnav.split_and_select_current_cells()
 		columns = []
 		for region in self.view.sel():
@@ -667,7 +683,7 @@ class MarkdownTableSelectColumnCommand(MarkdownTableCommand):
 
 class MarkdownTableSelectAllCommand(MarkdownTableCommand):
 	def run(self, edit, cell_direction = 1):
-		super().run(edit, cell_direction)
+		self.init_table()
 		self.tabnav.split_and_select_current_cells()
 		columns = []
 		# Expand the first column in each disjoint table to parse all rows of all selected tables
