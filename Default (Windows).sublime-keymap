@@ -1,702 +1,328 @@
 [
+    // #### Non-navigation keybindings ####
 
-    // #### Markdown ####
-
-    // move to previous cell in markdown table
-    { 
-        "keys": ["shift+tab"],
-        "command": "tabnav_move_cursor_reverse",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_move_reverse" },
-            { "key": "setting.tabnav_kb_move_reverse_markdown" },
-        ]
-    },
-    // move to next cell in markdown table
-    { 
-        "keys": ["tab"],
-        "command": "tabnav_move_cursor_forward",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_move_forward" },
-            { "key": "setting.tabnav_kb_move_forward_markdown" },
-        ]
-    },
-    // move to cell above in markdown table
-    { 
-        "keys": ["shift+enter"],
-        "command": "tabnav_move_cursor_up",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_move_up" },
-            { "key": "setting.tabnav_kb_move_up_markdown" },
-        ]
-    },
-    // move to cell below in markdown table
-    { 
-        "keys": ["enter"],
-        "command": "tabnav_move_cursor_down_or_newline",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_move_down" },
-            { "key": "setting.tabnav_kb_move_down_markdown" },
-        ]
-    },
-    // add previous cell in markdown table
-    { 
-        "keys": ["ctrl+alt+;"],
-        "command": "tabnav_add_cursor_reverse",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_add_reverse" },
-            { "key": "setting.tabnav_kb_add_reverse_markdown" },
-        ]
-    },
-    // add next cell in markdown table
-    { 
-        "keys": ["ctrl+alt+'"],
-        "command": "tabnav_add_cursor_forward",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_add_forward" },
-            { "key": "setting.tabnav_kb_add_forward_markdown" },
-        ]
-    },
-    // add cell above in markdown table
-    { 
-        "keys": ["ctrl+alt+["],
-        "command": "tabnav_add_cursor_up",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_add_up" },
-            { "key": "setting.tabnav_kb_add_up_markdown" },
-        ]
-    },
-    // add cell below in markdown table
-    { 
-        "keys": ["ctrl+alt+/"],
-        "command": "tabnav_add_cursor_down",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_add_down" },
-            { "key": "setting.tabnav_kb_add_down_markdown" },
-        ]
-    },
-    // select previous cell in markdown table
-    { 
-        "keys": ["ctrl+;"],
-        "command": "tabnav_select_reverse",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_reverse" },
-            { "key": "setting.tabnav_kb_select_reverse_markdown" },
-        ]
-    },
-    // select next cell in markdown table
-    { 
-        "keys": ["ctrl+'"],
-        "command": "tabnav_select_forward",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_forward" },
-            { "key": "setting.tabnav_kb_select_forward_markdown" },
-        ]
-    },
-    // select cell above in markdown table
-    { 
-        "keys": ["ctrl+["],
-        "command": "tabnav_select_up",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_up" },
-            { "key": "setting.tabnav_kb_select_up_markdown" },
-        ]
-    },
-    // select cell below in markdown table
-    { 
-        "keys": ["ctrl+/"],
-        "command": "tabnav_select_down",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_down" },
-            { "key": "setting.tabnav_kb_select_down_markdown" },
-        ]
-    },
-    // extend selection to previous cell in markdown table
-    { 
-        "keys": ["ctrl+shift+;"],
-        "command": "tabnav_extend_selection_reverse",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_extend_reverse" },
-            { "key": "setting.tabnav_kb_extend_reverse_markdown" },
-        ]
-    },
-    // extend selection to next cell in markdown table
-    { 
-        "keys": ["ctrl+shift+'"],
-        "command": "tabnav_extend_selection_forward",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_extend_forward" },
-            { "key": "setting.tabnav_kb_extend_forward_markdown" },
-        ]
-    },
-    // extend selection to cell above in markdown table
-    { 
-        "keys": ["ctrl+shift+["],
-        "command": "tabnav_extend_selection_up",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_extend_up" },
-            { "key": "setting.tabnav_kb_extend_up_markdown" },
-        ]
-    },
-    // extend selection to cell below in markdown table
-    { 
-        "keys": ["ctrl+shift+/"],
-        "command": "tabnav_extend_selection_down",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_extend_down" },
-            { "key": "setting.tabnav_kb_extend_down_markdown" },
-        ]
-    },
-    // select row cells in markdown table
-    { 
-        "keys": ["ctrl+shift+l"],
-        "command": "tabnav_select_row",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_row" },
-            { "key": "setting.tabnav_kb_select_row_markdown" },
-        ]
-    },
-    // select column cells in markdown table
-    { 
-        "keys": ["ctrl+shift+c"],
-        "command": "tabnav_select_column",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_column" },
-            { "key": "setting.tabnav_kb_select_column_markdown" },
-        ]
-    },
-    // select all table cells in markdown table
-    { 
-        "keys": ["ctrl+alt+shift+s"],
-        "command": "tabnav_select_all",
-        "args": {"context": "markdown"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.html.markdown", "match_all": true },
-            { "key": "selector", "operator": "not_equal", "operand": "markup.raw", "match_all": true },
-            { "key": "preceding_text", "operator": "regex_contains", "operand": "^\\s*\\|", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_table" },
-            { "key": "setting.tabnav_kb_select_table_markdown" },
-        ]
-    },
-    
-    // #### CSV ####
-
-    // move to previous cell in CSV
-    { 
-        "keys": ["shift+tab"],
-        "command": "tabnav_move_cursor_reverse",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_move_reverse" },
-            { "key": "setting.tabnav_kb_move_reverse_csv" },
-        ]
-    },
-    // move to next cell in CSV
-    { 
-        "keys": ["tab"],
-        "command": "tabnav_move_cursor_forward",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_move_forward" },
-            { "key": "setting.tabnav_kb_move_forward_csv" },
-        ]
-    },
-    // move to cell above in CSV
-    { 
-        "keys": ["shift+enter"],
-        "command": "tabnav_move_cursor_up",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_move_up" },
-            { "key": "setting.tabnav_kb_move_up_csv" },
-        ]
-    },
-    // move to cell below in CSV
-    { 
-        "keys": ["enter"],
-        "command": "tabnav_move_cursor_down_or_newline",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_move_down" },
-            { "key": "setting.tabnav_kb_move_down_csv" },
-        ]
-    },
-    // add previous cell in CSV
-    { 
-        "keys": ["ctrl+alt+;"],
-        "command": "tabnav_add_cursor_reverse",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_add_reverse" },
-            { "key": "setting.tabnav_kb_add_reverse_csv" },
-        ]
-    },
-    // add next cell in CSV
-    { 
-        "keys": ["ctrl+alt+'"],
-        "command": "tabnav_add_cursor_forward",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_add_forward" },
-            { "key": "setting.tabnav_kb_add_forward_csv" },
-        ]
-    },
-    // add cell above in CSV
-    { 
-        "keys": ["ctrl+alt+["],
-        "command": "tabnav_add_cursor_up",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_add_up" },
-            { "key": "setting.tabnav_kb_add_up_csv" },
-        ]
-    },
-    // add cell below in CSV
-    { 
-        "keys": ["ctrl+alt+/"],
-        "command": "tabnav_add_cursor_down",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_add_down" },
-            { "key": "setting.tabnav_kb_add_down_csv" },
-        ]
-    },
-    // select previous cell in CSV
-    { 
-        "keys": ["ctrl+;"],
-        "command": "tabnav_select_reverse",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_reverse" },
-            { "key": "setting.tabnav_kb_select_reverse_csv" },
-        ]
-    },
-    // select next cell in CSV
-    { 
-        "keys": ["ctrl+'"],
-        "command": "tabnav_select_forward",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_forward" },
-            { "key": "setting.tabnav_kb_select_forward_csv" },
-        ]
-    },
-    // select cell above in CSV
-    { 
-        "keys": ["ctrl+["],
-        "command": "tabnav_select_up",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_up" },
-            { "key": "setting.tabnav_kb_select_up_csv" },
-        ]
-    },
-    // select cell below in CSV
-    { 
-        "keys": ["ctrl+/"],
-        "command": "tabnav_select_down",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_down" },
-            { "key": "setting.tabnav_kb_select_down_csv" },
-        ]
-    },
-    // extend selection to previous cell in CSV
-    { 
-        "keys": ["ctrl+shift+;"],
-        "command": "tabnav_extend_selection_reverse",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_extend_reverse" },
-            { "key": "setting.tabnav_kb_extend_reverse_csv" },
-        ]
-    },
-    // extend selection to next cell in CSV
-    { 
-        "keys": ["ctrl+shift+'"],
-        "command": "tabnav_extend_selection_forward",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_extend_forward" },
-            { "key": "setting.tabnav_kb_extend_forward_csv" },
-        ]
-    },
-    // extend selection to cell above in CSV
-    { 
-        "keys": ["ctrl+shift+["],
-        "command": "tabnav_extend_selection_up",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_extend_up" },
-            { "key": "setting.tabnav_kb_extend_up_csv" },
-        ]
-    },
-    // extend selection to cell below in CSV
-    { 
-        "keys": ["ctrl+shift+/"],
-        "command": "tabnav_extend_selection_down",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_extend_down" },
-            { "key": "setting.tabnav_kb_extend_down_csv" },
-        ]
-    },
-    // select row cells in CSV
-    { 
-        "keys": ["ctrl+shift+l"],
-        "command": "tabnav_select_row",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_row" },
-            { "key": "setting.tabnav_kb_select_row_csv" },
-        ]
-    },
-    // select column cells in CSV
-    { 
-        "keys": ["ctrl+shift+c"],
-        "command": "tabnav_select_column",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_column" },
-            { "key": "setting.tabnav_kb_select_column_csv" },
-        ]
-    },
-    // select all table cells in CSV
-    { 
-        "keys": ["ctrl+alt+shift+s"],
-        "command": "tabnav_select_all",
-        "args": {"context": "csv"},
-        "context":
-        [
-            { "key": "selector", "operator": "equal", "operand": "text.advanced_csv", "match_all": true },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "setting.tabnav_kb_select_table" },
-            { "key": "setting.tabnav_kb_select_table_csv" },
-        ]
-    },
-    
-    
-
-    // #### Other keybindings ####
-
-    // trim whitespace from selections
     {
+        // enable tabnav on current view
+        // Note: this keybinding gets clobbered by the "select next cell" keybindings
+        // once tabnav is enabled. In a CSV file, what this means is that the first press
+        // of this keybinding enables tabnav, and the next press selects the current cell.
+        "keys": ["ctrl+'"],
+        "command": "enable_tabnav",
+        "context": [{"key": "setting.tabnav.kb_enable_tabnav"}]
+    },
+    {
+        // disable tabnav on current view
+        // Note: by default, tabnav is neither enabled _nor_ disabled on a given view.
+        // Some contexts require that tabnav be explicitly enabled to work, while others
+        // are assumed to be enabled unless tabnav has been explicitly disabled.
+        "keys": ["ctrl+alt+shift+'"],
+        "command": "disable_tabnav",
+        "context": [{"key": "setting.tabnav.kb_disable_tabnav"}]
+    },
+    {
+        // trim whitespace from selections
         "keys": ["alt+w"],
-        "command": "trim_whitespace_from_selection"
-    }
+        "command": "trim_whitespace_from_selection",
+        "context": [{"key": "setting.tabnav.kb_trim_whitespace"}]
+    },
+
+    // #### Navigation keybindings: move cell ####
+
+    { 
+        // move to previous cell
+        "keys": ["shift+tab"],
+        "command": "tabnav_move_cursor_reverse",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_reverse" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // move to next cell
+        "keys": ["tab"],
+        "command": "tabnav_move_cursor_forward",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_forward" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // move to cell above
+        "keys": ["shift+enter"],
+        "command": "tabnav_move_cursor_up",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_up" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // move to cell below
+        "keys": ["enter"],
+        "command": "tabnav_move_cursor_down_or_newline",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_down" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+
+    // #### Navigation keybindings: add cursor ####
+
+    { 
+        // add previous cell
+        "keys": ["ctrl+alt+;"],
+        "command": "tabnav_add_cursor_reverse",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_add_reverse" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // add next cell
+        "keys": ["ctrl+alt+'"],
+        "command": "tabnav_add_cursor_forward",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_add_forward" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // add cell above
+        "keys": ["ctrl+alt+["],
+        "command": "tabnav_add_cursor_up",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_add_up" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // add cell below
+        "keys": ["ctrl+alt+/"],
+        "command": "tabnav_add_cursor_down",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_add_down" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+
+    // #### Navigation keybindings: select cell ####
+
+    { 
+        // select previous cell
+        "keys": ["ctrl+;"],
+        "command": "tabnav_select_reverse",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_reverse" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select next cell
+        "keys": ["ctrl+'"],
+        "command": "tabnav_select_forward",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_forward" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select cell above
+        "keys": ["ctrl+["],
+        "command": "tabnav_select_up",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_up" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select cell below
+        "keys": ["ctrl+/"],
+        "command": "tabnav_select_down",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_down" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+
+    // #### Navigation keybindings: extend selection ####
+
+    { 
+        // extend selection to previous cell
+        "keys": ["ctrl+shift+;"],
+        "command": "tabnav_extend_selection_reverse",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_reverse" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // extend selection to next cell
+        "keys": ["ctrl+shift+'"],
+        "command": "tabnav_extend_selection_forward",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_forward" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // extend selection to cell above
+        "keys": ["ctrl+shift+["],
+        "command": "tabnav_extend_selection_up",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_up" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // extend selection to cell below
+        "keys": ["ctrl+shift+/"],
+        "command": "tabnav_extend_selection_down",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_down" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+
+    // #### Navigation keybindings: select row/column/table ####
+
+    { 
+        // select row cells
+        "keys": ["ctrl+shift+l"],
+        "command": "tabnav_select_row",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_row" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select column cells
+        "keys": ["ctrl+shift+c"],
+        "command": "tabnav_select_column",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_column" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select all table cells
+        "keys": ["ctrl+alt+shift+s"],
+        "command": "tabnav_select_all",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_table" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
 ]

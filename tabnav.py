@@ -6,7 +6,7 @@ import logging
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.WARNING)
-log.setLevel(logging.DEBUG)
+# log.setLevel(logging.DEBUG)
 
 class Direction:
 	FORWARD = (0,1)
@@ -155,10 +155,10 @@ class TableView:
 	Note that a view can contain multiple, disjoint tables. This class
 	makes no effort to distinguish between separate tables.
 	'''
-	def __init__(self, view, cell_pattern, eol_pattern, cell_direction=1):
+	def __init__(self, view, context, cell_direction=1):
 		self.view = view
-		self._cell_pattern = re.compile(cell_pattern)
-		self._eol_pattern = re.compile(eol_pattern)
+		self._cell_pattern = re.compile(context.cell_pattern)
+		self._eol_pattern = re.compile(context.eol_pattern)
 		self._cell_direction = cell_direction
 		self._parse_selected_rows()
 
@@ -208,8 +208,7 @@ class TableView:
 		return (r, ic)
 
 	def _parse_selected_rows(self):
-		selections = list(self.view.sel())
-		selection_lines = itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections))
+		selection_lines = itertools.chain.from_iterable((self.view.lines(r) for r in self.view.sel()))
 		unique_rows = set([self.view.rowcol(line.a)[0] for line in selection_lines])
 		log.debug("Unique selection rows: %s", unique_rows)
 		self._rows = { r:self._parse_row(r) for r in unique_rows}
@@ -233,10 +232,11 @@ class TableView:
 			cell_end = cell_match.end(1)
 		if len(cells) == 0:
 			raise RowNotInTableError(r)
-		eol_match = self._eol_pattern.search(line_content, cell_end)
-		if eol_match:
-			index = index + 1
-			cells.append(self._regex_group_to_region(r, index, eol_match, 'content'))
+		if self._eol_pattern is not None:
+			eol_match = self._eol_pattern.search(line_content, cell_end)
+			if eol_match:
+				index = index + 1
+				cells.append(self._regex_group_to_region(r, index, eol_match, 'content'))
 		row = TableRow(r, cells)
 		return row
 
@@ -417,6 +417,107 @@ class TableNavigator:
 				break
 		return column
 
+class TabnavContext:
+	def __init__(self, view, context_key=None):
+		self.view = view
+		settings = sublime.load_settings("tabnav.sublime-settings")
+		context_configs = settings.get("contexts", {})
+		if context_key is None:
+			context_key, score = self._get_context_by_config_selector(context_configs)
+			if score < 0:
+				self._is_tabnav_view = False
+				return
+		if context_key is None:
+			context_key = "auto_csv"
+		try:
+			context_config = context_configs[context_key]
+		except KeyError:
+			log.warning("Context '%s' not found in tabnav settings.", context_key)
+			self._is_tabnav_view = False
+			return
+		if context_config.get('enable_explicitly', False):
+			# This context requires that tabnav be explicilty enabled on the view.
+			enabled = self.view.settings().get('tabnav.enabled')
+			if enabled is None or not enabled:
+				log.debug("Context '%s' requires that tabnav be explicitly enabled.", context_key)
+				self._is_tabnav_view = False
+				return
+		if context_key == "auto_csv":
+			self._is_tabnav_view = self._get_auto_csv_table_config(context_config)
+		else:
+			log.debug("Using tabnav context '%s'", context_key)
+			self._cell_pattern = context_config.get('cell_pattern', None)
+			self._eol_pattern = context_config.get('eol_pattern', None)
+			self._is_tabnav_view = True
+
+	@property
+	def is_tabnav_view(self):
+		return self._is_tabnav_view
+
+	@property
+	def cell_pattern(self):
+		return self._cell_pattern
+	
+	@property
+	def eol_pattern(self):
+		return self._eol_pattern
+	
+	def _get_context_by_config_selector(self, context_configs):
+		point = self.view.sel()[0].a
+		max_context = None
+		for key in context_configs:
+			config = context_configs[key]
+			try:
+				selector = config['selector']
+			except KeyError:
+				continue
+			score = self.view.score_selector(point, selector)
+			log.debug("'%s' context selector score: %d", selector, score)
+			except_selector = config.get('except_selector', None)
+			if except_selector is not None:
+				except_score = self.view.score_selector(point, except_selector)
+				log.debug("'%s' context except_selector score: %d", except_selector, except_score)
+				if except_score > 0:
+					score = -1
+					log.debug("except_selector '%s' overules the selector '%s'", except_selector, selector)
+			if (max_context is None and score != 0) or (max_context is not None and score > max_context[1]):
+				max_context = (key, score)
+		if max_context is not None:
+			return max_context
+		return (None, 0)
+
+	def _get_auto_csv_table_config(self, context_config):
+		point = self.view.sel()[0].a
+		scope = self.view.scope_name(point)
+		# If an explicit delimiter is set, use that
+		delimiter = self.view.settings().get('tabnav.delimiter')
+		if delimiter is None:
+			log.debug("Checking if in Advanced CSV package scope.")
+			if re.search(r'text\.advanced_csv', scope):
+				delimiter = self.view.settings().get('delimiter') # this is the Advnaced CSV delimiter
+		if delimiter is None:
+			log.debug("Checking if in Rainbow CSV package scope.")
+			try:
+				rainbow_match = re.search(r'text\.rbcsm|tn(?P<delimiter>\d+)',scope)
+				delimiter = chr(int(rainbow_match.group('delimiter')))
+			except:
+				pass
+		if delimiter is None:
+			log.debug("Attempting to infer the delimiter from the first line of the file.")
+			line = self.view.substr(self.view.line(0))
+			auto_delimiters = context_config.get('auto_delimiters', [r',', r';', r'\t', r'\|'])
+			matches = [d for d in auto_delimiters if re.search(d, line) is not None]
+			if len(matches) == 1:
+				# If we hit on exactly one delimiter, then we'll assume it's the one to use
+				delimiter = matches[0]
+			else:
+				log.debug('More than one auto delimiter matched: %s.', matches)
+		if delimiter is None:
+			return False
+		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
+		self._cell_pattern = context_config['cell_pattern'].format(delimiter)
+		self._eol_pattern = context_config['eol_pattern'].format(delimiter)
+		return True
 
 #### Commands ####
 
@@ -424,50 +525,17 @@ class TabnavCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		raise NotImplementedError("The base TabnavCommand is not a runnable command.")
 
-	def init_table(self, cell_direction=1, context=None):
-		log.debug("%s triggered", self.__class__.__name__)
-		settings = sublime.load_settings("tabnav.sublime-settings")
-		contexts = settings.get("contexts", {})
-		if context is None:
-			point = self.view.sel()[0].a
-			max_context = None
-			for key in contexts:
-				config = contexts[key]
-				try:
-					selector = config['selector']
-				except KeyError:
-					raise Exception("Context '{0}' has no 'selector' defined.".format(key))
-				score = self.view.score_selector(point, selector)
-				except_selector = config.get('except_selector', None)
-				if except_selector is not None:
-					except_score = self.view.score_selector(point, except_selector)
-					if except_score >= score:
-						log.warning("except_selector '%s' overules the selector '%s'", except_selector, selector)
-						continue
-				if score == 0:
-					continue
-				if max_context is None or score > max_context[1]:
-					max_context = (key, score)
-			if max_context is None:
-				raise Exception("Can't execute command '{0}'. No tabnav context matches the current scope, '{1}'".format(self.__class__.__name__, self.view.scope_name(point)))
-			else:
-				context = max_context[0]
-		try:
-			context_config = contexts[context]
-		except KeyError:
-			raise Exception("Context '{0}' not found in tabnav settings.".format(context))
-		try:
-			cell_pattern = context_config['cell_pattern']
-		except KeyError:
-			raise Exception("Context '{0}' does not have a cell_pattern regex pattern defined.".format(context))
-		try:
-			eol_pattern = context_config['eol_pattern']
-		except KeyError:
-			raise Exception("Context '{0}' does not have a eol_pattern regex pattern defined.".format(context))
-		log.debug("Initializing tabnav command using context %s", context)
-		log.debug("cell_pattern: %s", cell_pattern)
-		log.debug("eol_pattern: %s", eol_pattern)
-		self.table = TableView(self.view, cell_pattern, eol_pattern, cell_direction)
+	def is_enabled(self, **args):
+		'''Enabled by default, unless explicitly disabled.'''
+		enabled = self.view.settings().get('tabnav.enabled')
+		if enabled is not None and not enabled:
+			return False
+		context_key = args.get('context_key', None)
+		self.context = TabnavContext(self.view, context_key)
+		return self.context.is_tabnav_view
+
+	def init_table(self, cell_direction = 1):
+		self.table = TableView(self.view, self.context, cell_direction)
 		self.tabnav = TableNavigator(self.table)
 
 
@@ -475,7 +543,7 @@ class TabnavCommand(sublime_plugin.TextCommand):
 
 class TabnavMoveCursorCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, move_cursors=False, context=None):
-		self.init_table(cell_direction, context)
+		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.move_next_cell(move_direction)
@@ -531,7 +599,6 @@ class TabnavMoveCursorDownCommand(TabnavMoveCursorCommand):
 		
 class TabnavMoveCursorDownOrNewlineCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
-		self.init_table(context=context)
 		try:
 			moved = self.tabnav.split_and_move_current_cells(move_cursors=False) \
 				    or super().move_next_cell(Direction.DOWN)
@@ -546,7 +613,7 @@ class TabnavMoveCursorDownOrNewlineCommand(TabnavMoveCursorCommand):
 
 class TabnavAddCursorCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, move_cursors=False, context=None):
-		self.init_table(cell_direction, context)
+		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.add_next_cell(move_direction)
@@ -591,7 +658,7 @@ class TabnavAddCursorDownCommand(TabnavAddCursorCommand):
 
 class TabnavSelectCurrentCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
-		self.init_table(cell_direction, context)
+		self.init_table(cell_direction)
 		try:
 			self.tabnav.split_and_select_current_cells()
 		except CursorNotInTableError as e:
@@ -600,7 +667,7 @@ class TabnavSelectCurrentCommand(TabnavCommand):
 
 class TabnavSelectNextCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, context=None):
-		self.init_table(cell_direction, context)
+		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_select_current_cells():
 				self.select_next_cell(move_direction)
@@ -644,7 +711,7 @@ class TabnavSelectDownCommand(TabnavSelectNextCommand):
 
 class TabnavExtendSelectionCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, context=None):
-		self.init_table(cell_direction, context)
+		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_select_current_cells():
 				self.extend_cell_selection(move_direction)
@@ -688,7 +755,7 @@ class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
 
 class TabnavSelectRowCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
-		self.init_table(cell_direction, context)
+		self.init_table(cell_direction)
 		cells = [cell for row in self.table.rows for cell in row]
 		if len(cells) > 0:
 			self.view.sel().clear()
@@ -699,7 +766,7 @@ class TabnavSelectRowCommand(TabnavCommand):
 
 class TabnavSelectColumnCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
-		self.init_table(cell_direction, context)
+		self.init_table(cell_direction)
 		self.tabnav.split_and_select_current_cells()
 		columns = []
 		for region in self.view.sel():
@@ -718,7 +785,7 @@ class TabnavSelectColumnCommand(TabnavCommand):
 
 class TabnavSelectAllCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
-		self.init_table(cell_direction, context)
+		self.init_table(cell_direction)
 		self.tabnav.split_and_select_current_cells()
 		columns = []
 		# Expand the first column in each disjoint table to parse all rows of all selected tables
@@ -753,3 +820,44 @@ class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 					trimmed = sublime.Region(end, start)
 			self.view.sel().subtract(region)
 			self.view.sel().add(trimmed)
+
+
+class EnableTabnavCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.settings().set('tabnav.enabled', True)
+
+class DisableTabnavCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.settings().set('tabnav.enabled', False)
+
+class IsTabnavContextListener(sublime_plugin.ViewEventListener):
+	def on_query_context(self, key, operator, operand, match_all):
+		if key != 'is_tabnav_context':
+			return None
+		enabled = self.view.settings().get('tabnav.enabled')
+		if enabled is not None and not enabled:
+			# Tabnav is explicitly disabled
+			return False
+		if type(operand) is str:
+			context_key = operand
+		else:
+			context_key = None
+		context = TabnavContext(self.view, context_key)
+		if not context.is_tabnav_view:
+			is_context = False
+		elif match_all:
+			# parse all of the current selections
+			try:
+				TableView(context)
+				is_context = True
+			except Exception:
+				is_context = False
+		else:
+			# parse only the first cell on the first line of the first selection
+			point = self.view.sel()[0].begin()
+			line = self.view.line(point)
+			line_content = self.view.substr(line)
+			is_context =  re.search(context.cell_pattern, line_content) is not None
+		if (operator == sublime.OP_NOT_EQUAL):
+			return not is_context
+		return is_context

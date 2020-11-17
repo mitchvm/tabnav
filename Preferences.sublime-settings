@@ -1,73 +1,33 @@
 {
 	// Settings to enable/disable keybindings
-	// For a keybinding to be enabled, BOTH the global and context-specific flags need to be "true".
-	// By default, all keybindings are enabled.
-	// To disable a particular keybinding in all contexts, override the global flag in your user 
+	// By default, all keybindings are enabled in all applicable contexts.
+	// To disable a particular keybinding in all contexts, override the flag in your user 
 	// settings file to "false".
-	// To disable a particular keybinding for only a particular context, override only the
-	// context-specific flag to "false" in your user settings file.
-	// NOTE: For the flags to take effect, they _must_ be placed in a "Preferences.sublime-settings" file.
+	// To disable a particular keybinding for only a particular syntax, override the flag
+	// in a the syntax-specific user settings file to "false".
+	// NOTE: For the flags to take effect, they _must_ be placed in a "Preferences.sublime-settings" file
+	// or a [Syntax].sublime-settings file (e.g. "Markdown.sublime-settings")
 	
-	// Global flags
-	"tabnav_kb_move_forward": true,
-	"tabnav_kb_move_reverse": true,
-	"tabnav_kb_move_up": true,
-	"tabnav_kb_move_down": true,
-	"tabnav_kb_select_forward": true,
-	"tabnav_kb_select_reverse": true,
-	"tabnav_kb_select_up": true,
-	"tabnav_kb_select_down": true,
-	"tabnav_kb_add_forward": true,
-	"tabnav_kb_add_reverse": true,
-	"tabnav_kb_add_up": true,
-	"tabnav_kb_add_down": true,
-	"tabnav_kb_extend_forward": true,
-	"tabnav_kb_extend_reverse": true,
-	"tabnav_kb_extend_up": true,
-	"tabnav_kb_extend_down": true,
-	"tabnav_kb_select_row": true,
-	"tabnav_kb_select_column": true,
-	"tabnav_kb_select_table": true,
-
-	// Markdown-specific flags 
-	"tabnav_kb_move_forward_markdown": true,
-	"tabnav_kb_move_reverse_markdown": true,
-	"tabnav_kb_move_up_markdown": true,
-	"tabnav_kb_move_down_markdown": true,
-	"tabnav_kb_select_forward_markdown": true,
-	"tabnav_kb_select_reverse_markdown": true,
-	"tabnav_kb_select_up_markdown": true,
-	"tabnav_kb_select_down_markdown": true,
-	"tabnav_kb_add_forward_markdown": true,
-	"tabnav_kb_add_reverse_markdown": true,
-	"tabnav_kb_add_up_markdown": true,
-	"tabnav_kb_add_down_markdown": true,
-	"tabnav_kb_extend_forward_markdown": true,
-	"tabnav_kb_extend_reverse_markdown": true,
-	"tabnav_kb_extend_up_markdown": true,
-	"tabnav_kb_extend_down_markdown": true,
-	"tabnav_kb_select_row_markdown": true,
-	"tabnav_kb_select_column_markdown": true,
-	"tabnav_kb_select_table_markdown": true,
-
-	// CSV-specific flags 
-	"tabnav_kb_move_forward_csv": true,
-	"tabnav_kb_move_reverse_csv": true,
-	"tabnav_kb_move_up_csv": true,
-	"tabnav_kb_move_down_csv": true,
-	"tabnav_kb_select_forward_csv": true,
-	"tabnav_kb_select_reverse_csv": true,
-	"tabnav_kb_select_up_csv": true,
-	"tabnav_kb_select_down_csv": true,
-	"tabnav_kb_add_forward_csv": true,
-	"tabnav_kb_add_reverse_csv": true,
-	"tabnav_kb_add_up_csv": true,
-	"tabnav_kb_add_down_csv": true,
-	"tabnav_kb_extend_forward_csv": true,
-	"tabnav_kb_extend_reverse_csv": true,
-	"tabnav_kb_extend_up_csv": true,
-	"tabnav_kb_extend_down_csv": true,
-	"tabnav_kb_select_row_csv": true,
-	"tabnav_kb_select_column_csv": true,
-	"tabnav_kb_select_table_csv": true,
+	"tabnav.kb_enable_tabnav": true,
+	"tabnav.kb_disable_tabnav": true,
+	"tabnav.kb_trim_whitespace": true,
+	"tabnav.kb_move_forward": true,
+	"tabnav.kb_move_reverse": true,
+	"tabnav.kb_move_up": true,
+	"tabnav.kb_move_down": true,
+	"tabnav.kb_select_forward": true,
+	"tabnav.kb_select_reverse": true,
+	"tabnav.kb_select_up": true,
+	"tabnav.kb_select_down": true,
+	"tabnav.kb_add_forward": true,
+	"tabnav.kb_add_reverse": true,
+	"tabnav.kb_add_up": true,
+	"tabnav.kb_add_down": true,
+	"tabnav.kb_extend_forward": true,
+	"tabnav.kb_extend_reverse": true,
+	"tabnav.kb_extend_up": true,
+	"tabnav.kb_extend_down": true,
+	"tabnav.kb_select_row": true,
+	"tabnav.kb_select_column": true,
+	"tabnav.kb_select_table": true,
 }
