@@ -471,8 +471,7 @@ class TabnavContext:
 
 	@staticmethod
 	def get_current_context(view, context_key=None):
-		settings = sublime.load_settings("tabnav.sublime-settings")
-		context_configs = settings.get("contexts", {})
+		context_configs = TabnavContext._merge_context_configs(context_key)
 		if context_key is None:
 			context_key, score = TabnavContext._get_context_by_config_selector(view, context_configs)
 			if score < 0:
@@ -502,6 +501,25 @@ class TabnavContext:
 		if context is not None:
 			context._include_separators = context_config.get('include_separators', None)
 		return context
+
+	@staticmethod
+	def _merge_context_configs(context_key=None):
+		settings = sublime.load_settings("tabnav.sublime-settings")
+		configs = settings.get("contexts", {})
+		user_configs = settings.get("user_contexts", {})
+		if context_key is not None:
+			if context_key not in user_configs:
+				return configs
+			else:
+				context_keys = [context_key]
+		else:
+			context_keys = user_configs.keys()
+		for key in context_keys:
+			config = configs.get(key, {})
+			for subkey in user_configs[key]:
+				config[subkey] = user_configs[key]
+			configs[key] = config
+		return configs
 
 	@staticmethod
 	def _get_context_by_config_selector(view, context_configs):
