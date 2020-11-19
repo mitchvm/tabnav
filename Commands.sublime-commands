@@ -1,0 +1,110 @@
+[
+    {
+        "caption": "TabNav: Trim whitespace from selections",
+        "command": "trim_whitespace_from_selection",
+    },
+    {
+        "caption": "TabNav: Enable on current view",
+        "command": "enable_tabnav",
+    },
+    {
+        "caption": "TabNav: Disable on current view",
+        "command": "disable_tabnav",
+    },
+    {
+        "caption": "TabNav: Include separator lines in selections",
+        "command": "tabnav_include_separators",
+    },
+    {
+        "caption": "TabNav: Exclude separator lines in selections",
+        "command": "tabnav_exclude_separators",
+    },
+    { 
+        "caption": "TabNav: Move cursor to start of current cell",
+        "command": "tabnav_move_cursor_start"
+    },
+    { 
+        "caption": "TabNav: Move cursor to end of current cell",
+        "command": "tabnav_move_cursor_end"
+    },
+    { 
+        "caption": "TabNav: Move cursor to previous cell",
+        "command": "tabnav_move_cursor_reverse"
+    },
+    { 
+        "caption": "TabNav: Move cursor to next cell",
+        "command": "tabnav_move_cursor_forward"
+    },
+    { 
+        "caption": "TabNav: Move cursor to cell above",
+        "command": "tabnav_move_cursor_up"
+    },
+    { 
+        "caption": "TabNav: Move cursor to cell below",
+        "command": "tabnav_move_cursor_down"
+    },
+    { 
+        "caption": "TabNav: Add cursor to previous cell",
+        "command": "tabnav_add_cursor_reverse"
+    },
+    { 
+        "caption": "TabNav: Add cursor to next cell",
+        "command": "tabnav_add_cursor_forward"
+    },
+    { 
+        "caption": "TabNav: Add cursor to cell above",
+        "command": "tabnav_add_cursor_up"
+    },
+    { 
+        "caption": "TabNav: Add cursor to cell below",
+        "command": "tabnav_add_cursor_down"
+    },
+    { 
+        "caption": "TabNav: Select previous cell",
+        "command": "tabnav_select_reverse"
+    },
+    { 
+        "caption": "TabNav: Select current cell",
+        "command": "tabnav_select_current"
+    },
+    { 
+        "caption": "TabNav: Select next cell",
+        "command": "tabnav_select_forward"
+    },
+    { 
+        "caption": "TabNav: Select cell above",
+        "command": "tabnav_select_up"
+    },
+    { 
+        "caption": "TabNav: Select cell below",
+        "command": "tabnav_select_down"
+    },
+    { 
+        "caption": "TabNav: Extend selection to previous cell",
+        "command": "tabnav_extend_selection_reverse"
+    },
+    { 
+        "caption": "TabNav: Extend selection to next cell",
+        "command": "tabnav_extend_selection_forward"
+    },
+    { 
+        "caption": "TabNav: Extend selection to cell above",
+        "command": "tabnav_extend_selection_up"
+    },
+    { 
+        "caption": "TabNav: Extend selection to cell below",
+        "command": "tabnav_extend_selection_down"
+    },
+    { 
+        "caption": "TabNav: Select row cells",
+        "command": "tabnav_select_row"
+    },
+    { 
+        "caption": "TabNav: Select column cells",
+        "command": "tabnav_select_column"
+    },
+    { 
+        "caption": "TabNav: Select all table cells",
+        "command": "tabnav_select_all"
+    },
+]
