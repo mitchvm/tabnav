@@ -27,40 +27,9 @@
     },
 
     // #### Navigation keybindings: move cell ####
-
-    {
-        // move to start of current cell
-        "keys": ["alt+;"],
-        "command": "tabnav_move_cursor_start",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_move_start" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    {
-        // move to end of current cell
-        "keys": ["alt+'"],
-        "command": "tabnav_move_cursor_end",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_move_end" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
-            { "key": "is_tabnav_context"},
-        ]
-    },
     { 
         // move to previous cell
-        "keys": ["shift+tab"],
+        "keys": ["alt+;"],
         "command": "tabnav_move_cursor_reverse",
         "context":
         [
@@ -75,7 +44,7 @@
     },
     { 
         // move to next cell
-        "keys": ["tab"],
+        "keys": ["alt+'"],
         "command": "tabnav_move_cursor_forward",
         "context":
         [
@@ -90,7 +59,7 @@
     },
     { 
         // move to cell above
-        "keys": ["shift+enter"],
+        "keys": ["alt+["],
         "command": "tabnav_move_cursor_up",
         "context":
         [
@@ -105,8 +74,8 @@
     },
     { 
         // move to cell below
-        "keys": ["enter"],
-        "command": "tabnav_move_cursor_down_or_newline",
+        "keys": ["alt+/"],
+        "command": "tabnav_move_cursor_down",
         "context":
         [
             { "key": "setting.tabnav.kb_move_down" },

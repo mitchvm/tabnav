@@ -402,32 +402,6 @@ class TableNavigator:
 				row = self._table[target_row]
 		return row[target_col]
 
-	def single_cursor_vertical_move(self, point, dr):
-		# If moving vertically with only a single cursor, continue moving out of the table
-		try:
-			r, ic = self._table.table_coords(point)
-		except ColumnIndexError as e:
-			raise CursorNotInTableError(point)
-		try:
-			new_cell = self.get_next_cell(r, ic, dr, 0)
-			current_cell = self._table[(r, ic)]
-			new_cell.add_cursor_offset(point - current_cell.begin())
-			self.view.sel().clear()
-			self.view.sel().add(new_cell.get_cursors_as_regions()[0])
-			return True
-		except ColumnIndexError as e:
-			log.warning(e.err)
-			return True # Don't actually move the region, but consider it a move since the target row was part of the table, we just couldn't get there.
-		except RowNotInTableError as e:
-			log.debug("Moving selection to the start of the target row.")
-			new_point = self.view.text_point(r + dr, 0)
-			self.view.sel().clear()
-			self.view.sel().add(sublime.Region(new_point, new_point))
-			return True
-		except RowOutOfFileBounds as e:
-			log.debug(e.err)
-			return False # Leave the current selection, and don't consider a move.
-
 	def get_table_column(self, seed_cell):
 		column = TableColumn(seed_cell)
 		# Get all cells above current row:
@@ -654,9 +628,6 @@ class TabnavMoveCursorCommand(TabnavCommand):
 		moved = False
 		selections = list(self.view.sel())
 		dr, dc = move_direction
-		if len(selections) == 1 and dr != 0:
-			# Special case when moving vertically with only a single cursor
-			return self.tabnav.single_cursor_vertical_move(selections[0].b, dr)
 		try:
 			if dc > 0: # When moving forwards, go to the end of the cell
 				offset = -1
@@ -692,19 +663,6 @@ class TabnavMoveCursorDownCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
 		super().run(edit, Direction.DOWN, -1, False, context=context)
 		
-class TabnavMoveCursorDownOrNewlineCommand(TabnavMoveCursorCommand):
-	def run(self, edit, context=None):
-		self.init_table()
-		try:
-			moved = self.tabnav.split_and_move_current_cells(move_cursors=False) \
-				    or super().move_next_cell(Direction.DOWN)
-		except CursorNotInTableError as e:
-			log.warning(e.err)
-			moved = False
-		if not moved:
-			log.debug("No table cells were moved. Inserting lines.")
-			self.view.run_command("run_macro_file", args={"file":"res://Packages/Default/Add Line.sublime-macro"})
-
 # Add cells
 
 class TabnavAddCursorCommand(TabnavCommand):

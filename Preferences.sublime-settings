@@ -11,8 +11,6 @@
 	"tabnav.kb_enable_tabnav": true,
 	"tabnav.kb_disable_tabnav": true,
 	"tabnav.kb_trim_whitespace": true,
-	"tabnav.kb_move_start": true,
-	"tabnav.kb_move_end": true,
 	"tabnav.kb_move_forward": true,
 	"tabnav.kb_move_reverse": true,
 	"tabnav.kb_move_up": true,
