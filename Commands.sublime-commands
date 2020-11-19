@@ -16,7 +16,7 @@
         "command": "tabnav_include_separators",
     },
     {
-        "caption": "TabNav: Exclude separator lines in selections",
+        "caption": "TabNav: Exclude separator lines from selections",
         "command": "tabnav_exclude_separators",
     },
     { 
