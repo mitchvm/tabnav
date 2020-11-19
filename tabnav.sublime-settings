@@ -1,4 +1,5 @@
 {
+	"include_separators": false,
 	"contexts":
 	{
 		"markdown": 
@@ -6,7 +7,9 @@
 			"selector": "text.html.markdown",
 			"except_selector": "markup.raw",
 			"cell_pattern": "\\|?(?P<content>.*?)(?=\\|)",
-			"eol_pattern": "\\|(?P<content>.+)$"
+			"eol_pattern": "\\|(?P<content>.+)$",
+			"sep_cell_pattern": "\\|?(?P<content>\\s*[:-]+\\s*)(?=\\|)",
+			"sep_eol_pattern": "\\|(?P<content>\\s*[:-]+\\s*)",
 		},
 		"auto_csv":
 		{
@@ -20,7 +23,7 @@
 			//    the delimiter set by those packages is used.
 			//      - Note: Rainbow CSV "simple" syntaxes aren't truly supported, but as long as a cell
 			//        doesn't _start_ with a quote (optionally preceded by whitespace) then the cell won't
-			//        get treat it as a quoted cell, even if it contains quotes.
+			//        get treated as a quoted cell, even if it contains quotes.
 			// 3) If the first line of the file contains only one the following characters (potentially 
 			//    multiple instances of that singele character), then it is assumed to be the delimiter:
 			//    * Comma (,)

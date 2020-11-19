@@ -28,6 +28,36 @@
 
     // #### Navigation keybindings: move cell ####
 
+    {
+        // move to start of current cell
+        "keys": ["alt+;"],
+        "command": "tabnav_move_cursor_start",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_start" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    {
+        // move to end of current cell
+        "keys": ["alt+'"],
+        "command": "tabnav_move_cursor_end",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_end" },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "has_prev_field", "operator": "equal", "operand": false },
+            { "key": "popup_visible", "operator": "equal", "operand": false },
+            { "key": "overlay_visible", "operator": "equal", "operand": false },
+            { "key": "is_tabnav_context"},
+        ]
+    },
     { 
         // move to previous cell
         "keys": ["shift+tab"],
@@ -93,7 +123,7 @@
 
     { 
         // add previous cell
-        "keys": ["ctrl+alt+;"],
+        "keys": ["alt+shift+;"],
         "command": "tabnav_add_cursor_reverse",
         "context":
         [
@@ -108,7 +138,7 @@
     },
     { 
         // add next cell
-        "keys": ["ctrl+alt+'"],
+        "keys": ["alt+shift+'"],
         "command": "tabnav_add_cursor_forward",
         "context":
         [
@@ -123,7 +153,7 @@
     },
     { 
         // add cell above
-        "keys": ["ctrl+alt+["],
+        "keys": ["alt+shift+["],
         "command": "tabnav_add_cursor_up",
         "context":
         [
@@ -138,7 +168,7 @@
     },
     { 
         // add cell below
-        "keys": ["ctrl+alt+/"],
+        "keys": ["alt+shift+/"],
         "command": "tabnav_add_cursor_down",
         "context":
         [

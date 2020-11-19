@@ -6,7 +6,7 @@ import logging
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.WARNING)
-# log.setLevel(logging.DEBUG)
+log.setLevel(logging.DEBUG)
 
 class Direction:
 	FORWARD = (0,1)
@@ -42,11 +42,12 @@ class CursorNotInTableError(Exception):
 
 
 class TableCell(sublime.Region):
-	def __init__(self, row, col, a, b):
+	def __init__(self, row, col, a, b, is_separator=False):
 		super().__init__(a, b)
 		self._row = row
 		self._col = col
 		self._cursor_offsets = set()
+		self._is_separator = is_separator
 
 	def intersects(self, region):
 		'''Overrides the default `Region.intersects` method.
@@ -77,7 +78,11 @@ class TableCell(sublime.Region):
 
 	@property
 	def col(self):
-		return self._col	
+		return self._col
+
+	@property
+	def is_separator(self):
+		return self._is_separator	
 	
 	def add_cursor_offset(self, offset):
 		self._cursor_offsets.add(offset)
@@ -95,13 +100,19 @@ class TableCell(sublime.Region):
 
 class TableRow:
 	'''Stores the TableCell objects parsed from a single line of text.'''
-	def __init__(self, rownum, cells):
+	def __init__(self, rownum, cells, is_separator=False):
 		self._row = rownum
 		self._cells = cells
+		self._is_separator = is_separator
 
 	@property
 	def row(self):
 		return self._row
+
+	@property
+	def is_separator(self):
+		return self._is_separator
+	
 
 	def __getitem__(self, key):
 		try:
@@ -157,8 +168,7 @@ class TableView:
 	'''
 	def __init__(self, view, context, cell_direction=1):
 		self.view = view
-		self._cell_pattern = re.compile(context.cell_pattern)
-		self._eol_pattern = re.compile(context.eol_pattern)
+		self._context = context
 		self._cell_direction = cell_direction
 		self._parse_selected_rows()
 
@@ -176,7 +186,7 @@ class TableView:
 	def row(self, r):
 		'''Gets the list of cells on the row with the given index.'''
 		if r not in self._rows:
-			self._rows[r] = self._parse_row(r)
+			self._rows[r] = self._parse_context_row(r)
 		return self._rows[r]
 
 	def cell(self, r, ic):
@@ -211,52 +221,63 @@ class TableView:
 		selection_lines = itertools.chain.from_iterable((self.view.lines(r) for r in self.view.sel()))
 		unique_rows = set([self.view.rowcol(line.a)[0] for line in selection_lines])
 		log.debug("Unique selection rows: %s", unique_rows)
-		self._rows = { r:self._parse_row(r) for r in unique_rows}
+		self._rows = { r:self._parse_context_row(r) for r in unique_rows}
 
-	def _parse_row(self, r):
+	def _parse_context_row(self, r):
 		line = self.view.line(self.view.text_point(r,0))
 		line_content = self.view.substr(line)
+		row = self._parse_row(r, line_content, self._context.sep_cell_pattern, self._context.sep_eol_pattern, True)
+		if row is None:
+			row = self._parse_row(r, line_content, self._context.cell_pattern, self._context.eol_pattern, False)
+		if row is None:
+			raise RowNotInTableError(r)
+		log.debug("Row %d: #cells: %d; is_separator: %s", r, len(row), row.is_separator)
+		return row
+
+	def _parse_row(self, r, line_content, cell_pattern, eol_pattern, is_separator):
 		# The cell_pattern returns all cells _before_ the final delimiter, as well as a zero-width match immediately before the final delimiter as the last match
+		if cell_pattern is None:
+			return None
 		cells = []
 		cell_end = -1
 		index = -1
-		for cell_match in self._cell_pattern.finditer(line_content):
+		for cell_match in cell_pattern.finditer(line_content):
 			if cell_end == cell_match.start(1):
 				# cell_match is on the final, zero-width match before the final delimiter. This is not a table cell.
 				break
 			index = index + 1
-			cell = self._regex_group_to_region(r, index, cell_match, 'content')
+			cell = self._regex_group_to_region(r, index, cell_match, 'content', is_separator)
 			if self.view.rowcol(cell.a)[0] != r:
 				raise RowOutOfFileBounds(r)
 			cells.append(cell)
 			cell_end = cell_match.end(1)
 		if len(cells) == 0:
-			raise RowNotInTableError(r)
-		if self._eol_pattern is not None:
-			eol_match = self._eol_pattern.search(line_content, cell_end)
+			return None
+		if eol_pattern is not None:
+			eol_match = eol_pattern.search(line_content, cell_end)
 			if eol_match:
 				index = index + 1
-				cells.append(self._regex_group_to_region(r, index, eol_match, 'content'))
-		row = TableRow(r, cells)
+				cells.append(self._regex_group_to_region(r, index, eol_match, 'content', is_separator))
+		row = TableRow(r, cells, is_separator)
 		return row
 
-	def _regex_group_to_region(self, row, index, match, group):
+	def _regex_group_to_region(self, row, index, match, group, is_separator):
 		start_point = self.view.text_point(row, match.start(group))
 		end_point = self.view.text_point(row, match.end(group))
 		if self._cell_direction > 0:
-			return TableCell(row, index, start_point, end_point)
+			return TableCell(row, index, start_point, end_point, is_separator)
 		else:
-			return TableCell(row, index, end_point, start_point)
+			return TableCell(row, index, end_point, start_point, is_separator)
 
 
 class TableNavigator:
-	def __init__(self, table):
+	def __init__(self, table, include_separators=False):
 		self._table = table
+		self.include_separators = include_separators
 
 	@property
 	def view(self):
 		return self._table.view
-
 
 	def split_and_move_current_cells(self, move_cursors=True):
 		'''Puts a cursor in each of the cells spanned by the current selection.
@@ -268,27 +289,45 @@ class TableNavigator:
 
 		Returns True if the selections changed, or False otherwise.
 		'''
-		selections = list(self.view.sel())
-		selection_lines = list(itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections)))
-		selection_changed = len(selection_lines) != len(selections)
+		lines = []
+		selection_changed = False
+		for sel in self.view.sel():
+			l = self.view.split_by_newlines(sel)
+			if len(l) > 1:
+				lines.extend(l)
+				selection_changed = True
+			else:
+				# If the selection does not span multiple lines, use the original selection
+				# to maintain the 'direction' of the selection (Comes into play when moving
+				# forward, and the current selection is a cell selected in reverse.)
+				lines.append(sel)
 		cursors = []
-		for region in selection_lines:
+		sep_cursors = []
+		for region in lines:
+			point = region.b
+			r = self.view.rowcol(point)[0]
+			row = self._table[r]
 			if not move_cursors and region.size() == 0:
 				line_cursors = [region]
 			else:
-				point = region.b
-				r = self.view.rowcol(point)[0]
-				line_cells = list(cell for cell in self._table[r] if cell.intersects(region))
+				line_cells = list(cell for cell in row if cell.intersects(region))
 				if len(line_cells) == 0:
 					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
 					raise CursorNotInTableError(region.begin())
 				if len(line_cells) > 1 or line_cells[0].b != point:
 					selection_changed = True
 				line_cursors = (sublime.Region(cell.b, cell.b) for cell in line_cells)
-			cursors = itertools.chain(cursors, line_cursors)
+			if row.is_separator:
+				sep_cursors = itertools.chain(sep_cursors, line_cursors)
+			else:
+				cursors = itertools.chain(cursors, line_cursors)
 		if selection_changed:
+			cursors = list(cursors)
+			if self.include_separators or len(cursors) == 0:
+				# If only separator rows are selected, ignore the include_separators setting
+				cursors.extend(sep_cursors)
 			self.view.sel().clear()
-			self.view.sel().add_all(list(cursors))
+			self.view.sel().add_all(cursors)
 		return selection_changed
 
 
@@ -300,10 +339,13 @@ class TableNavigator:
 		selections = list(self.view.sel())
 		selection_lines = list(itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections)))
 		selection_changed = len(selection_lines) != len(selections)
+		all_separators = True
 		cells = []
 		for region in selection_lines:
 			r = self.view.rowcol(region.begin())[0]
-			line_cells = list(cell for cell in self._table[r] if cell.intersects(region))
+			row = self._table[r]
+			all_separators = all_separators and row.is_separator
+			line_cells = list(cell for cell in row if cell.intersects(region))
 			if len(line_cells) == 0: 
 				# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
 				raise CursorNotInTableError(region.begin())
@@ -311,11 +353,12 @@ class TableNavigator:
 				selection_changed = True
 			cells = itertools.chain(cells, line_cells)
 		if selection_changed:
-			cells = list(cells)
+			if not (self.include_separators or all_separators):
+				# If only separator rows are selected, ignore the include_separators setting
+				cells = (c for c in cells if c.is_separator == self.include_separators)
 			self.view.sel().clear()
-			self.view.sel().add_all(cells)
+			self.view.sel().add_all(list(cells))
 		return selection_changed
-
 
 	def get_next_cells(self, direction, offset=None):
 		new_cells = []
@@ -346,25 +389,18 @@ class TableNavigator:
 			new_cells.append(next_cell)
 		return new_cells
 
-
 	def get_next_cell(self, r, ic, dr, dc):
 		target_row = r + dr
 		target_col = ic + dc
 		if target_col < 0: # direction == REVERSE
-			log.debug("At first cell in row %d, getting last cell from previous row.", r)
-			target_row = r - 1
-			target_col = -1 # likely already the case, but let's be explicit
-		try:
-			cell = self._table[(target_row, target_col)]
-			log.debug("Next cell: %s", cell)
-		except ColumnIndexError:
-			if dc == 1: # direction == FORWARD
-				log.debug("At last cell in row %d, getting first cell from next row.", r)
-				return self._table[(target_row + 1, 0)]  # This needs to be within the outer try/except to handle the two row errors, still
-			else: # Moving vertically, and the target row is a table row but doesn't have enough columns. This is an actual error.
-				raise
-		return cell
-
+			log.debug("At first cell in row %d.", r)
+			return self._table[(r,ic)]
+		row = self._table[target_row]
+		if dr != 0 and not self.include_separators:
+			while row.is_separator:
+				target_row = target_row + dr
+				row = self._table[target_row]
+		return row[target_col]
 
 	def single_cursor_vertical_move(self, point, dr):
 		# If moving vertically with only a single cursor, continue moving out of the table
@@ -392,13 +428,14 @@ class TableNavigator:
 			log.debug(e.err)
 			return False # Leave the current selection, and don't consider a move.
 
-
 	def get_table_column(self, seed_cell):
 		column = TableColumn(seed_cell)
 		# Get all cells above current row:
 		for r in range(seed_cell.row-1, -1, -1):
 			try:
-				column.add(self._table[(r, seed_cell.col)])
+				cell = self._table[(r, seed_cell.col)]
+				if self.include_separators or not cell.is_separator:
+					column.add(cell)
 			except ColumnIndexError as e:
 				log.warning(e.err)
 				# jump past this cell and keep going
@@ -409,7 +446,9 @@ class TableNavigator:
 		while(True):
 			r = r + 1
 			try:
-				column.add(self._table[(r, seed_cell.col)])
+				cell = self._table[(r, seed_cell.col)]
+				if self.include_separators or not cell.is_separator:
+					column.add(cell)
 			except ColumnIndexError as e:
 				log.warning(e.err)
 				# jump past this cell and keep going
@@ -417,43 +456,24 @@ class TableNavigator:
 				break
 		return column
 
+
 class TabnavContext:
-	def __init__(self, view, context_key=None):
-		self.view = view
-		settings = sublime.load_settings("tabnav.sublime-settings")
-		context_configs = settings.get("contexts", {})
-		if context_key is None:
-			context_key, score = self._get_context_by_config_selector(context_configs)
-			if score < 0:
-				self._is_tabnav_view = False
-				return
-		if context_key is None:
-			context_key = "auto_csv"
-		try:
-			context_config = context_configs[context_key]
-		except KeyError:
-			log.warning("Context '%s' not found in tabnav settings.", context_key)
-			self._is_tabnav_view = False
-			return
-		if context_config.get('enable_explicitly', False):
-			# This context requires that tabnav be explicilty enabled on the view.
-			enabled = self.view.settings().get('tabnav.enabled')
-			if enabled is None or not enabled:
-				log.debug("Context '%s' requires that tabnav be explicitly enabled.", context_key)
-				self._is_tabnav_view = False
-				return
-		if context_key == "auto_csv":
-			self._is_tabnav_view = self._get_auto_csv_table_config(context_config)
+	def __init__(self, cell_pattern, eol_pattern, sep_cell_pattern=None, sep_eol_pattern=None):
+		self._include_separators = None
+		self._cell_pattern = re.compile(cell_pattern)
+		if eol_pattern is not None:
+			self._eol_pattern = re.compile(eol_pattern)
 		else:
-			log.debug("Using tabnav context '%s'", context_key)
-			self._cell_pattern = context_config.get('cell_pattern', None)
-			self._eol_pattern = context_config.get('eol_pattern', None)
-			self._is_tabnav_view = True
-
-	@property
-	def is_tabnav_view(self):
-		return self._is_tabnav_view
-
+			self._eol_pattern = None
+		if sep_cell_pattern is not None:
+			self._sep_cell_pattern = re.compile(sep_cell_pattern)
+		else:
+			self._sep_cell_pattern = None
+		if sep_eol_pattern is not None:
+			self._sep_eol_pattern = re.compile(sep_eol_pattern)
+		else:
+			self._sep_eol_pattern = None
+	
 	@property
 	def cell_pattern(self):
 		return self._cell_pattern
@@ -462,8 +482,56 @@ class TabnavContext:
 	def eol_pattern(self):
 		return self._eol_pattern
 	
-	def _get_context_by_config_selector(self, context_configs):
-		point = self.view.sel()[0].a
+	@property
+	def sep_cell_pattern(self):
+		return self._sep_cell_pattern
+	
+	@property
+	def sep_eol_pattern(self):
+		return self._sep_eol_pattern
+
+	@property
+	def include_separators(self):
+		return self._include_separators
+	
+
+	@staticmethod
+	def get_current_context(view, context_key=None):
+		settings = sublime.load_settings("tabnav.sublime-settings")
+		context_configs = settings.get("contexts", {})
+		if context_key is None:
+			context_key, score = TabnavContext._get_context_by_config_selector(view, context_configs)
+			if score < 0:
+				return None
+		if context_key is None:
+			context_key = "auto_csv"
+		try:
+			context_config = context_configs[context_key]
+		except KeyError:
+			log.warning("Context '%s' not found in tabnav settings.", context_key)
+			return None
+		if context_config.get('enable_explicitly', False):
+			# This context requires that tabnav be explicilty enabled on the view.
+			enabled = view.settings().get('tabnav.enabled')
+			if enabled is None or not enabled:
+				log.debug("Context '%s' requires that tabnav be explicitly enabled.", context_key)
+				return None
+		if context_key == "auto_csv":
+			context = TabnavContext._get_auto_csv_table_config(view, context_config)
+		else:
+			log.debug("Using tabnav context '%s'", context_key)
+			cell_pattern = context_config.get('cell_pattern', None)
+			eol_pattern = context_config.get('eol_pattern', None)
+			sep_cell_pattern = context_config.get('sep_cell_pattern', None)
+			sep_eol_pattern = context_config.get('sep_eol_pattern', None)
+			context = TabnavContext(cell_pattern, eol_pattern, sep_cell_pattern, sep_eol_pattern)
+		if context is not None:
+			context._include_separators = context_config.get('include_separators', None)
+		return context
+
+	@staticmethod
+	def _get_context_by_config_selector(view, context_configs):
+		point = view.sel()[0].a
 		max_context = None
 		for key in context_configs:
 			config = context_configs[key]
@@ -471,12 +539,12 @@ class TabnavContext:
 				selector = config['selector']
 			except KeyError:
 				continue
-			score = self.view.score_selector(point, selector)
+			score = view.score_selector(point, selector)
 			log.debug("'%s' context selector score: %d", selector, score)
 			except_selector = config.get('except_selector', None)
 			if except_selector is not None:
-				except_score = self.view.score_selector(point, except_selector)
-				log.debug("'%s' context except_selector score: %d", except_selector, except_score)
+				except_score = view.score_selector(point, except_selector)
+				log.warning("'%s' context except_selector score: %d", except_selector, except_score)
 				if except_score > 0:
 					score = -1
 					log.debug("except_selector '%s' overules the selector '%s'", except_selector, selector)
@@ -486,15 +554,16 @@ class TabnavContext:
 			return max_context
 		return (None, 0)
 
-	def _get_auto_csv_table_config(self, context_config):
-		point = self.view.sel()[0].a
-		scope = self.view.scope_name(point)
+	@staticmethod
+	def _get_auto_csv_table_config(view, context_config):
+		point = view.sel()[0].a
+		scope = view.scope_name(point)
 		# If an explicit delimiter is set, use that
-		delimiter = self.view.settings().get('tabnav.delimiter')
+		delimiter = view.settings().get('tabnav.delimiter')
 		if delimiter is None:
 			log.debug("Checking if in Advanced CSV package scope.")
 			if re.search(r'text\.advanced_csv', scope):
-				delimiter = self.view.settings().get('delimiter') # this is the Advnaced CSV delimiter
+				delimiter = view.settings().get('delimiter') # this is the Advnaced CSV delimiter
 		if delimiter is None:
 			log.debug("Checking if in Rainbow CSV package scope.")
 			try:
@@ -504,7 +573,7 @@ class TabnavContext:
 				pass
 		if delimiter is None:
 			log.debug("Attempting to infer the delimiter from the first line of the file.")
-			line = self.view.substr(self.view.line(0))
+			line = view.substr(view.line(0))
 			auto_delimiters = context_config.get('auto_delimiters', [r',', r';', r'\t', r'\|'])
 			matches = [d for d in auto_delimiters if re.search(d, line) is not None]
 			if len(matches) == 1:
@@ -513,11 +582,11 @@ class TabnavContext:
 			else:
 				log.debug('More than one auto delimiter matched: %s.', matches)
 		if delimiter is None:
-			return False
+			return None
 		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
-		self._cell_pattern = context_config['cell_pattern'].format(delimiter)
-		self._eol_pattern = context_config['eol_pattern'].format(delimiter)
-		return True
+		cell_pattern = context_config['cell_pattern'].format(delimiter)
+		eol_pattern = context_config['eol_pattern'].format(delimiter)
+		return TabnavContext(cell_pattern, eol_pattern)
 
 #### Commands ####
 
@@ -530,16 +599,43 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		enabled = self.view.settings().get('tabnav.enabled')
 		if enabled is not None and not enabled:
 			return False
+		if len(self.view.sel()) == 0:
+			return False
 		context_key = args.get('context_key', None)
-		self.context = TabnavContext(self.view, context_key)
-		return self.context.is_tabnav_view
+		self.context = TabnavContext.get_current_context(self.view, context_key)
+		return self.context is not None
 
-	def init_table(self, cell_direction = 1):
+	def init_table(self, cell_direction=1):
+		self.init_settings()
 		self.table = TableView(self.view, self.context, cell_direction)
-		self.tabnav = TableNavigator(self.table)
+		self.tabnav = TableNavigator(self.table, self.include_separators)
 
+	def init_settings(self):
+		settings = sublime.load_settings("tabnav.sublime-settings")
+		self.include_separators = self.context.include_separators
+		if self.include_separators is None:
+			self.include_separators = self.view.settings().get("tabnav.include_separators")
+		if self.include_separators is None:
+			self.include_separators = settings.get("include_separators", False)
+		
 
 # Move cells:
+
+class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
+	def run(self, edit, cell_direction=1, context=None):
+		self.init_table(cell_direction)
+		try:
+			self.tabnav.split_and_move_current_cells(True)
+		except CursorNotInTableError as e:
+			log.warning(e.err)
+
+class TabnavMoveCursorStartCommand(TabnavMoveCursorCurrentCellCommand):
+	def run(self, edit, context=None):
+		super().run(edit, -1, context)
+
+class TabnavMoveCursorEndCommand(TabnavMoveCursorCurrentCellCommand):
+	def run(self, edit, context=None):
+		super().run(edit, 1, context)
 
 class TabnavMoveCursorCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, move_cursors=False, context=None):
@@ -580,7 +676,6 @@ class TabnavMoveCursorCommand(TabnavCommand):
 			return True
 		return False
 
-
 class TabnavMoveCursorForwardCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
 		super().run(edit, Direction.FORWARD, 1, True, context=context)
@@ -599,6 +694,7 @@ class TabnavMoveCursorDownCommand(TabnavMoveCursorCommand):
 		
 class TabnavMoveCursorDownOrNewlineCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
+		self.init_table()
 		try:
 			moved = self.tabnav.split_and_move_current_cells(move_cursors=False) \
 				    or super().move_next_cell(Direction.DOWN)
@@ -681,8 +777,9 @@ class TabnavSelectNextCommand(TabnavCommand):
 		'''
 		try:
 			new_cells = self.tabnav.get_next_cells(move_direction)
-		except Error as e:
+		except Exception as e:
 			log.debug(e)
+			return False
 		if new_cells is not None:
 			self.view.sel().clear()
 			self.view.sel().add_all(new_cells)
@@ -726,7 +823,7 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 		initial_selections = list(self.view.sel())
 		try:
 			new_cells = self.tabnav.get_next_cells(move_direction)
-		except Error as e:
+		except Exception as e:
 			log.debug(e)
 		if new_cells is not None:
 			self.view.sel().add_all(new_cells)
@@ -756,7 +853,11 @@ class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
 class TabnavSelectRowCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
 		self.init_table(cell_direction)
-		cells = [cell for row in self.table.rows for cell in row]
+		if self.include_separators or all((row.is_separator for row in self.table.rows)):
+			# if only separator rows are currently selected, ignore the include_separators setting
+			cells = [cell for row in self.table.rows for cell in row]
+		else:
+			cells = [cell for row in self.table.rows for cell in row if not row.is_separator]
 		if len(cells) > 0:
 			self.view.sel().clear()
 			self.view.sel().add_all(cells)
@@ -830,10 +931,20 @@ class DisableTabnavCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.settings().set('tabnav.enabled', False)
 
+class TabnavIncludeSeparatorsCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.settings().set('tabnav.include_separators', True)
+
+class TabnavExcludeSeparatorsCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		self.view.settings().set('tabnav.include_separators', False)
+
 class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 	def on_query_context(self, key, operator, operand, match_all):
 		if key != 'is_tabnav_context':
 			return None
+		if len(self.view.sel()) == 0:
+			return False
 		enabled = self.view.settings().get('tabnav.enabled')
 		if enabled is not None and not enabled:
 			# Tabnav is explicitly disabled
@@ -842,8 +953,8 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 			context_key = operand
 		else:
 			context_key = None
-		context = TabnavContext(self.view, context_key)
-		if not context.is_tabnav_view:
+		context = TabnavContext.get_current_context(self.view, context_key)
+		if context is None:
 			is_context = False
 		elif match_all:
 			# parse all of the current selections
