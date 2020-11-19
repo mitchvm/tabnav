@@ -221,7 +221,7 @@
     },
     { 
         // select all table cells
-        "keys": ["ctrl+alt+shift+s"],
+        "keys": ["ctrl+alt+shift+c"],
         "command": "tabnav_select_all",
         "context":
         [
