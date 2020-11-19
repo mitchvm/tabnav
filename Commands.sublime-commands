@@ -1,23 +1,23 @@
 [
     {
         "caption": "TabNav: Trim whitespace from selections",
-        "command": "trim_whitespace_from_selection",
+        "command": "trim_whitespace_from_selection"
     },
     {
         "caption": "TabNav: Enable on current view",
-        "command": "enable_tabnav",
+        "command": "enable_tabnav"
     },
     {
         "caption": "TabNav: Disable on current view",
-        "command": "disable_tabnav",
+        "command": "disable_tabnav"
     },
     {
         "caption": "TabNav: Include separator lines in selections",
-        "command": "tabnav_include_separators",
+        "command": "tabnav_include_separators"
     },
     {
         "caption": "TabNav: Exclude separator lines from selections",
-        "command": "tabnav_exclude_separators",
+        "command": "tabnav_exclude_separators"
     },
     { 
         "caption": "TabNav: Move cursor to start of current cell",
@@ -106,5 +106,5 @@
     { 
         "caption": "TabNav: Select all table cells",
         "command": "tabnav_select_all"
-    },
+    }
 ]

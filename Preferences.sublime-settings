@@ -6,7 +6,7 @@
 	// To disable a particular keybinding for only a particular syntax, override the flag
 	// in a the syntax-specific user settings file to "false".
 	// NOTE: For the flags to take effect, they _must_ be placed in a "Preferences.sublime-settings" file
-	// or a [Syntax].sublime-settings file (e.g. "Markdown.sublime-settings"). Tabnav itself
+	// or a [Syntax].sublime-settings file (e.g. "Markdown.sublime-settings"). TabNav itself
 	// does not provide a syntax, so putting them in "tabnav.sublime-settings" will have no effect.
 	
 	"tabnav.kb_enable_tabnav": true,

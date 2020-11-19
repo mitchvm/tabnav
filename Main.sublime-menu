@@ -126,5 +126,64 @@
         ]
       }
     ]
+  },
+  {
+    "id": "preferences",
+    "children": [
+      {
+        "caption": "Package Settings",
+        "id": "package-settings",
+        "mnemonic": "P",
+        "children": [
+          {
+            "caption": "TabNav",
+            "id": "tabnav",
+            "children": [
+              {
+                "caption": "Settings – TabNav",
+                "command": "edit_settings",
+                "args": {
+                  "base_file": "${packages}/tabnav/tabnav.sublime-settings",
+                  "default": "{\n\t\"user_contexts\":\n\t{\n\t\t$0\n\t}\n}\n"
+                }
+              },
+              {
+                "caption": "-"
+              },
+              {
+                "caption": "Key Bindings",
+                "command": "edit_settings",
+                "args": {
+                  "base_file": "${packages}/tabnav/Default ($platform).sublime-keymap",
+                  "default": "[\n\t$0\n]\n"
+                }
+              },
+              {
+                "caption": "Settings – Global Keybinding Flags",
+                "command": "edit_settings",
+                "args": {
+                  "base_file": "${packages}/tabnav/Preferences.sublime-settings",
+                  "default": "{\n\t$0\n}\n"
+                }
+              },
+              {
+                "caption": "-"
+              },
+              {
+                "caption": "Settings – Default Keybinding Flags",
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/tabnav/Preferences.sublime-settings"
+                }
+              },
+              {
+                "caption": "Settings – Syntax Specific",
+                "command": "open_file_settings"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]
