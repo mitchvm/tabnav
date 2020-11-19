@@ -34,11 +34,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_move_reverse" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -49,11 +44,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_move_forward" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -64,11 +54,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_move_up" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -79,11 +64,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_move_down" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -97,11 +77,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_add_reverse" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -112,11 +87,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_add_forward" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -127,11 +97,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_add_up" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -142,11 +107,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_add_down" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -160,11 +120,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_select_reverse" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -175,11 +130,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_select_forward" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -190,11 +140,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_select_up" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -205,11 +150,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_select_down" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -223,11 +163,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_extend_reverse" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -238,11 +173,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_extend_forward" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -253,11 +183,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_extend_up" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -268,11 +193,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_extend_down" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -286,11 +206,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_select_row" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -301,11 +216,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_select_column" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -316,11 +226,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_select_table" },
-            { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "has_prev_field", "operator": "equal", "operand": false },
-            { "key": "popup_visible", "operator": "equal", "operand": false },
-            { "key": "overlay_visible", "operator": "equal", "operand": false },
             { "key": "is_tabnav_context"},
         ]
     },
