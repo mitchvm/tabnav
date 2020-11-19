@@ -314,7 +314,7 @@ class TableNavigator:
 				if len(line_cells) == 0:
 					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
 					raise CursorNotInTableError(region.begin())
-				if len(line_cells) > 1 or line_cells[0].b != point:
+				if len(line_cells) > 1 or region.size() > 0 or line_cells[0].b != point:
 					selection_changed = True
 				line_cursors = (sublime.Region(cell.b, cell.b) for cell in line_cells)
 			if row.is_separator:
