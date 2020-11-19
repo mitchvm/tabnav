@@ -19,6 +19,10 @@
         "caption": "TabNav: Exclude separator lines from selections",
         "command": "tabnav_exclude_separators"
     },
+    {
+        "caption": "TabNav: Set CSV delimiter",
+        "command": "tabnav_set_csv_delimiter"
+    },
     { 
         "caption": "TabNav: Move cursor to start of current cell",
         "command": "tabnav_move_cursor_start"

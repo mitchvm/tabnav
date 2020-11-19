@@ -6,7 +6,7 @@ import logging
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.WARNING)
-log.setLevel(logging.DEBUG)
+# log.setLevel(logging.DEBUG)
 
 class Direction:
 	FORWARD = (0,1)
@@ -536,7 +536,7 @@ class TabnavContext:
 			except_selector = config.get('except_selector', None)
 			if except_selector is not None:
 				except_score = view.score_selector(point, except_selector)
-				log.warning("'%s' context except_selector score: %d", except_selector, except_score)
+				log.debug("'%s' context except_selector score: %d", except_selector, except_score)
 				if except_score > 0:
 					score = -1
 					log.debug("except_selector '%s' overules the selector '%s'", except_selector, selector)
@@ -573,6 +573,8 @@ class TabnavContext:
 				delimiter = matches[0]
 			else:
 				log.debug('More than one auto delimiter matched: %s.', matches)
+		if delimiter is None:
+			delimiter = context_config.get("default_delimiter", None)
 		if delimiter is None:
 			return None
 		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
@@ -903,9 +905,19 @@ class EnableTabnavCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.settings().set('tabnav.enabled', True)
 
+	def is_enabled(self):
+		# This command is enabled unless TabNav is already explicitly enabled
+		enabled = self.view.settings().get('tabnav.enabled')
+		return enabled is None or not enabled
+
 class DisableTabnavCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.settings().set('tabnav.enabled', False)
+
+	def is_enabled(self):
+		# This command is enabled unless TabNav is already explicitly disabled
+		enabled = self.view.settings().get('tabnav.enabled')
+		return enabled is None or enabled
 
 class TabnavIncludeSeparatorsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
@@ -915,6 +927,22 @@ class TabnavExcludeSeparatorsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		self.view.settings().set('tabnav.include_separators', False)
 
+class TabnavSetCsvDelimiterCommand(sublime_plugin.TextCommand):
+	def run(self, edit, delimiter=None):
+		if type(delimiter) is str and len(delimiter) == 0:
+			delimiter = None
+		self.view.settings().set('tabnav.delimiter', delimiter)
+
+	def input(self, args):
+		return TabnavCsvDelimiterInputHandler()
+
+class TabnavCsvDelimiterInputHandler(sublime_plugin.TextInputHandler):
+	def name(self):
+		return "delimiter"
+
+	def placeholder(self):
+		return ','
+
 class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 	def on_query_context(self, key, operator, operand, match_all):
 		if key != 'is_tabnav_context':
@@ -923,7 +951,7 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 			return False
 		enabled = self.view.settings().get('tabnav.enabled')
 		if enabled is not None and not enabled:
-			# Tabnav is explicitly disabled
+			# TabNav is explicitly disabled
 			return False
 		if type(operand) is str:
 			context_key = operand

@@ -23,6 +23,15 @@
             "command": "tabnav_exclude_separators"
           },
           {
+          	"caption": "Set CSV delimiter",
+            "command": "show_overlay",
+            "args":
+            {
+            	"overlay": "command_palette",
+            	"text": "TabNav: Set CSV delimiter"
+            }
+          },
+          {
             "caption": "-"
           },
           {

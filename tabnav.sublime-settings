@@ -16,7 +16,7 @@
 			// This context is handled as a special case in the code. It doesn't automatically
 			// map to a syntax (because there is no common CSV syntax), and it allows the column
 			// delimiter to be formatted into the pattern regexes at runtime.
-			// Tabnav attempts to automatically determine the delimiter to use:
+			// TabNav attempts to automatically determine the delimiter to use:
 			// 1) If the Set CSV Delimiter command has been run on the current view, the delimiter
 			//    defined by that command is used.
 			// 2) If the current file syntax is from either of the Advanced CSV or Rainbow CSV packages,
@@ -24,21 +24,21 @@
 			//      - Note: Rainbow CSV "simple" syntaxes aren't truly supported, but as long as a cell
 			//        doesn't _start_ with a quote (optionally preceded by whitespace) then the cell won't
 			//        get treated as a quoted cell, even if it contains quotes.
-			// 3) If the first line of the file contains only one the following characters (potentially 
-			//    multiple instances of that singele character), then it is assumed to be the delimiter:
+			// 3) If the first line of the file contains only one of the "auto_delimiters", then it is
+			//    assumed to be the delimiter:
 			//    * Comma (,)
 			//    * Semi-colon (;)
 			//    * Pipe (|)
 			//    * Tab
-			// If none of those conditions can be met, then the table interpolation fails.
-			"selector": "text.advanced_csv", // Rainbow CSV has a huge number of potential scopes; those are matched in code.
+			// 4) If all else fails, use the "default_delimiter".
 			"auto_delimiters": [",", ";", "\\|", "\\t"],
+			"default_delimiter": ",",
+			"selector": "text.advanced_csv", // Rainbow CSV has a huge number of potential scopes; those are matched in code.
 			// Because CSV cells can be optionally quoted, and double-quotes themselves can also
 			// be contained in the cell (escaped by double-double-quote), the matching gets a bit
 			// tricky. If the cell starts with a quote (after optional whitespace), then it needs
-			// to end with either a single quote, or three quotes, and again followed by optional
-			// whitespace.
-			// Match one of three scenarios within the <content> group:
+			// to end with either a single quote, or three quotes, followed by optional whitespace.
+			// These patterns match one of three scenarios within the <content> group:
 			// 1) Empty or whitespace-only cell
 			// 2) Unquoted content
 			// 3) Quoted content
