@@ -1,0 +1,232 @@
+[
+    // #### Non-navigation keybindings ####
+
+    {
+        // enable tabnav on current view
+        // Note: this keybinding gets clobbered by the "select next cell" keybindings
+        // once tabnav is enabled. In a CSV file, what this means is that the first press
+        // of this keybinding enables tabnav, and the next press selects the current cell.
+        "keys": ["ctrl+'"],
+        "command": "enable_tabnav",
+        "context": [{"key": "setting.tabnav.kb_enable_tabnav"}]
+    },
+    {
+        // disable tabnav on current view
+        // Note: by default, tabnav is neither enabled _nor_ disabled on a given view.
+        // Some contexts require that tabnav be explicitly enabled to work, while others
+        // are assumed to be enabled unless tabnav has been explicitly disabled.
+        "keys": ["ctrl+alt+shift+'"],
+        "command": "disable_tabnav",
+        "context": [{"key": "setting.tabnav.kb_disable_tabnav"}]
+    },
+    {
+        // trim whitespace from selections
+        "keys": ["alt+w"],
+        "command": "trim_whitespace_from_selection",
+        "context": [{"key": "setting.tabnav.kb_trim_whitespace"}]
+    },
+
+    // #### Navigation keybindings: move cell ####
+    { 
+        // move to previous cell
+        "keys": ["alt+;"],
+        "command": "tabnav_move_cursor_reverse",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_reverse" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // move to next cell
+        "keys": ["alt+'"],
+        "command": "tabnav_move_cursor_forward",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_forward" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // move to cell above
+        "keys": ["alt+["],
+        "command": "tabnav_move_cursor_up",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_up" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // move to cell below
+        "keys": ["alt+/"],
+        "command": "tabnav_move_cursor_down",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_move_down" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+
+    // #### Navigation keybindings: add cursor ####
+
+    { 
+        // add previous cell
+        "keys": ["alt+shift+;"],
+        "command": "tabnav_add_cursor_reverse",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_add_reverse" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // add next cell
+        "keys": ["alt+shift+'"],
+        "command": "tabnav_add_cursor_forward",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_add_forward" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // add cell above
+        "keys": ["alt+shift+["],
+        "command": "tabnav_add_cursor_up",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_add_up" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // add cell below
+        "keys": ["alt+shift+/"],
+        "command": "tabnav_add_cursor_down",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_add_down" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+
+    // #### Navigation keybindings: select cell ####
+
+    { 
+        // select previous cell
+        "keys": ["ctrl+;"],
+        "command": "tabnav_select_reverse",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_reverse" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select next cell
+        "keys": ["ctrl+'"],
+        "command": "tabnav_select_forward",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_forward" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select cell above
+        "keys": ["ctrl+["],
+        "command": "tabnav_select_up",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_up" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select cell below
+        "keys": ["ctrl+/"],
+        "command": "tabnav_select_down",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_down" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+
+    // #### Navigation keybindings: extend selection ####
+
+    { 
+        // extend selection to previous cell
+        "keys": ["ctrl+shift+;"],
+        "command": "tabnav_extend_selection_reverse",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_reverse" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // extend selection to next cell
+        "keys": ["ctrl+shift+'"],
+        "command": "tabnav_extend_selection_forward",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_forward" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // extend selection to cell above
+        "keys": ["ctrl+shift+["],
+        "command": "tabnav_extend_selection_up",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_up" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // extend selection to cell below
+        "keys": ["ctrl+shift+/"],
+        "command": "tabnav_extend_selection_down",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_down" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+
+    // #### Navigation keybindings: select row/column/table ####
+
+    { 
+        // select row cells
+        "keys": ["ctrl+shift+l"],
+        "command": "tabnav_select_row",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_row" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select column cells
+        "keys": ["ctrl+shift+c"],
+        "command": "tabnav_select_column",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_column" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // select all table cells
+        "keys": ["ctrl+alt+shift+c"],
+        "command": "tabnav_select_all",
+        "context":
+        [
+            { "key": "setting.tabnav.kb_select_table" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+]
