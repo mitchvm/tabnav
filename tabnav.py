@@ -600,6 +600,22 @@ class TabnavContext:
 			return max_context
 		return (None, 0)
 
+	_escaped_delimiters = {
+		'|': r'\|',
+		'	': r'\t',
+		'.': r'\.',
+		'\\': '\\\\', # raw string doesn't work here: https://docs.python.org/3/faq/design.html#why-can-t-raw-strings-r-strings-end-with-a-backslash
+		'(': r'\(',
+		')': r'\)',
+		'[': r'\[',
+		'{': r'\{',
+		'?': r'\?',
+		'+': r'\+',
+		'*': r'\*',
+		'^': r'\^',
+		'$': r'\$'
+	}
+
 	@staticmethod
 	def _get_auto_csv_table_config(view, context_config):
 		point = view.sel()[0].a
@@ -611,7 +627,7 @@ class TabnavContext:
 			delimiter = view.settings().get('delimiter') # this is the Advnaced CSV delimiter
 		if delimiter is None:
 			try:
-				rainbow_match = re.search(r'text\.rbcsm|tn(?P<delimiter>\d+)',scope)
+				rainbow_match = re.search(r'text\.rbcs(?:m|t)n(?P<delimiter>\d+)',scope)
 				delimiter = chr(int(rainbow_match.group('delimiter')))
 				log.debug("Using Rainbow CSV delimiter.")
 			except:
@@ -632,6 +648,7 @@ class TabnavContext:
 			delimiter = context_config.get("default_delimiter", None)
 		if delimiter is None:
 			return None
+		delimiter = TabnavContext._escaped_delimiters.get(delimiter, delimiter)
 		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
 		cell_pattern = context_config['cell_pattern'].format(delimiter)
 		eol_pattern = context_config['eol_pattern'].format(delimiter)
@@ -1005,16 +1022,11 @@ def is_other_csv_scope(view):
 		return False
 
 class TabnavSetCsvDelimiterCommand(sublime_plugin.TextCommand):
-	_mappings = {
-		'': None,
-		'|': r'\|',
-		'	': r'\t'
-	}
-
 	def run(self, edit, delimiter=None):
 		'''Sets the delimiter to use for CSV files.'''
-		delimiter = TabnavSetCsvDelimiterCommand._mappings.get(delimiter, delimiter)
 		log.debug('Setting CSV delimiter: %s', delimiter)
+		if delimiter == '':
+			delimiter = None
 		self.view.settings().set('tabnav.delimiter', delimiter)
 
 	def input(self, args):
