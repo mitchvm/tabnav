@@ -950,13 +950,15 @@ class TabnavSelectAllCommand(TabnavCommand):
 		self.tabnav.split_and_select_current_cells()
 		columns = []
 		# Expand the first column in each disjoint table to parse all rows of all selected tables
-		for row in (table_row.row for table_row in self.table.rows):
-			cell = self.table[(row, 0)] 
+		for cell in (row[0] for row in self.table.rows):
 			containing_columns = [col for col in columns if col.contains(cell)]
 			if len(containing_columns) > 0:
 				continue # This cell is already contained in a previously captured column
 			columns.append(self.tabnav.get_table_column(cell))
-		cells = [cell for row in self.table.rows for cell in row]
+		if self.include_separators:
+			cells = [cell for row in self.table.rows for cell in row]
+		else:
+			cells = [cell for row in self.table.rows for cell in row if not row.is_separator]
 		if len(cells) > 0:
 			self.view.sel().clear()
 			self.view.sel().add_all(cells)
