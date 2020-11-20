@@ -604,27 +604,28 @@ class TabnavContext:
 	def _get_auto_csv_table_config(view, context_config):
 		point = view.sel()[0].a
 		scope = view.scope_name(point)
+		delimiter = None
 		# If an explicit delimiter is set, use that
-		delimiter = view.settings().get('tabnav.delimiter')
+		if re.search(r'text\.advanced_csv', scope) is not None:
+			log.debug("Using Advanced CSV delimiter.")
+			delimiter = view.settings().get('delimiter') # this is the Advnaced CSV delimiter
 		if delimiter is None:
-			log.debug("Checking if in Advanced CSV package scope.")
-			if re.search(r'text\.advanced_csv', scope):
-				delimiter = view.settings().get('delimiter') # this is the Advnaced CSV delimiter
-		if delimiter is None:
-			log.debug("Checking if in Rainbow CSV package scope.")
 			try:
 				rainbow_match = re.search(r'text\.rbcsm|tn(?P<delimiter>\d+)',scope)
 				delimiter = chr(int(rainbow_match.group('delimiter')))
+				log.debug("Using Rainbow CSV delimiter.")
 			except:
 				pass
 		if delimiter is None:
-			log.debug("Attempting to infer the delimiter from the first line of the file.")
+			delimiter = view.settings().get('tabnav.delimiter')
+		if delimiter is None:
 			line = view.substr(view.line(0))
 			auto_delimiters = context_config.get('auto_delimiters', [r',', r';', r'\t', r'\|'])
 			matches = [d for d in auto_delimiters if re.search(d, line) is not None]
 			if len(matches) == 1:
 				# If we hit on exactly one delimiter, then we'll assume it's the one to use
 				delimiter = matches[0]
+				log.debug("Inferred delimiter: %s", delimiter)
 			else:
 				log.debug('More than one auto delimiter matched: %s.', matches)
 		if delimiter is None:
@@ -995,15 +996,32 @@ class TabnavExcludeSeparatorsCommand(sublime_plugin.TextCommand):
 		'''Causes TabNav to exclude line separator rows from selections in the current view.'''
 		self.view.settings().set('tabnav.include_separators', False)
 
+def is_other_csv_scope(view):
+		scope = view.scope_name(0)
+		if re.search(r'text\.advanced_csv', scope):
+			return True
+		if re.search(r'text\.rbcsm|tn\d+', scope):
+			return True
+		return False
+
 class TabnavSetCsvDelimiterCommand(sublime_plugin.TextCommand):
+	_mappings = {
+		'': None,
+		'|': r'\|',
+		'	': r'\t'
+	}
+
 	def run(self, edit, delimiter=None):
 		'''Sets the delimiter to use for CSV files.'''
-		if type(delimiter) is str and len(delimiter) == 0:
-			delimiter = None
+		delimiter = TabnavSetCsvDelimiterCommand._mappings.get(delimiter, delimiter)
+		log.debug('Setting CSV delimiter: %s', delimiter)
 		self.view.settings().set('tabnav.delimiter', delimiter)
 
 	def input(self, args):
 		return TabnavCsvDelimiterInputHandler()
+
+	def is_enabled(self):
+		return not is_other_csv_scope(self.view)
 
 class TabnavCsvDelimiterInputHandler(sublime_plugin.TextInputHandler):
 	'''Input handler to get the delimiter when the TabnavSetCsvDelimiterCommand
@@ -1013,6 +1031,20 @@ class TabnavCsvDelimiterInputHandler(sublime_plugin.TextInputHandler):
 
 	def placeholder(self):
 		return ','
+
+class TabnavSetCsvDelimiterMenuCommand(sublime_plugin.TextCommand):
+	'''Shows the command palette to trigger the set CSV delimiter command, 
+	so that the input handler is triggered.
+
+	It's a bit hacky, but I'd rather have a consistent input method.'''
+	def run(self, edit):
+		self.view.window().run_command("show_overlay", args={"overlay":"command_palette", "text":"TabNav: Set CSV delimiter"})
+
+	def is_enabled(self):
+		return not is_other_csv_scope(self.view)
+
+	def is_visible(self):
+		return not is_other_csv_scope(self.view)
 
 class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 	'''Listener for the 'is_tabnav_context' keybinding context.

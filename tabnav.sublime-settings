@@ -17,12 +17,12 @@
 			// map to a syntax (because there is no common CSV syntax), and it allows the column
 			// delimiter to be formatted into the pattern regexes at runtime.
 			// TabNav attempts to automatically determine the delimiter to use:
-			// 1) If the Set CSV Delimiter command has been run on the current view, the delimiter
-			//    defined by that command is used.
-			// 2) If the current file syntax is from either of the Advanced CSV or Rainbow CSV packages,
+			// 1) If the current file syntax is from either of the Advanced CSV or Rainbow CSV packages,
 			//    the delimiter set by those packages is used.
 			//      - Note: Rainbow CSV "simple" syntaxes aren't truly supported. Cells that _start_
-			//        with a double-quote (optionally preceded by whitespace) will be treated as quoted cells.
+			//        with a double-quote (optionally preceded by spaces) will be treated as quoted cells.
+			// 2) If the Set CSV Delimiter command has been run on the current view, the delimiter
+			//    defined by that command is used.
 			// 3) If the first line of the file contains only one of the "auto_delimiters", then it is
 			//    assumed to be the delimiter:
 			//    * Comma (,)

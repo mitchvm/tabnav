@@ -24,12 +24,7 @@
           },
           {
           	"caption": "Set CSV delimiter",
-            "command": "show_overlay",
-            "args":
-            {
-            	"overlay": "command_palette",
-            	"text": "TabNav: Set CSV delimiter"
-            }
+            "command": "tabnav_set_csv_delimiter_menu",
           },
           {
             "caption": "-"
