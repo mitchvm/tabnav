@@ -984,6 +984,53 @@ class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 			self.view.sel().subtract(region)
 			self.view.sel().add(trimmed)
 
+def copy_delimited_regions(view, delimiter):
+	result = ''
+	row = None
+	for region in itertools.chain.from_iterable((view.split_by_newlines(r) for r in view.sel())):
+		r = view.rowcol(region.begin())[0]
+		if row is None:
+			result = view.substr(region)
+			row = r
+		elif r > row:
+			result = result + '\n' + view.substr(region)
+			row = r
+		else:
+			result = result + delimiter + view.substr(region)
+	sublime.set_clipboard(result)
+
+class TabnavCopyDelimitedCommand(sublime_plugin.TextCommand):
+	def run(self, edit, delimiter):
+		'''Puts all currently selected regions into the clipboard with columns separated by the
+		given delimiter, and rows separated by the newlins.
+
+		This is to facilitate copying table contents to other programs, such as Excel.'''
+		copy_delimited_regions(self.view, delimiter)
+
+	def input(self, args):
+		return TabnavCopyDelimitedInputHandler()
+
+class TabnavCopyDelimitedInputHandler(sublime_plugin.TextInputHandler):
+	'''Input handler to get the delimiter when the TabnavCopyDelimited
+	is run from the command palette.'''
+	def name(self):
+		return "delimiter"
+
+class TabnavCopyDelimitedMenuCommand(sublime_plugin.TextCommand):
+	'''Shows the command palette to trigger the copy selections with delimiter command, 
+	so that the input handler is triggered.
+
+	It's a bit hacky, but I'd rather have a consistent input method.'''
+	def run(self, edit):
+		self.view.window().run_command("show_overlay", args={"overlay":"command_palette", "text":"TabNav: Copy selections with delimiter"})
+
+class TabnavCopyTabSeparatedCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		'''Puts all currently selected regions into the clipboard with columns separated by tabs,
+		and rows separated by the newlins.
+
+		This is to facilitate copying table contents to other programs, such as Excel.'''
+		copy_delimited_regions(self.view, '	')
 
 class EnableTabnavCommand(sublime_plugin.TextCommand):
 	def run(self, edit):

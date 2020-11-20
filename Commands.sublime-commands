@@ -4,6 +4,14 @@
         "command": "trim_whitespace_from_selection"
     },
     {
+        "caption": "TabNav: Copy selections with delimiter",
+        "command": "tabnav_copy_delimited",
+    },
+    {
+        "caption": "TabNav: Copy selections as TSV",
+        "command": "tabnav_copy_tab_separated",
+    },
+    {
         "caption": "TabNav: Enable on current view",
         "command": "enable_tabnav"
     },

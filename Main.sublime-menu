@@ -126,6 +126,14 @@
           {
             "caption": "Trim whitespace from selections",
             "command": "trim_whitespace_from_selection"
+          },
+          {
+            "caption": "Copy selections as TSV",
+            "command": "tabnav_copy_tab_separated"
+          },
+          {
+            "caption": "Copy selections with delimiter",
+            "command": "tabnav_copy_delimited_menu"
           }
         ]
       }
