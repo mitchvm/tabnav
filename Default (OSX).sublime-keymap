@@ -3,7 +3,7 @@
 
     {
         // enable tabnav on current view
-        // Note: this keybinding gets clobbered by the "select next cell" keybindings
+        // Note: this keybinding gets clobbered by the "select cell on right" keybindings
         // once tabnav is enabled. In a CSV file, what this means is that the first press
         // of this keybinding enables tabnav, and the next press selects the current cell.
         "keys": ["command+'"],
@@ -28,22 +28,22 @@
 
     // #### Navigation keybindings: move cell ####
     { 
-        // move to previous cell
+        // move to cell on left
         "keys": ["control+;"],
-        "command": "tabnav_move_cursor_reverse",
+        "command": "tabnav_move_cursor_left",
         "context":
         [
-            { "key": "setting.tabnav.kb_move_reverse" },
+            { "key": "setting.tabnav.kb_move_left" },
             { "key": "is_tabnav_context"},
         ]
     },
     { 
-        // move to next cell
+        // move to cell on right
         "keys": ["control+'"],
-        "command": "tabnav_move_cursor_forward",
+        "command": "tabnav_move_cursor_right",
         "context":
         [
-            { "key": "setting.tabnav.kb_move_forward" },
+            { "key": "setting.tabnav.kb_move_right" },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -71,22 +71,22 @@
     // #### Navigation keybindings: add cursor ####
 
     { 
-        // add previous cell
+        // add cell on left
         "keys": ["control+shift+;"],
-        "command": "tabnav_add_cursor_reverse",
+        "command": "tabnav_add_cursor_left",
         "context":
         [
-            { "key": "setting.tabnav.kb_add_reverse" },
+            { "key": "setting.tabnav.kb_add_left" },
             { "key": "is_tabnav_context"},
         ]
     },
     { 
-        // add next cell
+        // add cell on right
         "keys": ["control+shift+'"],
-        "command": "tabnav_add_cursor_forward",
+        "command": "tabnav_add_cursor_right",
         "context":
         [
-            { "key": "setting.tabnav.kb_add_forward" },
+            { "key": "setting.tabnav.kb_add_right" },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -114,22 +114,22 @@
     // #### Navigation keybindings: select cell ####
 
     { 
-        // select previous cell
+        // select cell on left
         "keys": ["command+;"],
-        "command": "tabnav_select_reverse",
+        "command": "tabnav_select_left",
         "context":
         [
-            { "key": "setting.tabnav.kb_select_reverse" },
+            { "key": "setting.tabnav.kb_select_left" },
             { "key": "is_tabnav_context"},
         ]
     },
     { 
-        // select next cell
+        // select cell on right
         "keys": ["command+'"],
-        "command": "tabnav_select_forward",
+        "command": "tabnav_select_right",
         "context":
         [
-            { "key": "setting.tabnav.kb_select_forward" },
+            { "key": "setting.tabnav.kb_select_right" },
             { "key": "is_tabnav_context"},
         ]
     },
@@ -157,22 +157,22 @@
     // #### Navigation keybindings: extend selection ####
 
     { 
-        // extend selection to previous cell
+        // extend selection to cell on left
         "keys": ["command+shift+;"],
-        "command": "tabnav_extend_selection_reverse",
+        "command": "tabnav_extend_selection_left",
         "context":
         [
-            { "key": "setting.tabnav.kb_extend_reverse" },
+            { "key": "setting.tabnav.kb_extend_left" },
             { "key": "is_tabnav_context"},
         ]
     },
     { 
-        // extend selection to next cell
+        // extend selection to cell on right
         "keys": ["command+shift+'"],
-        "command": "tabnav_extend_selection_forward",
+        "command": "tabnav_extend_selection_right",
         "context":
         [
-            { "key": "setting.tabnav.kb_extend_forward" },
+            { "key": "setting.tabnav.kb_extend_right" },
             { "key": "is_tabnav_context"},
         ]
     },

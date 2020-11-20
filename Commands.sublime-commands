@@ -40,12 +40,12 @@
         "command": "tabnav_move_cursor_end"
     },
     { 
-        "caption": "TabNav: Move cursor to previous cell",
-        "command": "tabnav_move_cursor_reverse"
+        "caption": "TabNav: Move cursor to cell on left",
+        "command": "tabnav_move_cursor_left"
     },
     { 
-        "caption": "TabNav: Move cursor to next cell",
-        "command": "tabnav_move_cursor_forward"
+        "caption": "TabNav: Move cursor to cell on right",
+        "command": "tabnav_move_cursor_right"
     },
     { 
         "caption": "TabNav: Move cursor to cell above",
@@ -56,12 +56,12 @@
         "command": "tabnav_move_cursor_down"
     },
     { 
-        "caption": "TabNav: Add cursor to previous cell",
-        "command": "tabnav_add_cursor_reverse"
+        "caption": "TabNav: Add cursor to cell on left",
+        "command": "tabnav_add_cursor_left"
     },
     { 
-        "caption": "TabNav: Add cursor to next cell",
-        "command": "tabnav_add_cursor_forward"
+        "caption": "TabNav: Add cursor to cell on right",
+        "command": "tabnav_add_cursor_right"
     },
     { 
         "caption": "TabNav: Add cursor to cell above",
@@ -72,16 +72,16 @@
         "command": "tabnav_add_cursor_down"
     },
     { 
-        "caption": "TabNav: Select previous cell",
-        "command": "tabnav_select_reverse"
-    },
-    { 
         "caption": "TabNav: Select current cell",
         "command": "tabnav_select_current"
     },
     { 
-        "caption": "TabNav: Select next cell",
-        "command": "tabnav_select_forward"
+        "caption": "TabNav: Select cell on left",
+        "command": "tabnav_select_left"
+    },
+    { 
+        "caption": "TabNav: Select cell on right",
+        "command": "tabnav_select_right"
     },
     { 
         "caption": "TabNav: Select cell above",
@@ -92,12 +92,12 @@
         "command": "tabnav_select_down"
     },
     { 
-        "caption": "TabNav: Extend selection to previous cell",
-        "command": "tabnav_extend_selection_reverse"
+        "caption": "TabNav: Extend selection to cell on left",
+        "command": "tabnav_extend_selection_left"
     },
     { 
-        "caption": "TabNav: Extend selection to next cell",
-        "command": "tabnav_extend_selection_forward"
+        "caption": "TabNav: Extend selection to cell on right",
+        "command": "tabnav_extend_selection_right"
     },
     { 
         "caption": "TabNav: Extend selection to cell above",

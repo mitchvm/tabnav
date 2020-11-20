@@ -9,8 +9,8 @@ log.setLevel(logging.WARNING)
 # log.setLevel(logging.DEBUG)
 
 class Direction:
-	FORWARD = (0,1)
-	REVERSE = (0,-1)
+	RIGHT = (0,1)
+	LEFT = (0,-1)
 	DOWN = (1,0)
 	UP = (-1,0)
 
@@ -333,7 +333,7 @@ class TableNavigator:
 			else:
 				# If the selection does not span multiple lines, use the original selection
 				# to maintain the 'direction' of the selection (Comes into play when moving
-				# forward, and the current selection is a cell selected in reverse.)
+				# right, and the current selection is a cell selected in reverse.)
 				lines.append(sel)
 		cursors = []
 		sep_cursors = []
@@ -403,7 +403,7 @@ class TableNavigator:
 		new_cells = []
 		dr, dc = direction
 		selections = list(self.view.sel())
-		if direction in [Direction.FORWARD, Direction.DOWN]:
+		if direction in [Direction.RIGHT, Direction.DOWN]:
 			# If multiple regions are selected, avoid clobbering one-another
 			selections = reversed(selections)
 		for region in selections:
@@ -432,7 +432,7 @@ class TableNavigator:
 		'''Gest a table cell relative to the given r and ic table coordinates.'''
 		target_row = r + dr
 		target_col = ic + dc
-		if target_col < 0: # direction == REVERSE
+		if target_col < 0: # direction == LEFT
 			log.debug("At first cell in row %d.", r)
 			return self._table[(r,ic)]
 		row = self._table[target_row]
@@ -728,9 +728,9 @@ class TabnavMoveCursorCommand(TabnavCommand):
 		selections = list(self.view.sel())
 		dr, dc = move_direction
 		try:
-			if dc > 0: # When moving forwards, go to the end of the cell
+			if dc > 0: # When moving right, go to the end of the cell
 				offset = -1
-			elif dc < 0: # When moving reverse, go to the beginning of the cell
+			elif dc < 0: # When moving left, go to the beginning of the cell
 				offset = 0
 			else: # Otherwise, maintain the cell's offset (default behaviour)
 				offset = None
@@ -746,13 +746,13 @@ class TabnavMoveCursorCommand(TabnavCommand):
 			return True
 		return False
 
-class TabnavMoveCursorForwardCommand(TabnavMoveCursorCommand):
+class TabnavMoveCursorRightCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.FORWARD, 1, True, context=context)
+		super().run(edit, Direction.RIGHT, 1, True, context=context)
 
-class TabnavMoveCursorReverseCommand(TabnavMoveCursorCommand):
+class TabnavMoveCursorLeftCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.REVERSE, -1, True, context=context)
+		super().run(edit, Direction.LEFT, -1, True, context=context)
 
 class TabnavMoveCursorUpCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
@@ -792,13 +792,13 @@ class TabnavAddCursorCommand(TabnavCommand):
 		return len(initial_selections) != len(self.view.sel())
 
 
-class TabnavAddCursorForwardCommand(TabnavAddCursorCommand):
+class TabnavAddCursorRightCommand(TabnavAddCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.FORWARD, 1, False, context=context)
+		super().run(edit, Direction.RIGHT, 1, False, context=context)
 
-class TabnavAddCursorReverseCommand(TabnavAddCursorCommand):
+class TabnavAddCursorLeftCommand(TabnavAddCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.REVERSE, -1, False, context=context)
+		super().run(edit, Direction.LEFT, -1, False, context=context)
 
 class TabnavAddCursorUpCommand(TabnavAddCursorCommand):
 	def run(self, edit, context=None):
@@ -846,13 +846,13 @@ class TabnavSelectNextCommand(TabnavCommand):
 		return False
 
 
-class TabnavSelectForwardCommand(TabnavSelectNextCommand):
+class TabnavSelectRightCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.FORWARD, 1, context=context)
+		super().run(edit, Direction.RIGHT, 1, context=context)
 
-class TabnavSelectReverseCommand(TabnavSelectNextCommand):
+class TabnavSelectLeftCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.REVERSE, -1, context=context)
+		super().run(edit, Direction.LEFT, -1, context=context)
 
 class TabnavSelectUpCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
@@ -888,13 +888,13 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 		return len(initial_selections) != len(self.view.sel())
 
 
-class TabnavExtendSelectionForwardCommand(TabnavExtendSelectionCommand):
+class TabnavExtendSelectionRightCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.FORWARD, 1, context=context)
+		super().run(edit, Direction.RIGHT, 1, context=context)
 
-class TabnavExtendSelectionReverseCommand(TabnavExtendSelectionCommand):
+class TabnavExtendSelectionLeftCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.REVERSE, -1, context=context)
+		super().run(edit, Direction.LEFT, -1, context=context)
 
 class TabnavExtendSelectionUpCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
