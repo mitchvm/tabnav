@@ -42,15 +42,25 @@ class CursorNotInTableError(Exception):
 
 
 class TableCell(sublime.Region):
-	def __init__(self, row, col, a, b, is_separator=False):
+	'''Extends the base sublime.Region class with logic specific to TabNav's cells.'''
+	def __init__(self, rownum, col_index, a, b, is_separator=False):
+		'''Creates a new TableCell with the following properties:
+
+		* `rownum`: integer index of the row in the view on which the cell is found
+		* `col_index`: integer table column index (not text column index) of the cell
+		* `a`: the starting point in the view of the cell (the end of the region _without_ a cursor)
+		* `b`: the ending point in the view of the cell (the end of the region _with_ a cursor)
+		* `is_separator`: indicates if this cell is an a line-separator row of the table
+		'''
 		super().__init__(a, b)
-		self._row = row
-		self._col = col
+		self._row = rownum
+		self._col = col_index
 		self._cursor_offsets = set()
 		self._is_separator = is_separator
 
 	def intersects(self, region):
 		'''Overrides the default `Region.intersects` method.
+
 		Returns True if both cell and the given region include one or more
 		positions in common, including either extreme end. For example, if
 		the end of this cell is coincident with the start of the region, 
@@ -66,6 +76,7 @@ class TableCell(sublime.Region):
 
 	def __eq__(self, other):
 		'''Overrides the default Region equality comparison.
+
 		Returns True if both ends of both regions are coincident,
 		regardless of the 'direction' of the regions.
 		The base equality comparison also considers the direction.
@@ -85,9 +96,13 @@ class TableCell(sublime.Region):
 		return self._is_separator	
 	
 	def add_cursor_offset(self, offset):
+		'''Adds the given offset as the relative position within the cell
+		as a point at which a cursor should be placed.'''
 		self._cursor_offsets.add(offset)
 
 	def get_cursors_as_regions(self):
+		'''Gets a list of sublime.Region objects, one for each cursor cursor
+		that has been added to the cell.'''
 		cursors = []
 		for offset in self._cursor_offsets:
 			if offset >= 0:
@@ -101,6 +116,12 @@ class TableCell(sublime.Region):
 class TableRow:
 	'''Stores the TableCell objects parsed from a single line of text.'''
 	def __init__(self, rownum, cells, is_separator=False):
+		'''Creates a new TableRow with the following properties:
+
+		* `rownum`: integer index of the row in the view on which the cell is found
+		* `cells`: a list of TableCells that make up this row
+		* `is_separator`: indicates if this cell is an a line-separator row of the table
+		'''
 		self._row = rownum
 		self._cells = cells
 		self._is_separator = is_separator
@@ -131,7 +152,12 @@ class TableRow:
 
 
 class TableColumn:
+	'''Stores the TableCell objects that belong to the same column of a single table in the view.
+
+	The column "grows" as as additional lines of the view are parsed.
+	'''
 	def __init__(self, initial_cell):
+		'''Creates a TableColumn with a single, initial TableCell.'''
 		self._index = initial_cell.col
 		self._minRow = initial_cell.row
 		self._maxRow = initial_cell.row
@@ -144,6 +170,7 @@ class TableColumn:
 		return iter(self._cells)
 
 	def add(self, cell):
+		'''Adds the given TableCell to the columns'''
 		if cell.col != self._index:
 			raise Exception("Cell is not in column {0}".format(self._index))
 		if cell.row < self._minRow:
@@ -153,6 +180,7 @@ class TableColumn:
 		self._cells.append(cell)
 
 	def contains(self, cell):
+		'''Returns True if the given TableCell is within the span of this column.'''
 		if cell.col != self._index:
 			return False
 		if self._minRow <= cell.row and cell.row <= self._maxRow:
@@ -184,23 +212,23 @@ class TableView:
 		return list(self._rows.values())
 
 	def row(self, r):
-		'''Gets the list of cells on the row with the given index.'''
+		'''Gets the TableRow the given row index.'''
 		if r not in self._rows:
 			self._rows[r] = self._parse_context_row(r)
 		return self._rows[r]
 
 	def cell(self, r, ic):
-		'''Gets the cell with index ic on the row with index r.'''
+		'''Gets the cell with table cp;i,m index ic on the row with index r.'''
 		row = self.row(r)
 		return row[ic]
 
 	def row_at_point(self, point):
-		'''Gets the row of cells at the given view point.'''
+		'''Gets the TableRow at the given view point.'''
 		r = self.view.rowcol(point)[0]
 		return self.row(r)
 
 	def cell_at_point(self, point):
-		'''Gets the cell that contains the given view point.'''
+		'''Gets the TableCell that contains the given view point.'''
 		(r, ic) = self.table_coords(point)
 		return self.cell(r, ic)
 
@@ -271,6 +299,12 @@ class TableView:
 
 
 class TableNavigator:
+	'''Contains methods to navigate the cells of the given TableView.
+
+	If include_separators is False, then line separator cells are omitted from
+	navigation operations, **unless** the initial selections consist solely
+	of line separators.
+	'''
 	def __init__(self, table, include_separators=False):
 		self._table = table
 		self.include_separators = include_separators
@@ -361,6 +395,11 @@ class TableNavigator:
 		return selection_changed
 
 	def get_next_cells(self, direction, offset=None):
+		'''Gets the set of cells that would are relative to the currently
+		selected cells in the given direction.
+
+		The new TableCells contain cursor offsets matching the initial selections,
+		unless a specific cursor offset is provided.'''
 		new_cells = []
 		dr, dc = direction
 		selections = list(self.view.sel())
@@ -390,6 +429,7 @@ class TableNavigator:
 		return new_cells
 
 	def get_next_cell(self, r, ic, dr, dc):
+		'''Gest a table cell relative to the given r and ic table coordinates.'''
 		target_row = r + dr
 		target_col = ic + dc
 		if target_col < 0: # direction == REVERSE
@@ -403,6 +443,11 @@ class TableNavigator:
 		return row[target_col]
 
 	def get_table_column(self, seed_cell):
+		'''Gets all TableCell found in the table column above and below the given seed_cell.
+
+		Gaps in the table where a row is a table row but has insufficient columns are 
+		"jumped", but gaps between multiple tables (i.e. rows containing no table columns)
+		are not.'''
 		column = TableColumn(seed_cell)
 		# Get all cells above current row:
 		for r in range(seed_cell.row-1, -1, -1):
@@ -432,6 +477,11 @@ class TableNavigator:
 
 
 class TabnavContext:
+	'''Contains information about the current context of the view.
+
+	Contexts are defined in the settings files. The auto_csv context is a special case
+	for which additional work is done to try to identify the CSV delimiter to use.
+	'''
 	def __init__(self, cell_pattern, eol_pattern, sep_cell_pattern=None, sep_eol_pattern=None):
 		self._include_separators = None
 		self._cell_pattern = re.compile(cell_pattern)
@@ -468,9 +518,13 @@ class TabnavContext:
 	def include_separators(self):
 		return self._include_separators
 	
-
 	@staticmethod
 	def get_current_context(view, context_key=None):
+		'''Attempts to identify the current context and build the corresponding TabnavContext object.
+
+		If a particular context_key is provided, it is the only context configured. If no key is provided,
+		all contexts in the configuration are checked.
+		'''
 		context_configs = TabnavContext._merge_context_configs(context_key)
 		if context_key is None:
 			context_key, score = TabnavContext._get_context_by_config_selector(view, context_configs)
@@ -585,7 +639,8 @@ class TabnavContext:
 #### Commands ####
 
 class TabnavCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
+	'''Base command for all of the other TabNav commands. Doesn't do anything on its own.'''
+	def run(self, edit, context=None):
 		raise NotImplementedError("The base TabnavCommand is not a runnable command.")
 
 	def is_enabled(self, **args):
@@ -600,11 +655,13 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		return self.context is not None
 
 	def init_table(self, cell_direction=1):
+		'''Parses the table rows that intersect the currently selected regions.'''
 		self.init_settings()
 		self.table = TableView(self.view, self.context, cell_direction)
 		self.tabnav = TableNavigator(self.table, self.include_separators)
 
 	def init_settings(self):
+		'''Initializes TabNav settings from the context, view, or default settings.'''
 		settings = sublime.load_settings("tabnav.sublime-settings")
 		self.include_separators = self.context.include_separators
 		if self.include_separators is None:
@@ -617,6 +674,9 @@ class TabnavCommand(sublime_plugin.TextCommand):
 
 class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
+		'''Places cursors at one end of each cell that intersects the currently selected regions.
+
+		The cell_direction indicates which end of the cell the cursor should be placed at.'''
 		self.init_table(cell_direction)
 		try:
 			self.tabnav.split_and_move_current_cells(True)
@@ -633,6 +693,11 @@ class TabnavMoveCursorEndCommand(TabnavMoveCursorCurrentCellCommand):
 
 class TabnavMoveCursorCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, move_cursors=False, context=None):
+		'''Moves cursors to the cells adjacent to the currently selected cells in the given Direction.
+
+		The cell_direction inidicates which end of the cells the cursor should be placed.
+		move_cursors=False attempts to maintain the relative offset of the cursors within the cells.
+		move_cursors=True moves the cursors to the "end" of the cell (based on the cell_direction).'''
 		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
@@ -641,10 +706,6 @@ class TabnavMoveCursorCommand(TabnavCommand):
 			log.warning(e.err)
 
 	def move_next_cell(self, move_direction):
-		'''Moves all cursurs to the next cell in the given direction.
-
-		Returns True if the selections changed, or False otherwise.
-		'''
 		moved = False
 		selections = list(self.view.sel())
 		dr, dc = move_direction
@@ -687,6 +748,11 @@ class TabnavMoveCursorDownCommand(TabnavMoveCursorCommand):
 
 class TabnavAddCursorCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, move_cursors=False, context=None):
+		'''Adds cursors to the cells adjacent to the currently selected cells in the given Direction.
+
+		The cell_direction inidicates which end of the cells the cursor should be placed.
+		move_cursors=False attempts to maintain the relative offset of the cursors within the cells.
+		move_cursors=True moves the cursors to the "end" of the cell (based on the cell_direction).'''
 		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
@@ -695,10 +761,6 @@ class TabnavAddCursorCommand(TabnavCommand):
 			log.warning(e.err)
 
 	def add_next_cell(self, move_direction):
-		'''Adds a cursor to the next cell in the given direction.
-
-		Returns True if the selections changed, or False otherwise.
-		'''
 		initial_selections = list(self.view.sel())
 		try:
 			new_cells = self.tabnav.get_next_cells(move_direction)
@@ -732,6 +794,7 @@ class TabnavAddCursorDownCommand(TabnavAddCursorCommand):
 
 class TabnavSelectCurrentCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
+		'''Selects the contents of all table cells that intersect the current selection regions.'''
 		self.init_table(cell_direction)
 		try:
 			self.tabnav.split_and_select_current_cells()
@@ -741,6 +804,9 @@ class TabnavSelectCurrentCommand(TabnavCommand):
 
 class TabnavSelectNextCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, context=None):
+		'''Moves all selection regions to the cells adjacent to the currently selected cells in the given Direction.
+
+		The cell_direction inidicates which end of the region the cursor should be placed.'''
 		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_select_current_cells():
@@ -749,10 +815,6 @@ class TabnavSelectNextCommand(TabnavCommand):
 			log.warning(e.err)		
 
 	def select_next_cell(self, move_direction):
-		'''Selects the contents of the next cell in the given direction.
-
-		Returns True if the selections chnaged, or False otherwise.
-		'''
 		try:
 			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Exception as e:
@@ -786,6 +848,9 @@ class TabnavSelectDownCommand(TabnavSelectNextCommand):
 
 class TabnavExtendSelectionCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, context=None):
+		'''Adds selection regions to all cells adjacent to the currently selected cells in the given Direction.
+
+		The cell_direction inidicates which end of the region the cursor should be placed.'''
 		self.init_table(cell_direction)
 		try:
 			if not self.tabnav.split_and_select_current_cells():
@@ -794,10 +859,6 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 			log.warning(e.err)		
 
 	def extend_cell_selection(self, move_direction):
-		'''Adds the next cell in the given direction to the selection.
-
-		Returns True if the selections chnaged, or False otherwise.
-		'''
 		initial_selections = list(self.view.sel())
 		try:
 			new_cells = self.tabnav.get_next_cells(move_direction)
@@ -830,6 +891,7 @@ class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
 
 class TabnavSelectRowCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
+		'''Selects all cells in all rows intersecting the current selections.'''
 		self.init_table(cell_direction)
 		if self.include_separators or all((row.is_separator for row in self.table.rows)):
 			# if only separator rows are currently selected, ignore the include_separators setting
@@ -845,6 +907,7 @@ class TabnavSelectRowCommand(TabnavCommand):
 
 class TabnavSelectColumnCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
+		'''Selects all cells in all columns intersecting the current selections.'''
 		self.init_table(cell_direction)
 		self.tabnav.split_and_select_current_cells()
 		columns = []
@@ -864,6 +927,7 @@ class TabnavSelectColumnCommand(TabnavCommand):
 
 class TabnavSelectAllCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
+		'''Selects all cells in all tables intersecting the current selections.'''
 		self.init_table(cell_direction)
 		self.tabnav.split_and_select_current_cells()
 		columns = []
@@ -883,7 +947,7 @@ class TabnavSelectAllCommand(TabnavCommand):
 
 class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		log.debug("%s triggered", self.__class__.__name__)
+		'''Reduces all currently selected regions to exclude any whitespace characters on either end.'''
 		for region in self.view.sel():
 			begin = region.begin()
 			match = re.match(r'^\s*(\S.+?)\s*$', self.view.substr(region)) # Matches _at least_ one non-whitespace character
@@ -903,15 +967,17 @@ class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 
 class EnableTabnavCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
+		'''Enables TabNav in the current view.'''
 		self.view.settings().set('tabnav.enabled', True)
 
 	def is_enabled(self):
-		# This command is enabled unless TabNav is already explicitly enabled
+		'''This command is enabled unless TabNav is already explicitly enabled.'''
 		enabled = self.view.settings().get('tabnav.enabled')
 		return enabled is None or not enabled
 
 class DisableTabnavCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
+		'''Disables TabNav in the current view.'''
 		self.view.settings().set('tabnav.enabled', False)
 
 	def is_enabled(self):
@@ -921,14 +987,17 @@ class DisableTabnavCommand(sublime_plugin.TextCommand):
 
 class TabnavIncludeSeparatorsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
+		'''Causes TabNav to include line separator rows from selections in the current view.'''
 		self.view.settings().set('tabnav.include_separators', True)
 
 class TabnavExcludeSeparatorsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
+		'''Causes TabNav to exclude line separator rows from selections in the current view.'''
 		self.view.settings().set('tabnav.include_separators', False)
 
 class TabnavSetCsvDelimiterCommand(sublime_plugin.TextCommand):
 	def run(self, edit, delimiter=None):
+		'''Sets the delimiter to use for CSV files.'''
 		if type(delimiter) is str and len(delimiter) == 0:
 			delimiter = None
 		self.view.settings().set('tabnav.delimiter', delimiter)
@@ -937,6 +1006,8 @@ class TabnavSetCsvDelimiterCommand(sublime_plugin.TextCommand):
 		return TabnavCsvDelimiterInputHandler()
 
 class TabnavCsvDelimiterInputHandler(sublime_plugin.TextInputHandler):
+	'''Input handler to get the delimiter when the TabnavSetCsvDelimiterCommand
+	is run from the command palette.'''
 	def name(self):
 		return "delimiter"
 
@@ -944,6 +1015,11 @@ class TabnavCsvDelimiterInputHandler(sublime_plugin.TextInputHandler):
 		return ','
 
 class IsTabnavContextListener(sublime_plugin.ViewEventListener):
+	'''Listener for the 'is_tabnav_context' keybinding context.
+
+	Returns true if a TabNav has not been explicitly disabled on the view,
+	and if a TabnavContext can be succesfully identified in the current view.
+	'''
 	def on_query_context(self, key, operator, operand, match_all):
 		if key != 'is_tabnav_context':
 			return None

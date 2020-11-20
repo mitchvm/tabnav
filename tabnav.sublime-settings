@@ -21,9 +21,8 @@
 			//    defined by that command is used.
 			// 2) If the current file syntax is from either of the Advanced CSV or Rainbow CSV packages,
 			//    the delimiter set by those packages is used.
-			//      - Note: Rainbow CSV "simple" syntaxes aren't truly supported, but as long as a cell
-			//        doesn't _start_ with a quote (optionally preceded by whitespace) then the cell won't
-			//        get treated as a quoted cell, even if it contains quotes.
+			//      - Note: Rainbow CSV "simple" syntaxes aren't truly supported. Cells that _start_
+			//        with a double-quote (optionally preceded by whitespace) will be treated as quoted cells.
 			// 3) If the first line of the file contains only one of the "auto_delimiters", then it is
 			//    assumed to be the delimiter:
 			//    * Comma (,)
