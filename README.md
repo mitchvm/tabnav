@@ -9,7 +9,7 @@ TabNav also provides the ability to copy only the contents of the table, excludi
 
 ## Commands
 
-TabNav adds the following commands to Sublime Text. They are all accessible via the Command Palette, as well as the the TabNav submenu under the Settings menu.
+TabNav adds the following commands to Sublime Text. They are all accessible via the Command Palette, as well as the the TabNav submenu under the Selection menu.
 
 ### Table Navigation Commands
 
