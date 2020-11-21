@@ -171,7 +171,7 @@
                 }
               },
               {
-                "caption": "Settings – Global Keybinding Flags",
+                "caption": "Settings – Global Key Binding Flags",
                 "command": "edit_settings",
                 "args": {
                   "base_file": "${packages}/tabnav/Preferences.sublime-settings",
@@ -182,7 +182,7 @@
                 "caption": "-"
               },
               {
-                "caption": "Settings – Default Keybinding Flags",
+                "caption": "Settings – Default Key Binding Flags",
                 "command": "open_file",
                 "args": {
                   "file": "${packages}/tabnav/Preferences.sublime-settings"
