@@ -117,7 +117,7 @@ To add custom key bindings, select the TabNav "Key Bindings" menu option, which 
 
 Selecting the "TabNav - Settings" menu item opens the TabNav default settings file, as well as your local TabNav settings file. Currently, the only configuration option outside of a specific context is the `include_separators` flag. Copy the value to your local settings file with a value of `true` to include table row separator lines in movements and selections by default. Note that this setting can be temporarily set to true on a particular view with the ["Include separator lines in selections"](#other-commands) command.
 
-### Context Customization
+### Context Configuration
 
 To modify the behaviour of the default contexts, or to add new contexts, use the `user_contexts`<sup>2</sup> element in your local TabNav settings file
 
@@ -133,6 +133,17 @@ To override a default context's setting, you only need to provide the path to th
 }
 ```
 
+See the [Custom Contexts](#custom-contexts) section below for descriptions of the standard context parameters.
+
+#### CSV Context Configuration
+
+The `auto_csv` context is a special case be with several custom parameters in addition to the standard context parameters.
+
+1. `auto_delimiters`: The list of delimiters that TabNav will check when attempting to infer the CSV delimiter from the first line of the file.
+2. `default_delimiter`: The ultimate fallback delimiter used for the CSV context if all other methods of determining the delimiter fail.
+
+### Custom Contexts
+
 Additional contexts can also be defined in the `user_contexts` element. The following parameters are used to define a TabNav context:
 
 1. `selector`: **Required**. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that identifies the scope within which the context operates. If multiple selections are currently active, only the first selection's scope is checked. If multiple TabNav context's selectors match the current scope, then the context with the highest selector "score" (as returned by the Sublime Text API) is used.
@@ -141,6 +152,7 @@ Additional contexts can also be defined in the `user_contexts` element. The foll
 4. `eol_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to capture the final cell's contents if it is found after the final delimiter on the line.
 5. `sep_cell_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to identify row separator lines of text. If provided, it must return a `content` group that matches the portion of the separator line between column delimiters (similar to the `cell_pattern`).
 6. `sep_eol_pattern`: _Optional_. As `eol_pattern` is to the `cell_pattern`, so `sep_eol_pattern` is to the `sep_cell_pattern`.
-7. `enable_explicitly`: _Optional._ A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
+7. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
+8. `include_separators`: _Optional_. A boolean to indicate if line separators should be inclined when using this context. Overrides the global `include_separators` setting.
 
 <sup><b>2</b></sup> The default settings file has a `contexts` element. TabNav merges settings from the `user_contexts` and `contexts` settings. If you want to completely overwrite the default contexts, you can use the `contexts` element in your local settings file, however this is not recommended.
