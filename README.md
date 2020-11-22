@@ -120,7 +120,10 @@ To add custom key bindings, select the TabNav "Key Bindings" menu option, which 
 
 ### Configuration Options
 
-Selecting the "TabNav - Settings" menu item opens the TabNav default settings file, as well as your local TabNav settings file. Currently, the only configuration option outside of a specific context is the `include_separators` flag. Copy the value to your local settings file with a value of `true` to include table row separator lines in movements and selections by default. Note that this setting can be temporarily set to true on a particular view with the ["Include separator lines in selections"](#other-commands) command.
+Selecting the "TabNav - Settings" menu item opens the TabNav default settings file, as well as your local TabNav settings file. The following global configuration parameters are available:
+
+* `include_separators`: When false, row separator lines are skipped when moving and not included in selections. To temporarily include line separators, ["Include separator lines in selections" command](#other-commands). Can also be overridden on a per-context basis. Default: `false`.
+* `trim_on_copy`: When true, whitespace is trimmed from the selected regions' text prior to putting it  on the clipboard with the ["Copy selections" commands](#other-commands). The selections in the view themselves are not altered. Default: `true`.
 
 ### Context Configuration
 
@@ -142,7 +145,7 @@ See the [Custom Contexts](#custom-contexts) section below for descriptions of th
 
 #### CSV Context Configuration
 
-The `auto_csv` context is a special case be with several custom parameters in addition to the standard context parameters.
+The `auto_csv` context is a special case with several custom parameters in addition to the standard context parameters.
 
 1. `auto_delimiters`: The list of delimiters that TabNav will check when attempting to infer the CSV delimiter from the first line of the file.
 2. `default_delimiter`: The ultimate fallback delimiter used for the CSV context if all other methods of determining the delimiter fail.
@@ -151,7 +154,7 @@ The `auto_csv` context is a special case be with several custom parameters in ad
 
 Additional contexts can also be defined in the `user_contexts` element. The following parameters are used to define a TabNav context:
 
-1. `selector`: **Required**. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that identifies the scope within which the context operates. If multiple selections are currently active, only the first selection's scope is checked. If multiple TabNav context's selectors match the current scope, then the context with the highest selector "score" (as returned by the Sublime Text API) is used.
+1. `selector`: **Required**. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that identifies the scope within which the context operates. If multiple selections are currently active, only the first selection's scope is checked. If multiple TabNav contexts' selectors match the current scope, then the context with the highest selector "score" (as returned by the Sublime Text API) is used.
 2. `except_selector`: _Optional_. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that overrides the base `selector`. If the first selection matches this selector, then the context is _not_ matched.
 3. `cell_pattern`: **Required**. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to identify cell contents from a line of text. Each match of the expression should return a single cell's contents within a `contents` group. This expression can also, optionally, return a zero-width match immediately prior to the last delimiter on the line. This match will be ignored.
 4. `eol_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to capture the final cell's contents if it is found after the final delimiter on the line.

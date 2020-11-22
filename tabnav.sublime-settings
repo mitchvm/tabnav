@@ -1,5 +1,17 @@
 {
+	// When false, row separator lines are skipped when moving and not included in selections.
+	// To temporarily include line separators, use the "Include separator lines in selections" command.
+	// Can also be overridden on a per-context basis.
 	"include_separators": false,
+
+	// When true, whitespace is trimmed from the selected regions' text prior to putting it 
+	// on the clipboard with the "Copy selections" commands. The Sublime Text selections themselves
+	// are not altered.
+	"trim_on_copy": true,
+	
+	// To override individual context configs or add new contexts without
+	// overriding everything, place overrides in a "user_contexts" element,
+	// not "contexts".
 	"contexts":
 	{
 		"markdown": 

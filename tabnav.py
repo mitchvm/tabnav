@@ -984,19 +984,25 @@ class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 			self.view.sel().subtract(region)
 			self.view.sel().add(trimmed)
 
+
 def copy_delimited_regions(view, delimiter):
+	settings = sublime.load_settings("tabnav.sublime-settings")
+	trim = settings.get("trim_on_copy")
 	result = ''
 	row = None
 	for region in itertools.chain.from_iterable((view.split_by_newlines(r) for r in view.sel())):
+		text = view.substr(region)
+		if trim:
+			text = re.match(r'^\s*(.*?)\s*$',text).group(1)
 		r = view.rowcol(region.begin())[0]
 		if row is None:
-			result = view.substr(region)
+			result = text
 			row = r
 		elif r > row:
-			result = result + '\n' + view.substr(region)
+			result = result + '\n' + text
 			row = r
 		else:
-			result = result + delimiter + view.substr(region)
+			result = result + delimiter + text
 	sublime.set_clipboard(result)
 
 class TabnavCopyDelimitedCommand(sublime_plugin.TextCommand):
