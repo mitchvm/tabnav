@@ -9,6 +9,25 @@ TabNav also provides the ability to copy only the contents of the table, excludi
 
 ![Demo](teaser.gif)
 
+## Table of Contents
+
+<!-- MarkdownTOC -->
+
+- [Commands](#commands)
+    - [Table Navigation Commands](#table-navigation-commands)
+    - [Other Commands](#other-commands)
+- [Contexts](#contexts)
+    - [Markdown](#markdown)
+    - [CSV](#csv)
+- [Customization](#customization)
+    - [Key Bindings](#key-bindings)
+    - [Configuration Options](#configuration-options)
+    - [Context Configuration](#context-configuration)
+        - [CSV Context Configuration](#csv-context-configuration)
+    - [Custom Contexts](#custom-contexts)
+
+<!-- /MarkdownTOC -->
+
 ## Commands
 
 TabNav adds the following commands to Sublime Text. They are all accessible via the Command Palette, as well as the the TabNav submenu under the Selection menu.
