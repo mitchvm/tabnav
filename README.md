@@ -2,10 +2,12 @@
 
 TabNav is a Sublime Text 3 plugin for keyboard navigation of tabular text data. Quickly move and select "cells" of text in the following formats, without taking your hands off the keyboard:
 
-* CSV
-* Markdown tables
+* CSV files
+* Markdown pipe tables
 
 TabNav also provides the ability to copy only the contents of the table, excluding markup, in a format that can be readily-pasted into other programs, such as Excel.
+
+![Demo](teaser.gif)
 
 ## Commands
 
@@ -15,11 +17,24 @@ TabNav adds the following commands to Sublime Text. They are all accessible via 
 
 The table navigation commands below only operate within the context of a table. All of the table commands are compatible with multiple cursors, and even multiple cursors in multiple, disjoint tables.
 
-On initial invocation, all commands except the select row/column/table cells commands operate only cells that intersect the current selection(s). For example, if a line of text in a table is currently selected, all of the "Select" and "Extend selection" commands simply split the region into the table cells found on the line. Subsequent invocations will move/extend the selections.
-
 The default key bindings are intended for use on a US-English QWERTY keyboard. They make heavy use of the cluster of four keys immediately to the left of the <kbd>Enter</kbd> key. If you are using a different keyboard layout, or simply want to customize your key bindings, all of the default key bindings can be individually disabled. See [Customization](#customization).
 
+The core movement and selection key bindings combine one of four basic modifier key combinations together with with one of the four direction keys:
+
+
+| Name                        | Windows/Linux                   | macOS                    |
+|:----------------------------|:--------------------------------|:-------------------------|
+| Move cursor to cell...      | <kbd>Alt</kbd>                  | <kbd>^</kbd>             |
+| Add cursor to cell...       | <kbd>Alt</kbd><kbd>Shift</kbd>  | <kbd>^</kbd><kbd>⇧</kbd> |
+| Select cell...              | <kbd>Ctrl</kbd>                 | <kbd>⌘</kbd>             |
+| Extend selection to cell... | <kbd>Ctrl</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd> |
+
 <table>
+<thead>
+<tr>
+<th align="center">Direction Key</th>
+</tr>    
+</thead>
 <tbody>
 <tr>
 <td align="center">Up<br><kbd>[</kbd>
@@ -34,34 +49,24 @@ The default key bindings are intended for use on a US-English QWERTY keyboard. T
 </tbody>
 </table>
 
-| Name                                 |                                   Windows/Linux Key binding |                                  macOS Key binding |
-|:-------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|
-| Move cursor to start of current cell |                                                            |                                                   |
-| Move cursor to end of current cell   |                                                            |                                                   |
-| Move cursor to cell on left          |                                <kbd>Alt</kbd>+<kbd>;</kbd> |                         <kbd>^</kbd>+<kbd>;</kbd> |
-| Move cursor to cell on right         |                                <kbd>Alt</kbd>+<kbd>'</kbd> |                         <kbd>^</kbd>+<kbd>'</kbd> |
-| Move cursor to cell above            |                                <kbd>Alt</kbd>+<kbd>[</kbd> |                         <kbd>^</kbd>+<kbd>[</kbd> |
-| Move cursor to cell below            |                                <kbd>Alt</kbd>+<kbd>/</kbd> |                         <kbd>^</kbd>+<kbd>/</kbd> |
-| Add cursor to cell on left           |                <kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>;</kbd> |             <kbd>^</kbd><kbd>⇧</kbd>+<kbd>;</kbd> |
-| Add cursor to cell on right          |                <kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>'</kbd> |             <kbd>^</kbd><kbd>⇧</kbd>+<kbd>'</kbd> |
-| Add cursor to cell above             |                <kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>[</kbd> |             <kbd>^</kbd><kbd>⇧</kbd>+<kbd>[</kbd> |
-| Add cursor to cell below             |                <kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>/</kbd> |             <kbd>^</kbd><kbd>⇧</kbd>+<kbd>/</kbd> |
-| Select current cell                  |                                                            |                                                   |
-| Select cell on left                  |                               <kbd>Ctrl</kbd>+<kbd>;</kbd> |                         <kbd>⌘</kbd>+<kbd>;</kbd> |
-| Select cell on right                 |                               <kbd>Ctrl</kbd>+<kbd>'</kbd> |                         <kbd>⌘</kbd>+<kbd>'</kbd> |
-| Select cell above                    |                               <kbd>Ctrl</kbd>+<kbd>[</kbd> |                         <kbd>⌘</kbd>+<kbd>[</kbd> |
-| Select cell below                    |                               <kbd>Ctrl</kbd>+<kbd>/</kbd> |                         <kbd>⌘</kbd>+<kbd>/</kbd> |
-| Extend selection to cell on left     |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>;</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>;</kbd> |
-| Extend selection to cell on right    |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>'</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>'</kbd> |
-| Extend selection to cell above       |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>[</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>[</kbd> |
-| Extend selection to cell below       |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>/</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>/</kbd> |
-| Select row cells                     |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>L</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>L</kbd> |
-| Select column cells                  |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>C</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>C</kbd> |
-| Select all table cells               | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>C</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd>+<kbd>C</kbd> |
+Beyond the 16 core navigation commands, these additional movement and selection commands are provided. Unlike the core commands, all of these commands are idempotent - that is, they generate the same Sublime Text selections/cursors regardless of how many times they are invoked, or if the current selections/cursors are already aligned with table cells. This might prove useful, for example, if recording a macro.
+
+| Name                                             |                                  Windows/Linux Key binding |                                 macOS Key binding |
+|:-------------------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|
+| Move cursor to start of current cell<sup>1</sup> |                                                            |                                                   |
+| Move cursor to end of current cell<sup>1</sup>   |                                                            |                                                   |
+| Select current cell<sup>2</sup>                  |                                                            |                                                   |
+| Select row cells                                 |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>L</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>L</kbd> |
+| Select column cells                              |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>C</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>C</kbd> |
+| Select all table cells                           | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>C</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd>+<kbd>C</kbd> |
+
+<sup>1</sup> On initial invocation, the core move cursor left/right commands will also move the cursor to the start/end of the current cell, respectively, if not all selections are already at that position.
+
+<sup>2</sup> On initial invocation, all of the core select and extend selection commands will also select the current cell, if not all existing selections line up with table cells.
 
 ### Other Commands
 
-In addition to the table navigation commands, the following commands are provided for configuration or convenience. These commands will operate even outside the context of a table.
+These commands will operate even outside the context of a table.
 
 | Name                                    |                                   Windows/Linux Keybinding |                                  macOS Keybinding | Description                                                                                                                                                                                                                 |
 |:----------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -69,7 +74,7 @@ In addition to the table navigation commands, the following commands are provide
 | Disable on current view                 | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>'</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd>+<kbd>'</kbd> | Disables TabNav on the current view.                                                                                                                                                                                        |
 | Include separator lines in selections   |                                                            |                                                   | Configures TabNav to include row separator lines in selections and movements. By default, they are excluded.                                                                                                                |
 | Exclude separator lines from selections |                                                            |                                                   | Configures TabNav to exclude row separator lines from selections and movements.                                                                                                                                             |
-| Set CSV delimiter                       |                                                            |                                                   | Sets the delimiter to use for CSV files. See the [CSV](#csv) context section for more information.                                                                                                                  |
+| Set CSV delimiter                       |                                                            |                                                   | Sets the delimiter to use for CSV files. See the [CSV](#csv) context section for more information.                                                                                                                          |
 | Trim whitespace from selections         |                                <kbd>Alt</kbd>+<kbd>W</kbd> |                         <kbd>^</kbd>+<kbd>W</kbd> | Removes all whitespace characters from either end of all current selections.                                                                                                                                                |
 | Copy selections as TSV                  |                                                            |                                                   | Copies all current selections as tab-delimited data, with all selections on the same row of text tab-separated and a newline between selection row. This is useful, for example, to copy data from a text table into Excel. |
 | Copy selections with delimiter          |                                                            |                                                   | Same as the "Copy selections as TSV" command, but prompts the user to input the delimiter to use.                                                                                                                           |
@@ -86,7 +91,7 @@ TabNav is enabled by default in Markdown documents. Tables are identified as any
 
 CSV requires special handling, specifically because there are so many permutations of "separated value" documents. TabNav treats CSV as the fall-back context if no other context was positively identified, however TabNav is disabled by default in CSV contexts - use the ["Enable on current view"](#other-commands) command to enable it.
 
-TabNav integrates with both the [Advanced CSV](https://github.com/wadetb/Sublime-Text-Advanced-CSV) and [Rainbow CSV](https://github.com/mechatroner/sublime_rainbow_csv/)<sup id="a1">1</sup> packages. If the syntax on the current view comes from either of those packages, the delimiter being used by them is also automatically used by TabNav.
+TabNav integrates with both the [Advanced CSV](https://github.com/wadetb/Sublime-Text-Advanced-CSV) and [Rainbow CSV](https://github.com/mechatroner/sublime_rainbow_csv/)<sup id="a1">3</sup> packages. If the syntax on the current view comes from either of those packages, the delimiter being used by them is also automatically used by TabNav.
 
 If the syntaxes provided by those two packages are not in use on the current view, then TabNav attempts to infer the delimiter to use by inspecting the first line of the file. If the first line of the file contains only one of the following characters, then that character is assumed to be the delimiter:
 
@@ -99,7 +104,7 @@ You can also specify a particular delimiter to use (when not in an Advanced CSV 
 
 Finally, if all other methods of determining the delimiter fail, TabNav uses a comma as the default delimiter.
 
-<sup><b>1</b></sup> TabNav only partially supports Rainbow CSV syntaxes. The two restrictions are: only single-character delimiters are supported, and all CSV files are treated as quoted files, regardless if using a Rainbow CSV "simple" syntax.
+<sup><b>3</b></sup> TabNav only partially supports Rainbow CSV syntaxes. The two restrictions are: only single-character delimiters are supported, and all CSV files are treated as quoted files, regardless if using a Rainbow CSV "simple" syntax.
 
 ## Customization
 
@@ -119,7 +124,7 @@ Selecting the "TabNav - Settings" menu item opens the TabNav default settings fi
 
 ### Context Configuration
 
-To modify the behaviour of the default contexts, or to add new contexts, use the `user_contexts`<sup>2</sup> element in your local TabNav settings file
+To modify the behaviour of the default contexts, or to add new contexts, use the `user_contexts`<sup>4</sup> element in your local TabNav settings file
 
 To override a default context's setting, you only need to provide the path to that setting in the `user_contexts` element; you don't need to copy the full context definition. For example, to require that TabNav be explicitly enabled in Markdown contexts, add this to your local settings file:
 
@@ -155,4 +160,4 @@ Additional contexts can also be defined in the `user_contexts` element. The foll
 7. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
 8. `include_separators`: _Optional_. A boolean to indicate if line separators should be inclined when using this context. Overrides the global `include_separators` setting.
 
-<sup><b>2</b></sup> The default settings file has a `contexts` element. TabNav merges settings from the `user_contexts` and `contexts` settings. If you want to completely overwrite the default contexts, you can use the `contexts` element in your local settings file, however this is not recommended.
+<sup><b>4</b></sup> The default settings file has a `contexts` element. TabNav merges settings from the `user_contexts` and `contexts` settings. If you want to completely overwrite the default contexts, you can use the `contexts` element in your local settings file, however this is not recommended.
