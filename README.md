@@ -120,10 +120,10 @@ To add custom key bindings, select the TabNav "Key Bindings" menu option, which 
 
 ### Configuration Options
 
-Selecting the "TabNav - Settings" menu item opens the TabNav default settings file, as well as your local TabNav settings file. The following global configuration parameters are available:
+Selecting the "TabNav - Settings" menu item opens the TabNav default settings file, as well as your local TabNav settings file. Override the default configurations by placing the parameter into your local settings file. The following global configuration parameters are available:
 
-* `include_separators`: When false, row separator lines are skipped when moving and not included in selections. To temporarily include line separators, ["Include separator lines in selections" command](#other-commands). Can also be overridden on a per-context basis. Default: `false`.
-* `trim_on_copy`: When true, whitespace is trimmed from the selected regions' text prior to putting it  on the clipboard with the ["Copy selections" commands](#other-commands). The selections in the view themselves are not altered. Default: `true`.
+* `include_separators`: When false, row separator lines are skipped when moving and not included in selections. To temporarily include line separators, use the ["Include separator lines in selections" command](#other-commands). Can also be overridden on a per-context basis. Default: `false`.
+* `trim_on_copy`: When true, the ["Copy selections" commands](#other-commands) trim whitespace from the selected regions' text prior to putting it on the clipboard. The selections in the view themselves are not altered. Default: `true`.
 
 ### Context Configuration
 
