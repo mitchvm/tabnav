@@ -152,16 +152,13 @@ class TableRow:
 
 
 class TableColumn:
-	'''Stores the TableCell objects that belong to the same column of a single table in the view.
-
-	The column "grows" as as additional lines of the view are parsed.
-	'''
-	def __init__(self, initial_cell):
-		'''Creates a TableColumn with a single, initial TableCell.'''
-		self._index = initial_cell.col
-		self._minRow = initial_cell.row
-		self._maxRow = initial_cell.row
-		self._cells = [initial_cell]
+	'''Stores the TableCell objects that belong to the same column of a single table in the view.'''
+	def __init__(self, cells):
+		'''Creates a TableColumn with a optional initial TableCell.'''
+		self._cells = list(cells)
+		self._index = self._cells[0].col
+		self._minRow = min((c.row for c in self._cells))
+		self._maxRow = max((c.row for c in self._cells))
 
 	def __len__(self):
 		return len(self._cells)
@@ -169,19 +166,9 @@ class TableColumn:
 	def __iter__(self):
 		return iter(self._cells)
 
-	def add(self, cell):
-		'''Adds the given TableCell to the columns'''
-		if cell.col != self._index:
-			raise Exception("Cell is not in column {0}".format(self._index))
-		if cell.row < self._minRow:
-			self._minRow = cell.row
-		if cell.row > self._maxRow:
-			self._maxRow = cell.row
-		self._cells.append(cell)
-
 	def contains(self, cell):
 		'''Returns True if the given TableCell is within the span of this column.'''
-		if cell.col != self._index:
+		if self._index is None or cell.col != self._index:
 			return False
 		if self._minRow <= cell.row and cell.row <= self._maxRow:
 			return True 
@@ -365,11 +352,13 @@ class TableNavigator:
 		return selection_changed
 
 
-	def split_and_select_current_cells(self):
+	def split_and_select_current_cells(self, include_separators=None):
 		'''Selects all of the cells spanned by the current selection.
 
 		Returns True if the selections changed, or False otherwise.
 		'''
+		if include_separators is None:
+			include_separators = self.include_separators
 		selections = list(self.view.sel())
 		selection_lines = list(itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections)))
 		selection_changed = len(selection_lines) != len(selections)
@@ -387,9 +376,9 @@ class TableNavigator:
 				selection_changed = True
 			cells = itertools.chain(cells, line_cells)
 		if selection_changed:
-			if not (self.include_separators or all_separators):
+			if not (include_separators or all_separators):
 				# If only separator rows are selected, ignore the include_separators setting
-				cells = (c for c in cells if c.is_separator == self.include_separators)
+				cells = (c for c in cells if c.is_separator == include_separators)
 			self.view.sel().clear()
 			self.view.sel().add_all(list(cells))
 		return selection_changed
@@ -448,13 +437,11 @@ class TableNavigator:
 		Gaps in the table where a row is a table row but has insufficient columns are 
 		"jumped", but gaps between multiple tables (i.e. rows containing no table columns)
 		are not.'''
-		column = TableColumn(seed_cell)
+		cells = [seed_cell]
 		# Get all cells above current row:
 		for r in range(seed_cell.row-1, -1, -1):
 			try:
-				cell = self._table[(r, seed_cell.col)]
-				if self.include_separators or not cell.is_separator:
-					column.add(cell)
+				cells.append(self._table[(r, seed_cell.col)])
 			except ColumnIndexError as e:
 				log.warning(e.err)
 				# jump past this cell and keep going
@@ -465,15 +452,15 @@ class TableNavigator:
 		while(True):
 			r = r + 1
 			try:
-				cell = self._table[(r, seed_cell.col)]
-				if self.include_separators or not cell.is_separator:
-					column.add(cell)
+				cells.append(self._table[(r, seed_cell.col)])
 			except ColumnIndexError as e:
 				log.warning(e.err)
 				# jump past this cell and keep going
 			except (RowNotInTableError, RowOutOfFileBounds):
 				break
-		return column
+		if not self.include_separators:
+			cells = (c for c in cells if not c.is_separator)
+		return TableColumn(cells)
 
 
 class TabnavContext:
@@ -695,10 +682,10 @@ class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
 		'''Places cursors at one end of each cell that intersects the currently selected regions.
 
 		The cell_direction indicates which end of the cell the cursor should be placed at.'''
-		self.init_table(cell_direction)
 		try:
+			self.init_table(cell_direction)
 			self.tabnav.split_and_move_current_cells(True)
-		except CursorNotInTableError as e:
+		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.warning(e.err)
 
 class TabnavMoveCursorStartCommand(TabnavMoveCursorCurrentCellCommand):
@@ -716,11 +703,11 @@ class TabnavMoveCursorCommand(TabnavCommand):
 		The cell_direction inidicates which end of the cells the cursor should be placed.
 		move_cursors=False attempts to maintain the relative offset of the cursors within the cells.
 		move_cursors=True moves the cursors to the "end" of the cell (based on the cell_direction).'''
-		self.init_table(cell_direction)
 		try:
+			self.init_table(cell_direction)
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.move_next_cell(move_direction)
-		except CursorNotInTableError as e:
+		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.warning(e.err)
 
 	def move_next_cell(self, move_direction):
@@ -771,11 +758,11 @@ class TabnavAddCursorCommand(TabnavCommand):
 		The cell_direction inidicates which end of the cells the cursor should be placed.
 		move_cursors=False attempts to maintain the relative offset of the cursors within the cells.
 		move_cursors=True moves the cursors to the "end" of the cell (based on the cell_direction).'''
-		self.init_table(cell_direction)
 		try:
+			self.init_table(cell_direction)
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.add_next_cell(move_direction)
-		except CursorNotInTableError as e:
+		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.warning(e.err)
 
 	def add_next_cell(self, move_direction):
@@ -813,10 +800,10 @@ class TabnavAddCursorDownCommand(TabnavAddCursorCommand):
 class TabnavSelectCurrentCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
 		'''Selects the contents of all table cells that intersect the current selection regions.'''
-		self.init_table(cell_direction)
 		try:
+			self.init_table(cell_direction)
 			self.tabnav.split_and_select_current_cells()
-		except CursorNotInTableError as e:
+		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.warning(e.err)
 
 
@@ -825,11 +812,11 @@ class TabnavSelectNextCommand(TabnavCommand):
 		'''Moves all selection regions to the cells adjacent to the currently selected cells in the given Direction.
 
 		The cell_direction inidicates which end of the region the cursor should be placed.'''
-		self.init_table(cell_direction)
 		try:
+			self.init_table(cell_direction)
 			if not self.tabnav.split_and_select_current_cells():
 				self.select_next_cell(move_direction)
-		except CursorNotInTableError as e:
+		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.warning(e.err)		
 
 	def select_next_cell(self, move_direction):
@@ -869,11 +856,11 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 		'''Adds selection regions to all cells adjacent to the currently selected cells in the given Direction.
 
 		The cell_direction inidicates which end of the region the cursor should be placed.'''
-		self.init_table(cell_direction)
 		try:
+			self.init_table(cell_direction)
 			if not self.tabnav.split_and_select_current_cells():
 				self.extend_cell_selection(move_direction)
-		except CursorNotInTableError as e:
+		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.warning(e.err)		
 
 	def extend_cell_selection(self, move_direction):
@@ -910,15 +897,18 @@ class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
 class TabnavSelectRowCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
 		'''Selects all cells in all rows intersecting the current selections.'''
-		self.init_table(cell_direction)
-		if self.include_separators or all((row.is_separator for row in self.table.rows)):
-			# if only separator rows are currently selected, ignore the include_separators setting
-			cells = [cell for row in self.table.rows for cell in row]
-		else:
-			cells = [cell for row in self.table.rows for cell in row if not row.is_separator]
-		if len(cells) > 0:
-			self.view.sel().clear()
-			self.view.sel().add_all(cells)
+		try:
+			self.init_table(cell_direction)
+			if self.include_separators or all((row.is_separator for row in self.table.rows)):
+				# if only separator rows are currently selected, ignore the include_separators setting
+				cells = [cell for row in self.table.rows for cell in row]
+			else:
+				cells = [cell for row in self.table.rows for cell in row if not row.is_separator]
+			if len(cells) > 0:
+				self.view.sel().clear()
+				self.view.sel().add_all(cells)
+		except (CursorNotInTableError, RowNotInTableError) as e:
+			log.warning(e.err)
 
 
 # Select column cells
@@ -926,19 +916,23 @@ class TabnavSelectRowCommand(TabnavCommand):
 class TabnavSelectColumnCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
 		'''Selects all cells in all columns intersecting the current selections.'''
-		self.init_table(cell_direction)
-		self.tabnav.split_and_select_current_cells()
-		columns = []
-		for region in self.view.sel():
-			cell = self.table.cell_at_point(region.b)
-			containing_columns = [col for col in columns if col.contains(cell)]
-			if len(containing_columns) > 0:
-				continue # This cell is already contained in a previously captured column
-			columns.append(self.tabnav.get_table_column(cell))
-		cells = [cell for col in columns for cell in col]
-		if len(cells) > 0:
-			self.view.sel().clear()
-			self.view.sel().add_all(cells)
+		try:
+			self.init_table(cell_direction)
+			# include separators in the initial selection in case a cursor is in a separator row
+			self.tabnav.split_and_select_current_cells(include_separators=True)
+			columns = []
+			for region in self.view.sel():
+				cell = self.table.cell_at_point(region.b)
+				containing_columns = [col for col in columns if col.contains(cell)]
+				if len(containing_columns) > 0:
+					continue # This cell is already contained in a previously captured column
+				columns.append(self.tabnav.get_table_column(cell))
+			cells = [cell for col in columns for cell in col]
+			if len(cells) > 0:
+				self.view.sel().clear()
+				self.view.sel().add_all(cells)
+		except (CursorNotInTableError, RowNotInTableError) as e:
+			log.warning(e.err)
 
 
 # Select all table cells
@@ -946,23 +940,25 @@ class TabnavSelectColumnCommand(TabnavCommand):
 class TabnavSelectAllCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
 		'''Selects all cells in all tables intersecting the current selections.'''
-		self.init_table(cell_direction)
-		self.tabnav.split_and_select_current_cells()
-		columns = []
-		# Expand the first column in each disjoint table to parse all rows of all selected tables
-		for cell in (row[0] for row in self.table.rows):
-			containing_columns = [col for col in columns if col.contains(cell)]
-			if len(containing_columns) > 0:
-				continue # This cell is already contained in a previously captured column
-			columns.append(self.tabnav.get_table_column(cell))
-		if self.include_separators:
-			cells = [cell for row in self.table.rows for cell in row]
-		else:
-			cells = [cell for row in self.table.rows for cell in row if not row.is_separator]
-		if len(cells) > 0:
-			self.view.sel().clear()
-			self.view.sel().add_all(cells)
-
+		try:
+			self.init_table(cell_direction)
+			self.tabnav.split_and_select_current_cells()
+			columns = []
+			# Expand the first column in each disjoint table to parse all rows of all selected tables
+			for cell in (row[0] for row in self.table.rows):
+				containing_columns = [col for col in columns if col.contains(cell)]
+				if len(containing_columns) > 0:
+					continue # This cell is already contained in a previously captured column
+				columns.append(self.tabnav.get_table_column(cell))
+			if self.include_separators:
+				cells = [cell for row in self.table.rows for cell in row]
+			else:
+				cells = [cell for row in self.table.rows for cell in row if not row.is_separator]
+			if len(cells) > 0:
+				self.view.sel().clear()
+				self.view.sel().add_all(cells)
+		except (CursorNotInTableError, RowNotInTableError) as e:
+			log.warning(e.err)
 # Other
 
 class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
