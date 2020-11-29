@@ -7,8 +7,11 @@ import os
 import itertools
 import base64
 import uuid
+import json
 
-test_files_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "test_files")
+current_dir = os.path.dirname(os.path.realpath(__file__))
+test_cases_dir = os.path.join(current_dir, "test_cases")
+test_files_dir = os.path.join(current_dir, "test_files")
 
 pending_test_files = {}
 output_panel = None
@@ -16,14 +19,14 @@ test_results = []
 start_time = None
 
 class TestCase():
-	def __init__(self, command_name, context_name, file_name, test_definition):
-		self.command_name = command_name
-		self.context_name = context_name
-		self.file_name = file_name
+	def __init__(self, test_definition):
 		self.test_id = test_definition['id']
+		self.command_name = test_definition['command']
+		self.context_name = test_definition['context']
+		self.file_name = test_definition['file']
 		self.description = test_definition['description']
-		self.initial_selections = test_definition['initial_selections']
-		self.expected_selections = test_definition['expected_selections']
+		self.initial_selections = [(s['a'], s['b']) for s in test_definition['initial_selections']]
+		self.expected_selections = [(s['a'], s['b']) for s in test_definition['expected_selections']]
 		if 'settings' in test_definition:
 			self.settings = test_definition['settings']
 		else:
@@ -86,13 +89,16 @@ class TestSetResults():
 
 
 def enumerate_test_cases(command_name=None, context_name=None, file_name=None, test_id=None):
-	from tabnav_tests import TestCases
-	test_cases = TestCases.get_raw_test_cases()
-	for command in (key for key in test_cases if command_name is None or key == command_name):
-		for context in (key for key in test_cases[command] if context_name is None or key == context_name):
-			for file in (key for key in test_cases[command][context] if file_name is None or key == file_name):
-				for test in (test_def for test_def in test_cases[command][context][file] if test_id is None or test_def['id'] == test_id):
-					yield TestCase(command, context, file, test)
+	for dirpath, dirnames, filenames in os.walk(test_cases_dir):
+		for filename in (f for f in filenames if os.path.splitext(f)[1] == '.json'):
+			with open(os.path.join(dirpath, filename)) as f:
+				test_cases = [TestCase(test_definition) for test_definition in json.load(f)]
+			for test in test_cases:
+				if (command_name is None or test.command_name == command_name) \
+					and (context_name is None or test.context_name == context_name) \
+					and (file_name is None or test.file_name == file_name) \
+					and (test_id is None or test.test_id == test_id):
+					yield test
 
 
 def launch_tests(window, command_name=None, context_name=None, file_name=None, test_id=None):
@@ -289,17 +295,13 @@ class TabnavNewTestIdsCommand(sublime_plugin.TextCommand):
 
 class TabnavCopyRegionCoordsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		sublime.set_clipboard(list(self.view.sel()).__str__())
+		regions = [{'a': r.a, 'b': r.b} for r in self.view.sel()]
+		sublime.set_clipboard(json.dumps(regions, sort_keys=True))
 
 class TabnavSetRegionsFromClipboardCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		coords = sublime.get_clipboard()
-		pattern = re.compile(r'\((\d+),\s*(\d+)\)')
-		regions = []
-		for match in pattern.finditer(coords):
-			a = int(match.group(1))
-			b = int(match.group(2))
-			regions.append(sublime.Region(a, b))
+		coords = json.loads(sublime.get_clipboard())
+		regions = [sublime.Region(c['a'], c['b']) for c in coords]
 		if len(regions) == 0:
 			return
 		self.view.sel().clear()

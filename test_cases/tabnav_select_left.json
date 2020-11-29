@@ -1,0 +1,173 @@
+[
+	{
+		"id": "L3VA",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in first cell",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 12, "b": 1}]
+	},
+	{
+		"id": "CFIY",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in last cell of row",
+		"initial_selections": [{"a": 138, "b": 138}],
+		"expected_selections": [{"a": 146, "b": 132}]
+	},
+	{
+		"id": "24XH",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cell in line separator row already selected",
+		"initial_selections": [{"a": 74, "b": 63}],
+		"expected_selections": [{"a": 62, "b": 51}]
+	},
+	{
+		"id": "IG6N",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "First cell of row already selected, reverse",
+		"initial_selections": [{"a": 111, "b": 101}],
+		"expected_selections": [{"a": 111, "b": 101}]
+	},
+	{
+		"id": "V5XE",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "First cell of row already selected, forward",
+		"initial_selections": [{"a": 101, "b": 111}],
+		"expected_selections": [{"a": 111, "b": 101}]
+	},
+	{
+		"id": "XAJK",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cell already selected, reverse",
+		"initial_selections": [{"a": 205, "b": 192}],
+		"expected_selections": [{"a": 191, "b": 149}]
+	},
+	{
+		"id": "L5OL",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cell already selected, forward",
+		"initial_selections": [{"a": 192, "b": 205}],
+		"expected_selections": [{"a": 191, "b": 149}]
+	},
+	{
+		"id": "MYPK",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 205, "b": 192}]
+	},
+	{
+		"id": "ABKN",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Target cell is an empty cell",
+		"initial_selections": [{"a": 224, "b": 207}],
+		"expected_selections": [{"a": 206, "b": 206}]
+	},
+	{
+		"id": "DRBR",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor after last pipe (not in table)",
+		"initial_selections": [{"a": 280, "b": 280}],
+		"expected_selections": [{"a": 280, "b": 280}]
+	},
+	{
+		"id": "SG2F",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor before first pipe (not in table)",
+		"initial_selections": [{"a": 100, "b": 100}],
+		"expected_selections": [{"a": 100, "b": 100}]
+	},
+	{
+		"id": "AFR7",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple regions, some cells selected, some not",
+		"initial_selections": [{"a": 101, "b": 111}, {"a": 205, "b": 192}, {"a": 245, "b": 245}],
+		"expected_selections": [{"a": 111, "b": 101}, {"a": 205, "b": 192}, {"a": 247, "b": 243}]
+	},
+	{
+		"id": "7QCS",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cells selected",
+		"initial_selections": [{"a": 131, "b": 120}, {"a": 205, "b": 192}, {"a": 247, "b": 243}],
+		"expected_selections": [{"a": 119, "b": 112}, {"a": 191, "b": 149}, {"a": 242, "b": 227}]
+	},
+	{
+		"id": "V4JF",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cells selected, some in first column",
+		"initial_selections": [{"a": 131, "b": 120}, {"a": 224, "b": 207}, {"a": 242, "b": 227}, {"a": 307, "b": 282}],
+		"expected_selections": [{"a": 119, "b": 112}, {"a": 206, "b": 206}, {"a": 242, "b": 227}, {"a": 307, "b": 282}]
+	},
+	{
+		"id": "CWSW",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Two regions merging to one at in first column",
+		"initial_selections": [{"a": 111, "b": 101}, {"a": 119, "b": 112}],
+		"expected_selections": [{"a": 111, "b": 101}]
+	},
+	{
+		"id": "HYS5",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple adjacent cells same row",
+		"initial_selections": [{"a": 119, "b": 112}, {"a": 131, "b": 120}, {"a": 146, "b": 132}],
+		"expected_selections": [{"a": 111, "b": 101}, {"a": 119, "b": 112}, {"a": 131, "b": 120}]
+	},
+	{
+		"id": "5AZ6",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Multiple cells in multiple tables",
+		"initial_selections": [{"a": 394, "b": 376}, {"a": 1131, "b": 1125}, {"a": 1995, "b": 1982}, {"a": 2339, "b": 2326}],
+		"expected_selections": [{"a": 375, "b": 369}, {"a": 1124, "b": 1105}, {"a": 1995, "b": 1982}, {"a": 2325, "b": 2312}]
+	},
+	{
+		"id": "VRXT",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Multiple cells in multiple line separator rows",
+		"initial_selections": [{"a": 226, "b": 208}, {"a": 254, "b": 241}, {"a": 1919, "b": 1906}],
+		"expected_selections": [{"a": 207, "b": 201}, {"a": 240, "b": 227}, {"a": 1905, "b": 1892}]
+	},
+	{
+		"id": "5J5U",
+		"command": "tabnav_select_left",
+		"context": "markdown",
+		"file": "markdown03_borderless.md",
+		"description": "Cells at selected in each column",
+		"initial_selections": [{"a": 78, "b": 68}, {"a": 124, "b": 113}, {"a": 169, "b": 159}],
+		"expected_selections": [{"a": 78, "b": 68}, {"a": 112, "b": 102}, {"a": 158, "b": 147}]
+	}
+]

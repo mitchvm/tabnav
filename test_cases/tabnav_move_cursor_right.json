@@ -1,0 +1,155 @@
+[
+	{
+		"id": "SGRB",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in first cell",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 12, "b": 12}]
+	},
+	{
+		"id": "72AV",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in last cell of row",
+		"initial_selections": [{"a": 138, "b": 138}],
+		"expected_selections": [{"a": 146, "b": 146}]
+	},
+	{
+		"id": "TFIU",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor at end of cell in line separator cell",
+		"initial_selections": [{"a": 74, "b": 74}],
+		"expected_selections": [{"a": 86, "b": 86}]
+	},
+	{
+		"id": "J3S7",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor already at end of last cell of row",
+		"initial_selections": [{"a": 146, "b": 146}],
+		"expected_selections": [{"a": 146, "b": 146}]
+	},
+	{
+		"id": "ZII7",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor already at end of cell",
+		"initial_selections": [{"a": 191, "b": 191}],
+		"expected_selections": [{"a": 205, "b": 205}]
+	},
+	{
+		"id": "ELLF",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 224, "b": 224}]
+	},
+	{
+		"id": "P7EM",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Target cell is an empty cell",
+		"initial_selections": [{"a": 205, "b": 205}],
+		"expected_selections": [{"a": 206, "b": 206}]
+	},
+	{
+		"id": "JEPY",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor after last pipe (not in table)",
+		"initial_selections": [{"a": 280, "b": 280}],
+		"expected_selections": [{"a": 280, "b": 280}]
+	},
+	{
+		"id": "L5ZP",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor before first pipe (not in table)",
+		"initial_selections": [{"a": 100, "b": 100}],
+		"expected_selections": [{"a": 100, "b": 100}]
+	},
+	{
+		"id": "JZGG",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cursors, some at end of cell, some not",
+		"initial_selections": [{"a": 12, "b": 12}, {"a": 114, "b": 114}, {"a": 191, "b": 191}, {"a": 295, "b": 295}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 307, "b": 307}]
+	},
+	{
+		"id": "C4OR",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cursors, all at the end of their respective cells",
+		"initial_selections": [{"a": 12, "b": 12}, {"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 307, "b": 307}],
+		"expected_selections": [{"a": 24, "b": 24}, {"a": 131, "b": 131}, {"a": 205, "b": 205}, {"a": 311, "b": 311}]
+	},
+	{
+		"id": "JTBR",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cursors, some at end of last column",
+		"initial_selections": [{"a": 36, "b": 36}, {"a": 146, "b": 146}, {"a": 206, "b": 206}, {"a": 279, "b": 279}, {"a": 346, "b": 346}],
+		"expected_selections": [{"a": 48, "b": 48}, {"a": 146, "b": 146}, {"a": 224, "b": 224}, {"a": 279, "b": 279}, {"a": 354, "b": 354}]
+	},
+	{
+		"id": "F5I5",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Two cursors merging to one at end of last cell of colum",
+		"initial_selections": [{"a": 131, "b": 131}, {"a": 146, "b": 146}],
+		"expected_selections": [{"a": 146, "b": 146}]
+	},
+	{
+		"id": "KDS6",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cursors same row, one cursor is the target for another",
+		"initial_selections": [{"a": 111, "b": 111}, {"a": 119, "b": 119}],
+		"expected_selections": [{"a": 119, "b": 119}, {"a": 131, "b": 131}]
+	},
+	{
+		"id": "GOEZ",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Multiple cursors at end of cells in multiple tables",
+		"initial_selections": [{"a": 478, "b": 478}, {"a": 704, "b": 704}, {"a": 996, "b": 996}, {"a": 1522, "b": 1522}, {"a": 2055, "b": 2055}, {"a": 2279, "b": 2279}],
+		"expected_selections": [{"a": 492, "b": 492}, {"a": 711, "b": 711}, {"a": 1010, "b": 1010}, {"a": 1522, "b": 1522}, {"a": 2069, "b": 2069}, {"a": 2279, "b": 2279}]
+	},
+	{
+		"id": "4WIC",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Multiple cursors in multiple line separator rows",
+		"initial_selections": [{"a": 207, "b": 207}, {"a": 1905, "b": 1905}],
+		"expected_selections": [{"a": 226, "b": 226}, {"a": 1919, "b": 1919}]
+	},
+	{
+		"id": "FQXF",
+		"command": "tabnav_move_cursor_right",
+		"context": "markdown",
+		"file": "markdown03_borderless.md",
+		"description": "Cursors at end of each column",
+		"initial_selections": [{"a": 10, "b": 10}, {"a": 124, "b": 124}, {"a": 203, "b": 203}],
+		"expected_selections": [{"a": 22, "b": 22}, {"a": 135, "b": 135}, {"a": 203, "b": 203}]
+	}
+]

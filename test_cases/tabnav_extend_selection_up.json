@@ -1,0 +1,20 @@
+[
+	{
+		"id": "XE26",
+		"command": "tabnav_extend_selection_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Region split into cells",
+		"initial_selections": [{"a": 125, "b": 245}],
+		"expected_selections": [{"a": 131, "b": 120}, {"a": 146, "b": 132}, {"a": 191, "b": 149}, {"a": 205, "b": 192}, {"a": 206, "b": 206}, {"a": 224, "b": 207}, {"a": 242, "b": 227}, {"a": 247, "b": 243}]
+	},
+	{
+		"id": "JMBK",
+		"command": "tabnav_extend_selection_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cells, some added, some not",
+		"initial_selections": [{"a": 24, "b": 13}, {"a": 131, "b": 120}, {"a": 242, "b": 227}, {"a": 279, "b": 248}, {"a": 307, "b": 282}, {"a": 354, "b": 347}],
+		"expected_selections": [{"a": 24, "b": 13}, {"a": 36, "b": 25}, {"a": 131, "b": 120}, {"a": 191, "b": 149}, {"a": 206, "b": 206}, {"a": 242, "b": 227}, {"a": 279, "b": 248}, {"a": 307, "b": 282}, {"a": 354, "b": 347}]
+	}
+]

@@ -1,0 +1,168 @@
+[
+	{
+		"id": "Q5PE",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cursor in top row of file doesn't move",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 6, "b": 6}]
+	},
+	{
+		"id": "42LX",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in first cell of row",
+		"initial_selections": [{"a": 231, "b": 231}],
+		"expected_selections": [{"a": 153, "b": 153}]
+	},
+	{
+		"id": "FFIL",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in last cell of row",
+		"initial_selections": [{"a": 215, "b": 215}],
+		"expected_selections": [{"a": 140, "b": 140}]
+	},
+	{
+		"id": "NDMD",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Separators excluded - separator row jumped",
+		"initial_selections": [{"a": 140, "b": 140}],
+		"expected_selections": [{"a": 45, "b": 45}],
+		"settings": {"tabnav.include_separators": false}
+	},
+	{
+		"id": "HSCM",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Separators excluded - multiple cursros, separator only jumped as applicable",
+		"initial_selections": [{"a": 106, "b": 106}, {"a": 245, "b": 245}],
+		"expected_selections": [{"a": 6, "b": 6}, {"a": 194, "b": 194}],
+		"settings": {"tabnav.include_separators": false}
+	},
+	{
+		"id": "CAVZ",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cursor in line separator row moves out",
+		"initial_selections": [{"a": 69, "b": 69}],
+		"expected_selections": [{"a": 19, "b": 19}],
+		"settings": {"tabnav.include_separators": false}
+	},
+	{
+		"id": "AEZM",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Separators included - moves to separator row",
+		"initial_selections": [{"a": 140, "b": 140}],
+		"expected_selections": [{"a": 95, "b": 95}],
+		"settings": {"tabnav.include_separators": true}
+	},
+	{
+		"id": "JOQO",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move to shorter cell, go to end of cell",
+		"initial_selections": [{"a": 186, "b": 186}],
+		"expected_selections": [{"a": 111, "b": 111}]
+	},
+	{
+		"id": "7KPM",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 120, "b": 120}]
+	},
+	{
+		"id": "FPKG",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Target cell is an empty cell",
+		"initial_selections": [{"a": 264, "b": 264}],
+		"expected_selections": [{"a": 206, "b": 206}]
+	},
+	{
+		"id": "Y2QP",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Relatively aligned cursors, one in top row - merged",
+		"initial_selections": [{"a": 40, "b": 40}, {"a": 135, "b": 135}],
+		"expected_selections": [{"a": 40, "b": 40}]
+	},
+	{
+		"id": "CIOA",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cursors in a single cell - all move",
+		"initial_selections": [{"a": 230, "b": 230}, {"a": 236, "b": 236}],
+		"expected_selections": [{"a": 152, "b": 152}, {"a": 158, "b": 158}]
+	},
+	{
+		"id": "HBX2",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Target row has insufficient columns - cursor doesn't move",
+		"initial_selections": [{"a": 352, "b": 352}],
+		"expected_selections": [{"a": 352, "b": 352}]
+	},
+	{
+		"id": "BZIA",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cursors, some move some don't",
+		"initial_selections": [{"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 339, "b": 339}, {"a": 352, "b": 352}],
+		"expected_selections": [{"a": 20, "b": 20}, {"a": 111, "b": 111}, {"a": 275, "b": 275}, {"a": 352, "b": 352}]
+	},
+	{
+		"id": "T3JT",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Target location already selected by another cursor",
+		"initial_selections": [{"a": 152, "b": 152}, {"a": 230, "b": 230}],
+		"expected_selections": [{"a": 104, "b": 104}, {"a": 152, "b": 152}]
+	},
+	{
+		"id": "BMGX",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Cursors in top rows of multiple tables",
+		"initial_selections": [{"a": 129, "b": 129}, {"a": 1878, "b": 1878}],
+		"expected_selections": [{"a": 129, "b": 129}, {"a": 1878, "b": 1878}]
+	},
+	{
+		"id": "SGZN",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Multiple cursors in multiple tables",
+		"initial_selections": [{"a": 148, "b": 148}, {"a": 247, "b": 247}, {"a": 613, "b": 613}, {"a": 720, "b": 720}, {"a": 1869, "b": 1869}, {"a": 2192, "b": 2192}, {"a": 2213, "b": 2213}],
+		"expected_selections": [{"a": 148, "b": 148}, {"a": 163, "b": 163}, {"a": 529, "b": 529}, {"a": 636, "b": 636}, {"a": 1869, "b": 1869}, {"a": 2162, "b": 2162}, {"a": 2183, "b": 2183}]
+	},
+	{
+		"id": "I5EB",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown03_borderless.md",
+		"description": "Cursors in borderless table",
+		"initial_selections": [{"a": 102, "b": 102}, {"a": 151, "b": 151}, {"a": 203, "b": 203}],
+		"expected_selections": [{"a": 68, "b": 68}, {"a": 117, "b": 117}, {"a": 169, "b": 169}]
+	}
+]

@@ -1,0 +1,20 @@
+[
+	{
+		"id": "XBNN",
+		"command": "tabnav_add_cursor_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Region split into one cursor per cell",
+		"initial_selections": [{"a": 125, "b": 245}],
+		"expected_selections": [{"a": 120, "b": 120}, {"a": 132, "b": 132}, {"a": 149, "b": 149}, {"a": 192, "b": 192}, {"a": 206, "b": 206}, {"a": 207, "b": 207}, {"a": 227, "b": 227}, {"a": 243, "b": 243}]
+	},
+	{
+		"id": "HPT7",
+		"command": "tabnav_add_cursor_left",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cursors, some added, some not",
+		"initial_selections": [{"a": 7, "b": 7}, {"a": 130, "b": 130}, {"a": 217, "b": 217}, {"a": 243, "b": 243}],
+		"expected_selections": [{"a": 7, "b": 7}, {"a": 119, "b": 119}, {"a": 130, "b": 130}, {"a": 206, "b": 206}, {"a": 217, "b": 217}, {"a": 227, "b": 227}, {"a": 243, "b": 243}]
+	}
+]
