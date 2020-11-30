@@ -241,48 +241,50 @@ class TableView:
 	def _parse_context_row(self, r):
 		line = self.view.line(self.view.text_point(r,0))
 		line_content = self.view.substr(line)
-		row = self._parse_row(r, line_content, self._context.sep_cell_pattern, self._context.sep_eol_pattern, True)
+		row = self._parse_row(r, line_content, self._context.separator_patterns, True)
 		if row is None:
-			row = self._parse_row(r, line_content, self._context.cell_pattern, self._context.eol_pattern, False)
+			row = self._parse_row(r, line_content, self._context.cell_patterns, False)
 		if row is None:
 			raise RowNotInTableError(r)
 		log.debug("Row %d: #cells: %d; is_separator: %s", r, len(row), row.is_separator)
 		return row
 
-	def _parse_row(self, r, line_content, cell_pattern, eol_pattern, is_separator):
-		# The cell_pattern returns all cells _before_ the final delimiter, as well as a zero-width match immediately before the final delimiter as the last match
-		if cell_pattern is None:
+	def _parse_row(self, r, line_content, patterns, is_separator):
+		if patterns is None or len(patterns) == 0:
 			return None
 		cells = []
 		cell_end = -1
-		index = -1
-		for cell_match in cell_pattern.finditer(line_content):
-			if cell_end == cell_match.start(1):
-				# cell_match is on the final, zero-width match before the final delimiter. This is not a table cell.
-				break
-			index = index + 1
-			cell = self._regex_group_to_region(r, index, cell_match, 'content', is_separator)
-			if self.view.rowcol(cell.a)[0] != r:
-				raise RowOutOfFileBounds(r)
-			cells.append(cell)
-			cell_end = cell_match.end(1)
+		col_index = -1
+		offset = 0
+		search_content = line_content
+		for pattern in patterns:
+			if cell_end > 0:
+				offset = offset + cell_end
+			if offset > 0:
+				search_content = line_content[offset:]
+			cell_end = -1
+			for cell_match in pattern.finditer(search_content):
+				if cell_end == cell_match.start(1):
+					# cell_match is on the final, zero-width match before the final delimiter. This is not a table cell.
+					break
+				col_index = col_index + 1
+				cell = self._regex_group_to_region(r, offset, col_index, cell_match, 'content', is_separator)
+				if self.view.rowcol(cell.a)[0] != r:
+					raise RowOutOfFileBounds(r)
+				cells.append(cell)
+				cell_end = cell_match.end(1)
 		if len(cells) == 0:
 			return None
-		if eol_pattern is not None:
-			eol_match = eol_pattern.search(line_content, cell_end)
-			if eol_match:
-				index = index + 1
-				cells.append(self._regex_group_to_region(r, index, eol_match, 'content', is_separator))
 		row = TableRow(r, cells, is_separator)
 		return row
 
-	def _regex_group_to_region(self, row, index, match, group, is_separator):
-		start_point = self.view.text_point(row, match.start(group))
-		end_point = self.view.text_point(row, match.end(group))
+	def _regex_group_to_region(self, row, offset, col_index, match, group, is_separator):
+		start_point = self.view.text_point(row, offset + match.start(group))
+		end_point = self.view.text_point(row, offset + match.end(group))
 		if self._cell_direction > 0:
-			return TableCell(row, index, start_point, end_point, is_separator)
+			return TableCell(row, col_index, start_point, end_point, is_separator)
 		else:
-			return TableCell(row, index, end_point, start_point, is_separator)
+			return TableCell(row, col_index, end_point, start_point, is_separator)
 
 
 class TableNavigator:
@@ -469,38 +471,22 @@ class TabnavContext:
 	Contexts are defined in the settings files. The auto_csv context is a special case
 	for which additional work is done to try to identify the CSV delimiter to use.
 	'''
-	def __init__(self, cell_pattern, eol_pattern, sep_cell_pattern=None, sep_eol_pattern=None):
+	def __init__(self, cell_patterns, separator_patterns=None):
 		self._include_separators = None
-		self._cell_pattern = re.compile(cell_pattern)
-		if eol_pattern is not None:
-			self._eol_pattern = re.compile(eol_pattern)
+		self._cell_patterns = [re.compile(p) for p in cell_patterns]
+		if separator_patterns is not None:
+			self._separator_patterns = [re.compile(p) for p in separator_patterns]
 		else:
-			self._eol_pattern = None
-		if sep_cell_pattern is not None:
-			self._sep_cell_pattern = re.compile(sep_cell_pattern)
-		else:
-			self._sep_cell_pattern = None
-		if sep_eol_pattern is not None:
-			self._sep_eol_pattern = re.compile(sep_eol_pattern)
-		else:
-			self._sep_eol_pattern = None
+			self._separator_patterns = []
 	
 	@property
-	def cell_pattern(self):
-		return self._cell_pattern
+	def cell_patterns(self):
+		return self._cell_patterns
 	
 	@property
-	def eol_pattern(self):
-		return self._eol_pattern
+	def separator_patterns(self):
+		return self._separator_patterns
 	
-	@property
-	def sep_cell_pattern(self):
-		return self._sep_cell_pattern
-	
-	@property
-	def sep_eol_pattern(self):
-		return self._sep_eol_pattern
-
 	@property
 	def include_separators(self):
 		return self._include_separators
@@ -534,11 +520,9 @@ class TabnavContext:
 			context = TabnavContext._get_auto_csv_table_config(view, context_config)
 		else:
 			log.debug("Using tabnav context '%s'", context_key)
-			cell_pattern = context_config.get('cell_pattern', None)
-			eol_pattern = context_config.get('eol_pattern', None)
-			sep_cell_pattern = context_config.get('sep_cell_pattern', None)
-			sep_eol_pattern = context_config.get('sep_eol_pattern', None)
-			context = TabnavContext(cell_pattern, eol_pattern, sep_cell_pattern, sep_eol_pattern)
+			cell_patterns = context_config.get('cell_patterns', None)
+			separator_patterns = context_config.get('separator_patterns', None)
+			context = TabnavContext(cell_patterns, separator_patterns)
 		if context is not None:
 			context._include_separators = context_config.get('include_separators', None)
 		return context
@@ -637,9 +621,14 @@ class TabnavContext:
 			return None
 		delimiter = TabnavContext._escaped_delimiters.get(delimiter, delimiter)
 		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
-		cell_pattern = context_config['cell_pattern'].format(delimiter)
-		eol_pattern = context_config['eol_pattern'].format(delimiter)
-		return TabnavContext(cell_pattern, eol_pattern)
+		cell_patterns = [p.format(delimiter) for p in context_config['cell_patterns']]
+		# The base auto_csv context has no separator patterns, but handle them in case a user adds some to their user_contexts.
+		raw_sep_patterns = context_config.get('separator_patterns', None)
+		if raw_sep_patterns is not None:
+			separator_patterns = [p.format(delimiter) for p in raw_sep_patterns]
+		else:
+			separator_patterns = None
+		return TabnavContext(cell_patterns, separator_patterns)
 
 #### Commands ####
 
@@ -1143,7 +1132,8 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 			point = self.view.sel()[0].begin()
 			line = self.view.line(point)
 			line_content = self.view.substr(line)
-			is_context =  re.search(context.cell_pattern, line_content) is not None
+			is_context =  re.search(context.cell_patterns[0], line_content) is not None \
+				or (len(context.separator_patterns) > 0 and re.search(context.separator_patterns[0]) is not None)
 		if (operator == sublime.OP_NOT_EQUAL):
 			return not is_context
 		return is_context

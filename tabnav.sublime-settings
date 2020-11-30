@@ -18,10 +18,14 @@
 		{
 			"selector": "text.html.markdown",
 			"except_selector": "markup.raw",
-			"cell_pattern": "\\|?(?P<content>.*?)(?=\\|)",
-			"eol_pattern": "\\|(?P<content>.+)$",
-			"sep_cell_pattern": "\\|?(?P<content>\\s*[:-]+\\s*)(?=\\|)",
-			"sep_eol_pattern": "\\|(?P<content>\\s*[:-]+\\s*)",
+			"cell_patterns": [
+				"\\|?(?P<content>.*?)(?=\\|)",
+				"\\|(?P<content>.+)$"
+			],
+			"separator_patterns": [
+				"\\|?(?P<content>\\s*[:-]+\\s*)(?=\\|)",
+				"\\|(?P<content>\\s*[:-]+\\s*)"
+			]
 		},
 		"auto_csv":
 		{
@@ -53,8 +57,11 @@
 			// 1) Empty or whitespace-only cell
 			// 2) Unquoted content
 			// 3) Quoted content
-			"cell_pattern": "(?:{0})?(?P<content>(?:\\s*)|(?:\\s*[^\"\\s].*?)|(?:\\s*\"(?:\"{{2}}|[^\"])*?\"\\s*))(?={0})",
-			"eol_pattern": "{0}(?P<content>(?:\\s*)|(?:\\s*[^\"].*?)|(?:\\s*\"(?:\"{{2}}|[^\"])*?\"\\s*))$",
+			"cell_patterns": [
+				"^(?P<content>(?:\\s*)|(?:\\s*[^\"\\s].*?)|(?:\\s*\"(?:\"{{2}}|[^\"])*?\"\\s*))(?={0})",
+				"{0}(?P<content>(?:\\s*)|(?:\\s*[^\"\\s].*?)|(?:\\s*\"(?:\"{{2}}|[^\"])*?\"\\s*))(?={0})",
+				"{0}(?P<content>(?:\\s*)|(?:\\s*[^\"].*?)|(?:\\s*\"(?:\"{{2}}|[^\"])*?\"\\s*))$"
+			],
 			"enable_explicitly": true, // We'll only infer the auto_csv context if tabnav has been explicitly enabled on a particular view
 		}
 	}
