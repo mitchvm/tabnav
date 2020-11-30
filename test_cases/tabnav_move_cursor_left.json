@@ -63,24 +63,6 @@
 		"expected_selections": [{"a": 206, "b": 206}]
 	},
 	{
-		"id": "NXW6",
-		"command": "tabnav_move_cursor_left",
-		"context": "markdown",
-		"file": "markdown01_unformatted_table.md",
-		"description": "Single cursor after last pipe (not in table)",
-		"initial_selections": [{"a": 280, "b": 280}],
-		"expected_selections": [{"a": 280, "b": 280}]
-	},
-	{
-		"id": "RPP2",
-		"command": "tabnav_move_cursor_left",
-		"context": "markdown",
-		"file": "markdown01_unformatted_table.md",
-		"description": "Single cursor before first pipe (not in table)",
-		"initial_selections": [{"a": 100, "b": 100}],
-		"expected_selections": [{"a": 100, "b": 100}]
-	},
-	{
 		"id": "5Z6J",
 		"command": "tabnav_move_cursor_left",
 		"context": "markdown",

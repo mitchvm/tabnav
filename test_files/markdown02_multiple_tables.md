@@ -54,3 +54,13 @@ This file contains multiple Markdown tables with only a single line of whitespac
 |          28 |          34 |
 |          29 |          14 |
 |          30 |           8 |
+
+This looks like a Markdown table, but it's in a raw code block, which should be ignored.
+
+```
+| An  | Example  | Of    |
+|:----|----------|------:|
+| a   | Markdown | table |
+| to  | display  | the   |
+| raw | syntax   |       |
+```

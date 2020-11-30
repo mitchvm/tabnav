@@ -54,24 +54,6 @@
 		"expected_selections": [{"a": 206, "b": 206}]
 	},
 	{
-		"id": "ZFVU",
-		"command": "tabnav_move_cursor_start",
-		"context": "markdown",
-		"file": "markdown01_unformatted_table.md",
-		"description": "Single cursor after last pipe (not in table)",
-		"initial_selections": [{"a": 280, "b": 280}],
-		"expected_selections": [{"a": 280, "b": 280}]
-	},
-	{
-		"id": "QRBV",
-		"command": "tabnav_move_cursor_start",
-		"context": "markdown",
-		"file": "markdown01_unformatted_table.md",
-		"description": "Single cursor before first pipe (not in table)",
-		"initial_selections": [{"a": 100, "b": 100}],
-		"expected_selections": [{"a": 100, "b": 100}]
-	},
-	{
 		"id": "E5R2",
 		"command": "tabnav_move_cursor_start",
 		"context": "markdown",
@@ -146,24 +128,6 @@
 		"expected_selections": [{"a": 265, "b": 265}, {"a": 759, "b": 759}, {"a": 1384, "b": 1384}, {"a": 1922, "b": 1922}, {"a": 2326, "b": 2326}]
 	},
 	{
-		"id": "7EN6",
-		"command": "tabnav_move_cursor_start",
-		"context": "markdown",
-		"file": "markdown02_multiple_tables.md",
-		"description": "Cursor in empty line between tables (not in table)",
-		"initial_selections": [{"a": 1860, "b": 1860}],
-		"expected_selections": [{"a": 1860, "b": 1860}]
-	},
-	{
-		"id": "ZP7L",
-		"command": "tabnav_move_cursor_start",
-		"context": "markdown",
-		"file": "markdown02_multiple_tables.md",
-		"description": "Single region spans multiple tables (no change)",
-		"initial_selections": [{"a": 1537, "b": 2001}],
-		"expected_selections": [{"a": 1537, "b": 2001}]
-	},
-	{
 		"id": "3SGX",
 		"command": "tabnav_move_cursor_start",
 		"context": "markdown",
@@ -224,6 +188,7 @@
 		"file": "markdown03_borderless.md",
 		"description": "Selection spans separator row",
 		"initial_selections": [{"a": 18, "b": 86}],
-		"expected_selections": [{"a": 11, "b": 11}, {"a": 23, "b": 23}, {"a": 68, "b": 68}, {"a": 79, "b": 79}]
+		"expected_selections": [{"a": 11, "b": 11}, {"a": 23, "b": 23}, {"a": 68, "b": 68}, {"a": 79, "b": 79}],
+		"settings": {"tabnav.include_separators": false}
 	}
 ]

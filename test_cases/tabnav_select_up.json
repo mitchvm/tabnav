@@ -91,7 +91,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Sequential cells in a column, one in top row merged",
 		"initial_selections": [{"a": 24, "b": 13}, {"a": 119, "b": 112}],
-		"expected_selections": [{"a": 24, "b": 13}]
+		"expected_selections": [{"a": 24, "b": 13}],
+		"settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "U2XO",

@@ -6,6 +6,7 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some added, some not",
 		"initial_selections": [{"a": 20, "b": 20}, {"a": 126, "b": 126}, {"a": 218, "b": 218}, {"a": 227, "b": 227}, {"a": 325, "b": 325}],
-		"expected_selections": [{"a": 20, "b": 20}, {"a": 119, "b": 119}, {"a": 126, "b": 126}, {"a": 206, "b": 206}, {"a": 218, "b": 218}, {"a": 227, "b": 227}, {"a": 282, "b": 282}, {"a": 325, "b": 325}]
+		"expected_selections": [{"a": 20, "b": 20}, {"a": 119, "b": 119}, {"a": 126, "b": 126}, {"a": 206, "b": 206}, {"a": 218, "b": 218}, {"a": 227, "b": 227}, {"a": 282, "b": 282}, {"a": 325, "b": 325}],
+		"settings": {"tabnav.include_separators": false}
 	}
 ]

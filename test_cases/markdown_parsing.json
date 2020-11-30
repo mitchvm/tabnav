@@ -1,0 +1,208 @@
+[
+	{
+		"id": "N2BJ",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Parse Markdown table row - cells",
+		"initial_selections": [{"a": 0, "b": 49}],
+		"expected_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}]
+	},
+	{
+		"id": "3FIM",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Parse Markdown separator row - cells",
+		"initial_selections": [{"a": 50, "b": 99}],
+		"expected_selections": [{"a": 51, "b": 62}, {"a": 63, "b": 74}, {"a": 75, "b": 86}, {"a": 87, "b": 98}]
+	},
+	{
+		"id": "4CHP",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Parse Markdown region spanning separator row cells - separators excluded",
+		"initial_selections": [{"a": 0, "b": 148}],
+		"expected_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}, {"a": 132, "b": 146}],
+		"settings": {"tabnav.include_separators": false}
+	},
+	{
+		"id": "QW6N",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Parse Markdown region spanning separator row cells - separators include",
+		"initial_selections": [{"a": 0, "b": 148}],
+		"expected_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 51, "b": 62}, {"a": 63, "b": 74}, {"a": 75, "b": 86}, {"a": 87, "b": 98}, {"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}, {"a": 132, "b": 146}],
+		"settings": {"tabnav.include_separators": true}
+	},
+	{
+		"id": "MSBO",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor after last pipe (not in table)",
+		"initial_selections": [{"a": 280, "b": 280}],
+		"expected_selections": [{"a": 280, "b": 280}]
+	},
+	{
+		"id": "2UE4",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor before first pipe (not in table)",
+		"initial_selections": [{"a": 100, "b": 100}],
+		"expected_selections": [{"a": 100, "b": 100}]
+	},
+	{
+		"id": "NKMH",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Cursor in empty line between tables (not in table)",
+		"initial_selections": [{"a": 1860, "b": 1860}],
+		"expected_selections": [{"a": 1860, "b": 1860}]
+	},
+	{
+		"id": "DVNE",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Single region spans multiple tables (no change)",
+		"initial_selections": [{"a": 1537, "b": 2001}],
+		"expected_selections": [{"a": 1537, "b": 2001}]
+	},
+	{
+		"id": "VKIL",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Cursor in raw scope",
+		"initial_selections": [{"a": 2919, "b": 2919}],
+		"expected_selections": [{"a": 2919, "b": 2919}]
+	},
+	{
+		"id": "V6U6",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Region in raw scope",
+		"initial_selections": [{"a": 2916, "b": 2997}],
+		"expected_selections": [{"a": 2916, "b": 2997}]
+	},
+	{
+		"id": "N2BJ",
+		"command": "tabnav_move_cursor_end",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Parse Markdown table row - cursors",
+		"initial_selections": [{"a": 0, "b": 49}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}]
+	},
+	{
+		"id": "3FIM",
+		"command": "tabnav_move_cursor_end",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Parse Markdown separator row - cursors",
+		"initial_selections": [{"a": 50, "b": 99}],
+		"expected_selections": [{"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}]
+	},
+	{
+		"id": "4CHP",
+		"command": "tabnav_move_cursor_end",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Parse Markdown region spanning separator row cursors - separators excluded",
+		"initial_selections": [{"a": 0, "b": 148}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}],
+		"settings": {"tabnav.include_separators": false}
+	},
+	{
+		"id": "QW6N",
+		"command": "tabnav_move_cursor_end",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Parse Markdown region spanning separator row cursors - separators include",
+		"initial_selections": [{"a": 0, "b": 148}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}],
+		"settings": {"tabnav.include_separators": true}
+	},
+	{
+		"id": "NIPV",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Parse Markdown borderless table row - cells",
+		"initial_selections": [{"a": 0, "b": 33}],
+		"expected_selections": [{"a": 0, "b": 10}, {"a": 11, "b": 22}, {"a": 23, "b": 33}]
+	},
+	{
+		"id": "O346",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Parse Markdown borderless separator row - cells",
+		"initial_selections": [{"a": 34, "b": 67}],
+		"expected_selections": [{"a": 34, "b": 44}, {"a": 45, "b": 56}, {"a": 57, "b": 67}]
+	},
+	{
+		"id": "J5YO",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Parse Markdown region spanning borderless separator row cells - separators excluded",
+		"initial_selections": [{"a": 0, "b": 101}],
+		"expected_selections": [{"a": 0, "b": 10}, {"a": 11, "b": 22}, {"a": 23, "b": 33}, {"a": 68, "b": 78}, {"a": 79, "b": 90}, {"a": 91, "b": 101}],
+		"settings": {"tabnav.include_separators": false}
+	},
+	{
+		"id": "3ZAJ",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Parse Markdown region spanning borderless separator row cells - separators include",
+		"initial_selections": [{"a": 0, "b": 101}],
+		"expected_selections": [{"a": 0, "b": 10}, {"a": 11, "b": 22}, {"a": 23, "b": 33}, {"a": 34, "b": 44}, {"a": 45, "b": 56}, {"a": 57, "b": 67}, {"a": 68, "b": 78}, {"a": 79, "b": 90}, {"a": 91, "b": 101}],
+		"settings": {"tabnav.include_separators": true}
+	},
+	{
+		"id": "FQO6",
+		"command": "tabnav_move_cursor_end",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Parse Markdown borderless table row - cursors",
+		"initial_selections": [{"a": 0, "b": 33}],
+		"expected_selections": [{"a": 10, "b": 10}, {"a": 22, "b": 22}, {"a": 33, "b": 33}]
+	},
+	{
+		"id": "UTDU",
+		"command": "tabnav_move_cursor_end",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Parse Markdown borderless separator row - cursors",
+		"initial_selections": [{"a": 34, "b": 67}],
+		"expected_selections": [{"a": 44, "b": 44}, {"a": 56, "b": 56}, {"a": 67, "b": 67}]
+	},
+	{
+		"id": "T6RW",
+		"command": "tabnav_move_cursor_end",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Parse Markdown region spanning borderless separator row cursors - separators excluded",
+		"initial_selections": [{"a": 0, "b": 101}],
+		"expected_selections": [{"a": 10, "b": 10}, {"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 78, "b": 78}, {"a": 90, "b": 90}, {"a": 101, "b": 101}],
+		"settings": {"tabnav.include_separators": false}
+	},
+	{
+		"id": "P2TW",
+		"command": "tabnav_move_cursor_end",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Parse Markdown region spanning borderless separator row cursors - separators include",
+		"initial_selections": [{"a": 0, "b": 101}],
+		"expected_selections": [{"a": 10, "b": 10}, {"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 44, "b": 44}, {"a": 56, "b": 56}, {"a": 67, "b": 67}, {"a": 78, "b": 78}, {"a": 90, "b": 90}, {"a": 101, "b": 101}],
+		"settings": {"tabnav.include_separators": true}
+	}
+]

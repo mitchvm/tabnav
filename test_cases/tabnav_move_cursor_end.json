@@ -54,24 +54,6 @@
 		"expected_selections": [{"a": 206, "b": 206}]
 	},
 	{
-		"id": "FSUM",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
-		"file": "markdown01_unformatted_table.md",
-		"description": "Single cursor after last pipe (not in table)",
-		"initial_selections": [{"a": 280, "b": 280}],
-		"expected_selections": [{"a": 280, "b": 280}]
-	},
-	{
-		"id": "P67M",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
-		"file": "markdown01_unformatted_table.md",
-		"description": "Single cursor before first pipe (not in table)",
-		"initial_selections": [{"a": 100, "b": 100}],
-		"expected_selections": [{"a": 100, "b": 100}]
-	},
-	{
 		"id": "LYSY",
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
@@ -146,24 +128,6 @@
 		"expected_selections": [{"a": 284, "b": 284}, {"a": 766, "b": 766}, {"a": 1402, "b": 1402}, {"a": 1935, "b": 1935}, {"a": 2339, "b": 2339}]
 	},
 	{
-		"id": "XKMY",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
-		"file": "markdown02_multiple_tables.md",
-		"description": "Cursor in empty line between tables (not in table)",
-		"initial_selections": [{"a": 1860, "b": 1860}],
-		"expected_selections": [{"a": 1860, "b": 1860}]
-	},
-	{
-		"id": "VDEY",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
-		"file": "markdown02_multiple_tables.md",
-		"description": "Single region spans multiple tables (no change)",
-		"initial_selections": [{"a": 1537, "b": 2001}],
-		"expected_selections": [{"a": 1537, "b": 2001}]
-	},
-	{
 		"id": "BGP3",
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
@@ -224,6 +188,7 @@
 		"file": "markdown03_borderless.md",
 		"description": "Selection spans separator row",
 		"initial_selections": [{"a": 18, "b": 86}],
-		"expected_selections": [{"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 78, "b": 78}, {"a": 90, "b": 90}]
+		"expected_selections": [{"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 78, "b": 78}, {"a": 90, "b": 90}],
+		"settings": {"tabnav.include_separators": false}
 	}
 ]

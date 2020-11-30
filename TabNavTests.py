@@ -19,10 +19,14 @@ test_results = []
 start_time = None
 
 class TestCase():
-	def __init__(self, test_definition):
+	def __init__(self, test_case_file, test_definition):
+		self.test_case_file = test_case_file
 		self.test_id = test_definition['id']
 		self.command_name = test_definition['command']
-		self.context_name = test_definition['context']
+		if test_definition['context'] == "None":
+			self.context_name = None
+		else:
+			self.context_name = test_definition['context']
 		self.file_name = test_definition['file']
 		self.description = test_definition['description']
 		self.initial_selections = [(s['a'], s['b']) for s in test_definition['initial_selections']]
@@ -92,7 +96,10 @@ def enumerate_test_cases(command_name=None, context_name=None, file_name=None, t
 	for dirpath, dirnames, filenames in os.walk(test_cases_dir):
 		for filename in (f for f in filenames if os.path.splitext(f)[1] == '.json'):
 			with open(os.path.join(dirpath, filename)) as f:
-				test_cases = [TestCase(test_definition) for test_definition in json.load(f)]
+				try:
+					test_cases = [TestCase(filename, test_definition) for test_definition in json.load(f)]
+				except Exception as e:
+					raise Exception("Failed to read test cases from file {0}.".format(filename), e)
 			for test in test_cases:
 				if (command_name is None or test.command_name == command_name) \
 					and (context_name is None or test.context_name == context_name) \
@@ -157,20 +164,15 @@ def run_test_case(view, test):
 def print_test_results():
 	global start_time
 	commandkey = lambda r:r.test_case.command_name
-	contextkey = lambda r:r.test_case.context_name
-	filekey = lambda r:r.test_case.file_name
+	filekey = lambda r:r.test_case.test_case_file
 	test_case_results = sorted(test_results, key=commandkey)
 	command_result_sets = []
 	for command_name, g1 in itertools.groupby(test_case_results, commandkey):
-		command_results = sorted(g1, key=contextkey)
-		context_result_sets = []
-		for context_name, g2 in itertools.groupby(command_results, contextkey):
-			context_results = sorted(g2, key=filekey)
-			file_result_sets = []
-			for file_name, g3 in itertools.groupby(context_results, filekey):
-				file_result_sets.append(TestSetResults('File: {0}'.format(file_name), sorted(g3, key=lambda t:t.test_case.test_id.upper())))
-			context_result_sets.append(TestSetResults('Context: {0}'.format(context_name), file_result_sets))
-		command_result_sets.append(TestSetResults('Command: {0}'.format(command_name), context_result_sets))
+		command_results = sorted(g1, key=filekey)
+		file_result_sets = []
+		for file_name, g3 in itertools.groupby(command_results, filekey):
+			file_result_sets.append(TestSetResults('File: {0}'.format(file_name), sorted(g3, key=lambda t:t.test_case.test_id.upper())))
+		command_result_sets.append(TestSetResults('Command: {0}'.format(command_name), file_result_sets))
 	result_set = TestSetResults('Cumulative', command_result_sets)
 	if start_time is not None:
 		duration = datetime.now() - start_time

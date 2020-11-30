@@ -100,7 +100,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Relatively aligned cursors, one in top row - merged",
 		"initial_selections": [{"a": 40, "b": 40}, {"a": 135, "b": 135}],
-		"expected_selections": [{"a": 40, "b": 40}]
+		"expected_selections": [{"a": 40, "b": 40}],
+		"settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "CIOA",
@@ -127,7 +128,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some move some don't",
 		"initial_selections": [{"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 339, "b": 339}, {"a": 352, "b": 352}],
-		"expected_selections": [{"a": 20, "b": 20}, {"a": 111, "b": 111}, {"a": 275, "b": 275}, {"a": 352, "b": 352}]
+		"expected_selections": [{"a": 20, "b": 20}, {"a": 111, "b": 111}, {"a": 275, "b": 275}, {"a": 352, "b": 352}],
+		"settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "T3JT",

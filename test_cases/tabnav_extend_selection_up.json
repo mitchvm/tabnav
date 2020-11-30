@@ -15,6 +15,7 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells, some added, some not",
 		"initial_selections": [{"a": 24, "b": 13}, {"a": 131, "b": 120}, {"a": 242, "b": 227}, {"a": 279, "b": 248}, {"a": 307, "b": 282}, {"a": 354, "b": 347}],
-		"expected_selections": [{"a": 24, "b": 13}, {"a": 36, "b": 25}, {"a": 131, "b": 120}, {"a": 191, "b": 149}, {"a": 206, "b": 206}, {"a": 242, "b": 227}, {"a": 279, "b": 248}, {"a": 307, "b": 282}, {"a": 354, "b": 347}]
+		"expected_selections": [{"a": 24, "b": 13}, {"a": 36, "b": 25}, {"a": 131, "b": 120}, {"a": 191, "b": 149}, {"a": 206, "b": 206}, {"a": 242, "b": 227}, {"a": 279, "b": 248}, {"a": 307, "b": 282}, {"a": 354, "b": 347}],
+		"settings": {"tabnav.include_separators": false}
 	}
 ]

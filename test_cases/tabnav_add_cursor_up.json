@@ -15,6 +15,7 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some added, some not",
 		"initial_selections": [{"a": 19, "b": 19}, {"a": 126, "b": 126}, {"a": 227, "b": 227}, {"a": 264, "b": 264}, {"a": 351, "b": 351}],
-		"expected_selections": [{"a": 19, "b": 19}, {"a": 31, "b": 31}, {"a": 126, "b": 126}, {"a": 149, "b": 149}, {"a": 206, "b": 206}, {"a": 227, "b": 227}, {"a": 264, "b": 264}, {"a": 351, "b": 351}]
+		"expected_selections": [{"a": 19, "b": 19}, {"a": 31, "b": 31}, {"a": 126, "b": 126}, {"a": 149, "b": 149}, {"a": 206, "b": 206}, {"a": 227, "b": 227}, {"a": 264, "b": 264}, {"a": 351, "b": 351}],
+		"settings": {"tabnav.include_separators": false}
 	}
 ]

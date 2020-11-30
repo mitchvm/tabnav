@@ -164,15 +164,6 @@
 		"expected_selections": [{"a": 1860, "b": 1860}]
 	},
 	{
-		"id": "YKR2",
-		"command": "tabnav_select_current",
-		"context": "markdown",
-		"file": "markdown02_multiple_tables.md",
-		"description": "Single region spans multiple tables (no change)",
-		"initial_selections": [{"a": 1537, "b": 2001}],
-		"expected_selections": [{"a": 1537, "b": 2001}]
-	},
-	{
 		"id": "UOFD",
 		"command": "tabnav_select_current",
 		"context": "markdown",
@@ -224,6 +215,7 @@
 		"file": "markdown03_borderless.md",
 		"description": "Selection spans separator row",
 		"initial_selections": [{"a": 18, "b": 86}],
-		"expected_selections": [{"a": 11, "b": 22}, {"a": 23, "b": 33}, {"a": 68, "b": 78}, {"a": 79, "b": 90}]
+		"expected_selections": [{"a": 11, "b": 22}, {"a": 23, "b": 33}, {"a": 68, "b": 78}, {"a": 79, "b": 90}],
+		"settings": {"tabnav.include_separators": false}
 	}
 ]
