@@ -110,10 +110,10 @@ TabNav is enabled by default in Markdown documents. Only "pipe" style tables are
 Some flavours of Markdown support "borderless" tables, where pipes are not required on the outer edges of the table. For example, this is a valid table:
 
 ```
-| Heading 1 | Heading 2 | Heading 3 |
-|:----------|:----------|----------:|
-| 1.1       | 1.2       |       1.3 |
-| 2.1       | 2.2       |       2.3 |
+ Heading 1 | Heading 2 | Heading 3 
+:----------|:----------|----------:
+ 1.1       | 1.2       |       1.3 
+ 2.1       | 2.2       |       2.3 
 ```
 
 Alternatively, the same table as a "bordered" table would look like this:
@@ -135,7 +135,7 @@ If you only use bordered Markdown tables, you can configure TabNav to be more re
 
 CSV requires special handling, specifically because there are so many permutations of "separated value" documents. TabNav treats CSV as the fall-back context if no other context was positively identified, however TabNav is disabled by default in CSV contexts - use the ["Enable on current view"](#other-commands) command to enable it.
 
-TabNav integrates with both the [Advanced CSV](https://github.com/wadetb/Sublime-Text-Advanced-CSV) and [Rainbow CSV](https://github.com/mechatroner/sublime_rainbow_csv/)<sup id="a1">3</sup> packages. If the syntax on the current view comes from either of those packages, the delimiter being used by them is also automatically used by TabNav.
+TabNav integrates with both the [Advanced CSV](https://github.com/wadetb/Sublime-Text-Advanced-CSV) and [Rainbow CSV](https://github.com/mechatroner/sublime_rainbow_csv/)<sup>3</sup> packages. If the syntax on the current view comes from either of those packages, the delimiter being used by them is also automatically used by TabNav.
 
 If the syntaxes provided by those two packages are not in use on the current view, then TabNav attempts to infer the delimiter to use by inspecting the first line of the file. If the first line of the file contains only one of the following characters, then that character is assumed to be the delimiter:
 
@@ -152,11 +152,11 @@ Finally, if all other methods of determining the delimiter fail, TabNav uses a c
 
 ## Customization
 
-TabNav offers considerable configuration, or even customizabliity to modify the default contexts' behaviour or add new contexts.
+TabNav offers considerable configuration, or even customizability to modify the default contexts' behaviour or add new contexts.
 
 ### Key Bindings
 
-All of the default key bindings can be disabled either globally, or only within specific syntaxes. To disable the key bindings globally, select the "Settings - Global Key Binding Flags" menu option under TabNav Package Settings menu (Settings ▶ Package Settings ▶ TabNav), which opens TabNav's default Preferences file along with your local Preferences file. Copy the appropriate `tabnav.kb` flag to your local Preferences file and set it to `false`.
+All of the default key bindings can be disabled either globally, or only within specific syntaxes. To disable the key bindings globally, select the "Settings - Global Key Binding Flags" menu option under TabNav Package Settings menu (Settings ▶ Package Settings ▶ TabNav), which opens TabNav's default Preferences file along with your local Preferences file. Copy the appropriate `tabnav.kb_` flag to your local Preferences file and set it to `false`.
 
 Disabling the default key bindings for a particular syntax follows the same principle, but Sublime Text does not offer a command to open the default TabNav preferences file alongside a syntax-specific preferences file. The "Settings - Default Key Binding Flags" and "Settings - Syntax Specific" menu options open the appropriate files individually.
 
@@ -205,7 +205,7 @@ Additional contexts can also be defined in the `user_contexts` element. The foll
 2. `except_selector`: _Optional_. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that overrides the base `selector`. If the first selection matches this selector, then the context is _not_ matched.
 3. `cell_patterns`: **Required**. A list containing at least one [regular expression](https://docs.python.org/3.3/library/re.html) that is used to identify cell contents from a line of text. Each match of each expression should return a single cell's contents within a named `contents` group. Each expression can also, optionally, return a zero-width match immediately prior to the last matching delimiter. This match will be ignored. If multiple expressions are provided, they are processed in sequence until their matches are exhausted. Use this to have, for example, one expression to capture the first cell on the line, a different expression to capture cells in the middle of the row, and a third expression to capture the final cell on the line.
 4. `separator_patterns`: _Optional_. Similar to `cell_patterns`, a list of [regular expressions](https://docs.python.org/3.3/library/re.html) that are used to identify row separator lines of text. If provided, each expression must return a named `content` group that matches the portion of the separator line between column delimiters.
-5. `line_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is part of a table. If a `line_pattern` is used, it must return a named `line` group that captures the part of the line to use for matching table content with the `cell_patterns` and `separator_patterns`. If a `line_pattern` is not provided, the entire line of text is used.
+5. `line_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is part of a table. If used, the `line_pattern` it must return a named `table` group that captures the part of the line to use for matching table content with the `cell_patterns` and `separator_patterns`. If a `line_pattern` is not provided, the entire line of text is used.
 6. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
 7. `include_separators`: _Optional_. A boolean to indicate if line separators should be inclined when using this context. Overrides the global `include_separators` setting.
 
