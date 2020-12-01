@@ -5,8 +5,6 @@ import re
 import logging
 
 log = logging.getLogger(__name__)
-log.setLevel(logging.WARNING)
-# log.setLevel(logging.DEBUG)
 
 class Direction:
 	RIGHT = (0,1)
@@ -412,7 +410,7 @@ class TableNavigator:
 				next_cell = self.get_next_cell(r, ic, dr, dc)
 			except ColumnIndexError as e:
 				# In a properly-formatted table, this shouldn't happen, so log it as a warning
-				log.warning(e.err)
+				log.info(e.err)
 				next_cell = current_cell
 			except (RowNotInTableError, RowOutOfFileBounds) as e:
 				log.debug(e.err)
@@ -431,7 +429,6 @@ class TableNavigator:
 		target_row = r + dr
 		target_col = ic + dc
 		if target_col < 0: # direction == LEFT
-			log.debug("At first cell in row %d.", r)
 			return self._table[(r,ic)]
 		row = self._table[target_row]
 		if dr != 0 and not self.include_separators:
@@ -452,7 +449,7 @@ class TableNavigator:
 			try:
 				cells.append(self._table[(r, seed_cell.col)])
 			except ColumnIndexError as e:
-				log.warning(e.err)
+				log.info(e.err)
 				# jump past this cell and keep going
 			except RowNotInTableError:
 				break # at the start of the table
@@ -463,7 +460,7 @@ class TableNavigator:
 			try:
 				cells.append(self._table[(r, seed_cell.col)])
 			except ColumnIndexError as e:
-				log.warning(e.err)
+				log.info(e.err)
 				# jump past this cell and keep going
 			except (RowNotInTableError, RowOutOfFileBounds):
 				break
@@ -532,7 +529,7 @@ class TabnavContext:
 		try:
 			context_config = context_configs[context_key]
 		except KeyError:
-			log.warning("Context '%s' not found in tabnav settings.", context_key)
+			log.info("Context '%s' not found in tabnav settings.", context_key)
 			return None
 		if context_config.get('enable_explicitly', False):
 			# This context requires that tabnav be explicilty enabled on the view.
@@ -584,14 +581,11 @@ class TabnavContext:
 			except KeyError:
 				continue
 			score = view.score_selector(point, selector)
-			log.debug("'%s' context selector score: %d", selector, score)
 			except_selector = config.get('except_selector', None)
 			if except_selector is not None:
 				except_score = view.score_selector(point, except_selector)
-				log.debug("'%s' context except_selector score: %d", except_selector, except_score)
 				if except_score > 0:
 					score = -1
-					log.debug("except_selector '%s' overules the selector '%s'", except_selector, selector)
 			if (max_context is None and score != 0) or (max_context is not None and score > max_context[1]):
 				max_context = (key, score)
 		if max_context is not None:
@@ -707,7 +701,7 @@ class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
 			self.init_table(cell_direction)
 			self.tabnav.split_and_move_current_cells(True)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.warning(e.err)
+			log.info(e.err)
 
 class TabnavMoveCursorStartCommand(TabnavMoveCursorCurrentCellCommand):
 	def run(self, edit, context=None):
@@ -729,7 +723,7 @@ class TabnavMoveCursorCommand(TabnavCommand):
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.move_next_cell(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.warning(e.err)
+			log.info(e.err)
 
 	def move_next_cell(self, move_direction):
 		moved = False
@@ -744,7 +738,7 @@ class TabnavMoveCursorCommand(TabnavCommand):
 				offset = None
 			new_cells = self.tabnav.get_next_cells(move_direction, offset)
 		except Exception as e:
-			log.debug(e)
+			log.info(e)
 			new_cells = None
 		if new_cells is not None:
 			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
@@ -784,14 +778,14 @@ class TabnavAddCursorCommand(TabnavCommand):
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.add_next_cell(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.warning(e.err)
+			log.info(e.err)
 
 	def add_next_cell(self, move_direction):
 		initial_selections = list(self.view.sel())
 		try:
 			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Exception as e:
-			log.debug(e)
+			log.info(e)
 			new_cells = None
 		if new_cells is not None:
 			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
@@ -825,7 +819,7 @@ class TabnavSelectCurrentCommand(TabnavCommand):
 			self.init_table(cell_direction)
 			self.tabnav.split_and_select_current_cells()
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.warning(e.err)
+			log.info(e.err)
 
 
 class TabnavSelectNextCommand(TabnavCommand):
@@ -838,13 +832,13 @@ class TabnavSelectNextCommand(TabnavCommand):
 			if not self.tabnav.split_and_select_current_cells():
 				self.select_next_cell(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.warning(e.err)		
+			log.info(e.err)		
 
 	def select_next_cell(self, move_direction):
 		try:
 			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Exception as e:
-			log.debug(e)
+			log.info(e)
 			return False
 		if new_cells is not None:
 			self.view.sel().clear()
@@ -882,14 +876,14 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 			if not self.tabnav.split_and_select_current_cells():
 				self.extend_cell_selection(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.warning(e.err)		
+			log.info(e.err)		
 
 	def extend_cell_selection(self, move_direction):
 		initial_selections = list(self.view.sel())
 		try:
 			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Exception as e:
-			log.debug(e)
+			log.info(e)
 		if new_cells is not None:
 			self.view.sel().add_all(new_cells)
 			self.view.show(self.view.sel())
@@ -929,7 +923,7 @@ class TabnavSelectRowCommand(TabnavCommand):
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.warning(e.err)
+			log.info(e.err)
 
 
 # Select column cells
@@ -953,7 +947,7 @@ class TabnavSelectColumnCommand(TabnavCommand):
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.warning(e.err)
+			log.info(e.err)
 
 
 # Select all table cells
@@ -979,7 +973,7 @@ class TabnavSelectAllCommand(TabnavCommand):
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.warning(e.err)
+			log.info(e.err)
 # Other
 
 class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
@@ -1169,3 +1163,17 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 		if (operator == sublime.OP_NOT_EQUAL):
 			return not is_context
 		return is_context
+
+def update_log_level():
+	package_settings = sublime.load_settings("tabnav.sublime-settings")
+	log_level = package_settings.get('log_level', 'WARNING')
+	log.setLevel(log_level)
+
+def plugin_loaded():
+	package_settings = sublime.load_settings("tabnav.sublime-settings")
+	package_settings.add_on_change('tabnav_settings_listener', update_log_level)
+	update_log_level()
+
+def plugin_unloaded():
+	package_settings = sublime.load_settings("tabnav.sublime-settings")
+	package_settings.clear_on_change('tabnav_settings_listener')

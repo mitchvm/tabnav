@@ -167,6 +167,7 @@ Selecting the "TabNav - Settings" menu item opens the TabNav default settings fi
 
 * `include_separators`: When false, row separator lines are skipped when moving and not included in selections. To temporarily include line separators, use the ["Include separator lines in selections" command](#other-commands). Can also be overridden on a per-context basis. Default: `false`.
 * `trim_on_copy`: When true, the ["Copy selections" commands](#other-commands) trim whitespace from the selected regions' text prior to putting it on the clipboard. The selections in the view themselves are not altered. Default: `true`.
+* `log_level`: Set to `INFO` or `DEBUG` to see TabNav log messages in the Sublime Text console. Default `WARNING`.
 
 ### Context Configuration
 
