@@ -235,11 +235,14 @@ class TableView:
 	def _parse_selected_rows(self):
 		selection_lines = itertools.chain.from_iterable((self.view.lines(r) for r in self.view.sel()))
 		unique_rows = set([self.view.rowcol(line.a)[0] for line in selection_lines])
-		log.debug("Unique selection rows: %s", unique_rows)
 		self._rows = { r:self._parse_context_row(r) for r in unique_rows}
 
 	def _parse_context_row(self, r):
-		line = self.view.line(self.view.text_point(r,0))
+		point = self.view.text_point(r,0)
+		if (self._context.selector is not None and not self.view.match_selector(point, self._context.selector)) \
+			or (self._context.except_selector is not None and self.view.match_selector(point, self._context.except_selector)):
+			raise RowNotInTableError(r)
+		line = self.view.line(point)
 		line_content = self.view.substr(line)
 		if self._context.line_pattern is not None:
 			line_match = self._context.line_pattern.search(line_content)
@@ -251,7 +254,6 @@ class TableView:
 			row = self._parse_row(r, line_content, self._context.cell_patterns, False)
 		if row is None:
 			raise RowNotInTableError(r)
-		log.debug("Row %d: #cells: %d; is_separator: %s", r, len(row), row.is_separator)
 		return row
 
 	def _parse_row(self, r, line_content, patterns, is_separator):
@@ -499,7 +501,16 @@ class TabnavContext:
 	@property
 	def line_pattern(self):
 		return self._line_pattern
-		
+	
+	@property
+	def selector(self):
+		return self._selector
+	
+	@property
+	def except_selector(self):
+		return self._except_selector
+	
+
 	@property
 	def include_separators(self):
 		return self._include_separators
@@ -539,6 +550,8 @@ class TabnavContext:
 			context = TabnavContext(cell_patterns, separator_patterns, line_pattern)
 		if context is not None:
 			context._include_separators = context_config.get('include_separators', None)
+			context._selector = context_config.get('selector', None)
+			context._except_selector = context_config.get('except_selector', None)
 		return context
 
 	@staticmethod
