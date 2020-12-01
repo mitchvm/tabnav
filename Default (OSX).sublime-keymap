@@ -68,49 +68,6 @@
         ]
     },
 
-    // #### Navigation keybindings: add cursor ####
-
-    { 
-        // add cell on left
-        "keys": ["control+shift+;"],
-        "command": "tabnav_add_cursor_left",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_add_left" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // add cell on right
-        "keys": ["control+shift+'"],
-        "command": "tabnav_add_cursor_right",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_add_right" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // add cell above
-        "keys": ["control+shift+["],
-        "command": "tabnav_add_cursor_up",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_add_up" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // add cell below
-        "keys": ["control+shift+/"],
-        "command": "tabnav_add_cursor_down",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_add_down" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-
     // #### Navigation keybindings: select cell ####
 
     { 

@@ -14,17 +14,17 @@ TabNav also provides the ability to copy only the contents of the table, excludi
 <!-- MarkdownTOC -->
 
 - [Commands](#commands)
-    - [Table Navigation Commands](#table-navigation-commands)
-    - [Other Commands](#other-commands)
+  - [Table Navigation Commands](#table-navigation-commands)
+  - [Other Commands](#other-commands)
 - [Contexts](#contexts)
-    - [Markdown](#markdown)
-    - [CSV](#csv)
+  - [Markdown](#markdown)
+  - [CSV](#csv)
 - [Customization](#customization)
-    - [Key Bindings](#key-bindings)
-    - [Configuration Options](#configuration-options)
-    - [Context Configuration](#context-configuration)
-        - [CSV Context Configuration](#csv-context-configuration)
-    - [Custom Contexts](#custom-contexts)
+  - [Key Bindings](#key-bindings)
+  - [Configuration Options](#configuration-options)
+  - [Context Configuration](#context-configuration)
+    - [CSV Context Configuration](#csv-context-configuration)
+  - [Custom Contexts](#custom-contexts)
 
 <!-- /MarkdownTOC -->
 
@@ -41,12 +41,11 @@ The default key bindings are intended for use on a US-English QWERTY keyboard. T
 The core movement and selection key bindings combine one of four basic modifier key combinations together with with one of the four direction keys:
 
 
-| Name                        | Windows/Linux                   | macOS                    |
-|:----------------------------|:--------------------------------|:-------------------------|
-| Move cursor to cell...      | <kbd>Alt</kbd>                  | <kbd>^</kbd>             |
-| Add cursor to cell...       | <kbd>Alt</kbd><kbd>Shift</kbd>  | <kbd>^</kbd><kbd>⇧</kbd> |
-| Select cell...              | <kbd>Ctrl</kbd>                 | <kbd>⌘</kbd>             |
-| Extend selection to cell... | <kbd>Ctrl</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd> |
+| Name                        | Windows/Linux                   | macOS                    | Description                                                            |
+|:----------------------------|:--------------------------------|:-------------------------|:-----------------------------------------------------------------------|
+| Move cursor to cell...      | <kbd>Alt</kbd>                  | <kbd>^</kbd>             | Moves all cursors to the next cell in the desired direction.           |
+| Select cell...              | <kbd>Ctrl</kbd>                 | <kbd>⌘</kbd>             | Moves all selections to the next cell in the desired direction.        |
+| Extend selection to cell... | <kbd>Ctrl</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd> | Adds the next cell in the desired direction to the current selections. |
 
 <table>
 <thead>
@@ -68,6 +67,8 @@ The core movement and selection key bindings combine one of four basic modifier 
 </tbody>
 </table>
 
+There are also "Add cursor to cell {direction}" commands without default key bindings. For each active cursor, they add a cursor to the cell in the desired direction.
+
 Beyond the 16 core navigation commands, these additional movement and selection commands are provided. Unlike the core commands, all of these commands are idempotent - that is, they generate the same Sublime Text selections/cursors regardless of how many times they are invoked, or if the current selections/cursors are already aligned with table cells. This might prove useful, for example, if recording a macro.
 
 | Name                                             |                                  Windows/Linux Key binding |                                 macOS Key binding |
@@ -87,7 +88,7 @@ Beyond the 16 core navigation commands, these additional movement and selection 
 
 These commands will operate even outside the context of a table.
 
-| Name                                    |                                   Windows/Linux Keybinding |                                  macOS Keybinding | Description                                                                                                                                                                                                                 |
+| Name                                    |                                  Windows/Linux Key Binding |                                 macOS Key Binding | Description                                                                                                                                                                                                                 |
 |:----------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Enable on current view                  |                               <kbd>Ctrl</kbd>+<kbd>'</kbd> |                         <kbd>⌘</kbd>+<kbd>'</kbd> | Enables TabNav on the current view. Note, once enabled, the keybinding is clobbered by the "Move cursor to cell on right" command.                                                                                          |
 | Disable on current view                 | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>'</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd>+<kbd>'</kbd> | Disables TabNav on the current view.                                                                                                                                                                                        |
@@ -109,19 +110,19 @@ TabNav is enabled by default in Markdown documents. Only "pipe" style tables are
 Some flavours of Markdown support "borderless" tables, where pipes are not required on the outer edges of the table. For example, this is a valid table:
 
 ```
-  Heading 1 | Heading 2 | Heading 3 
- :----------|-----------|----------:
-  1.1       | 1.2       |       1.3 
-  2.1       | 2.2       |       2.3 
+| Heading 1 | Heading 2 | Heading 3 |
+|:----------|:----------|----------:|
+| 1.1       | 1.2       |       1.3 |
+| 2.1       | 2.2       |       2.3 |
 ```
 
 Alternatively, the same table as a "bordered" table would look like this:
 
 ```
- | Heading 1 | Heading 2 | Heading 3 |
- |:----------|-----------|----------:|
- | 1.1       | 1.2       |       1.3 |
- | 2.1       | 2.2       |       2.3 |
+| Heading 1 | Heading 2 | Heading 3 |
+|:----------|:----------|----------:|
+| 1.1       | 1.2       |       1.3 |
+| 2.1       | 2.2       |       2.3 |
 ```
 
 By default, TabNav supports both borderless and bordered tables. To be able to support borderless tables, however, any line of (non-raw) text containing a pipe character is considered to be part of a table. 
