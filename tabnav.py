@@ -242,13 +242,21 @@ class TableView:
 			raise RowNotInTableError(r)
 		line = self.view.line(point)
 		line_content = self.view.substr(line)
-		if self._context.line_pattern is not None:
-			line_match = self._context.line_pattern.search(line_content)
-			if line_match is None:
-				raise RowNotInTableError(r)
-			line_content = line_match.group('table')
-		row = self._parse_row(r, line_content, self._context.separator_patterns, True)
+		if self._context.separator_line_pattern is not None:
+			separator_match = self._context.separator_line_pattern.search(line_content)
+			if separator_match is not None:
+				separator_content = separator_match.group('table')
+				row = self._parse_row(r, separator_content, self._context.separator_patterns, True)
+			else:
+				row = None
+		else:
+			row = self._parse_row(r, line_content, self._context.separator_patterns, True)
 		if row is None:
+			if self._context.line_pattern is not None:
+				line_match = self._context.line_pattern.search(line_content)
+				if line_match is None:
+					raise RowNotInTableError(r)
+				line_content = line_match.group('table')
 			row = self._parse_row(r, line_content, self._context.cell_patterns, False)
 		if row is None:
 			raise RowNotInTableError(r)
@@ -410,7 +418,7 @@ class TableNavigator:
 				next_cell = self.get_next_cell(r, ic, dr, dc)
 			except ColumnIndexError as e:
 				# In a properly-formatted table, this shouldn't happen, so log it as a warning
-				log.info(e.err)
+				log.info(e)
 				next_cell = current_cell
 			except (RowNotInTableError, RowOutOfFileBounds) as e:
 				log.debug(e.err)
@@ -449,7 +457,7 @@ class TableNavigator:
 			try:
 				cells.append(self._table[(r, seed_cell.col)])
 			except ColumnIndexError as e:
-				log.info(e.err)
+				log.info(e)
 				# jump past this cell and keep going
 			except RowNotInTableError:
 				break # at the start of the table
@@ -460,7 +468,7 @@ class TableNavigator:
 			try:
 				cells.append(self._table[(r, seed_cell.col)])
 			except ColumnIndexError as e:
-				log.info(e.err)
+				log.info(e)
 				# jump past this cell and keep going
 			except (RowNotInTableError, RowOutOfFileBounds):
 				break
@@ -475,7 +483,7 @@ class TabnavContext:
 	Contexts are defined in the settings files. The auto_csv context is a special case
 	for which additional work is done to try to identify the CSV delimiter to use.
 	'''
-	def __init__(self, cell_patterns, separator_patterns=None, line_pattern=None):
+	def __init__(self, cell_patterns, separator_patterns=None, line_pattern=None, separator_line_pattern=None):
 		self._include_separators = None
 		self._cell_patterns = [re.compile(p) for p in cell_patterns]
 		if separator_patterns is not None:
@@ -486,6 +494,10 @@ class TabnavContext:
 			self._line_pattern = re.compile(line_pattern)
 		else:
 			self._line_pattern = None
+		if separator_line_pattern is not None:
+			self._separator_line_pattern = re.compile(separator_line_pattern)
+		else:
+			self._separator_line_pattern = None
 	
 	@property
 	def cell_patterns(self):
@@ -498,6 +510,10 @@ class TabnavContext:
 	@property
 	def line_pattern(self):
 		return self._line_pattern
+
+	@property
+	def separator_line_pattern(self):
+		return self._separator_line_pattern
 	
 	@property
 	def selector(self):
@@ -544,7 +560,8 @@ class TabnavContext:
 			cell_patterns = context_config.get('cell_patterns', None)
 			separator_patterns = context_config.get('separator_patterns', None)
 			line_pattern = context_config.get('line_pattern', None)
-			context = TabnavContext(cell_patterns, separator_patterns, line_pattern)
+			separator_line_pattern = context_config.get('separator_line_pattern', None)
+			context = TabnavContext(cell_patterns, separator_patterns, line_pattern, separator_line_pattern)
 		if context is not None:
 			context._include_separators = context_config.get('include_separators', None)
 			context._selector = context_config.get('selector', None)
@@ -649,12 +666,13 @@ class TabnavContext:
 			separator_patterns = [p.format(delimiter) for p in raw_sep_patterns]
 		else:
 			separator_patterns = None
-		raw_line_pattern = context_config.get('line_pattern', None)
-		if raw_line_pattern is not None:
-			line_pattern = raw_line_pattern.format(delimiter)
-		else:
-			line_pattern = None
-		return TabnavContext(cell_patterns, separator_patterns, line_pattern)
+		line_pattern = context_config.get('line_pattern', None)
+		if line_pattern is not None:
+			line_pattern = line_pattern.format(delimiter)
+		separator_line_pattern = context_config.get('separator_line_pattern', None)
+		if separator_line_pattern is not None:
+			separator_line_pattern = separator_line_pattern.format(delimiter)
+		return TabnavContext(cell_patterns, separator_patterns, line_pattern, separator_line_pattern)
 
 #### Commands ####
 
@@ -701,7 +719,7 @@ class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
 			self.init_table(cell_direction)
 			self.tabnav.split_and_move_current_cells(True)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e.err)
+			log.info(e)
 
 class TabnavMoveCursorStartCommand(TabnavMoveCursorCurrentCellCommand):
 	def run(self, edit, context=None):
@@ -723,7 +741,7 @@ class TabnavMoveCursorCommand(TabnavCommand):
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.move_next_cell(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e.err)
+			log.info(e)
 
 	def move_next_cell(self, move_direction):
 		moved = False
@@ -778,7 +796,7 @@ class TabnavAddCursorCommand(TabnavCommand):
 			if not self.tabnav.split_and_move_current_cells(move_cursors):
 				self.add_next_cell(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e.err)
+			log.info(e)
 
 	def add_next_cell(self, move_direction):
 		initial_selections = list(self.view.sel())
@@ -819,7 +837,7 @@ class TabnavSelectCurrentCommand(TabnavCommand):
 			self.init_table(cell_direction)
 			self.tabnav.split_and_select_current_cells()
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e.err)
+			log.info(e)
 
 
 class TabnavSelectNextCommand(TabnavCommand):
@@ -832,7 +850,7 @@ class TabnavSelectNextCommand(TabnavCommand):
 			if not self.tabnav.split_and_select_current_cells():
 				self.select_next_cell(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e.err)		
+			log.info(e)		
 
 	def select_next_cell(self, move_direction):
 		try:
@@ -876,7 +894,7 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 			if not self.tabnav.split_and_select_current_cells():
 				self.extend_cell_selection(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e.err)		
+			log.info(e)		
 
 	def extend_cell_selection(self, move_direction):
 		initial_selections = list(self.view.sel())
@@ -923,7 +941,7 @@ class TabnavSelectRowCommand(TabnavCommand):
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e.err)
+			log.info(e)
 
 
 # Select column cells
@@ -947,7 +965,7 @@ class TabnavSelectColumnCommand(TabnavCommand):
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e.err)
+			log.info(e)
 
 
 # Select all table cells
@@ -973,7 +991,7 @@ class TabnavSelectAllCommand(TabnavCommand):
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e.err)
+			log.info(e)
 # Other
 
 class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):

@@ -18,13 +18,14 @@
 		{
 			"selector": "text.html.markdown",
 			"except_selector": "markup.raw",
+			"separator_line_pattern": "^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$",
 			"cell_patterns": [
 				"\\|?(?P<content>.*?)(?=\\|)",
 				"\\|(?P<content>.+)$"
 			],
 			"separator_patterns": [
 				"\\|?(?P<content>\\s*[:-]+\\s*)(?=\\|)",
-				"\\|(?P<content>\\s*[:-]+\\s*)"
+				"\\|(?P<content>\\s*[:-]+\\s*$)"
 			]
 		},
 		"auto_csv":

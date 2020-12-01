@@ -182,7 +182,8 @@ To override a default context's setting, you only need to provide the path to th
   {
     "markdown":
     {
-      "line_pattern": "^(?P<table>\\|.*\\|$)"
+      "line_pattern": "^(?P<table>\\|.*\\|$)",
+      "separator_line_pattern": "^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$"
     }
   }
 }
@@ -205,8 +206,9 @@ Additional contexts can also be defined in the `user_contexts` element. The foll
 2. `except_selector`: _Optional_. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that overrides the base `selector`. If the first selection matches this selector, then the context is _not_ matched.
 3. `cell_patterns`: **Required**. A list containing at least one [regular expression](https://docs.python.org/3.3/library/re.html) that is used to identify cell contents from a line of text. Each match of each expression should return a single cell's contents within a named `contents` group. Each expression can also, optionally, return a zero-width match immediately prior to the last matching delimiter. This match will be ignored. If multiple expressions are provided, they are processed in sequence until their matches are exhausted. Use this to have, for example, one expression to capture the first cell on the line, a different expression to capture cells in the middle of the row, and a third expression to capture the final cell on the line.
 4. `separator_patterns`: _Optional_. Similar to `cell_patterns`, a list of [regular expressions](https://docs.python.org/3.3/library/re.html) that are used to identify row separator lines of text. If provided, each expression must return a named `content` group that matches the portion of the separator line between column delimiters.
-5. `line_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is part of a table. If used, the `line_pattern` it must return a named `table` group that captures the part of the line to use for matching table content with the `cell_patterns` and `separator_patterns`. If a `line_pattern` is not provided, the entire line of text is used.
-6. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
-7. `include_separators`: _Optional_. A boolean to indicate if line separators should be inclined when using this context. Overrides the global `include_separators` setting.
+5. `line_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is part of a table. If used, the `line_pattern` must return a named `table` group that captures the part of the line to use for matching table content with the `cell_patterns`. If a `line_pattern` is not provided, the entire line of text is parsed using the `cell_patterns`.
+6. `separator_line_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is separator row in a table. If used, the `separator_line_pattern` must return a named `table` group that captures the part of the line to use for matching table content with the `separator_patterns`. If a `separator_line_pattern` is not provided, the entire line of text is parsed using the `separator_patterns`.
+7. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
+8. `include_separators`: _Optional_. A boolean to indicate if line separators should be inclined when using this context. Overrides the global `include_separators` setting.
 
 <sup><b>4</b></sup> The default settings file has a `contexts` element. TabNav merges settings from the `user_contexts` and `contexts` settings. If you want to completely overwrite the default contexts, you can use the `contexts` element in your local settings file, however this is not recommended.
