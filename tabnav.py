@@ -241,6 +241,11 @@ class TableView:
 	def _parse_context_row(self, r):
 		line = self.view.line(self.view.text_point(r,0))
 		line_content = self.view.substr(line)
+		if self._context.line_pattern is not None:
+			line_match = self._context.line_pattern.search(line_content)
+			if line_match is None:
+				raise RowNotInTableError(r)
+			line_content = line_match.group('table')
 		row = self._parse_row(r, line_content, self._context.separator_patterns, True)
 		if row is None:
 			row = self._parse_row(r, line_content, self._context.cell_patterns, False)
@@ -471,13 +476,17 @@ class TabnavContext:
 	Contexts are defined in the settings files. The auto_csv context is a special case
 	for which additional work is done to try to identify the CSV delimiter to use.
 	'''
-	def __init__(self, cell_patterns, separator_patterns=None):
+	def __init__(self, cell_patterns, separator_patterns=None, line_pattern=None):
 		self._include_separators = None
 		self._cell_patterns = [re.compile(p) for p in cell_patterns]
 		if separator_patterns is not None:
 			self._separator_patterns = [re.compile(p) for p in separator_patterns]
 		else:
 			self._separator_patterns = []
+		if line_pattern is not None:
+			self._line_pattern = re.compile(line_pattern)
+		else:
+			self._line_pattern = None
 	
 	@property
 	def cell_patterns(self):
@@ -486,7 +495,11 @@ class TabnavContext:
 	@property
 	def separator_patterns(self):
 		return self._separator_patterns
-	
+
+	@property
+	def line_pattern(self):
+		return self._line_pattern
+		
 	@property
 	def include_separators(self):
 		return self._include_separators
@@ -522,7 +535,8 @@ class TabnavContext:
 			log.debug("Using tabnav context '%s'", context_key)
 			cell_patterns = context_config.get('cell_patterns', None)
 			separator_patterns = context_config.get('separator_patterns', None)
-			context = TabnavContext(cell_patterns, separator_patterns)
+			line_pattern = context_config.get('line_pattern', None)
+			context = TabnavContext(cell_patterns, separator_patterns, line_pattern)
 		if context is not None:
 			context._include_separators = context_config.get('include_separators', None)
 		return context
@@ -542,7 +556,7 @@ class TabnavContext:
 		for key in context_keys:
 			config = configs.get(key, {})
 			for subkey in user_configs[key]:
-				config[subkey] = user_configs[key]
+				config[subkey] = user_configs[key][subkey]
 			configs[key] = config
 		return configs
 
@@ -628,7 +642,12 @@ class TabnavContext:
 			separator_patterns = [p.format(delimiter) for p in raw_sep_patterns]
 		else:
 			separator_patterns = None
-		return TabnavContext(cell_patterns, separator_patterns)
+		raw_line_pattern = context_config.get('line_pattern', None)
+		if raw_line_pattern is not None:
+			line_pattern = raw_line_pattern.format(delimiter)
+		else:
+			line_pattern = None
+		return TabnavContext(cell_patterns, separator_patterns, line_pattern)
 
 #### Commands ####
 

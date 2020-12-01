@@ -104,7 +104,31 @@ TabNav operates on the concept of "contexts", which define how it identifies tab
 
 ### Markdown
 
-TabNav is enabled by default in Markdown documents. Tables are identified as any line containing at least one pipe character, `|`, not within a raw code block.
+TabNav is enabled by default in Markdown documents. Only "pipe" style tables are supported. Other styles of Markdown tables are not currently supported.
+
+Some flavours of Markdown support "borderless" tables, where pipes are not required on the outer edges of the table. For example, this is a valid table:
+
+```
+  Heading 1 | Heading 2 | Heading 3 
+ :----------|-----------|----------:
+  1.1       | 1.2       |       1.3 
+  2.1       | 2.2       |       2.3 
+```
+
+Alternatively, the same table as a "bordered" table would look like this:
+
+```
+ | Heading 1 | Heading 2 | Heading 3 |
+ |:----------|-----------|----------:|
+ | 1.1       | 1.2       |       1.3 |
+ | 2.1       | 2.2       |       2.3 |
+```
+
+By default, TabNav supports both borderless and bordered tables. To be able to support borderless tables, however, any line of (non-raw) text containing a pipe character is considered to be part of a table. 
+
+So if I put a pipe right here | then this line of text is considered to be a table.
+
+If you only use bordered Markdown tables, you can configure TabNav to be more restrictive in what it considers to be a table. See [Context Configuration](#context-configuration).
 
 ### CSV
 
@@ -148,15 +172,17 @@ Selecting the "TabNav - Settings" menu item opens the TabNav default settings fi
 
 To modify the behaviour of the default contexts, or to add new contexts, use the `user_contexts`<sup>4</sup> element in your local TabNav settings file
 
-To override a default context's setting, you only need to provide the path to that setting in the `user_contexts` element; you don't need to copy the full context definition. For example, to require that TabNav be explicitly enabled in Markdown contexts, add this to your local settings file:
+To override a default context's setting, you only need to provide the path to that setting in the `user_contexts` element; you don't need to copy the full context definition. For example, to configure the [Markdown](#markdown) context to only support bordered tables, add this to your user configuration:
 
 ```json
-"user_contexts":
 {
+  "user_contexts":
+  {
     "markdown":
     {
-        "enable_explicitly": true
+      "line_pattern": "^(?P<table>\\|.*\\|$)"
     }
+  }
 }
 ```
 
@@ -177,7 +203,8 @@ Additional contexts can also be defined in the `user_contexts` element. The foll
 2. `except_selector`: _Optional_. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that overrides the base `selector`. If the first selection matches this selector, then the context is _not_ matched.
 3. `cell_patterns`: **Required**. A list containing at least one [regular expression](https://docs.python.org/3.3/library/re.html) that is used to identify cell contents from a line of text. Each match of each expression should return a single cell's contents within a named `contents` group. Each expression can also, optionally, return a zero-width match immediately prior to the last matching delimiter. This match will be ignored. If multiple expressions are provided, they are processed in sequence until their matches are exhausted. Use this to have, for example, one expression to capture the first cell on the line, a different expression to capture cells in the middle of the row, and a third expression to capture the final cell on the line.
 4. `separator_patterns`: _Optional_. Similar to `cell_patterns`, a list of [regular expressions](https://docs.python.org/3.3/library/re.html) that are used to identify row separator lines of text. If provided, each expression must return a named `content` group that matches the portion of the separator line between column delimiters.
-5. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
-6. `include_separators`: _Optional_. A boolean to indicate if line separators should be inclined when using this context. Overrides the global `include_separators` setting.
+5. `line_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is part of a table. If a `line_pattern` is used, it must return a named `line` group that captures the part of the line to use for matching table content with the `cell_patterns` and `separator_patterns`. If a `line_pattern` is not provided, the entire line of text is used.
+6. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
+7. `include_separators`: _Optional_. A boolean to indicate if line separators should be inclined when using this context. Overrides the global `include_separators` setting.
 
 <sup><b>4</b></sup> The default settings file has a `contexts` element. TabNav merges settings from the `user_contexts` and `contexts` settings. If you want to completely overwrite the default contexts, you can use the `contexts` element in your local settings file, however this is not recommended.
