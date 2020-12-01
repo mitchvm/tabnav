@@ -229,7 +229,8 @@
 			{
 				"markdown":
 				{
-					"line_pattern": "^(?P<table>\\|.*\\|$)"
+					"line_pattern": "^(?P<table>\\|.*\\|$)",
+					"separator_line_pattern": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
 				}
 			}
 		}
@@ -249,9 +250,40 @@
 			{
 				"markdown":
 				{
-					"line_pattern": "^(?P<table>\\|.*\\|$)"
+					"line_pattern": "^(?P<table>\\|.*\\|$)",
+					"separator_line_pattern": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
 				}
 			}
 		}
+	},
+	{
+		"id": "NFNL",
+		"command": "tabnav_select_down",
+		"context": "None",
+		"file": "markdown04_separator_like.md",
+		"description": "Markdown non-separator cells that match line separator regex",
+		"initial_selections": [{"a": 214, "b": 210}],
+		"expected_selections": [{"a": 263, "b": 259}],
+		"view_settings": {"tabnav.include_separators": false}
+	},
+	{
+		"id": "P2H2",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Markdown two column borderless table - separators excluded",
+		"initial_selections": [{"a": 300, "b": 300}],
+		"expected_selections": [{"a": 239, "b": 243}, {"a": 244, "b": 251}, {"a": 266, "b": 277}, {"a": 278, "b": 284}, {"a": 285, "b": 290}, {"a": 291, "b": 294}, {"a": 295, "b": 296}, {"a": 297, "b": 301}, {"a": 302, "b": 310}, {"a": 311, "b": 312}, {"a": 313, "b": 317}, {"a": 318, "b": 322}, {"a": 323, "b": 329}, {"a": 330, "b": 336}],
+		"view_settings": {"tabnav.include_separators": false}
+	},
+	{
+		"id": "K3UR",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Markdown two column borderless table - separators included",
+		"initial_selections": [{"a": 300, "b": 300}],
+		"expected_selections": [{"a": 239, "b": 243}, {"a": 244, "b": 251}, {"a": 252, "b": 256}, {"a": 257, "b": 265}, {"a": 266, "b": 277}, {"a": 278, "b": 284}, {"a": 285, "b": 290}, {"a": 291, "b": 294}, {"a": 295, "b": 296}, {"a": 297, "b": 301}, {"a": 302, "b": 310}, {"a": 311, "b": 312}, {"a": 313, "b": 317}, {"a": 318, "b": 322}, {"a": 323, "b": 329}, {"a": 330, "b": 336}],
+		"view_settings": {"tabnav.include_separators": true}
 	}
 ]
