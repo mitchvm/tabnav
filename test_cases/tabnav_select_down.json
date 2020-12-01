@@ -34,7 +34,7 @@
 		"description": "Separators excluded - separator row jumped",
 		"initial_selections": [{"a": 24, "b": 13}],
 		"expected_selections": [{"a": 119, "b": 112}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "YUUF",
@@ -44,7 +44,7 @@
 		"description": "Separators excluded - multiple cursros, separator only jumped as applicable",
 		"initial_selections": [{"a": 36, "b": 25}, {"a": 119, "b": 112}],
 		"expected_selections": [{"a": 131, "b": 120}, {"a": 205, "b": 192}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "SZZW",
@@ -54,7 +54,7 @@
 		"description": "Cell in line separator row moves out",
 		"initial_selections": [{"a": 74, "b": 63}],
 		"expected_selections": [{"a": 119, "b": 112}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "SY5V",
@@ -64,7 +64,7 @@
 		"description": "Separators included - moves to separator row",
 		"initial_selections": [{"a": 24, "b": 13}],
 		"expected_selections": [{"a": 74, "b": 63}],
-		"settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_separators": true}
 	},
 	{
 		"id": "TXOK",

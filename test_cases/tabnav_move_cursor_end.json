@@ -106,7 +106,7 @@
 		"description": "Region spans body and separator row, separators excluded",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "NPWG",
@@ -116,7 +116,7 @@
 		"description": "Region spans body and separator row, separators included",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}],
-		"settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_separators": true}
 	},
 	{
 		"id": "2UF4",
@@ -189,6 +189,6 @@
 		"description": "Selection spans separator row",
 		"initial_selections": [{"a": 18, "b": 86}],
 		"expected_selections": [{"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 78, "b": 78}, {"a": 90, "b": 90}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	}
 ]

@@ -34,7 +34,7 @@
 		"description": "Separators excluded - separator row jumped",
 		"initial_selections": [{"a": 146, "b": 132}],
 		"expected_selections": [{"a": 48, "b": 37}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "WX5P",
@@ -44,7 +44,7 @@
 		"description": "Separators excluded - multiple cells, separator only jumped as applicable",
 		"initial_selections": [{"a": 146, "b": 132}, {"a": 242, "b": 227}],
 		"expected_selections": [{"a": 48, "b": 37}, {"a": 191, "b": 149}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "KLLS",
@@ -54,7 +54,7 @@
 		"description": "Cell in line separator row moves out",
 		"initial_selections": [{"a": 74, "b": 63}],
 		"expected_selections": [{"a": 24, "b": 13}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "EB7Z",
@@ -64,7 +64,7 @@
 		"description": "Separators included - moves to separator row",
 		"initial_selections": [{"a": 146, "b": 132}],
 		"expected_selections": [{"a": 98, "b": 87}],
-		"settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_separators": true}
 	},
 	{
 		"id": "7FXN",
@@ -92,7 +92,7 @@
 		"description": "Sequential cells in a column, one in top row merged",
 		"initial_selections": [{"a": 24, "b": 13}, {"a": 119, "b": 112}],
 		"expected_selections": [{"a": 24, "b": 13}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "U2XO",

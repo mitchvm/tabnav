@@ -106,7 +106,7 @@
 		"description": "Region spans body and separator row, separators excluded",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 13, "b": 13}, {"a": 25, "b": 25}, {"a": 37, "b": 37}, {"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 120, "b": 120}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "WTGF",
@@ -116,7 +116,7 @@
 		"description": "Region spans body and separator row, separators included",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 13, "b": 13}, {"a": 25, "b": 25}, {"a": 37, "b": 37}, {"a": 51, "b": 51}, {"a": 63, "b": 63}, {"a": 75, "b": 75}, {"a": 87, "b": 87}, {"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 120, "b": 120}],
-		"settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_separators": true}
 	},
 	{
 		"id": "3AWG",
@@ -189,6 +189,6 @@
 		"description": "Selection spans separator row",
 		"initial_selections": [{"a": 18, "b": 86}],
 		"expected_selections": [{"a": 11, "b": 11}, {"a": 23, "b": 23}, {"a": 68, "b": 68}, {"a": 79, "b": 79}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	}
 ]

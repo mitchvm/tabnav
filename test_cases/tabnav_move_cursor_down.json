@@ -34,7 +34,7 @@
 		"description": "Separators excluded - separator row jumped",
 		"initial_selections": [{"a": 45, "b": 45}],
 		"expected_selections": [{"a": 140, "b": 140}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "TB3O",
@@ -44,7 +44,7 @@
 		"description": "Separators excluded - multiple cursros, separator only jumped as applicable",
 		"initial_selections": [{"a": 6, "b": 6}, {"a": 116, "b": 116}],
 		"expected_selections": [{"a": 106, "b": 106}, {"a": 196, "b": 196}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "FLUF",
@@ -54,7 +54,7 @@
 		"description": "Cursor in line separator row moves out",
 		"initial_selections": [{"a": 69, "b": 69}],
 		"expected_selections": [{"a": 118, "b": 118}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "E4DJ",
@@ -64,7 +64,7 @@
 		"description": "Separators included - moves to separator row",
 		"initial_selections": [{"a": 29, "b": 29}],
 		"expected_selections": [{"a": 79, "b": 79}],
-		"settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_separators": true}
 	},
 	{
 		"id": "7V7C",

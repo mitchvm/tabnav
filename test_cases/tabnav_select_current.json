@@ -124,7 +124,7 @@
 		"description": "Region spans body and separator row, separators excluded",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
 		"id": "4ZRW",
@@ -134,7 +134,7 @@
 		"description": "Region spans body and separator row, separators included",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 51, "b": 62}, {"a": 63, "b": 74}, {"a": 75, "b": 86}, {"a": 87, "b": 98}, {"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}],
-		"settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_separators": true}
 	},
 	{
 		"id": "MNIB",
@@ -216,6 +216,6 @@
 		"description": "Selection spans separator row",
 		"initial_selections": [{"a": 18, "b": 86}],
 		"expected_selections": [{"a": 11, "b": 22}, {"a": 23, "b": 33}, {"a": 68, "b": 78}, {"a": 79, "b": 90}],
-		"settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_separators": false}
 	}
 ]

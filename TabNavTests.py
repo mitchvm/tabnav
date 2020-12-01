@@ -31,10 +31,8 @@ class TestCase():
 		self.description = test_definition['description']
 		self.initial_selections = [(s['a'], s['b']) for s in test_definition['initial_selections']]
 		self.expected_selections = [(s['a'], s['b']) for s in test_definition['expected_selections']]
-		if 'settings' in test_definition:
-			self.settings = test_definition['settings']
-		else:
-			self.settings = {}
+		self.view_settings = test_definition.get('view_settings', {})
+		self.package_settings = test_definition.get('package_settings', {})
 
 	@property
 	def html_preview(self):
@@ -127,6 +125,9 @@ def launch_tests(window, command_name=None, context_name=None, file_name=None, t
 
 
 def run_test_cases(view, file_name, close_file=True):
+	package_settings = sublime.load_settings("tabnav.sublime-settings")
+	initial_user_contexts = package_settings.get('user_contexts')
+	package_settings.set('user_contexts', {})
 	global test_results
 	test_cases = pending_test_files.pop(file_name)
 	commandkey = lambda t:t.command_name
@@ -137,14 +138,20 @@ def run_test_cases(view, file_name, close_file=True):
 			test_results.append(run_test_case(view, test))
 	if close_file:
 		view.close()
+	package_settings.set('user_contexts', initial_user_contexts)
 
 
 def run_test_case(view, test):
-	initial_settings = {}
+	package_settings = sublime.load_settings("tabnav.sublime-settings")
+	initial_package_settings = {}
+	initial_view_settings = {}
 	try:
-		for setting in test.settings:
-			initial_settings[setting] = view.settings().get(setting)
-			view.settings().set(setting, test.settings[setting])
+		for setting in test.view_settings:
+			initial_view_settings[setting] = view.settings().get(setting)
+			view.settings().set(setting, test.view_settings[setting])
+		for setting in test.package_settings:
+			initial_package_settings[setting] = package_settings.get(setting)
+			package_settings.set(setting, test.package_settings[setting])
 		view.sel().clear()
 		view.sel().add_all([sublime.Region(a, b) for a,b in test.initial_selections])
 		view.run_command(test.command_name, args={"context":test.context_name})
@@ -157,8 +164,10 @@ def run_test_case(view, test):
 	except Exception as e:
 		return TestResult(test, False, e.__str__())
 	finally:
-		for setting in initial_settings:
-			view.settings().set(setting, initial_settings[setting])
+		for setting in initial_view_settings:
+			view.settings().set(setting, initial_view_settings[setting])
+		for setting in initial_package_settings:
+			package_settings.set(setting, initial_package_settings[setting])
 
 
 def print_test_results():
