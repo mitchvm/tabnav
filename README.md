@@ -182,8 +182,8 @@ To override a default context's setting, you only need to provide the path to th
   {
     "markdown":
     {
-      "line_pattern": "^(?P<table>\\|.*\\|$)",
-      "separator_line_pattern": "^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$"
+      "line_pattern": "^(?P<table>\\|.*\\|)$",
+      "separator_line_pattern": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
     }
   }
 }
