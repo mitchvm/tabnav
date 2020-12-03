@@ -229,7 +229,7 @@
 			{
 				"markdown":
 				{
-					"line_pattern": "^(?P<table>\\|.*\\|$)",
+					"line_pattern": "^(?P<table>\\|.*\\|)$",
 					"separator_line_pattern": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
 				}
 			}
@@ -250,7 +250,7 @@
 			{
 				"markdown":
 				{
-					"line_pattern": "^(?P<table>\\|.*\\|$)",
+					"line_pattern": "^(?P<table>\\|.*\\|)$",
 					"separator_line_pattern": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
 				}
 			}
