@@ -183,7 +183,7 @@ class TableView:
 		self.view = view
 		self._context = context
 		self._cell_direction = cell_direction
-		self._parse_selected_rows()
+		self._rows = {}
 
 	def __getitem__(self, key):
 		try:
@@ -230,7 +230,7 @@ class TableView:
 			ic = ic + 1
 		return (r, ic)
 
-	def _parse_selected_rows(self):
+	def parse_selected_rows(self):
 		selection_lines = itertools.chain.from_iterable((self.view.lines(r) for r in self.view.sel()))
 		unique_rows = set([self.view.rowcol(line.a)[0] for line in selection_lines])
 		self._rows = { r:self._parse_context_row(r) for r in unique_rows}
@@ -696,6 +696,7 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		'''Parses the table rows that intersect the currently selected regions.'''
 		self.init_settings()
 		self.table = TableView(self.view, self.context, cell_direction)
+		self.table.parse_selected_rows()
 		self.tabnav = TableNavigator(self.table, self.include_separators)
 
 	def init_settings(self):
@@ -1164,20 +1165,20 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 		context = TabnavContext.get_current_context(self.view, context_key)
 		if context is None:
 			is_context = False
-		elif match_all:
-			# parse all of the current selections
-			try:
-				TableView(context)
-				is_context = True
-			except Exception:
-				is_context = False
 		else:
-			# parse only the first cell on the first line of the first selection
-			point = self.view.sel()[0].begin()
-			line = self.view.line(point)
-			line_content = self.view.substr(line)
-			is_context =  re.search(context.cell_patterns[0], line_content) is not None \
-				or (len(context.separator_patterns) > 0 and re.search(context.separator_patterns[0]) is not None)
+			table = TableView(self.view, context)
+			try:
+				if match_all:
+					# parse all of the current selections
+					table.parse_selected_rows()
+				else:
+					point = self.view.sel()[0].begin()
+					r = self.view.rowcol(point)[0]
+					table[r]
+			except RowNotInTableError:
+				is_context = False
+			else:
+				is_context = True
 		if (operator == sublime.OP_NOT_EQUAL):
 			return not is_context
 		return is_context
