@@ -18,7 +18,10 @@
 		"description": "Parse CSV: comma, unquoted, first cell",
 		"initial_selections": [{"a": 59, "b": 59}],
 		"expected_selections": [{"a": 57, "b": 60}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "R7ZU",
@@ -29,7 +32,10 @@
 		"description": "Parse CSV: comma, quoted, first cell",
 		"initial_selections": [{"a": 211, "b": 211}],
 		"expected_selections": [{"a": 209, "b": 219}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "P3PP",
@@ -40,7 +46,10 @@
 		"description": "Parse CSV: comma, quoted with comma and quotes, first cell",
 		"initial_selections": [{"a": 248, "b": 248}],
 		"expected_selections": [{"a": 241, "b": 315}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "5TZE",
@@ -51,7 +60,10 @@
 		"description": "Parse CSV: comma, empty, first cell",
 		"initial_selections": [{"a": 380, "b": 380}],
 		"expected_selections": [{"a": 380, "b": 380}, {"a": 381, "b": 419}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "DFVG",
@@ -62,7 +74,10 @@
 		"description": "Parse CSV: comma, unquoted, middle cell",
 		"initial_selections": [{"a": 24, "b": 24}],
 		"expected_selections": [{"a": 13, "b": 36}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "IBIG",
@@ -73,7 +88,10 @@
 		"description": "Parse CSV: comma, quoted, middle cell",
 		"initial_selections": [{"a": 83, "b": 83}],
 		"expected_selections": [{"a": 61, "b": 95}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "5OD7",
@@ -84,7 +102,10 @@
 		"description": "Parse CSV: comma, quoted with comma and quotes, middle cell",
 		"initial_selections": [{"a": 445, "b": 445}],
 		"expected_selections": [{"a": 431, "b": 451}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "3WPO",
@@ -95,7 +116,10 @@
 		"description": "Parse CSV: comma, empty, middle cell",
 		"initial_selections": [{"a": 176, "b": 176}],
 		"expected_selections": [{"a": 175, "b": 158}, {"a": 176, "b": 176}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "U3ZU",
@@ -106,7 +130,10 @@
 		"description": "Parse CSV: comma, unquoted, last cell",
 		"initial_selections": [{"a": 370, "b": 370}],
 		"expected_selections": [{"a": 347, "b": 379}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "KLIJ",
@@ -117,7 +144,10 @@
 		"description": "Parse CSV: comma, quoted, last cell",
 		"initial_selections": [{"a": 135, "b": 135}],
 		"expected_selections": [{"a": 97, "b": 140}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "RPJ7",
@@ -128,7 +158,10 @@
 		"description": "Parse CSV: comma, quoted with comma and quotes, last cell",
 		"initial_selections": [{"a": 471, "b": 471}],
 		"expected_selections": [{"a": 458, "b": 490}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "MR6J",
@@ -139,7 +172,10 @@
 		"description": "Parse CSV: comma, empty, last cell",
 		"initial_selections": [{"a": 208, "b": 208}],
 		"expected_selections": [{"a": 207, "b": 177}, {"a": 208, "b": 208}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "ZPYK",
@@ -147,10 +183,13 @@
 		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
-		"description": "Parse CSV: comma, select all",
+		"description": "Plain CSV: comma, select all",
 		"initial_selections": [{"a": 165, "b": 165}],
 		"expected_selections": [{"a": 0, "b": 1}, {"a": 2, "b": 12}, {"a": 13, "b": 36}, {"a": 37, "b": 40}, {"a": 41, "b": 56}, {"a": 57, "b": 60}, {"a": 61, "b": 95}, {"a": 96, "b": 96}, {"a": 97, "b": 140}, {"a": 141, "b": 143}, {"a": 144, "b": 157}, {"a": 158, "b": 175}, {"a": 176, "b": 176}, {"a": 177, "b": 207}, {"a": 208, "b": 208}, {"a": 209, "b": 219}, {"a": 220, "b": 228}, {"a": 229, "b": 240}, {"a": 241, "b": 315}, {"a": 316, "b": 327}, {"a": 328, "b": 346}, {"a": 347, "b": 379}, {"a": 380, "b": 380}, {"a": 381, "b": 419}, {"a": 420, "b": 423}, {"a": 424, "b": 425}, {"a": 426, "b": 430}, {"a": 431, "b": 451}, {"a": 452, "b": 457}, {"a": 458, "b": 490}, {"a": 491, "b": 491}, {"a": 492, "b": 492}, {"a": 493, "b": 493}, {"a": 494, "b": 494}, {"a": 495, "b": 495}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "AP5Y",
@@ -158,10 +197,13 @@
 		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv02_pipe_quoted.csv",
-		"description": "Parse CSV: pipe, select all",
+		"description": "Plain CSV: pipe, select all",
 		"initial_selections": [{"a": 165, "b": 165}],
 		"expected_selections": [{"a": 0, "b": 1}, {"a": 2, "b": 12}, {"a": 13, "b": 36}, {"a": 37, "b": 40}, {"a": 41, "b": 56}, {"a": 57, "b": 60}, {"a": 61, "b": 95}, {"a": 96, "b": 96}, {"a": 97, "b": 140}, {"a": 141, "b": 143}, {"a": 144, "b": 157}, {"a": 158, "b": 175}, {"a": 176, "b": 176}, {"a": 177, "b": 207}, {"a": 208, "b": 208}, {"a": 209, "b": 219}, {"a": 220, "b": 228}, {"a": 229, "b": 240}, {"a": 241, "b": 315}, {"a": 316, "b": 327}, {"a": 328, "b": 346}, {"a": 347, "b": 379}, {"a": 380, "b": 380}, {"a": 381, "b": 419}, {"a": 420, "b": 423}, {"a": 424, "b": 425}, {"a": 426, "b": 430}, {"a": 431, "b": 451}, {"a": 452, "b": 457}, {"a": 458, "b": 490}, {"a": 491, "b": 491}, {"a": 492, "b": 492}, {"a": 493, "b": 493}, {"a": 494, "b": 494}, {"a": 495, "b": 495}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "MT5C",
@@ -169,10 +211,13 @@
 		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv03_semicolon_quoted.csv",
-		"description": "Parse CSV: semicolon, select all",
+		"description": "Plain CSV: semicolon, select all",
 		"initial_selections": [{"a": 165, "b": 165}],
 		"expected_selections": [{"a": 0, "b": 1}, {"a": 2, "b": 12}, {"a": 13, "b": 36}, {"a": 37, "b": 40}, {"a": 41, "b": 56}, {"a": 57, "b": 60}, {"a": 61, "b": 95}, {"a": 96, "b": 96}, {"a": 97, "b": 140}, {"a": 141, "b": 143}, {"a": 144, "b": 157}, {"a": 158, "b": 175}, {"a": 176, "b": 176}, {"a": 177, "b": 207}, {"a": 208, "b": 208}, {"a": 209, "b": 219}, {"a": 220, "b": 228}, {"a": 229, "b": 240}, {"a": 241, "b": 315}, {"a": 316, "b": 327}, {"a": 328, "b": 346}, {"a": 347, "b": 379}, {"a": 380, "b": 380}, {"a": 381, "b": 419}, {"a": 420, "b": 423}, {"a": 424, "b": 425}, {"a": 426, "b": 430}, {"a": 431, "b": 451}, {"a": 452, "b": 457}, {"a": 458, "b": 490}, {"a": 491, "b": 491}, {"a": 492, "b": 492}, {"a": 493, "b": 493}, {"a": 494, "b": 494}, {"a": 495, "b": 495}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
 	},
 	{
 		"id": "D7W2",
@@ -180,9 +225,96 @@
 		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv04_tab_quoted.csv",
-		"description": "Parse CSV: tab, select all",
+		"description": "Plain CSV: tab, select all",
 		"initial_selections": [{"a": 165, "b": 165}],
 		"expected_selections": [{"a": 0, "b": 1}, {"a": 2, "b": 12}, {"a": 13, "b": 36}, {"a": 37, "b": 40}, {"a": 41, "b": 56}, {"a": 57, "b": 60}, {"a": 61, "b": 95}, {"a": 96, "b": 96}, {"a": 97, "b": 140}, {"a": 141, "b": 143}, {"a": 144, "b": 157}, {"a": 158, "b": 175}, {"a": 176, "b": 176}, {"a": 177, "b": 207}, {"a": 208, "b": 208}, {"a": 209, "b": 219}, {"a": 220, "b": 228}, {"a": 229, "b": 240}, {"a": 241, "b": 315}, {"a": 316, "b": 327}, {"a": 328, "b": 346}, {"a": 347, "b": 379}, {"a": 380, "b": 380}, {"a": 381, "b": 419}, {"a": 420, "b": 423}, {"a": 424, "b": 425}, {"a": 426, "b": 430}, {"a": 431, "b": 451}, {"a": 452, "b": 457}, {"a": 458, "b": 490}, {"a": 491, "b": 491}, {"a": 492, "b": 492}, {"a": 493, "b": 493}, {"a": 494, "b": 494}, {"a": 495, "b": 495}],
-		"view_settings": {"tabnav.enabled": true}
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
+	},
+	{
+		"id": "SIW7",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Text/Plain text.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Plain CSV: fallback comma delimiter",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 8}, {"a": 9, "b": 42}, {"a": 43, "b": 51}, {"a": 52, "b": 85}, {"a": 86, "b": 94}, {"a": 95, "b": 128}, {"a": 129, "b": 137}, {"a": 138, "b": 171}, {"a": 172, "b": 180}, {"a": 181, "b": 214}, {"a": 215, "b": 223}, {"a": 224, "b": 257}, {"a": 258, "b": 266}, {"a": 267, "b": 300}, {"a": 301, "b": 309}, {"a": 310, "b": 343}, {"a": 344, "b": 352}, {"a": 353, "b": 386}, {"a": 387, "b": 395}, {"a": 396, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": null
+		}
+	},
+	{
+		"id": "GTZE",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Text/Plain text.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Plain CSV: explicit comma delimiter",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 8}, {"a": 9, "b": 42}, {"a": 43, "b": 51}, {"a": 52, "b": 85}, {"a": 86, "b": 94}, {"a": 95, "b": 128}, {"a": 129, "b": 137}, {"a": 138, "b": 171}, {"a": 172, "b": 180}, {"a": 181, "b": 214}, {"a": 215, "b": 223}, {"a": 224, "b": 257}, {"a": 258, "b": 266}, {"a": 267, "b": 300}, {"a": 301, "b": 309}, {"a": 310, "b": 343}, {"a": 344, "b": 352}, {"a": 353, "b": 386}, {"a": 387, "b": 395}, {"a": 396, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": ","
+		}
+	},
+	{
+		"id": "VD4E",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Text/Plain text.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Plain CSV: explicit semicolon delimiter",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 17}, {"a": 18, "b": 42}, {"a": 43, "b": 60}, {"a": 61, "b": 85}, {"a": 86, "b": 103}, {"a": 104, "b": 128}, {"a": 129, "b": 146}, {"a": 147, "b": 171}, {"a": 172, "b": 189}, {"a": 190, "b": 214}, {"a": 215, "b": 232}, {"a": 233, "b": 257}, {"a": 258, "b": 275}, {"a": 276, "b": 300}, {"a": 301, "b": 318}, {"a": 319, "b": 343}, {"a": 344, "b": 361}, {"a": 362, "b": 386}, {"a": 387, "b": 404}, {"a": 405, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": ";"
+		}
+	},
+	{
+		"id": "PLIU",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Text/Plain text.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Plain CSV: explicit pipe delimiter",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 25}, {"a": 26, "b": 42}, {"a": 43, "b": 68}, {"a": 69, "b": 85}, {"a": 86, "b": 111}, {"a": 112, "b": 128}, {"a": 129, "b": 154}, {"a": 155, "b": 171}, {"a": 172, "b": 197}, {"a": 198, "b": 214}, {"a": 215, "b": 240}, {"a": 241, "b": 257}, {"a": 258, "b": 283}, {"a": 284, "b": 300}, {"a": 301, "b": 326}, {"a": 327, "b": 343}, {"a": 344, "b": 369}, {"a": 370, "b": 386}, {"a": 387, "b": 412}, {"a": 413, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": "|"
+		}
+	},
+	{
+		"id": "SCTI",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Text/Plain text.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Plain CSV: explicit escaped pipe delimiter",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 25}, {"a": 26, "b": 42}, {"a": 43, "b": 68}, {"a": 69, "b": 85}, {"a": 86, "b": 111}, {"a": 112, "b": 128}, {"a": 129, "b": 154}, {"a": 155, "b": 171}, {"a": 172, "b": 197}, {"a": 198, "b": 214}, {"a": 215, "b": 240}, {"a": 241, "b": 257}, {"a": 258, "b": 283}, {"a": 284, "b": 300}, {"a": 301, "b": 326}, {"a": 327, "b": 343}, {"a": 344, "b": 369}, {"a": 370, "b": 386}, {"a": 387, "b": 412}, {"a": 413, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": "\\|"
+		}
+	},
+	{
+		"id": "Z3G5",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Text/Plain text.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Plain CSV: explicit escaped tab delimiter",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 33}, {"a": 34, "b": 42}, {"a": 43, "b": 76}, {"a": 77, "b": 85}, {"a": 86, "b": 119}, {"a": 120, "b": 128}, {"a": 129, "b": 162}, {"a": 163, "b": 171}, {"a": 172, "b": 205}, {"a": 206, "b": 214}, {"a": 215, "b": 248}, {"a": 249, "b": 257}, {"a": 258, "b": 291}, {"a": 292, "b": 300}, {"a": 301, "b": 334}, {"a": 335, "b": 343}, {"a": 344, "b": 377}, {"a": 378, "b": 386}, {"a": 387, "b": 420}, {"a": 421, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.delimiter": "\\t"
+		}
 	}
 ]
