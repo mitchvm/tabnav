@@ -58,9 +58,9 @@
 			// 2) Unquoted content
 			// 3) Quoted content
 			"cell_patterns": [
-				"^(?P<content>(?:\\s*)|(?:\\s*[^\"\\s].*?)|(?:\\s*\"(?:\"{{2}}|[^\"])*?\"\\s*))(?={0})",
-				"{0}(?P<content>(?:\\s*)|(?:\\s*[^\"\\s].*?)|(?:\\s*\"(?:\"{{2}}|[^\"])*?\"\\s*))(?={0})",
-				"{0}(?P<content>(?:\\s*)|(?:\\s*[^\"].*?)|(?:\\s*\"(?:\"{{2}}|[^\"])*?\"\\s*))$"
+				"^(?P<content>(?: *)|(?: *[^\" ].*?)|(?: *\"(?:\"{{2}}|[^\"])*?\" *))(?={0})",
+				"{0}(?P<content>(?: *)|(?: *[^\" ].*?)|(?: *\"(?:\"{{2}}|[^\"])*?\" *))(?={0})",
+				"{0}(?P<content>(?: *)|(?: *[^\"].*?)|(?: *\"(?:\"{{2}}|[^\"])*?\" *))$"
 			],
 			"enable_explicitly": true, // We'll only infer the auto_csv context if tabnav has been explicitly enabled on a particular view
 			"selector": null, // There is no global selector that matches all CSV syntaxes. This is a special case.

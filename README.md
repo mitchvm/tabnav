@@ -144,7 +144,7 @@ If the syntaxes provided by those two packages are not in use on the current vie
 3. Pipe: `|`
 3. Tab: `   `
 
-You can also specify a particular delimiter to use (when not in an Advanced CSV or Rainbow CSV syntax) with the ["Set CSV delimiter"](#other-commands) command.
+You can also specify a particular delimiter to use (when not in an Advanced CSV or Rainbow CSV syntax) with the ["Set CSV delimiter"](#other-commands) command. Note that a space cannot be used as the delimiter for the built-in CSV context.
 
 Finally, if all other methods of determining the delimiter fail, TabNav uses a comma as the default delimiter.
 
