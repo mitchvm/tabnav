@@ -31,6 +31,7 @@ class TestCase():
 		self.description = test_definition['description']
 		self.initial_selections = [(s['a'], s['b']) for s in test_definition['initial_selections']]
 		self.expected_selections = [(s['a'], s['b']) for s in test_definition['expected_selections']]
+		self.syntax = test_definition.get('syntax')
 		self.view_settings = test_definition.get('view_settings', {})
 		self.package_settings = test_definition.get('package_settings', {})
 
@@ -63,7 +64,7 @@ class TestResult():
 			icon = '✘'
 		yield '{0} {1}: {2}'.format(icon, self.test_case.test_id, self.test_case.description)
 		if self.message is not None:
-			yield '          ' + self.message
+			yield '        ' + self.message
 
 
 class TestSetResults():
@@ -142,6 +143,9 @@ def run_test_cases(view, file_name, close_file=True):
 
 
 def run_test_case(view, test):
+	initial_syntax = view.settings().get('syntax')
+	if test.syntax is not None:
+		view.set_syntax_file(test.syntax)
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
 	initial_package_settings = {}
 	initial_view_settings = {}
@@ -156,7 +160,7 @@ def run_test_case(view, test):
 		view.sel().add_all([sublime.Region(a, b) for a,b in test.initial_selections])
 		view.run_command(test.command_name, args={"context":test.context_name})
 		selections = list(view.sel())
-		assert (len(selections) == len(test.expected_selections)), "Expected {0} selections but got {1}".format(len(test.expected_selections), len(selections))
+		assert (len(selections) == len(test.expected_selections)), "Expected {0} selections but got {1}: {2}".format(len(test.expected_selections), len(selections), selections)
 		for region in selections:
 			r = (region.a, region.b)
 			assert (r in test.expected_selections), "Region {0} not expected".format(r)
@@ -164,6 +168,7 @@ def run_test_case(view, test):
 	except Exception as e:
 		return TestResult(test, False, e.__str__())
 	finally:
+		view.set_syntax_file(initial_syntax)
 		for setting in initial_view_settings:
 			view.settings().set(setting, initial_view_settings[setting])
 		for setting in initial_package_settings:
