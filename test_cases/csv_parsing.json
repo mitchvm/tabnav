@@ -316,5 +316,141 @@
 			"tabnav.enabled": true,
 			"tabnav.delimiter": "\\t"
 		}
+	},
+	{
+		"id": "HTYY",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Advanced CSV: comma",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 8}, {"a": 9, "b": 42}, {"a": 43, "b": 51}, {"a": 52, "b": 85}, {"a": 86, "b": 94}, {"a": 95, "b": 128}, {"a": 129, "b": 137}, {"a": 138, "b": 171}, {"a": 172, "b": 180}, {"a": 181, "b": 214}, {"a": 215, "b": 223}, {"a": 224, "b": 257}, {"a": 258, "b": 266}, {"a": 267, "b": 300}, {"a": 301, "b": 309}, {"a": 310, "b": 343}, {"a": 344, "b": 352}, {"a": 353, "b": 386}, {"a": 387, "b": 395}, {"a": 396, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"delimiter": ","
+		}
+	},
+	{
+		"id": "Q5XF",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Advanced CSV: semicolon",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 17}, {"a": 18, "b": 42}, {"a": 43, "b": 60}, {"a": 61, "b": 85}, {"a": 86, "b": 103}, {"a": 104, "b": 128}, {"a": 129, "b": 146}, {"a": 147, "b": 171}, {"a": 172, "b": 189}, {"a": 190, "b": 214}, {"a": 215, "b": 232}, {"a": 233, "b": 257}, {"a": 258, "b": 275}, {"a": 276, "b": 300}, {"a": 301, "b": 318}, {"a": 319, "b": 343}, {"a": 344, "b": 361}, {"a": 362, "b": 386}, {"a": 387, "b": 404}, {"a": 405, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"delimiter": ";"
+		}
+	},
+	{
+		"id": "IRAS",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Advanced CSV: pipe",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 25}, {"a": 26, "b": 42}, {"a": 43, "b": 68}, {"a": 69, "b": 85}, {"a": 86, "b": 111}, {"a": 112, "b": 128}, {"a": 129, "b": 154}, {"a": 155, "b": 171}, {"a": 172, "b": 197}, {"a": 198, "b": 214}, {"a": 215, "b": 240}, {"a": 241, "b": 257}, {"a": 258, "b": 283}, {"a": 284, "b": 300}, {"a": 301, "b": 326}, {"a": 327, "b": 343}, {"a": 344, "b": 369}, {"a": 370, "b": 386}, {"a": 387, "b": 412}, {"a": 413, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"delimiter": "|"
+		}
+	},
+	{
+		"id": "54BY",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Advanced CSV: escaped pipe",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 25}, {"a": 26, "b": 42}, {"a": 43, "b": 68}, {"a": 69, "b": 85}, {"a": 86, "b": 111}, {"a": 112, "b": 128}, {"a": 129, "b": 154}, {"a": 155, "b": 171}, {"a": 172, "b": 197}, {"a": 198, "b": 214}, {"a": 215, "b": 240}, {"a": 241, "b": 257}, {"a": 258, "b": 283}, {"a": 284, "b": 300}, {"a": 301, "b": 326}, {"a": 327, "b": 343}, {"a": 344, "b": 369}, {"a": 370, "b": 386}, {"a": 387, "b": 412}, {"a": 413, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"delimiter": "\\|"
+		}
+	},
+	{
+		"id": "VJPI",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Advanced CSV: escaped tab",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 33}, {"a": 34, "b": 42}, {"a": 43, "b": 76}, {"a": 77, "b": 85}, {"a": 86, "b": 119}, {"a": 120, "b": 128}, {"a": 129, "b": 162}, {"a": 163, "b": 171}, {"a": 172, "b": 205}, {"a": 206, "b": 214}, {"a": 215, "b": 248}, {"a": 249, "b": 257}, {"a": 258, "b": 291}, {"a": 292, "b": 300}, {"a": 301, "b": 334}, {"a": 335, "b": 343}, {"a": 344, "b": 377}, {"a": 378, "b": 386}, {"a": 387, "b": 420}, {"a": 421, "b": 429}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"delimiter": "\\t"
+		}
+	},
+	{
+		"id": "R7SM",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_2c_quoted_rfc.sublime-syntax",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Rainbow CSV: comma RFC",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 8}, {"a": 9, "b": 42}, {"a": 43, "b": 51}, {"a": 52, "b": 85}, {"a": 86, "b": 94}, {"a": 95, "b": 128}, {"a": 129, "b": 137}, {"a": 138, "b": 171}, {"a": 172, "b": 180}, {"a": 181, "b": 214}, {"a": 215, "b": 223}, {"a": 224, "b": 257}, {"a": 258, "b": 266}, {"a": 267, "b": 300}, {"a": 301, "b": 309}, {"a": 310, "b": 343}, {"a": 344, "b": 352}, {"a": 353, "b": 386}, {"a": 387, "b": 395}, {"a": 396, "b": 429}],
+		"view_settings": { "tabnav.enabled": true }
+	},
+	{
+		"id": "PIU5",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_2c_Simple.sublime-syntax",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Rainbow CSV: comma Simple",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 8}, {"a": 9, "b": 42}, {"a": 43, "b": 51}, {"a": 52, "b": 85}, {"a": 86, "b": 94}, {"a": 95, "b": 128}, {"a": 129, "b": 137}, {"a": 138, "b": 171}, {"a": 172, "b": 180}, {"a": 181, "b": 214}, {"a": 215, "b": 223}, {"a": 224, "b": 257}, {"a": 258, "b": 266}, {"a": 267, "b": 300}, {"a": 301, "b": 309}, {"a": 310, "b": 343}, {"a": 344, "b": 352}, {"a": 353, "b": 386}, {"a": 387, "b": 395}, {"a": 396, "b": 429}],
+		"view_settings": { "tabnav.enabled": true }
+	},
+	{
+		"id": "7EZB",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_3b_quoted_rfc.sublime-syntax",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Rainbow CSV: semicolon RFC",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 17}, {"a": 18, "b": 42}, {"a": 43, "b": 60}, {"a": 61, "b": 85}, {"a": 86, "b": 103}, {"a": 104, "b": 128}, {"a": 129, "b": 146}, {"a": 147, "b": 171}, {"a": 172, "b": 189}, {"a": 190, "b": 214}, {"a": 215, "b": 232}, {"a": 233, "b": 257}, {"a": 258, "b": 275}, {"a": 276, "b": 300}, {"a": 301, "b": 318}, {"a": 319, "b": 343}, {"a": 344, "b": 361}, {"a": 362, "b": 386}, {"a": 387, "b": 404}, {"a": 405, "b": 429}],
+		"view_settings": { "tabnav.enabled": true }
+	},
+	{
+		"id": "WE7P",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_3b_Simple.sublime-syntax",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Rainbow CSV: semicolon Simple",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 17}, {"a": 18, "b": 42}, {"a": 43, "b": 60}, {"a": 61, "b": 85}, {"a": 86, "b": 103}, {"a": 104, "b": 128}, {"a": 129, "b": 146}, {"a": 147, "b": 171}, {"a": 172, "b": 189}, {"a": 190, "b": 214}, {"a": 215, "b": 232}, {"a": 233, "b": 257}, {"a": 258, "b": 275}, {"a": 276, "b": 300}, {"a": 301, "b": 318}, {"a": 319, "b": 343}, {"a": 344, "b": 361}, {"a": 362, "b": 386}, {"a": 387, "b": 404}, {"a": 405, "b": 429}],
+		"view_settings": { "tabnav.enabled": true }
+	},
+	{
+		"id": "6VLM",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_7c_Simple.sublime-syntax",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Rainbow CSV: pipe",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 25}, {"a": 26, "b": 42}, {"a": 43, "b": 68}, {"a": 69, "b": 85}, {"a": 86, "b": 111}, {"a": 112, "b": 128}, {"a": 129, "b": 154}, {"a": 155, "b": 171}, {"a": 172, "b": 197}, {"a": 198, "b": 214}, {"a": 215, "b": 240}, {"a": 241, "b": 257}, {"a": 258, "b": 283}, {"a": 284, "b": 300}, {"a": 301, "b": 326}, {"a": 327, "b": 343}, {"a": 344, "b": 369}, {"a": 370, "b": 386}, {"a": 387, "b": 412}, {"a": 413, "b": 429}],
+		"view_settings": { "tabnav.enabled": true }
+	},
+	{
+		"id": "X2SU",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/rainbow_csv/pregenerated_grammars/TSV (Rainbow).sublime-syntax",
+		"file": "csv05_mixed_unquoted.csv",
+		"description": "Rainbow CSV: tab",
+		"initial_selections": [{"a": 235, "b": 235}],
+		"expected_selections": [{"a": 0, "b": 33}, {"a": 34, "b": 42}, {"a": 43, "b": 76}, {"a": 77, "b": 85}, {"a": 86, "b": 119}, {"a": 120, "b": 128}, {"a": 129, "b": 162}, {"a": 163, "b": 171}, {"a": 172, "b": 205}, {"a": 206, "b": 214}, {"a": 215, "b": 248}, {"a": 249, "b": 257}, {"a": 258, "b": 291}, {"a": 292, "b": 300}, {"a": 301, "b": 334}, {"a": 335, "b": 343}, {"a": 344, "b": 377}, {"a": 378, "b": 386}, {"a": 387, "b": 420}, {"a": 421, "b": 429}],
+		"view_settings": { "tabnav.enabled": true }
 	}
 ]
