@@ -593,9 +593,8 @@ class TabnavContext:
 		max_context = None
 		for key in context_configs:
 			config = context_configs[key]
-			try:
-				selector = config['selector']
-			except KeyError:
+			selector = config.get('selector', None)
+			if selector is None:
 				continue
 			score = view.score_selector(point, selector)
 			except_selector = config.get('except_selector', None)
@@ -652,7 +651,7 @@ class TabnavContext:
 				delimiter = matches[0]
 				log.debug("Inferred delimiter: %s", delimiter)
 			else:
-				log.debug('More than one auto delimiter matched: %s.', matches)
+				log.debug('Not exactly one auto delimiter matched: %s.', matches)
 		if delimiter is None:
 			delimiter = context_config.get("default_delimiter", None)
 		if delimiter is None:
@@ -1185,8 +1184,9 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 
 def update_log_level():
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
-	log_level = package_settings.get('log_level', 'WARNING')
+	log_level = package_settings.get('log_level', 'WARNING').upper()
 	log.setLevel(log_level)
+	log.info("TabNav log level: %s", log_level)
 
 def plugin_loaded():
 	package_settings = sublime.load_settings("tabnav.sublime-settings")

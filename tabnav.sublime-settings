@@ -49,7 +49,6 @@
 			// 4) If all else fails, use the "default_delimiter".
 			"auto_delimiters": [",", ";", "\\|", "\\t"],
 			"default_delimiter": ",",
-			"selector": "text.advanced_csv", // Rainbow CSV has a huge number of potential scopes; those are matched in code.
 			// Because CSV cells can be optionally quoted, and double-quotes themselves can also
 			// be contained in the cell (escaped by double-double-quote), the matching gets a bit
 			// tricky. If the cell starts with a quote (after optional whitespace), then it needs
@@ -64,6 +63,7 @@
 				"{0}(?P<content>(?:\\s*)|(?:\\s*[^\"].*?)|(?:\\s*\"(?:\"{{2}}|[^\"])*?\"\\s*))$"
 			],
 			"enable_explicitly": true, // We'll only infer the auto_csv context if tabnav has been explicitly enabled on a particular view
+			"selector": null, // There is no global selector that matches all CSV syntaxes. This is a special case.
 		}
 	},
 
