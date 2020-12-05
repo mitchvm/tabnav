@@ -37,6 +37,16 @@
 		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
+		"id": "PFKW",
+		"command": "tabnav_select_down",
+		"context": "markdown",
+		"file": "markdown05_multiple_separators.md",
+		"description": "Separators excluded - multiple sequential separator rows jumped",
+		"initial_selections": [{"a": 693, "b": 699}],
+		"expected_selections": [{"a": 1035, "b": 1029}],
+		"view_settings": {"tabnav.include_separators": false}
+	},
+	{
 		"id": "YUUF",
 		"command": "tabnav_select_down",
 		"context": "markdown",

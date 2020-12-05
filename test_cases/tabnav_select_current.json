@@ -117,6 +117,15 @@
 		"expected_selections": [{"a": 120, "b": 131}, {"a": 132, "b": 146}, {"a": 149, "b": 191}, {"a": 192, "b": 205}, {"a": 206, "b": 206}, {"a": 207, "b": 224}, {"a": 227, "b": 242}, {"a": 243, "b": 247}]
 	},
 	{
+		"id": "YJ2V",
+		"command": "tabnav_select_current",
+		"context": "markdown",
+		"file": "markdown05_multiple_separators.md",
+		"description": "Region spans three separator rows",
+		"initial_selections": [{"a": 790, "b": 958}],
+		"expected_selections": [{"a": 784, "b": 802}, {"a": 803, "b": 816}, {"a": 817, "b": 830}, {"a": 831, "b": 838}, {"a": 841, "b": 860}, {"a": 861, "b": 867}, {"a": 868, "b": 886}, {"a": 887, "b": 900}, {"a": 901, "b": 914}, {"a": 915, "b": 922}, {"a": 925, "b": 944}, {"a": 945, "b": 951}, {"a": 952, "b": 970}]
+	},
+	{
 		"id": "WQYH",
 		"command": "tabnav_select_current",
 		"context": "markdown",

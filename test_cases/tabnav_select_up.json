@@ -37,6 +37,16 @@
 		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
+		"id": "KWTA",
+		"command": "tabnav_select_up",
+		"context": "markdown",
+		"file": "markdown05_multiple_separators.md",
+		"description": "Separators excluded - multiple sequential separator rows jumped",
+		"initial_selections": [{"a": 1035, "b": 1029}],
+		"expected_selections": [{"a": 699, "b": 693}],
+		"view_settings": {"tabnav.include_separators": false}
+	},
+	{
 		"id": "WX5P",
 		"command": "tabnav_select_up",
 		"context": "markdown",

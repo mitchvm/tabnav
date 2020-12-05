@@ -37,6 +37,16 @@
 		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
+		"id": "OOHZ",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown05_multiple_separators.md",
+		"description": "Separators excluded - multiple sequential separator rows jumped",
+		"initial_selections": [{"a": 1043, "b": 1043}],
+		"expected_selections": [{"a": 707, "b": 707}],
+		"view_settings": {"tabnav.include_separators": false}
+	},
+	{
 		"id": "HSCM",
 		"command": "tabnav_move_cursor_up",
 		"context": "markdown",

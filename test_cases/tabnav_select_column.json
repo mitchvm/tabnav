@@ -50,6 +50,16 @@
 		"view_settings": {"tabnav.include_separators": false}
 	},
 	{
+		"id": "TNVM",
+		"command": "tabnav_select_column",
+		"context": "markdown",
+		"file": "markdown05_multiple_separators.md",
+		"description": "Multiple separators in sequence jumped",
+		"initial_selections": [{"a": 581, "b": 581}],
+		"expected_selections": [{"a": 75, "b": 82}, {"a": 159, "b": 166}, {"a": 243, "b": 250}, {"a": 327, "b": 334}, {"a": 411, "b": 418}, {"a": 495, "b": 502}, {"a": 579, "b": 586}, {"a": 663, "b": 670}, {"a": 747, "b": 754}, {"a": 1083, "b": 1090}, {"a": 1167, "b": 1174}, {"a": 1251, "b": 1258}, {"a": 1335, "b": 1342}, {"a": 1419, "b": 1426}, {"a": 1503, "b": 1510}, {"a": 1587, "b": 1594}, {"a": 1671, "b": 1678}, {"a": 1755, "b": 1762}, {"a": 1839, "b": 1846}, {"a": 1923, "b": 1930}],
+		"view_settings": {"tabnav.include_separators": false}
+	},
+	{
 		"id": "4VY3",
 		"command": "tabnav_select_column",
 		"context": "markdown",

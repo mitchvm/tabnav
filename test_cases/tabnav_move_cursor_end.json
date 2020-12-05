@@ -99,6 +99,15 @@
 		"expected_selections": [{"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}]
 	},
 	{
+		"id": "HICB",
+		"command": "tabnav_move_cursor_end",
+		"context": "markdown",
+		"file": "markdown05_multiple_separators.md",
+		"description": "Region spans three separator rows",
+		"initial_selections": [{"a": 790, "b": 958}],
+		"expected_selections": [{"a": 802, "b": 802}, {"a": 816, "b": 816}, {"a": 830, "b": 830}, {"a": 838, "b": 838}, {"a": 860, "b": 860}, {"a": 867, "b": 867}, {"a": 886, "b": 886}, {"a": 900, "b": 900}, {"a": 914, "b": 914}, {"a": 922, "b": 922}, {"a": 944, "b": 944}, {"a": 951, "b": 951}, {"a": 970, "b": 970}]
+	},
+	{
 		"id": "PTUN",
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
