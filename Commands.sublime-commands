@@ -1,122 +1,138 @@
 [
-    {
-        "caption": "TabNav: Trim whitespace from selections",
-        "command": "trim_whitespace_from_selection"
-    },
-    {
-        "caption": "TabNav: Copy selections with delimiter",
-        "command": "tabnav_copy_delimited",
-    },
-    {
-        "caption": "TabNav: Copy selections as TSV",
-        "command": "tabnav_copy_tab_separated",
-    },
-    {
-        "caption": "TabNav: Enable on current view",
-        "command": "enable_tabnav"
-    },
-    {
-        "caption": "TabNav: Disable on current view",
-        "command": "disable_tabnav"
-    },
-    {
-        "caption": "TabNav: Include separator lines in selections",
-        "command": "tabnav_include_separators"
-    },
-    {
-        "caption": "TabNav: Exclude separator lines from selections",
-        "command": "tabnav_exclude_separators"
-    },
-    {
-        "caption": "TabNav: Set CSV delimiter",
-        "command": "tabnav_set_csv_delimiter"
-    },
-    { 
-        "caption": "TabNav: Move cursor to start of current cell",
-        "command": "tabnav_move_cursor_start"
-    },
-    { 
-        "caption": "TabNav: Move cursor to end of current cell",
-        "command": "tabnav_move_cursor_end"
-    },
-    { 
-        "caption": "TabNav: Move cursor to cell on left",
-        "command": "tabnav_move_cursor_left"
-    },
-    { 
-        "caption": "TabNav: Move cursor to cell on right",
-        "command": "tabnav_move_cursor_right"
-    },
-    { 
-        "caption": "TabNav: Move cursor to cell above",
-        "command": "tabnav_move_cursor_up"
-    },
-    { 
-        "caption": "TabNav: Move cursor to cell below",
-        "command": "tabnav_move_cursor_down"
-    },
-    { 
-        "caption": "TabNav: Add cursor to cell on left",
-        "command": "tabnav_add_cursor_left"
-    },
-    { 
-        "caption": "TabNav: Add cursor to cell on right",
-        "command": "tabnav_add_cursor_right"
-    },
-    { 
-        "caption": "TabNav: Add cursor to cell above",
-        "command": "tabnav_add_cursor_up"
-    },
-    { 
-        "caption": "TabNav: Add cursor to cell below",
-        "command": "tabnav_add_cursor_down"
-    },
-    { 
-        "caption": "TabNav: Select current cell",
-        "command": "tabnav_select_current"
-    },
-    { 
-        "caption": "TabNav: Select cell on left",
-        "command": "tabnav_select_left"
-    },
-    { 
-        "caption": "TabNav: Select cell on right",
-        "command": "tabnav_select_right"
-    },
-    { 
-        "caption": "TabNav: Select cell above",
-        "command": "tabnav_select_up"
-    },
-    { 
-        "caption": "TabNav: Select cell below",
-        "command": "tabnav_select_down"
-    },
-    { 
-        "caption": "TabNav: Extend selection to cell on left",
-        "command": "tabnav_extend_selection_left"
-    },
-    { 
-        "caption": "TabNav: Extend selection to cell on right",
-        "command": "tabnav_extend_selection_right"
-    },
-    { 
-        "caption": "TabNav: Extend selection to cell above",
-        "command": "tabnav_extend_selection_up"
-    },
-    { 
-        "caption": "TabNav: Extend selection to cell below",
-        "command": "tabnav_extend_selection_down"
-    },
-    { 
-        "caption": "TabNav: Select row cells",
-        "command": "tabnav_select_row"
-    },
-    { 
-        "caption": "TabNav: Select column cells",
-        "command": "tabnav_select_column"
-    },
-    { 
-        "caption": "TabNav: Select all table cells",
-        "command": "tabnav_select_all"
-    }
+  {
+    "caption": "TabNav: Trim whitespace from selections",
+    "command": "trim_whitespace_from_selection"
+  },
+  {
+    "caption": "TabNav: Copy selections with delimiter",
+    "command": "tabnav_copy_delimited"
+  },
+  {
+    "caption": "TabNav: Copy selections as TSV",
+    "command": "tabnav_copy_tab_separated"
+  },
+  {
+    "caption": "TabNav: Enable on current view",
+    "command": "enable_tabnav"
+  },
+  {
+    "caption": "TabNav: Disable on current view",
+    "command": "disable_tabnav"
+  },
+  {
+    "caption": "TabNav: Include separator lines in selections",
+    "command": "tabnav_include_separators"
+  },
+  {
+    "caption": "TabNav: Exclude separator lines from selections",
+    "command": "tabnav_exclude_separators"
+  },
+  {
+    "caption": "TabNav: Set CSV delimiter",
+    "command": "tabnav_set_csv_delimiter"
+  },
+  {
+    "caption": "TabNav: Move cursor to start of current cell",
+    "command": "tabnav_move_cursor_start"
+  },
+  {
+    "caption": "TabNav: Move cursor to end of current cell",
+    "command": "tabnav_move_cursor_end"
+  },
+  {
+    "caption": "TabNav: Move cursor to cell on left",
+    "command": "tabnav_move_cursor_left"
+  },
+  {
+    "caption": "TabNav: Move cursor to cell on right",
+    "command": "tabnav_move_cursor_right"
+  },
+  {
+    "caption": "TabNav: Move cursor to cell above",
+    "command": "tabnav_move_cursor_up"
+  },
+  {
+    "caption": "TabNav: Move cursor to cell below",
+    "command": "tabnav_move_cursor_down"
+  },
+  {
+    "caption": "TabNav: Add cursor to cell on left",
+    "command": "tabnav_add_cursor_left"
+  },
+  {
+    "caption": "TabNav: Add cursor to cell on right",
+    "command": "tabnav_add_cursor_right"
+  },
+  {
+    "caption": "TabNav: Add cursor to cell above",
+    "command": "tabnav_add_cursor_up"
+  },
+  {
+    "caption": "TabNav: Add cursor to cell below",
+    "command": "tabnav_add_cursor_down"
+  },
+  {
+    "caption": "TabNav: Select current cell",
+    "command": "tabnav_select_current"
+  },
+  {
+    "caption": "TabNav: Select cell on left",
+    "command": "tabnav_select_left"
+  },
+  {
+    "caption": "TabNav: Select cell on right",
+    "command": "tabnav_select_right"
+  },
+  {
+    "caption": "TabNav: Select cell above",
+    "command": "tabnav_select_up"
+  },
+  {
+    "caption": "TabNav: Select cell below",
+    "command": "tabnav_select_down"
+  },
+  {
+    "caption": "TabNav: Extend selection to cell on left",
+    "command": "tabnav_extend_selection_left"
+  },
+  {
+    "caption": "TabNav: Extend selection to cell on right",
+    "command": "tabnav_extend_selection_right"
+  },
+  {
+    "caption": "TabNav: Extend selection to cell above",
+    "command": "tabnav_extend_selection_up"
+  },
+  {
+    "caption": "TabNav: Extend selection to cell below",
+    "command": "tabnav_extend_selection_down"
+  },
+  {
+    "caption": "TabNav: Reduce selection from the left",
+    "command": "tabnav_reduce_selection_left"
+  },
+  {
+    "caption": "TabNav: Reduce selection from the right",
+    "command": "tabnav_reduce_selection_right"
+  },
+  {
+    "caption": "TabNav: Reduce selection upwards",
+    "command": "tabnav_reduce_selection_up"
+  },
+  {
+    "caption": "TabNav: Reduce selection downwards",
+    "command": "tabnav_reduce_selection_down"
+  },
+  {
+    "caption": "TabNav: Select row cells",
+    "command": "tabnav_select_row"
+  },
+  {
+    "caption": "TabNav: Select column cells",
+    "command": "tabnav_select_column"
+  },
+  {
+    "caption": "TabNav: Select all table cells",
+    "command": "tabnav_select_all"
+  }
 ]

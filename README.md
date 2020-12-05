@@ -41,11 +41,12 @@ The default key bindings are intended for use on a US-English QWERTY keyboard. T
 The core movement and selection key bindings combine one of four basic modifier key combinations together with with one of the four direction keys:
 
 
-| Name                        | Windows/Linux                   | macOS                    | Description                                                            |
-|:----------------------------|:--------------------------------|:-------------------------|:-----------------------------------------------------------------------|
-| Move cursor to cell...      | <kbd>Alt</kbd>                  | <kbd>^</kbd>             | Moves all cursors to the next cell in the desired direction.           |
-| Select cell...              | <kbd>Ctrl</kbd>                 | <kbd>⌘</kbd>             | Moves all selections to the next cell in the desired direction.        |
-| Extend selection to cell... | <kbd>Ctrl</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd> | Adds the next cell in the desired direction to the current selections. |
+| Name                   | Windows/Linux                   | macOS                    | Description                                                                                                  |
+|:-----------------------|:--------------------------------|:-------------------------|:-------------------------------------------------------------------------------------------------------------|
+| Move cursor to cell... | <kbd>Alt</kbd>                  | <kbd>^</kbd>             | Moves all cursors to the next cell in the desired direction.                                                 |
+| Select cell...         | <kbd>Ctrl</kbd>                 | <kbd>⌘</kbd>             | Moves all selections to the next cell in the desired direction.                                              |
+| Extend selection...    | <kbd>Ctrl</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd> | Adds the next cell in the desired direction to the current selections.                                       |
+| Reduce selection...    | <kbd>Alt</kbd><kbd>Shift</kbd>  | <kbd>^</kbd><kbd>⇧</kbd> | When two or more cells in sequence are selected, removes the selection from a cell in the desired direction. |
 
 <table>
 <thead>
@@ -90,7 +91,7 @@ These commands will operate even outside the context of a table.
 
 | Name                                    |                                  Windows/Linux Key Binding |                                 macOS Key Binding | Description                                                                                                                                                                                                                 |
 |:----------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Enable on current view                  |                               <kbd>Ctrl</kbd>+<kbd>'</kbd> |                         <kbd>⌘</kbd>+<kbd>'</kbd> | Enables TabNav on the current view. Note, once enabled, the keybinding is clobbered by the "Move cursor to cell on right" command.                                                                                          |
+| Enable on current view                  |                               <kbd>Ctrl</kbd>+<kbd>'</kbd> |                         <kbd>⌘</kbd>+<kbd>'</kbd> | Enables TabNav on the current view. Note, once enabled, the key binding is clobbered by the "Move cursor to cell on right" command.                                                                                          |
 | Disable on current view                 | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>'</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd>+<kbd>'</kbd> | Disables TabNav on the current view.                                                                                                                                                                                        |
 | Include separator lines in selections   |                                                            |                                                   | Configures TabNav to include row separator lines in selections and movements. By default, they are excluded.                                                                                                                |
 | Exclude separator lines from selections |                                                            |                                                   | Configures TabNav to exclude row separator lines from selections and movements.                                                                                                                                             |

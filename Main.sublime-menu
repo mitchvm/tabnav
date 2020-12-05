@@ -108,6 +108,25 @@
             "caption": "Extend selection to cell below",
             "command": "tabnav_extend_selection_down"
           },
+          { 
+            "caption": "Reduce selection from the left",
+            "command": "tabnav_reduce_selection_left"
+          },
+          { 
+            "caption": "Reduce selection from the right",
+            "command": "tabnav_reduce_selection_right"
+          },
+          { 
+            "caption": "Reduce selection upwards",
+            "command": "tabnav_reduce_selection_up"
+          },
+          { 
+            "caption": "Reduce selection downwards",
+            "command": "tabnav_reduce_selection_down"
+          },
+          {
+            "caption": "-"
+          },
           {
             "caption": "Select row cells",
             "command": "tabnav_select_row"

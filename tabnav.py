@@ -522,7 +522,6 @@ class TabnavContext:
 	@property
 	def except_selector(self):
 		return self._except_selector
-	
 
 	@property
 	def include_separators(self):
@@ -912,6 +911,100 @@ class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
 		super().run(edit, Direction.DOWN, -1, context=context)
 
+# Reduce selection
+
+class TabnavReduceSelectionCommand(TabnavCommand):
+	def run(self, edit, move_direction, cell_direction=1 , context=None):
+		try:
+			self.init_table(cell_direction)
+			if not self.tabnav.split_and_select_current_cells():
+				dr, dc = move_direction
+				if dc != 0:
+					self.reduce_cell_selection_row(-dc) # reverse the given direction
+				else:
+					self.reduce_cell_selection_col(-dr)
+		except (CursorNotInTableError, RowNotInTableError) as e:
+			log.info(e)
+
+	def reduce_cell_selection_row(self, direction):
+		points = (region.a for region in self.view.sel())
+		selected_cells = [self.table.cell_at_point(p) for p in points]
+		for i, g in itertools.groupby(selected_cells, lambda c: c.row):
+			cells = list(g)
+			if len(cells) == 1:
+				# Only one cell selected on this row; can't reduce selection further
+				continue
+			seq = 0
+			last = None
+			for cell in cells[::direction]:
+				if seq == 0 or cell.col == last.col + direction:
+					# First cell of a new sequence OR continuing an existing sequence
+					seq = seq + 1
+				else:
+					# Current cell is not part of the same sequence
+					if seq > 1:
+						# The previous sequence had more than one cell, so can be reduced
+						self.view.sel().subtract(last)
+					seq = 1
+				last = cell
+			if seq > 1:
+				# Final sequence ended with more than one cell
+				self.view.sel().subtract(last)
+
+	def reduce_cell_selection_col(self, direction):
+		points = (region.a for region in self.view.sel())
+		selected_cells = sorted((self.table.cell_at_point(p) for p in points), key=lambda c: c.col)
+		for i, g in itertools.groupby(selected_cells, lambda c: c.col):
+			cells = list(g)
+			if len(cells) == 1:
+				# Only one cell selected on this column; can't reduce selection further
+				continue
+			seq = 0
+			last = None
+			for cell in cells[::direction]:
+				if seq == 0 or cell.row == last.row + direction:
+					# First cell of a new sequence OR continuing an existing sequence
+					seq = seq + 1
+				elif self.jumped_separator_row(cell, last, direction):
+					# We've just jumped over a separator row, so consider the cells a sequence
+					seq = seq + 1
+				else:
+					# Current cell is not part of the same sequence
+					if seq > 1:
+						# The previous sequence had more than one cell, so can be reduced
+						self.view.sel().subtract(last)
+					seq = 1
+				last = cell
+			if seq > 1:
+				# Final sequence ended with more than one cell
+				self.view.sel().subtract(last)
+
+	def jumped_separator_row(self, cell, last, direction):
+		if self.context.include_separators:
+			# If separator rows are included in selections, then they must be selected
+			return False
+		try:
+			# If all rows between the cells are separator rows, consider it a jump
+			return all(self.table[r].is_separator for r in range(last.row+direction, cell.row, direction))
+		except RowNotInTableError:
+			# don't jump across disjoint tables
+			return False
+
+class TabnavReduceSelectionRightCommand(TabnavReduceSelectionCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.RIGHT, 1, context)
+
+class TabnavReduceSelectionLeftCommand(TabnavReduceSelectionCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.LEFT, -1, context)
+
+class TabnavReduceSelectionUpCommand(TabnavReduceSelectionCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.UP, -1, context)
+
+class TabnavReduceSelectionDownCommand(TabnavReduceSelectionCommand):
+	def run(self, edit, context=None):
+		super().run(edit, Direction.DOWN, -1, context)
 
 # Select row cells
 
