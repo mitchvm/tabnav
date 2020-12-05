@@ -700,9 +700,9 @@ class TabnavCommand(sublime_plugin.TextCommand):
 	def init_settings(self):
 		'''Initializes TabNav settings from the context, view, or default settings.'''
 		settings = sublime.load_settings("tabnav.sublime-settings")
-		self.include_separators = self.context.include_separators
+		self.include_separators = self.view.settings().get("tabnav.include_separators")
 		if self.include_separators is None:
-			self.include_separators = self.view.settings().get("tabnav.include_separators")
+			self.include_separators = self.context.include_separators
 		if self.include_separators is None:
 			self.include_separators = settings.get("include_separators", False)
 
@@ -980,7 +980,7 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 				self.view.sel().subtract(last)
 
 	def jumped_separator_row(self, cell, last, direction):
-		if self.context.include_separators:
+		if self.include_separators:
 			# If separator rows are included in selections, then they must be selected
 			return False
 		try:
