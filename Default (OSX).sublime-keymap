@@ -15,13 +15,13 @@
         // Note: by default, tabnav is neither enabled _nor_ disabled on a given view.
         // Some contexts require that tabnav be explicitly enabled to work, while others
         // are assumed to be enabled unless tabnav has been explicitly disabled.
-        "keys": ["command+control+shift+'"],
+        "keys": ["command+ctrl+shift+'"],
         "command": "disable_tabnav",
         "context": [{"key": "setting.tabnav.kb_disable_tabnav"}]
     },
     {
         // trim whitespace from selections
-        "keys": ["control+w"],
+        "keys": ["ctrl+w"],
         "command": "trim_whitespace_from_selection",
         "context": [{"key": "setting.tabnav.kb_trim_whitespace"}]
     },
@@ -29,7 +29,7 @@
     // #### Navigation keybindings: move cell ####
     { 
         // move to cell on left
-        "keys": ["control+;"],
+        "keys": ["ctrl+;"],
         "command": "tabnav_move_cursor_left",
         "context":
         [
@@ -39,7 +39,7 @@
     },
     { 
         // move to cell on right
-        "keys": ["control+'"],
+        "keys": ["ctrl+'"],
         "command": "tabnav_move_cursor_right",
         "context":
         [
@@ -49,7 +49,7 @@
     },
     { 
         // move to cell above
-        "keys": ["control+["],
+        "keys": ["ctrl+["],
         "command": "tabnav_move_cursor_up",
         "context":
         [
@@ -59,7 +59,7 @@
     },
     { 
         // move to cell below
-        "keys": ["control+/"],
+        "keys": ["ctrl+/"],
         "command": "tabnav_move_cursor_down",
         "context":
         [
@@ -158,7 +158,7 @@
 
     { 
         // reduce selection from the left
-        "keys": ["control+shift+;"],
+        "keys": ["ctrl+shift+;"],
         "command": "tabnav_reduce_selection_left",
         "context":
         [
@@ -168,7 +168,7 @@
     },
     { 
         // reduce selection from the right
-        "keys": ["control+shift+'"],
+        "keys": ["ctrl+shift+'"],
         "command": "tabnav_reduce_selection_right",
         "context":
         [
@@ -178,7 +178,7 @@
     },
     { 
         // reduce selection upwards
-        "keys": ["control+shift+["],
+        "keys": ["ctrl+shift+["],
         "command": "tabnav_reduce_selection_up",
         "context":
         [
@@ -188,7 +188,7 @@
     },
     { 
         // reduce selection downwards
-        "keys": ["control+shift+/"],
+        "keys": ["ctrl+shift+/"],
         "command": "tabnav_reduce_selection_down",
         "context":
         [
@@ -221,7 +221,7 @@
     },
     { 
         // select all table cells
-        "keys": ["command+control+shift+c"],
+        "keys": ["command+ctrl+shift+c"],
         "command": "tabnav_select_all",
         "context":
         [
