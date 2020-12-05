@@ -706,7 +706,6 @@ class TabnavCommand(sublime_plugin.TextCommand):
 			self.include_separators = self.view.settings().get("tabnav.include_separators")
 		if self.include_separators is None:
 			self.include_separators = settings.get("include_separators", False)
-		
 
 # Move cells:
 
@@ -763,8 +762,6 @@ class TabnavMoveCursorCommand(TabnavCommand):
 			self.view .sel().clear()
 			self.view.sel().add_all(cursors)
 			self.view.show(self.view.sel())
-			return True
-		return False
 
 class TabnavMoveCursorRightCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
@@ -809,8 +806,6 @@ class TabnavAddCursorCommand(TabnavCommand):
 			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
 			self.view.sel().add_all(cursors)
 			self.view.show(self.view.sel())
-		return len(initial_selections) != len(self.view.sel())
-
 
 class TabnavAddCursorRightCommand(TabnavAddCursorCommand):
 	def run(self, edit, context=None):
@@ -839,7 +834,6 @@ class TabnavSelectCurrentCommand(TabnavCommand):
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
-
 class TabnavSelectNextCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, context=None):
 		'''Moves all selection regions to the cells adjacent to the currently selected cells in the given Direction.
@@ -862,9 +856,6 @@ class TabnavSelectNextCommand(TabnavCommand):
 			self.view.sel().clear()
 			self.view.sel().add_all(new_cells)
 			self.view.show(self.view.sel())
-			return True
-		return False
-
 
 class TabnavSelectRightCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
@@ -894,10 +885,9 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 			if not self.tabnav.split_and_select_current_cells():
 				self.extend_cell_selection(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)		
+			log.info(e)
 
 	def extend_cell_selection(self, move_direction):
-		initial_selections = list(self.view.sel())
 		try:
 			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Exception as e:
@@ -905,8 +895,6 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 		if new_cells is not None:
 			self.view.sel().add_all(new_cells)
 			self.view.show(self.view.sel())
-		return len(initial_selections) != len(self.view.sel())
-
 
 class TabnavExtendSelectionRightCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
@@ -992,6 +980,7 @@ class TabnavSelectAllCommand(TabnavCommand):
 				self.view.sel().add_all(cells)
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
+
 # Other
 
 class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
