@@ -18,7 +18,7 @@
 		{
 			"selector": "text.html.markdown",
 			"except_selector": "markup.raw",
-			"markup_line_pattern": "^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$",
+			"markup_line_patterns": ["^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$"],
 			"cell_patterns": [
 				"\\|?(?P<content>.*?)(?=\\|)",
 				"\\|(?P<content>.+)$"
@@ -26,6 +26,31 @@
 			"markup_patterns": [
 				"\\|?(?P<content>\\s*[:-]+\\s*)(?=\\|)",
 				"\\|(?P<content>\\s*[:-]+\\s*$)"
+			]
+		},
+		"orgmode":
+		{
+			"selector": "text.orgmode",
+			"except_selector": "orgmode.raw.block",
+			"line_pattern": "^\\s*(?P<table>\\|.*\\|)\\s*$",
+			"cell_patterns": ["\\|(?P<content>.*?)(?=\\|)"],
+			// Org Mode has three forms of table markup rows:
+			// 1) Simple separator rows, which are defined as having a single '-' after the opening pipe,
+			//    though there is typically more markup in general.
+			// 2) A grouping row, which is defined as having only a single "/" in the first cell, 
+			//    only "<" and/or ">" in the other cell, or empty cells.
+			// 3) A column width row, which contains only column widths in the form "<10>" (at least such one column), or empty cells.
+			"markup_line_patterns": [
+				"^\\s*(?P<table>\\|-[-+]*\\|)\\s*$",
+				"^\\s*(?P<table>\\|\\s*/\\s*\\|(?:\\s*<?\\s*>?\\s*\\|)*)\\s*$",
+				"^\\s*(?P<table>\\|(?:\\s*\\|)*(?:\\s*<\\d+>\\s*\\|)(?:\\s*(?:<\\d+>)?\\s*\\|)*)\\s*$"
+			],
+			"markup_patterns": [
+				"^\\|(?P<content>-+)(?=\\+|\\|)",
+				"\\+(?P<content>-+)(?=\\+|\\|)",
+				"^\\|(?P<content>\\s*/\\s*)(?=\\|)",
+				"\\|(?P<content>\\s*<?\\s*>?\\s*)(?=\\|)",
+				"\\|(?P<content>\\s*(<\\d+>)?\\s*)(?=\\|)",
 			]
 		},
 		"auto_csv":

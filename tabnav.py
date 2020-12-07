@@ -242,13 +242,15 @@ class TableView:
 			raise RowNotInTableError(r)
 		line = self.view.line(point)
 		line_content = self.view.substr(line)
-		if self._context.markup_line_pattern is not None:
-			markup_match = self._context.markup_line_pattern.search(line_content)
-			if markup_match is not None:
-				markup_content = markup_match.group('table')
-				row = self._parse_row(r, markup_content, self._context.markup_patterns, True)
-			else:
-				row = None
+		if self._context.markup_line_patterns is not None:
+			row = None
+			for pattern in self._context.markup_line_patterns:
+				markup_match = pattern.search(line_content)
+				if markup_match is not None:
+					line_offset = markup_match.start('table')
+					markup_content = markup_match.group('table')
+					row = self._parse_row(r, markup_content, self._context.markup_patterns, True, line_offset)
+					break
 		else:
 			row = self._parse_row(r, line_content, self._context.markup_patterns, True)
 		if row is None:
@@ -256,13 +258,16 @@ class TableView:
 				line_match = self._context.line_pattern.search(line_content)
 				if line_match is None:
 					raise RowNotInTableError(r)
+				line_offset = line_match.start('table')
 				line_content = line_match.group('table')
-			row = self._parse_row(r, line_content, self._context.cell_patterns, False)
+			else:
+				line_offset = 0
+			row = self._parse_row(r, line_content, self._context.cell_patterns, False, line_offset)
 		if row is None:
 			raise RowNotInTableError(r)
 		return row
 
-	def _parse_row(self, r, line_content, patterns, is_markup):
+	def _parse_row(self, r, line_content, patterns, is_markup, line_offset=0):
 		if patterns is None or len(patterns) == 0:
 			return None
 		cells = []
@@ -281,7 +286,7 @@ class TableView:
 					# cell_match is on the final, zero-width match before the final delimiter. This is not a table cell.
 					break
 				col_index = col_index + 1
-				cell = self._regex_group_to_region(r, offset, col_index, cell_match, 'content', is_markup)
+				cell = self._regex_group_to_region(r, line_offset, offset, col_index, cell_match, 'content', is_markup)
 				if self.view.rowcol(cell.a)[0] != r:
 					raise RowOutOfFileBounds(r)
 				cells.append(cell)
@@ -291,9 +296,9 @@ class TableView:
 		row = TableRow(r, cells, is_markup)
 		return row
 
-	def _regex_group_to_region(self, row, offset, col_index, match, group, is_markup):
-		start_point = self.view.text_point(row, offset + match.start(group))
-		end_point = self.view.text_point(row, offset + match.end(group))
+	def _regex_group_to_region(self, row, line_offset, offset, col_index, match, group, is_markup):
+		start_point = self.view.text_point(row, line_offset + offset + match.start(group))
+		end_point = self.view.text_point(row, line_offset + offset + match.end(group))
 		if self._cell_direction > 0:
 			return TableCell(row, col_index, start_point, end_point, is_markup)
 		else:
@@ -483,7 +488,7 @@ class TabnavContext:
 	Contexts are defined in the settings files. The auto_csv context is a special case
 	for which additional work is done to try to identify the CSV delimiter to use.
 	'''
-	def __init__(self, cell_patterns, markup_patterns=None, line_pattern=None, markup_line_pattern=None):
+	def __init__(self, cell_patterns, markup_patterns=None, line_pattern=None, markup_line_patterns=None):
 		self._include_markup = None
 		self._cell_patterns = [re.compile(p) for p in cell_patterns]
 		if markup_patterns is not None:
@@ -494,10 +499,10 @@ class TabnavContext:
 			self._line_pattern = re.compile(line_pattern)
 		else:
 			self._line_pattern = None
-		if markup_line_pattern is not None:
-			self._markup_line_pattern = re.compile(markup_line_pattern)
+		if markup_line_patterns is not None:
+			self._markup_line_patterns = [re.compile(p) for p in markup_line_patterns]
 		else:
-			self._markup_line_pattern = None
+			self._markup_line_patterns = None
 	
 	@property
 	def cell_patterns(self):
@@ -512,8 +517,8 @@ class TabnavContext:
 		return self._line_pattern
 
 	@property
-	def markup_line_pattern(self):
-		return self._markup_line_pattern
+	def markup_line_patterns(self):
+		return self._markup_line_patterns
 	
 	@property
 	def selector(self):
@@ -559,8 +564,8 @@ class TabnavContext:
 			cell_patterns = context_config.get('cell_patterns', None)
 			markup_patterns = context_config.get('markup_patterns', None)
 			line_pattern = context_config.get('line_pattern', None)
-			markup_line_pattern = context_config.get('markup_line_pattern', None)
-			context = TabnavContext(cell_patterns, markup_patterns, line_pattern, markup_line_pattern)
+			markup_line_patterns = context_config.get('markup_line_patterns', None)
+			context = TabnavContext(cell_patterns, markup_patterns, line_pattern, markup_line_patterns)
 		if context is not None:
 			context._include_markup = context_config.get('include_markup', None)
 			context._selector = context_config.get('selector', None)
@@ -667,10 +672,10 @@ class TabnavContext:
 		line_pattern = context_config.get('line_pattern', None)
 		if line_pattern is not None:
 			line_pattern = line_pattern.format(delimiter)
-		markup_line_pattern = context_config.get('markup_line_pattern', None)
-		if markup_line_pattern is not None:
-			markup_line_pattern = markup_line_pattern.format(delimiter)
-		return TabnavContext(cell_patterns, markup_patterns, line_pattern, markup_line_pattern)
+		markup_line_patterns = context_config.get('markup_line_patterns', None)
+		if markup_line_patterns is not None:
+			markup_line_patterns = [p.format(delimiter) for p in markup_line_patterns.format(delimiter)]
+		return TabnavContext(cell_patterns, markup_patterns, line_pattern, markup_line_patterns)
 
 #### Commands ####
 
