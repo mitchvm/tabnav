@@ -41,20 +41,20 @@ class CursorNotInTableError(Exception):
 
 class TableCell(sublime.Region):
 	'''Extends the base sublime.Region class with logic specific to TabNav's cells.'''
-	def __init__(self, rownum, col_index, a, b, is_separator=False):
+	def __init__(self, rownum, col_index, a, b, is_markup=False):
 		'''Creates a new TableCell with the following properties:
 
 		* `rownum`: integer index of the row in the view on which the cell is found
 		* `col_index`: integer table column index (not text column index) of the cell
 		* `a`: the starting point in the view of the cell (the end of the region _without_ a cursor)
 		* `b`: the ending point in the view of the cell (the end of the region _with_ a cursor)
-		* `is_separator`: indicates if this cell is an a line-separator row of the table
+		* `is_markup`: indicates if this cell is an a markup line of the table
 		'''
 		super().__init__(a, b)
 		self._row = rownum
 		self._col = col_index
 		self._cursor_offsets = set()
-		self._is_separator = is_separator
+		self._is_markup = is_markup
 
 	def intersects(self, region):
 		'''Overrides the default `Region.intersects` method.
@@ -90,8 +90,8 @@ class TableCell(sublime.Region):
 		return self._col
 
 	@property
-	def is_separator(self):
-		return self._is_separator	
+	def is_markup(self):
+		return self._is_markup	
 	
 	def add_cursor_offset(self, offset):
 		'''Adds the given offset as the relative position within the cell
@@ -113,24 +113,24 @@ class TableCell(sublime.Region):
 
 class TableRow:
 	'''Stores the TableCell objects parsed from a single line of text.'''
-	def __init__(self, rownum, cells, is_separator=False):
+	def __init__(self, rownum, cells, is_markup=False):
 		'''Creates a new TableRow with the following properties:
 
 		* `rownum`: integer index of the row in the view on which the cell is found
 		* `cells`: a list of TableCells that make up this row
-		* `is_separator`: indicates if this cell is an a line-separator row of the table
+		* `is_markup`: indicates if this cell is an a markup line of the table
 		'''
 		self._row = rownum
 		self._cells = cells
-		self._is_separator = is_separator
+		self._is_markup = is_markup
 
 	@property
 	def row(self):
 		return self._row
 
 	@property
-	def is_separator(self):
-		return self._is_separator
+	def is_markup(self):
+		return self._is_markup
 	
 
 	def __getitem__(self, key):
@@ -242,15 +242,15 @@ class TableView:
 			raise RowNotInTableError(r)
 		line = self.view.line(point)
 		line_content = self.view.substr(line)
-		if self._context.separator_line_pattern is not None:
-			separator_match = self._context.separator_line_pattern.search(line_content)
-			if separator_match is not None:
-				separator_content = separator_match.group('table')
-				row = self._parse_row(r, separator_content, self._context.separator_patterns, True)
+		if self._context.markup_line_pattern is not None:
+			markup_match = self._context.markup_line_pattern.search(line_content)
+			if markup_match is not None:
+				markup_content = markup_match.group('table')
+				row = self._parse_row(r, markup_content, self._context.markup_patterns, True)
 			else:
 				row = None
 		else:
-			row = self._parse_row(r, line_content, self._context.separator_patterns, True)
+			row = self._parse_row(r, line_content, self._context.markup_patterns, True)
 		if row is None:
 			if self._context.line_pattern is not None:
 				line_match = self._context.line_pattern.search(line_content)
@@ -262,7 +262,7 @@ class TableView:
 			raise RowNotInTableError(r)
 		return row
 
-	def _parse_row(self, r, line_content, patterns, is_separator):
+	def _parse_row(self, r, line_content, patterns, is_markup):
 		if patterns is None or len(patterns) == 0:
 			return None
 		cells = []
@@ -281,35 +281,35 @@ class TableView:
 					# cell_match is on the final, zero-width match before the final delimiter. This is not a table cell.
 					break
 				col_index = col_index + 1
-				cell = self._regex_group_to_region(r, offset, col_index, cell_match, 'content', is_separator)
+				cell = self._regex_group_to_region(r, offset, col_index, cell_match, 'content', is_markup)
 				if self.view.rowcol(cell.a)[0] != r:
 					raise RowOutOfFileBounds(r)
 				cells.append(cell)
 				cell_end = cell_match.end(1)
 		if len(cells) == 0:
 			return None
-		row = TableRow(r, cells, is_separator)
+		row = TableRow(r, cells, is_markup)
 		return row
 
-	def _regex_group_to_region(self, row, offset, col_index, match, group, is_separator):
+	def _regex_group_to_region(self, row, offset, col_index, match, group, is_markup):
 		start_point = self.view.text_point(row, offset + match.start(group))
 		end_point = self.view.text_point(row, offset + match.end(group))
 		if self._cell_direction > 0:
-			return TableCell(row, col_index, start_point, end_point, is_separator)
+			return TableCell(row, col_index, start_point, end_point, is_markup)
 		else:
-			return TableCell(row, col_index, end_point, start_point, is_separator)
+			return TableCell(row, col_index, end_point, start_point, is_markup)
 
 
 class TableNavigator:
 	'''Contains methods to navigate the cells of the given TableView.
 
-	If include_separators is False, then line separator cells are omitted from
+	If include_markup is False, then table markup cells are omitted from
 	navigation operations, **unless** the initial selections consist solely
-	of line separators.
+	of markup lines.
 	'''
-	def __init__(self, table, include_separators=False):
+	def __init__(self, table, include_markup=False):
 		self._table = table
-		self.include_separators = include_separators
+		self.include_markup = include_markup
 
 	@property
 	def view(self):
@@ -353,36 +353,36 @@ class TableNavigator:
 				if len(line_cells) > 1 or region.size() > 0 or line_cells[0].b != point:
 					selection_changed = True
 				line_cursors = (sublime.Region(cell.b, cell.b) for cell in line_cells)
-			if row.is_separator:
+			if row.is_markup:
 				sep_cursors = itertools.chain(sep_cursors, line_cursors)
 			else:
 				cursors = itertools.chain(cursors, line_cursors)
 		if selection_changed:
 			cursors = list(cursors)
-			if self.include_separators or len(cursors) == 0:
-				# If only separator rows are selected, ignore the include_separators setting
+			if self.include_markup or len(cursors) == 0:
+				# If only markup rows are selected, ignore the include_markup setting
 				cursors.extend(sep_cursors)
 			self.view.sel().clear()
 			self.view.sel().add_all(cursors)
 		return selection_changed
 
 
-	def split_and_select_current_cells(self, include_separators=None):
+	def split_and_select_current_cells(self, include_markup=None):
 		'''Selects all of the cells spanned by the current selection.
 
 		Returns True if the selections changed, or False otherwise.
 		'''
-		if include_separators is None:
-			include_separators = self.include_separators
+		if include_markup is None:
+			include_markup = self.include_markup
 		selections = list(self.view.sel())
 		selection_lines = list(itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections)))
 		selection_changed = len(selection_lines) != len(selections)
-		all_separators = True
+		all_markup = True
 		cells = []
 		for region in selection_lines:
 			r = self.view.rowcol(region.begin())[0]
 			row = self._table[r]
-			all_separators = all_separators and row.is_separator
+			all_markup = all_markup and row.is_markup
 			line_cells = list(cell for cell in row if cell.intersects(region))
 			if len(line_cells) == 0: 
 				# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
@@ -391,9 +391,9 @@ class TableNavigator:
 				selection_changed = True
 			cells = itertools.chain(cells, line_cells)
 		if selection_changed:
-			if not (include_separators or all_separators):
-				# If only separator rows are selected, ignore the include_separators setting
-				cells = (c for c in cells if c.is_separator == include_separators)
+			if not (include_markup or all_markup):
+				# If only markup rows are selected, ignore the include_markup setting
+				cells = (c for c in cells if c.is_markup == include_markup)
 			self.view.sel().clear()
 			self.view.sel().add_all(list(cells))
 		return selection_changed
@@ -439,8 +439,8 @@ class TableNavigator:
 		if target_col < 0: # direction == LEFT
 			return self._table[(r,ic)]
 		row = self._table[target_row]
-		if dr != 0 and not self.include_separators:
-			while row.is_separator:
+		if dr != 0 and not self.include_markup:
+			while row.is_markup:
 				target_row = target_row + dr
 				row = self._table[target_row]
 		return row[target_col]
@@ -472,8 +472,8 @@ class TableNavigator:
 				# jump past this cell and keep going
 			except (RowNotInTableError, RowOutOfFileBounds):
 				break
-		if not self.include_separators:
-			cells = (c for c in cells if not c.is_separator)
+		if not self.include_markup:
+			cells = (c for c in cells if not c.is_markup)
 		return TableColumn(cells)
 
 
@@ -483,37 +483,37 @@ class TabnavContext:
 	Contexts are defined in the settings files. The auto_csv context is a special case
 	for which additional work is done to try to identify the CSV delimiter to use.
 	'''
-	def __init__(self, cell_patterns, separator_patterns=None, line_pattern=None, separator_line_pattern=None):
-		self._include_separators = None
+	def __init__(self, cell_patterns, markup_patterns=None, line_pattern=None, markup_line_pattern=None):
+		self._include_markup = None
 		self._cell_patterns = [re.compile(p) for p in cell_patterns]
-		if separator_patterns is not None:
-			self._separator_patterns = [re.compile(p) for p in separator_patterns]
+		if markup_patterns is not None:
+			self._markup_patterns = [re.compile(p) for p in markup_patterns]
 		else:
-			self._separator_patterns = []
+			self._markup_patterns = []
 		if line_pattern is not None:
 			self._line_pattern = re.compile(line_pattern)
 		else:
 			self._line_pattern = None
-		if separator_line_pattern is not None:
-			self._separator_line_pattern = re.compile(separator_line_pattern)
+		if markup_line_pattern is not None:
+			self._markup_line_pattern = re.compile(markup_line_pattern)
 		else:
-			self._separator_line_pattern = None
+			self._markup_line_pattern = None
 	
 	@property
 	def cell_patterns(self):
 		return self._cell_patterns
 	
 	@property
-	def separator_patterns(self):
-		return self._separator_patterns
+	def markup_patterns(self):
+		return self._markup_patterns
 
 	@property
 	def line_pattern(self):
 		return self._line_pattern
 
 	@property
-	def separator_line_pattern(self):
-		return self._separator_line_pattern
+	def markup_line_pattern(self):
+		return self._markup_line_pattern
 	
 	@property
 	def selector(self):
@@ -524,8 +524,8 @@ class TabnavContext:
 		return self._except_selector
 
 	@property
-	def include_separators(self):
-		return self._include_separators
+	def include_markup(self):
+		return self._include_markup
 	
 	@staticmethod
 	def get_current_context(view, context_key=None):
@@ -557,12 +557,12 @@ class TabnavContext:
 		else:
 			log.debug("Using tabnav context '%s'", context_key)
 			cell_patterns = context_config.get('cell_patterns', None)
-			separator_patterns = context_config.get('separator_patterns', None)
+			markup_patterns = context_config.get('markup_patterns', None)
 			line_pattern = context_config.get('line_pattern', None)
-			separator_line_pattern = context_config.get('separator_line_pattern', None)
-			context = TabnavContext(cell_patterns, separator_patterns, line_pattern, separator_line_pattern)
+			markup_line_pattern = context_config.get('markup_line_pattern', None)
+			context = TabnavContext(cell_patterns, markup_patterns, line_pattern, markup_line_pattern)
 		if context is not None:
-			context._include_separators = context_config.get('include_separators', None)
+			context._include_markup = context_config.get('include_markup', None)
 			context._selector = context_config.get('selector', None)
 			context._except_selector = context_config.get('except_selector', None)
 		return context
@@ -658,19 +658,19 @@ class TabnavContext:
 		delimiter = TabnavContext._escaped_delimiters.get(delimiter, delimiter)
 		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
 		cell_patterns = [p.format(delimiter) for p in context_config['cell_patterns']]
-		# The base auto_csv context has no separator patterns, but handle them in case a user adds some to their user_contexts.
-		raw_sep_patterns = context_config.get('separator_patterns', None)
+		# The base auto_csv context has no markup patterns, but handle them in case a user adds some to their user_contexts.
+		raw_sep_patterns = context_config.get('markup_patterns', None)
 		if raw_sep_patterns is not None:
-			separator_patterns = [p.format(delimiter) for p in raw_sep_patterns]
+			markup_patterns = [p.format(delimiter) for p in raw_sep_patterns]
 		else:
-			separator_patterns = None
+			markup_patterns = None
 		line_pattern = context_config.get('line_pattern', None)
 		if line_pattern is not None:
 			line_pattern = line_pattern.format(delimiter)
-		separator_line_pattern = context_config.get('separator_line_pattern', None)
-		if separator_line_pattern is not None:
-			separator_line_pattern = separator_line_pattern.format(delimiter)
-		return TabnavContext(cell_patterns, separator_patterns, line_pattern, separator_line_pattern)
+		markup_line_pattern = context_config.get('markup_line_pattern', None)
+		if markup_line_pattern is not None:
+			markup_line_pattern = markup_line_pattern.format(delimiter)
+		return TabnavContext(cell_patterns, markup_patterns, line_pattern, markup_line_pattern)
 
 #### Commands ####
 
@@ -695,16 +695,16 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		self.init_settings()
 		self.table = TableView(self.view, self.context, cell_direction)
 		self.table.parse_selected_rows()
-		self.tabnav = TableNavigator(self.table, self.include_separators)
+		self.tabnav = TableNavigator(self.table, self.include_markup)
 
 	def init_settings(self):
 		'''Initializes TabNav settings from the context, view, or default settings.'''
 		settings = sublime.load_settings("tabnav.sublime-settings")
-		self.include_separators = self.view.settings().get("tabnav.include_separators")
-		if self.include_separators is None:
-			self.include_separators = self.context.include_separators
-		if self.include_separators is None:
-			self.include_separators = settings.get("include_separators", False)
+		self.include_markup = self.view.settings().get("tabnav.include_markup")
+		if self.include_markup is None:
+			self.include_markup = self.context.include_markup
+		if self.include_markup is None:
+			self.include_markup = settings.get("include_markup", False)
 
 # Move cells:
 
@@ -965,8 +965,8 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 				if seq == 0 or cell.row == last.row + direction:
 					# First cell of a new sequence OR continuing an existing sequence
 					seq = seq + 1
-				elif self.jumped_separator_row(cell, last, direction):
-					# We've just jumped over a separator row, so consider the cells a sequence
+				elif self.jumped_markup_row(cell, last, direction):
+					# We've just jumped over a markup row, so consider the cells a sequence
 					seq = seq + 1
 				else:
 					# Current cell is not part of the same sequence
@@ -979,13 +979,13 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 				# Final sequence ended with more than one cell
 				self.view.sel().subtract(last)
 
-	def jumped_separator_row(self, cell, last, direction):
-		if self.include_separators:
-			# If separator rows are included in selections, then they must be selected
+	def jumped_markup_row(self, cell, last, direction):
+		if self.include_markup:
+			# If markup rows are included in selections, then they must be selected
 			return False
 		try:
-			# If all rows between the cells are separator rows, consider it a jump
-			return all(self.table[r].is_separator for r in range(last.row+direction, cell.row, direction))
+			# If all rows between the cells are markup rows, consider it a jump
+			return all(self.table[r].is_markup for r in range(last.row+direction, cell.row, direction))
 		except RowNotInTableError:
 			# don't jump across disjoint tables
 			return False
@@ -1013,11 +1013,11 @@ class TabnavSelectRowCommand(TabnavCommand):
 		'''Selects all cells in all rows intersecting the current selections.'''
 		try:
 			self.init_table(cell_direction)
-			if self.include_separators or all((row.is_separator for row in self.table.rows)):
-				# if only separator rows are currently selected, ignore the include_separators setting
+			if self.include_markup or all((row.is_markup for row in self.table.rows)):
+				# if only markup rows are currently selected, ignore the include_markup setting
 				cells = [cell for row in self.table.rows for cell in row]
 			else:
-				cells = [cell for row in self.table.rows for cell in row if not row.is_separator]
+				cells = [cell for row in self.table.rows for cell in row if not row.is_markup]
 			if len(cells) > 0:
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
@@ -1032,8 +1032,8 @@ class TabnavSelectColumnCommand(TabnavCommand):
 		'''Selects all cells in all columns intersecting the current selections.'''
 		try:
 			self.init_table(cell_direction)
-			# include separators in the initial selection in case a cursor is in a separator row
-			self.tabnav.split_and_select_current_cells(include_separators=True)
+			# include markup in the initial selection in case a cursor is in a markup row
+			self.tabnav.split_and_select_current_cells(include_markup=True)
 			columns = []
 			for region in self.view.sel():
 				cell = self.table.cell_at_point(region.b)
@@ -1064,10 +1064,10 @@ class TabnavSelectAllCommand(TabnavCommand):
 				if len(containing_columns) > 0:
 					continue # This cell is already contained in a previously captured column
 				columns.append(self.tabnav.get_table_column(cell))
-			if self.include_separators:
+			if self.include_markup:
 				cells = [cell for row in self.table.rows for cell in row]
 			else:
-				cells = [cell for row in self.table.rows for cell in row if not row.is_separator]
+				cells = [cell for row in self.table.rows for cell in row if not row.is_markup]
 			if len(cells) > 0:
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
@@ -1169,15 +1169,15 @@ class DisableTabnavCommand(sublime_plugin.TextCommand):
 		enabled = self.view.settings().get('tabnav.enabled')
 		return enabled is None or enabled
 
-class TabnavIncludeSeparatorsCommand(sublime_plugin.TextCommand):
+class TabnavIncludeMarkupCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		'''Causes TabNav to include line separator rows from selections in the current view.'''
-		self.view.settings().set('tabnav.include_separators', True)
+		'''Causes TabNav to include table markup lines from selections in the current view.'''
+		self.view.settings().set('tabnav.include_markup', True)
 
-class TabnavExcludeSeparatorsCommand(sublime_plugin.TextCommand):
+class TabnavExcludeMarkupCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		'''Causes TabNav to exclude line separator rows from selections in the current view.'''
-		self.view.settings().set('tabnav.include_separators', False)
+		'''Causes TabNav to exclude table markup lines from selections in the current view.'''
+		self.view.settings().set('tabnav.include_markup', False)
 
 def is_other_csv_scope(view):
 		scope = view.scope_name(0)

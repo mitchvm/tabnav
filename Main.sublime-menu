@@ -15,12 +15,12 @@
             "command": "disable_tabnav"
           },
           {
-            "caption": "Include separator lines in selections",
-            "command": "tabnav_include_separators"
+            "caption": "Include markup lines in selections",
+            "command": "tabnav_include_markup"
           },
           {
-            "caption": "Exclude separator lines from selections",
-            "command": "tabnav_exclude_separators"
+            "caption": "Exclude markup lines from selections",
+            "command": "tabnav_exclude_markup"
           },
           {
           	"caption": "Set CSV delimiter",

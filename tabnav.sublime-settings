@@ -1,8 +1,8 @@
 {
-	// When false, row separator lines are skipped when moving and not included in selections.
-	// To temporarily include line separators, use the "Include separator lines in selections" command.
+	// When false, table markup lines are skipped when moving and not included in selections.
+	// To temporarily include markup lines, use the "Include markup lines in selections" command.
 	// Can also be overridden on a per-context basis.
-	"include_separators": false,
+	"include_markup": false,
 
 	// When true, whitespace is trimmed from the selected regions' text prior to putting it 
 	// on the clipboard with the "Copy selections" commands. The Sublime Text selections themselves
@@ -18,12 +18,12 @@
 		{
 			"selector": "text.html.markdown",
 			"except_selector": "markup.raw",
-			"separator_line_pattern": "^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$",
+			"markup_line_pattern": "^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$",
 			"cell_patterns": [
 				"\\|?(?P<content>.*?)(?=\\|)",
 				"\\|(?P<content>.+)$"
 			],
-			"separator_patterns": [
+			"markup_patterns": [
 				"\\|?(?P<content>\\s*[:-]+\\s*)(?=\\|)",
 				"\\|(?P<content>\\s*[:-]+\\s*$)"
 			]
