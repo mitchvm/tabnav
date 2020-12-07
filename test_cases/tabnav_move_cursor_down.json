@@ -31,50 +31,50 @@
 		"command": "tabnav_move_cursor_down",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators excluded - separator row jumped",
+		"description": "markup excluded - markup row jumped",
 		"initial_selections": [{"a": 45, "b": 45}],
 		"expected_selections": [{"a": 140, "b": 140}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "WGFV",
 		"command": "tabnav_move_cursor_down",
 		"context": "markdown",
-		"file": "markdown05_multiple_separators.md",
-		"description": "Separators excluded - multiple sequential separator rows jumped",
+		"file": "markdown05_multiple_markup.md",
+		"description": "markup excluded - multiple sequential markup rows jumped",
 		"initial_selections": [{"a": 707, "b": 707}],
 		"expected_selections": [{"a": 1043, "b": 1043}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "TB3O",
 		"command": "tabnav_move_cursor_down",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators excluded - multiple cursros, separator only jumped as applicable",
+		"description": "markup excluded - multiple cursros, markup only jumped as applicable",
 		"initial_selections": [{"a": 6, "b": 6}, {"a": 116, "b": 116}],
 		"expected_selections": [{"a": 106, "b": 106}, {"a": 196, "b": 196}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "FLUF",
 		"command": "tabnav_move_cursor_down",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Cursor in line separator row moves out",
+		"description": "Cursor in line markup row moves out",
 		"initial_selections": [{"a": 69, "b": 69}],
 		"expected_selections": [{"a": 118, "b": 118}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "E4DJ",
 		"command": "tabnav_move_cursor_down",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators included - moves to separator row",
+		"description": "markup included - moves to markup row",
 		"initial_selections": [{"a": 29, "b": 29}],
 		"expected_selections": [{"a": 79, "b": 79}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	},
 	{
 		"id": "7V7C",

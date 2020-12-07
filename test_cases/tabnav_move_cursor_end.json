@@ -22,7 +22,7 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Single cursor in line separator cell",
+		"description": "Single cursor in line markup cell",
 		"initial_selections": [{"a": 56, "b": 56}],
 		"expected_selections": [{"a": 62, "b": 62}]
 	},
@@ -102,8 +102,8 @@
 		"id": "HICB",
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
-		"file": "markdown05_multiple_separators.md",
-		"description": "Region spans three separator rows",
+		"file": "markdown05_multiple_markup.md",
+		"description": "Region spans three markup rows",
 		"initial_selections": [{"a": 790, "b": 958}],
 		"expected_selections": [{"a": 802, "b": 802}, {"a": 816, "b": 816}, {"a": 830, "b": 830}, {"a": 838, "b": 838}, {"a": 860, "b": 860}, {"a": 867, "b": 867}, {"a": 886, "b": 886}, {"a": 900, "b": 900}, {"a": 914, "b": 914}, {"a": 922, "b": 922}, {"a": 944, "b": 944}, {"a": 951, "b": 951}, {"a": 970, "b": 970}]
 	},
@@ -112,20 +112,20 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Region spans body and separator row, separators excluded",
+		"description": "Region spans body and markup row, markup excluded",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "NPWG",
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Region spans body and separator row, separators included",
+		"description": "Region spans body and markup row, markup included",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	},
 	{
 		"id": "2UF4",
@@ -141,7 +141,7 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
 		"file": "markdown02_multiple_tables.md",
-		"description": "Multiple cursors in multiple line separator rows",
+		"description": "Multiple cursors in multiple line markup rows",
 		"initial_selections": [{"a": 212, "b": 212}, {"a": 1913, "b": 1913}],
 		"expected_selections": [{"a": 226, "b": 226}, {"a": 1919, "b": 1919}]
 	},
@@ -177,7 +177,7 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
 		"file": "markdown03_borderless.md",
-		"description": "Cursor in first column of separator",
+		"description": "Cursor in first column of markup",
 		"initial_selections": [{"a": 39, "b": 39}],
 		"expected_selections": [{"a": 44, "b": 44}]
 	},
@@ -186,7 +186,7 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
 		"file": "markdown03_borderless.md",
-		"description": "Cursor in last column of separator",
+		"description": "Cursor in last column of markup",
 		"initial_selections": [{"a": 62, "b": 62}],
 		"expected_selections": [{"a": 67, "b": 67}]
 	},
@@ -195,9 +195,9 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "markdown",
 		"file": "markdown03_borderless.md",
-		"description": "Selection spans separator row",
+		"description": "Selection spans markup row",
 		"initial_selections": [{"a": 18, "b": 86}],
 		"expected_selections": [{"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 78, "b": 78}, {"a": 90, "b": 90}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	}
 ]

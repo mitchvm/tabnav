@@ -22,7 +22,7 @@
 		"command": "tabnav_move_cursor_right",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Single cursor at end of cell in line separator cell",
+		"description": "Single cursor at end of cell in line markup cell",
 		"initial_selections": [{"a": 74, "b": 74}],
 		"expected_selections": [{"a": 86, "b": 86}]
 	},
@@ -121,7 +121,7 @@
 		"command": "tabnav_move_cursor_right",
 		"context": "markdown",
 		"file": "markdown02_multiple_tables.md",
-		"description": "Multiple cursors in multiple line separator rows",
+		"description": "Multiple cursors in multiple line markup rows",
 		"initial_selections": [{"a": 207, "b": 207}, {"a": 1905, "b": 1905}],
 		"expected_selections": [{"a": 226, "b": 226}, {"a": 1919, "b": 1919}]
 	},

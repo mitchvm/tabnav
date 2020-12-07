@@ -22,7 +22,7 @@
 		"command": "tabnav_select_right",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Cell in line separator row already selected",
+		"description": "Cell in line markup row already selected",
 		"initial_selections": [{"a": 63, "b": 74}],
 		"expected_selections": [{"a": 75, "b": 86}]
 	},
@@ -139,7 +139,7 @@
 		"command": "tabnav_select_right",
 		"context": "markdown",
 		"file": "markdown02_multiple_tables.md",
-		"description": "Multiple cells in multiple line separator rows",
+		"description": "Multiple cells in multiple line markup rows",
 		"initial_selections": [{"a": 201, "b": 207}, {"a": 227, "b": 240}, {"a": 1892, "b": 1905}],
 		"expected_selections": [{"a": 208, "b": 226}, {"a": 241, "b": 254}, {"a": 1906, "b": 1919}]
 	},

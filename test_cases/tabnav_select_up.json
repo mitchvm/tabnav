@@ -31,50 +31,50 @@
 		"command": "tabnav_select_up",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators excluded - separator row jumped",
+		"description": "markup excluded - markup row jumped",
 		"initial_selections": [{"a": 146, "b": 132}],
 		"expected_selections": [{"a": 48, "b": 37}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "KWTA",
 		"command": "tabnav_select_up",
 		"context": "markdown",
-		"file": "markdown05_multiple_separators.md",
-		"description": "Separators excluded - multiple sequential separator rows jumped",
+		"file": "markdown05_multiple_markup.md",
+		"description": "markup excluded - multiple sequential markup rows jumped",
 		"initial_selections": [{"a": 1035, "b": 1029}],
 		"expected_selections": [{"a": 699, "b": 693}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "WX5P",
 		"command": "tabnav_select_up",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators excluded - multiple cells, separator only jumped as applicable",
+		"description": "markup excluded - multiple cells, markup only jumped as applicable",
 		"initial_selections": [{"a": 146, "b": 132}, {"a": 242, "b": 227}],
 		"expected_selections": [{"a": 48, "b": 37}, {"a": 191, "b": 149}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "KLLS",
 		"command": "tabnav_select_up",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Cell in line separator row moves out",
+		"description": "Cell in line markup row moves out",
 		"initial_selections": [{"a": 74, "b": 63}],
 		"expected_selections": [{"a": 24, "b": 13}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "EB7Z",
 		"command": "tabnav_select_up",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators included - moves to separator row",
+		"description": "markup included - moves to markup row",
 		"initial_selections": [{"a": 146, "b": 132}],
 		"expected_selections": [{"a": 98, "b": 87}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	},
 	{
 		"id": "7FXN",
@@ -102,7 +102,7 @@
 		"description": "Sequential cells in a column, one in top row merged",
 		"initial_selections": [{"a": 24, "b": 13}, {"a": 119, "b": 112}],
 		"expected_selections": [{"a": 24, "b": 13}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "U2XO",

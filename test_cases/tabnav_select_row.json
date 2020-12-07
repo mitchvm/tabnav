@@ -31,30 +31,30 @@
 		"command": "tabnav_select_row",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators excluded - region spanning separator row",
+		"description": "markup excluded - region spanning markup row",
 		"initial_selections": [{"a": 19, "b": 123}],
 		"expected_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}, {"a": 132, "b": 146}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "LXN5",
 		"command": "tabnav_select_row",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators excluded - only separator row selected",
+		"description": "markup excluded - only markup row selected",
 		"initial_selections": [{"a": 66, "b": 66}],
 		"expected_selections": [{"a": 51, "b": 62}, {"a": 63, "b": 74}, {"a": 75, "b": 86}, {"a": 87, "b": 98}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "6DLQ",
 		"command": "tabnav_select_row",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators included - region spanning separator row",
+		"description": "markup included - region spanning markup row",
 		"initial_selections": [{"a": 20, "b": 124}],
 		"expected_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 51, "b": 62}, {"a": 63, "b": 74}, {"a": 75, "b": 86}, {"a": 87, "b": 98}, {"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}, {"a": 132, "b": 146}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	},
 	{
 		"id": "PTG5",

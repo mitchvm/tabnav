@@ -13,7 +13,7 @@
 		"command": "tabnav_select_current",
 		"context": "None",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Parse Markdown separator row - cells",
+		"description": "Parse Markdown markup row - cells",
 		"initial_selections": [{"a": 50, "b": 99}],
 		"expected_selections": [{"a": 51, "b": 62}, {"a": 63, "b": 74}, {"a": 75, "b": 86}, {"a": 87, "b": 98}]
 	},
@@ -22,20 +22,20 @@
 		"command": "tabnav_select_current",
 		"context": "None",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Parse Markdown region spanning separator row cells - separators excluded",
+		"description": "Parse Markdown region spanning markup row cells - markup excluded",
 		"initial_selections": [{"a": 0, "b": 148}],
 		"expected_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}, {"a": 132, "b": 146}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "QW6N",
 		"command": "tabnav_select_current",
 		"context": "None",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Parse Markdown region spanning separator row cells - separators include",
+		"description": "Parse Markdown region spanning markup row cells - markup include",
 		"initial_selections": [{"a": 0, "b": 148}],
 		"expected_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 51, "b": 62}, {"a": 63, "b": 74}, {"a": 75, "b": 86}, {"a": 87, "b": 98}, {"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}, {"a": 132, "b": 146}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	},
 	{
 		"id": "MSBO",
@@ -114,7 +114,7 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "None",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Parse Markdown separator row - cursors",
+		"description": "Parse Markdown markup row - cursors",
 		"initial_selections": [{"a": 50, "b": 99}],
 		"expected_selections": [{"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}]
 	},
@@ -123,20 +123,20 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "None",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Parse Markdown region spanning separator row cursors - separators excluded",
+		"description": "Parse Markdown region spanning markup row cursors - markup excluded",
 		"initial_selections": [{"a": 0, "b": 148}],
 		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "QW6N",
 		"command": "tabnav_move_cursor_end",
 		"context": "None",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Parse Markdown region spanning separator row cursors - separators include",
+		"description": "Parse Markdown region spanning markup row cursors - markup include",
 		"initial_selections": [{"a": 0, "b": 148}],
 		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	},
 	{
 		"id": "NIPV",
@@ -152,7 +152,7 @@
 		"command": "tabnav_select_current",
 		"context": "None",
 		"file": "markdown03_borderless.md",
-		"description": "Parse Markdown borderless separator row - cells",
+		"description": "Parse Markdown borderless markup row - cells",
 		"initial_selections": [{"a": 34, "b": 67}],
 		"expected_selections": [{"a": 34, "b": 44}, {"a": 45, "b": 56}, {"a": 57, "b": 67}]
 	},
@@ -161,20 +161,20 @@
 		"command": "tabnav_select_current",
 		"context": "None",
 		"file": "markdown03_borderless.md",
-		"description": "Parse Markdown region spanning borderless separator row cells - separators excluded",
+		"description": "Parse Markdown region spanning borderless markup row cells - markup excluded",
 		"initial_selections": [{"a": 0, "b": 101}],
 		"expected_selections": [{"a": 0, "b": 10}, {"a": 11, "b": 22}, {"a": 23, "b": 33}, {"a": 68, "b": 78}, {"a": 79, "b": 90}, {"a": 91, "b": 101}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "3ZAJ",
 		"command": "tabnav_select_current",
 		"context": "None",
 		"file": "markdown03_borderless.md",
-		"description": "Parse Markdown region spanning borderless separator row cells - separators include",
+		"description": "Parse Markdown region spanning borderless markup row cells - markup include",
 		"initial_selections": [{"a": 0, "b": 101}],
 		"expected_selections": [{"a": 0, "b": 10}, {"a": 11, "b": 22}, {"a": 23, "b": 33}, {"a": 34, "b": 44}, {"a": 45, "b": 56}, {"a": 57, "b": 67}, {"a": 68, "b": 78}, {"a": 79, "b": 90}, {"a": 91, "b": 101}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	},
 	{
 		"id": "FQO6",
@@ -190,7 +190,7 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "None",
 		"file": "markdown03_borderless.md",
-		"description": "Parse Markdown borderless separator row - cursors",
+		"description": "Parse Markdown borderless markup row - cursors",
 		"initial_selections": [{"a": 34, "b": 67}],
 		"expected_selections": [{"a": 44, "b": 44}, {"a": 56, "b": 56}, {"a": 67, "b": 67}]
 	},
@@ -199,20 +199,20 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "None",
 		"file": "markdown03_borderless.md",
-		"description": "Parse Markdown region spanning borderless separator row cursors - separators excluded",
+		"description": "Parse Markdown region spanning borderless markup row cursors - markup excluded",
 		"initial_selections": [{"a": 0, "b": 101}],
 		"expected_selections": [{"a": 10, "b": 10}, {"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 78, "b": 78}, {"a": 90, "b": 90}, {"a": 101, "b": 101}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "P2TW",
 		"command": "tabnav_move_cursor_end",
 		"context": "None",
 		"file": "markdown03_borderless.md",
-		"description": "Parse Markdown region spanning borderless separator row cursors - separators include",
+		"description": "Parse Markdown region spanning borderless markup row cursors - markup include",
 		"initial_selections": [{"a": 0, "b": 101}],
 		"expected_selections": [{"a": 10, "b": 10}, {"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 44, "b": 44}, {"a": 56, "b": 56}, {"a": 67, "b": 67}, {"a": 78, "b": 78}, {"a": 90, "b": 90}, {"a": 101, "b": 101}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	},
 	{
 		"id": "Y7YV",
@@ -222,7 +222,7 @@
 		"description": "Borderless tables ignored - cursor in body cell",
 		"initial_selections": [{"a": 118, "b": 118}],
 		"expected_selections": [{"a": 118, "b": 118}],
-		"view_settings": {"tabnav.include_separators": true},
+		"view_settings": {"tabnav.include_markup": true},
 		"package_settings": 
 		{ 
 			"user_contexts":
@@ -230,7 +230,7 @@
 				"markdown":
 				{
 					"line_pattern": "^(?P<table>\\|.*\\|)$",
-					"separator_line_pattern": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
+					"markup_line_patterns": ["^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"]
 				}
 			}
 		}
@@ -240,10 +240,10 @@
 		"command": "tabnav_move_cursor_end",
 		"context": "None",
 		"file": "markdown03_borderless.md",
-		"description": "Borderless tables ignored - cursor in row separator",
+		"description": "Borderless tables ignored - cursor in row markup",
 		"initial_selections": [{"a": 49, "b": 49}],
 		"expected_selections": [{"a": 49, "b": 49}],
-		"view_settings": {"tabnav.include_separators": true},
+		"view_settings": {"tabnav.include_markup": true},
 		"package_settings": 
 		{ 
 			"user_contexts":
@@ -251,7 +251,7 @@
 				"markdown":
 				{
 					"line_pattern": "^(?P<table>\\|.*\\|)$",
-					"separator_line_pattern": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
+					"markup_line_patterns": ["^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"]
 				}
 			}
 		}
@@ -260,30 +260,30 @@
 		"id": "NFNL",
 		"command": "tabnav_select_down",
 		"context": "None",
-		"file": "markdown04_separator_like.md",
-		"description": "Markdown non-separator cells that match line separator regex",
+		"file": "markdown04_markup_like.md",
+		"description": "Markdown non-markup cells that match line markup regex",
 		"initial_selections": [{"a": 214, "b": 210}],
 		"expected_selections": [{"a": 263, "b": 259}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "P2H2",
 		"command": "tabnav_select_all",
 		"context": "None",
 		"file": "markdown03_borderless.md",
-		"description": "Markdown two column borderless table - separators excluded",
+		"description": "Markdown two column borderless table - markup excluded",
 		"initial_selections": [{"a": 300, "b": 300}],
 		"expected_selections": [{"a": 239, "b": 243}, {"a": 244, "b": 251}, {"a": 266, "b": 277}, {"a": 278, "b": 284}, {"a": 285, "b": 290}, {"a": 291, "b": 294}, {"a": 295, "b": 296}, {"a": 297, "b": 301}, {"a": 302, "b": 310}, {"a": 311, "b": 312}, {"a": 313, "b": 317}, {"a": 318, "b": 322}, {"a": 323, "b": 329}, {"a": 330, "b": 336}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "K3UR",
 		"command": "tabnav_select_all",
 		"context": "None",
 		"file": "markdown03_borderless.md",
-		"description": "Markdown two column borderless table - separators included",
+		"description": "Markdown two column borderless table - markup included",
 		"initial_selections": [{"a": 300, "b": 300}],
 		"expected_selections": [{"a": 239, "b": 243}, {"a": 244, "b": 251}, {"a": 252, "b": 256}, {"a": 257, "b": 265}, {"a": 266, "b": 277}, {"a": 278, "b": 284}, {"a": 285, "b": 290}, {"a": 291, "b": 294}, {"a": 295, "b": 296}, {"a": 297, "b": 301}, {"a": 302, "b": 310}, {"a": 311, "b": 312}, {"a": 313, "b": 317}, {"a": 318, "b": 322}, {"a": 323, "b": 329}, {"a": 330, "b": 336}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	}
 ]

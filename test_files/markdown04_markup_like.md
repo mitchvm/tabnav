@@ -13,4 +13,4 @@
 | 2020-09-14 |  2 | ██                         |
 | 2020-09-15 |  - |                            |
 
-The cells with only a "-" in them match the line separator regex.
+The cells with only a "-" in them match the markup cell regex.

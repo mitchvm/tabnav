@@ -31,50 +31,50 @@
 		"command": "tabnav_move_cursor_up",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators excluded - separator row jumped",
+		"description": "markup excluded - markup row jumped",
 		"initial_selections": [{"a": 140, "b": 140}],
 		"expected_selections": [{"a": 45, "b": 45}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "OOHZ",
 		"command": "tabnav_move_cursor_up",
 		"context": "markdown",
-		"file": "markdown05_multiple_separators.md",
-		"description": "Separators excluded - multiple sequential separator rows jumped",
+		"file": "markdown05_multiple_markup.md",
+		"description": "markup excluded - multiple sequential markup rows jumped",
 		"initial_selections": [{"a": 1043, "b": 1043}],
 		"expected_selections": [{"a": 707, "b": 707}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "HSCM",
 		"command": "tabnav_move_cursor_up",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators excluded - multiple cursros, separator only jumped as applicable",
+		"description": "markup excluded - multiple cursros, markup only jumped as applicable",
 		"initial_selections": [{"a": 106, "b": 106}, {"a": 245, "b": 245}],
 		"expected_selections": [{"a": 6, "b": 6}, {"a": 194, "b": 194}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "CAVZ",
 		"command": "tabnav_move_cursor_up",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Cursor in line separator row moves out",
+		"description": "Cursor in line markup row moves out",
 		"initial_selections": [{"a": 69, "b": 69}],
 		"expected_selections": [{"a": 19, "b": 19}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "AEZM",
 		"command": "tabnav_move_cursor_up",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Separators included - moves to separator row",
+		"description": "markup included - moves to markup row",
 		"initial_selections": [{"a": 140, "b": 140}],
 		"expected_selections": [{"a": 95, "b": 95}],
-		"view_settings": {"tabnav.include_separators": true}
+		"view_settings": {"tabnav.include_markup": true}
 	},
 	{
 		"id": "JOQO",
@@ -111,7 +111,7 @@
 		"description": "Relatively aligned cursors, one in top row - merged",
 		"initial_selections": [{"a": 40, "b": 40}, {"a": 135, "b": 135}],
 		"expected_selections": [{"a": 40, "b": 40}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "CIOA",
@@ -139,7 +139,7 @@
 		"description": "Multiple cursors, some move some don't",
 		"initial_selections": [{"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 339, "b": 339}, {"a": 352, "b": 352}],
 		"expected_selections": [{"a": 20, "b": 20}, {"a": 111, "b": 111}, {"a": 275, "b": 275}, {"a": 352, "b": 352}],
-		"view_settings": {"tabnav.include_separators": false}
+		"view_settings": {"tabnav.include_markup": false}
 	},
 	{
 		"id": "T3JT",
