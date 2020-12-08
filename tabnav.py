@@ -39,18 +39,265 @@ class CursorNotInTableError(Exception):
 		self.err = "Cursor at position {0} is not within a table.".format(cursor)
 
 
+def merge_dictionaries(base, override, keys=None):
+	'''Recursively merges the two given dictionaries. A new dictionary is returned.
+
+	All elements of the "override" dictionary are superimposed onto the "base" dictionary,
+	regardless if the same key exists on the base dictionary.
+
+	If a list-like of keys is provided, only those keys from the override are 
+	superimposed onto the base dictionary. All base dictionary keys are always returned.'''
+	if keys is None:
+		keys = override.keys()
+	result = dict(base)
+	for key in keys:
+		o_val = override[key]
+		if isinstance(o_val, dict) and key in base:
+			result[key] = merge_dictionaries(result[key], o_val)
+		else:
+			result[key] = o_val
+	return result
+
+
+class TabnavContext:
+	'''Contains information about the current context of the view.
+
+	Contexts are defined in the settings files. The auto_csv context is a special case
+	for which additional work is done to try to identify the CSV delimiter to use.
+	'''
+	def __init__(self, content_patterns, markup_patterns=None):
+		self._include_markup = None
+		if isinstance(content_patterns, dict):
+			content_patterns = [content_patterns]
+		content_parsers = (RowParser(p['cell'], p.get('line')) for p in content_patterns)
+		if markup_patterns is not None:
+			if isinstance(markup_patterns, dict):
+				markup_patterns = [markup_patterns]
+			# Markup parsers need to be first in the list
+			self._parsers = [RowParser(p['cell'], p.get('line'), is_markup=True) for p in markup_patterns]
+			self._parsers.extend(content_parsers)
+		else:
+			self._parsers = list(content_parsers)
+	
+	@property
+	def parsers(self):
+		return self._parsers
+	
+	@property
+	def selector(self):
+		return self._selector
+	
+	@property
+	def except_selector(self):
+		return self._except_selector
+
+	@property
+	def include_markup(self):
+		return self._include_markup
+	
+	@staticmethod
+	def get_current_context(view, context_key=None):
+		'''Attempts to identify the current context and build the corresponding TabnavContext object.
+
+		If a particular context_key is provided, it is the only context configured. If no key is provided,
+		all contexts in the configuration are checked.
+		'''
+		context_configs = TabnavContext._merge_context_configs(context_key)
+		if context_key is None:
+			context_key, score = TabnavContext._get_context_by_config_selector(view, context_configs)
+			if score < 0:
+				return None
+		if context_key is None:
+			context_key = "auto_csv"
+		try:
+			context_config = context_configs[context_key]
+		except KeyError:
+			log.info("Context '%s' not found in tabnav settings.", context_key)
+			return None
+		if context_config.get('enable_explicitly', False):
+			# This context requires that tabnav be explicilty enabled on the view.
+			enabled = view.settings().get('tabnav.enabled')
+			if enabled is None or not enabled:
+				log.debug("Context '%s' requires that tabnav be explicitly enabled.", context_key)
+				return None
+		if context_key == "auto_csv":
+			context = TabnavContext._get_auto_csv_table_config(view, context_config)
+		else:
+			log.debug("Using tabnav context '%s'", context_key)
+			content_patterns = context_config.get('content_patterns', None)
+			markup_patterns = context_config.get('markup_patterns', None)
+			context = TabnavContext(content_patterns, markup_patterns)
+		if context is not None:
+			context._include_markup = context_config.get('include_markup', None)
+			context._selector = context_config.get('selector', None)
+			context._except_selector = context_config.get('except_selector', None)
+		return context
+
+	@staticmethod
+	def _merge_context_configs(context_key=None):
+		settings = sublime.load_settings("tabnav.sublime-settings")
+		configs = settings.get("contexts", {})
+		user_configs = settings.get("user_contexts", {})
+		if context_key is not None:
+			if context_key not in user_configs:
+				return configs
+			else:
+				context_keys = [context_key]
+		else:
+			context_keys = user_configs.keys()
+		return merge_dictionaries(configs, user_configs)
+
+	@staticmethod
+	def _get_context_by_config_selector(view, context_configs):
+		point = view.sel()[0].a
+		max_context = None
+		for key in context_configs:
+			config = context_configs[key]
+			selector = config.get('selector', None)
+			if selector is None:
+				continue
+			score = view.score_selector(point, selector)
+			except_selector = config.get('except_selector', None)
+			if except_selector is not None:
+				except_score = view.score_selector(point, except_selector)
+				if except_score > 0:
+					score = -1
+			if (max_context is None and score != 0) or (max_context is not None and score > max_context[1]):
+				max_context = (key, score)
+		if max_context is not None:
+			return max_context
+		return (None, 0)
+
+	_escaped_delimiters = {
+		'|': r'\|',
+		'	': r'\t',
+		'.': r'\.',
+		'\\': '\\\\', # raw string doesn't work here: https://docs.python.org/3/faq/design.html#why-can-t-raw-strings-r-strings-end-with-a-backslash
+		'(': r'\(',
+		')': r'\)',
+		'[': r'\[',
+		'{': r'\{',
+		'?': r'\?',
+		'+': r'\+',
+		'*': r'\*',
+		'^': r'\^',
+		'$': r'\$'
+	}
+
+	@staticmethod
+	def _get_auto_csv_table_config(view, context_config):
+		point = view.sel()[0].a
+		scope = view.scope_name(point)
+		delimiter = None
+		# If an explicit delimiter is set, use that
+		if re.search(r'text\.advanced_csv', scope) is not None:
+			log.debug("Using Advanced CSV delimiter.")
+			delimiter = view.settings().get('delimiter') # this is the Advnaced CSV delimiter
+		if delimiter is None:
+			try:
+				rainbow_match = re.search(r'text\.rbcs(?:m|t)n(?P<delimiter>\d+)',scope)
+				delimiter = chr(int(rainbow_match.group('delimiter')))
+				log.debug("Using Rainbow CSV delimiter.")
+			except:
+				pass
+		if delimiter is None:
+			delimiter = view.settings().get('tabnav.delimiter')
+		if delimiter is None:
+			line = view.substr(view.line(0))
+			auto_delimiters = context_config.get('auto_delimiters', [r',', r';', r'\t', r'\|'])
+			matches = [d for d in auto_delimiters if re.search(d, line) is not None]
+			if len(matches) == 1:
+				# If we hit on exactly one delimiter, then we'll assume it's the one to use
+				delimiter = matches[0]
+				log.debug("Inferred delimiter: %s", delimiter)
+			else:
+				log.debug('Not exactly one auto delimiter matched: %s.', matches)
+		if delimiter is None:
+			delimiter = context_config.get("default_delimiter", None)
+		if delimiter is None:
+			return None
+		delimiter = TabnavContext._escaped_delimiters.get(delimiter, delimiter)
+		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
+		content_patterns = context_config['content_patterns']
+		if isinstance(content_patterns, dict):
+			content_patterns = [content_patterns]
+		for pattern_set in content_patterns:
+			if 'line' in pattern_set:
+				pattern_set['line'] = pattern_set['line'].format(delimiter)
+			pattern_set['cell'] = [p.format(delimiter) for p in pattern_set['cell']]
+		# The base auto_csv context has no markup patterns, but handle them in case a user adds some to their user_contexts.
+		markup_patterns = context_config.get('markup_patterns', None)
+		if isinstance(markup_patterns, dict):
+			markup_patterns = [markup_patterns]
+		if markup_patterns is not None:
+			for pattern_set in markup_patterns:
+				if 'line' in pattern_set:
+					pattern_set['line'] = pattern_set['line'].format(delimiter)
+				pattern_set['cell'] = [p.format(delimiter) for p in pattern_set['cell']]
+		return TabnavContext(content_patterns, markup_patterns)
+
+
+class RowParser:
+	def __init__(self, cell_patterns, line_pattern, is_markup=False):
+		self.is_markup = is_markup
+		if isinstance(cell_patterns, str):
+			self.cell_patterns = [re.compile(cell_patterns)]
+		else:
+			self.cell_patterns = [re.compile(p) for p in cell_patterns]
+		if line_pattern is not None:
+			self.line_pattern = re.compile(line_pattern)
+		else:
+			self.line_pattern = None
+
+	def parse_row(self, line_content, row, line_start_point, cell_direction=1):
+		if self.line_pattern is not None:
+			line_match = self.line_pattern.search(line_content)
+			if line_match is None:
+				return None
+			line_start_point = line_start_point + line_match.start('table')
+			line_content = line_match.group('table')
+		cells = []
+		cell_end = -1
+		col_index = -1
+		cell_offset = 0
+		search_content = line_content
+		for pattern in self.cell_patterns:
+			if cell_end > 0:
+				cell_offset = cell_offset + cell_end
+			if cell_offset > 0:
+				search_content = line_content[cell_offset:]
+			cell_end = -1
+			for cell_match in pattern.finditer(search_content):
+				if cell_end == cell_match.start(1):
+					# cell_match is on the final, zero-width match before the final delimiter. This is not a table cell.
+					break
+				col_index = col_index + 1
+				start_point = line_start_point + cell_offset + cell_match.start('content')
+				end_point = line_start_point + cell_offset + cell_match.end('content')
+				cell = TableCell(row, col_index, start_point, end_point, cell_direction, self.is_markup)
+				cells.append(cell)
+				cell_end = cell_match.end()
+		if len(cells) == 0:
+			return None
+		return TableRow(row, cells, self.is_markup)
+
+
 class TableCell(sublime.Region):
 	'''Extends the base sublime.Region class with logic specific to TabNav's cells.'''
-	def __init__(self, rownum, col_index, a, b, is_markup=False):
+	def __init__(self, rownum, col_index, start_point, end_point, direction=1, is_markup=False):
 		'''Creates a new TableCell with the following properties:
 
 		* `rownum`: integer index of the row in the view on which the cell is found
 		* `col_index`: integer table column index (not text column index) of the cell
-		* `a`: the starting point in the view of the cell (the end of the region _without_ a cursor)
-		* `b`: the ending point in the view of the cell (the end of the region _with_ a cursor)
+		* `start_point`: the starting point in the view of the cell
+		* `end_point`: the ending point in the view of the cell
+		* `direction`: 1 for a left-to-right region (cursor on the right), -1 for a right-to-left region (cursor on the left)
 		* `is_markup`: indicates if this cell is an a markup line of the table
 		'''
-		super().__init__(a, b)
+		if direction > 0:
+			super().__init__(start_point, end_point)
+		else:
+			super().__init__(end_point, start_point)
 		self._row = rownum
 		self._col = col_index
 		self._cursor_offsets = set()
@@ -199,7 +446,7 @@ class TableView:
 	def row(self, r):
 		'''Gets the TableRow the given row index.'''
 		if r not in self._rows:
-			self._rows[r] = self._parse_context_row(r)
+			self._rows[r] = self._parse_row(r)
 		return self._rows[r]
 
 	def cell(self, r, ic):
@@ -233,76 +480,24 @@ class TableView:
 	def parse_selected_rows(self):
 		selection_lines = itertools.chain.from_iterable((self.view.lines(r) for r in self.view.sel()))
 		unique_rows = set([self.view.rowcol(line.a)[0] for line in selection_lines])
-		self._rows = { r:self._parse_context_row(r) for r in unique_rows}
+		self._rows = { row:self._parse_row(row) for row in unique_rows}
 
-	def _parse_context_row(self, r):
-		point = self.view.text_point(r,0)
+	def _parse_row(self, row_num):
+		point = self.view.text_point(row_num,0)
+		if self.view.rowcol(point)[0] != row_num:
+			# text_point returns the last point in the file if the inputs are beyond the file bounds.
+			raise RowOutOfFileBounds(row_num)
 		if (self._context.selector is not None and not self.view.match_selector(point, self._context.selector)) \
 			or (self._context.except_selector is not None and self.view.match_selector(point, self._context.except_selector)):
-			raise RowNotInTableError(r)
+			raise RowNotInTableError(row_num)
 		line = self.view.line(point)
 		line_content = self.view.substr(line)
-		if self._context.markup_line_patterns is not None:
-			row = None
-			for pattern in self._context.markup_line_patterns:
-				markup_match = pattern.search(line_content)
-				if markup_match is not None:
-					line_offset = markup_match.start('table')
-					markup_content = markup_match.group('table')
-					row = self._parse_row(r, markup_content, self._context.markup_patterns, True, line_offset)
-					break
-		else:
-			row = self._parse_row(r, line_content, self._context.markup_patterns, True)
-		if row is None:
-			if self._context.line_pattern is not None:
-				line_match = self._context.line_pattern.search(line_content)
-				if line_match is None:
-					raise RowNotInTableError(r)
-				line_offset = line_match.start('table')
-				line_content = line_match.group('table')
-			else:
-				line_offset = 0
-			row = self._parse_row(r, line_content, self._context.cell_patterns, False, line_offset)
-		if row is None:
-			raise RowNotInTableError(r)
-		return row
-
-	def _parse_row(self, r, line_content, patterns, is_markup, line_offset=0):
-		if patterns is None or len(patterns) == 0:
-			return None
-		cells = []
-		cell_end = -1
-		col_index = -1
-		offset = 0
-		search_content = line_content
-		for pattern in patterns:
-			if cell_end > 0:
-				offset = offset + cell_end
-			if offset > 0:
-				search_content = line_content[offset:]
-			cell_end = -1
-			for cell_match in pattern.finditer(search_content):
-				if cell_end == cell_match.start(1):
-					# cell_match is on the final, zero-width match before the final delimiter. This is not a table cell.
-					break
-				col_index = col_index + 1
-				cell = self._regex_group_to_region(r, line_offset, offset, col_index, cell_match, 'content', is_markup)
-				if self.view.rowcol(cell.a)[0] != r:
-					raise RowOutOfFileBounds(r)
-				cells.append(cell)
-				cell_end = cell_match.end(1)
-		if len(cells) == 0:
-			return None
-		row = TableRow(r, cells, is_markup)
-		return row
-
-	def _regex_group_to_region(self, row, line_offset, offset, col_index, match, group, is_markup):
-		start_point = self.view.text_point(row, line_offset + offset + match.start(group))
-		end_point = self.view.text_point(row, line_offset + offset + match.end(group))
-		if self._cell_direction > 0:
-			return TableCell(row, col_index, start_point, end_point, is_markup)
-		else:
-			return TableCell(row, col_index, end_point, start_point, is_markup)
+		row = None
+		for parser in self._context.parsers:
+			row = parser.parse_row(line_content, row_num, point, self._cell_direction)
+			if row is not None:
+				return row
+		raise RowNotInTableError(row_num)
 
 
 class TableNavigator:
@@ -404,8 +599,8 @@ class TableNavigator:
 		return selection_changed
 
 	def get_next_cells(self, direction, offset=None):
-		'''Gets the set of cells that would are relative to the currently
-		selected cells in the given direction.
+		'''Gets the set of cells that would relative to the currently selected cells
+		in the given direction.
 
 		The new TableCells contain cursor offsets matching the initial selections,
 		unless a specific cursor offset is provided.'''
@@ -480,202 +675,6 @@ class TableNavigator:
 		if not self.include_markup:
 			cells = (c for c in cells if not c.is_markup)
 		return TableColumn(cells)
-
-
-class TabnavContext:
-	'''Contains information about the current context of the view.
-
-	Contexts are defined in the settings files. The auto_csv context is a special case
-	for which additional work is done to try to identify the CSV delimiter to use.
-	'''
-	def __init__(self, cell_patterns, markup_patterns=None, line_pattern=None, markup_line_patterns=None):
-		self._include_markup = None
-		self._cell_patterns = [re.compile(p) for p in cell_patterns]
-		if markup_patterns is not None:
-			self._markup_patterns = [re.compile(p) for p in markup_patterns]
-		else:
-			self._markup_patterns = []
-		if line_pattern is not None:
-			self._line_pattern = re.compile(line_pattern)
-		else:
-			self._line_pattern = None
-		if markup_line_patterns is not None:
-			self._markup_line_patterns = [re.compile(p) for p in markup_line_patterns]
-		else:
-			self._markup_line_patterns = None
-	
-	@property
-	def cell_patterns(self):
-		return self._cell_patterns
-	
-	@property
-	def markup_patterns(self):
-		return self._markup_patterns
-
-	@property
-	def line_pattern(self):
-		return self._line_pattern
-
-	@property
-	def markup_line_patterns(self):
-		return self._markup_line_patterns
-	
-	@property
-	def selector(self):
-		return self._selector
-	
-	@property
-	def except_selector(self):
-		return self._except_selector
-
-	@property
-	def include_markup(self):
-		return self._include_markup
-	
-	@staticmethod
-	def get_current_context(view, context_key=None):
-		'''Attempts to identify the current context and build the corresponding TabnavContext object.
-
-		If a particular context_key is provided, it is the only context configured. If no key is provided,
-		all contexts in the configuration are checked.
-		'''
-		context_configs = TabnavContext._merge_context_configs(context_key)
-		if context_key is None:
-			context_key, score = TabnavContext._get_context_by_config_selector(view, context_configs)
-			if score < 0:
-				return None
-		if context_key is None:
-			context_key = "auto_csv"
-		try:
-			context_config = context_configs[context_key]
-		except KeyError:
-			log.info("Context '%s' not found in tabnav settings.", context_key)
-			return None
-		if context_config.get('enable_explicitly', False):
-			# This context requires that tabnav be explicilty enabled on the view.
-			enabled = view.settings().get('tabnav.enabled')
-			if enabled is None or not enabled:
-				log.debug("Context '%s' requires that tabnav be explicitly enabled.", context_key)
-				return None
-		if context_key == "auto_csv":
-			context = TabnavContext._get_auto_csv_table_config(view, context_config)
-		else:
-			log.debug("Using tabnav context '%s'", context_key)
-			cell_patterns = context_config.get('cell_patterns', None)
-			markup_patterns = context_config.get('markup_patterns', None)
-			line_pattern = context_config.get('line_pattern', None)
-			markup_line_patterns = context_config.get('markup_line_patterns', None)
-			context = TabnavContext(cell_patterns, markup_patterns, line_pattern, markup_line_patterns)
-		if context is not None:
-			context._include_markup = context_config.get('include_markup', None)
-			context._selector = context_config.get('selector', None)
-			context._except_selector = context_config.get('except_selector', None)
-		return context
-
-	@staticmethod
-	def _merge_context_configs(context_key=None):
-		settings = sublime.load_settings("tabnav.sublime-settings")
-		configs = settings.get("contexts", {})
-		user_configs = settings.get("user_contexts", {})
-		if context_key is not None:
-			if context_key not in user_configs:
-				return configs
-			else:
-				context_keys = [context_key]
-		else:
-			context_keys = user_configs.keys()
-		for key in context_keys:
-			config = configs.get(key, {})
-			for subkey in user_configs[key]:
-				config[subkey] = user_configs[key][subkey]
-			configs[key] = config
-		return configs
-
-	@staticmethod
-	def _get_context_by_config_selector(view, context_configs):
-		point = view.sel()[0].a
-		max_context = None
-		for key in context_configs:
-			config = context_configs[key]
-			selector = config.get('selector', None)
-			if selector is None:
-				continue
-			score = view.score_selector(point, selector)
-			except_selector = config.get('except_selector', None)
-			if except_selector is not None:
-				except_score = view.score_selector(point, except_selector)
-				if except_score > 0:
-					score = -1
-			if (max_context is None and score != 0) or (max_context is not None and score > max_context[1]):
-				max_context = (key, score)
-		if max_context is not None:
-			return max_context
-		return (None, 0)
-
-	_escaped_delimiters = {
-		'|': r'\|',
-		'	': r'\t',
-		'.': r'\.',
-		'\\': '\\\\', # raw string doesn't work here: https://docs.python.org/3/faq/design.html#why-can-t-raw-strings-r-strings-end-with-a-backslash
-		'(': r'\(',
-		')': r'\)',
-		'[': r'\[',
-		'{': r'\{',
-		'?': r'\?',
-		'+': r'\+',
-		'*': r'\*',
-		'^': r'\^',
-		'$': r'\$'
-	}
-
-	@staticmethod
-	def _get_auto_csv_table_config(view, context_config):
-		point = view.sel()[0].a
-		scope = view.scope_name(point)
-		delimiter = None
-		# If an explicit delimiter is set, use that
-		if re.search(r'text\.advanced_csv', scope) is not None:
-			log.debug("Using Advanced CSV delimiter.")
-			delimiter = view.settings().get('delimiter') # this is the Advnaced CSV delimiter
-		if delimiter is None:
-			try:
-				rainbow_match = re.search(r'text\.rbcs(?:m|t)n(?P<delimiter>\d+)',scope)
-				delimiter = chr(int(rainbow_match.group('delimiter')))
-				log.debug("Using Rainbow CSV delimiter.")
-			except:
-				pass
-		if delimiter is None:
-			delimiter = view.settings().get('tabnav.delimiter')
-		if delimiter is None:
-			line = view.substr(view.line(0))
-			auto_delimiters = context_config.get('auto_delimiters', [r',', r';', r'\t', r'\|'])
-			matches = [d for d in auto_delimiters if re.search(d, line) is not None]
-			if len(matches) == 1:
-				# If we hit on exactly one delimiter, then we'll assume it's the one to use
-				delimiter = matches[0]
-				log.debug("Inferred delimiter: %s", delimiter)
-			else:
-				log.debug('Not exactly one auto delimiter matched: %s.', matches)
-		if delimiter is None:
-			delimiter = context_config.get("default_delimiter", None)
-		if delimiter is None:
-			return None
-		delimiter = TabnavContext._escaped_delimiters.get(delimiter, delimiter)
-		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
-		cell_patterns = [p.format(delimiter) for p in context_config['cell_patterns']]
-		# The base auto_csv context has no markup patterns, but handle them in case a user adds some to their user_contexts.
-		raw_sep_patterns = context_config.get('markup_patterns', None)
-		if raw_sep_patterns is not None:
-			markup_patterns = [p.format(delimiter) for p in raw_sep_patterns]
-		else:
-			markup_patterns = None
-		line_pattern = context_config.get('line_pattern', None)
-		if line_pattern is not None:
-			line_pattern = line_pattern.format(delimiter)
-		markup_line_patterns = context_config.get('markup_line_patterns', None)
-		if markup_line_patterns is not None:
-			markup_line_patterns = [p.format(delimiter) for p in markup_line_patterns.format(delimiter)]
-		return TabnavContext(cell_patterns, markup_patterns, line_pattern, markup_line_patterns)
 
 #### Commands ####
 
@@ -1244,7 +1243,7 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 		if enabled is not None and not enabled:
 			# TabNav is explicitly disabled
 			return False
-		if type(operand) is str:
+		if isinstance(operand, str):
 			context_key = operand
 		else:
 			context_key = None

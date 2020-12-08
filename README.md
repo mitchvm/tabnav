@@ -2,8 +2,9 @@
 
 TabNav is a Sublime Text 3 plugin for keyboard navigation of tabular text data. Quickly move and select "cells" of text in the following formats, without taking your hands off the keyboard:
 
-* CSV files
 * Markdown pipe tables
+* Org Mode tables
+* CSV files
 
 TabNav also provides the ability to copy only the contents of the table, excluding markup, in a format that can be readily-pasted into other programs, such as Excel.
 
@@ -18,6 +19,7 @@ TabNav also provides the ability to copy only the contents of the table, excludi
   - [Other Commands](#other-commands)
 - [Contexts](#contexts)
   - [Markdown](#markdown)
+  - [Org Mode](#org-mode)
   - [CSV](#csv)
 - [Customization](#customization)
   - [Key Bindings](#key-bindings)
@@ -25,6 +27,7 @@ TabNav also provides the ability to copy only the contents of the table, excludi
   - [Context Configuration](#context-configuration)
     - [CSV Context Configuration](#csv-context-configuration)
   - [Custom Contexts](#custom-contexts)
+    - [Pattern Definitions](#pattern-definitions)
 
 <!-- /MarkdownTOC -->
 
@@ -132,6 +135,16 @@ So if I put a pipe right here | then this line of text is considered to be a tab
 
 If you only use bordered Markdown tables, you can configure TabNav to be more restrictive in what it considers to be a table. See [Context Configuration](#context-configuration).
 
+### Org Mode
+
+TabNav is enabled by default in Org Mode documents, using the scopes defined by either the [orgmode](https://github.com/danielmagnussons/orgmode) or [orgextended](https://github.com/ihdavids/orgextended) packages. Tables in "raw" scopes are ignored.
+
+TabNav recognizes three kinds of markup rows in Org Mode tables:
+
+1. [Horizontal rules](https://orgmode.org/manual/Built_002din-Table-Editor.html)
+2. [Column width rows](https://orgmode.org/manual/Column-Width-and-Alignment.html)
+3. [Column group rows](https://orgmode.org/manual/Column-Groups.html)
+
 ### CSV
 
 CSV requires special handling, specifically because there are so many permutations of "separated value" documents. TabNav treats CSV as the fall-back context if no other context was positively identified, however TabNav is disabled by default in CSV contexts - use the ["Enable on current view"](#other-commands) command to enable it.
@@ -157,7 +170,7 @@ TabNav offers considerable configuration, or even customizability to modify the 
 
 ### Key Bindings
 
-All of the default key bindings can be disabled either globally, or only within specific syntaxes. To disable the key bindings globally, select the "Settings - Global Key Binding Flags" menu option under TabNav Package Settings menu (Settings ▶ Package Settings ▶ TabNav), which opens TabNav's default Preferences file along with your local Preferences file. Copy the appropriate `tabnav.kb_` flag to your local Preferences file and set it to `false`.
+All of the default key bindings can be disabled either globally, or only within specific syntaxes. To disable the key bindings globally, select the "Settings - Global Key Binding Flags" menu option under TabNav Package Settings menu (Settings ❯ Package Settings ❯ TabNav), which opens TabNav's default Preferences file along with your local Preferences file. Copy the appropriate `tabnav.kb_` flag to your local Preferences file and set it to `false`.
 
 Disabling the default key bindings for a particular syntax follows the same principle, but Sublime Text does not offer a command to open the default TabNav preferences file alongside a syntax-specific preferences file. The "Settings - Default Key Binding Flags" and "Settings - Syntax Specific" menu options open the appropriate files individually.
 
@@ -183,14 +196,20 @@ To override a default context's setting, you only need to provide the path to th
   {
     "markdown":
     {
-      "line_pattern": "^(?P<table>\\|.*\\|)$",
-      "markup_line_pattern": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
+      "content_patterns": {
+        "line": "^(?P<table>\\|.*\\|)$"
+      },
+      "markup_patterns": {
+        "line": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
+      }
     }
   }
 }
 ```
 
 See the [Custom Contexts](#custom-contexts) section below for descriptions of the standard context parameters.
+
+<sup><b>4</b></sup> The default settings file has a `contexts` element. TabNav merges settings from the `user_contexts` and `contexts` settings. If you want to completely overwrite the default contexts, you can use the `contexts` element in your local settings file, however this is not recommended.
 
 #### CSV Context Configuration
 
@@ -201,17 +220,27 @@ The `auto_csv` context is a special case with several custom parameters in addit
 
 ### Custom Contexts
 
-Additional contexts can also be defined in the `user_contexts` element. The following parameters are used to define a TabNav context:
+Additional contexts can also be defined in the `user_contexts` element. For examples, see the `tabnav.sublime-settings` file (Settings ❯ Package Settings ❯ TabNav ❯ Settings - TabNav) to see the default contexts, which are generously commented.
+
+The following parameters are used to define a TabNav context:
 
 1. `selector`: **Required**. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that identifies the scope within which the context operates. If multiple selections are currently active, only the first selection's scope is checked. If multiple TabNav contexts' selectors match the current scope, then the context with the highest selector "score" (as returned by the Sublime Text API) is used.
 2. `except_selector`: _Optional_. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that overrides the base `selector`. If the first selection matches this selector, then the context is _not_ matched.
-3. `cell_patterns`: **Required**. A list containing at least one [regular expression](https://docs.python.org/3.3/library/re.html) that is used to identify cell contents from a line of text. Each match of each expression should return a single cell's contents within a named `contents` group. Each expression can also, optionally, return a zero-width match immediately prior to the last matching delimiter. This match will be ignored. If multiple expressions are provided, they are processed in sequence until their matches are exhausted. Use this to have, for example, one expression to capture the first cell on the line, a different expression to capture cells in the middle of the row, and a third expression to capture the final cell on the line.
-4. `markup_patterns`: _Optional_. Similar to `cell_patterns`, a list of [regular expressions](https://docs.python.org/3.3/library/re.html) that are used to identify lines of table markup (for example, row separators). If provided, each expression must return a named `content` group that matches the portion of the markup line between column delimiters.
-5. `line_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is part of a table. If used, the `line_pattern` must return a named `table` group that captures the part of the line to use for matching table content with the `cell_patterns`. If a `line_pattern` is not provided, the entire line of text is parsed using the `cell_patterns`.
-6. `markup_line_pattern`: _Optional_. A [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is a markup row in a table. If used, the `markup_line_pattern` must return a named `table` group that captures the part of the line to use for matching table content with the `markup_patterns`. If a `markup_line_pattern` is not provided, the entire line of text is parsed using the `markup_patterns`.
-7. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
-8. `include_markup`: _Optional_. A boolean to indicate if markup lines should be included when using this context. Overrides the global `include_markup` setting.
+3. `content_patterns`: **Required**. One or more [pattern definitions](#pattern-definitions) used to identify and parse non-markup rows of table content. If only one pattern is provided, it need-not be placed in a JSON array. If multiple patterns are provided, they are applied in sequence until the first match.
+4. `markup_patterns`: _Optional_. One or more [pattern definitions](#pattern-definitions) used to identify and parse markup rows of the table. If only one pattern is provided, it need-not be placed in a JSON array. If multiple patterns are provided, they are applied in sequence until the first match.
+5. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
+6. `include_markup`: _Optional_. A boolean to indicate if markup lines should be included when using this context. Overrides the global `include_markup` setting.
 
-A note on markup vs. content (non-markup) lines: the markup patterns take precedence over the content patterns. That is, if a positive match is made on the `markup_line_pattern`, or if no `markup_line_pattern` is matched but at least one cell is parsed with the `markup_patterns`, then the line is assumed to be markup.
+A note on markup vs. content (non-markup) lines: the markup patterns take precedence over the content patterns. That is, if a positive match is made against any of the `markup_patterns`, then the line is assumed to be markup and not content.
 
-<sup><b>4</b></sup> The default settings file has a `contexts` element. TabNav merges settings from the `user_contexts` and `contexts` settings. If you want to completely overwrite the default contexts, you can use the `contexts` element in your local settings file, however this is not recommended.
+#### Pattern Definitions
+
+The `content_patterns` and `markup_patterns` [context parameters](#custom-contexts) are used to:
+
+1. identify that a line of text is part of a table, and
+2. parse the contents of the table cells of that line of text.
+
+Each pattern contains two elements:
+
+1. `line`: _Optional_. A single [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is part of a table. If used, the `line` expression must return a named `table` group that captures the part of the line to use for matching table content with the `cell` expressions. If a `line` expression is not provided, the entire line of text is parsed using the `cell` expressions.
+2. `cell`: **Required**. One or more [regular expressions](https://docs.python.org/3.3/library/re.html) that are used to identify cell contents from a line of text. Each match of each expression should return a single cell's contents within a named `content` group. Each expression can also, optionally, return a zero-width match immediately prior to the last matching delimiter. This match will be ignored. If multiple expressions are provided in a JSON array, they are processed in sequence until their matches are exhausted. Use this to have, for example, one expression to capture the first cell on the line, a different expression to capture cells in the middle of the row, and a third expression to capture the final cell on the line. If only one expression is provided, it need-not be placed in a JSON array.

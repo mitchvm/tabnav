@@ -18,39 +18,57 @@
 		{
 			"selector": "text.html.markdown",
 			"except_selector": "markup.raw",
-			"markup_line_patterns": ["^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$"],
-			"cell_patterns": [
-				"\\|?(?P<content>.*?)(?=\\|)",
-				"\\|(?P<content>.+)$"
-			],
+			// These patterns match both "bordered" and "borderless" Markdown tables.
+			// See the README for override patterns if you only want to match on bordered tables.
+			"content_patterns": {
+				"cell":[
+					"\\|?(?P<content>.*?)(?=\\|)",
+					"\\|(?P<content>.+)$" // Captures the last cell of a borderless table.
+				]
+			},
+			// Markdown tables can have one markup row directly under the heading row.
+			// It contains dashes, and optional colons to indicate text justification.
 			"markup_patterns": [
-				"\\|?(?P<content>\\s*[:-]+\\s*)(?=\\|)",
-				"\\|(?P<content>\\s*[:-]+\\s*$)"
-			]
+				{
+					"line": "^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$",
+					"cell": [
+						"\\|?(?P<content>\\s*[:-]+\\s*)(?=\\|)",
+						"\\|(?P<content>\\s*[:-]+\\s*)$" // Captures the last cell of a borderless table.
+					]
+				}
+			],
 		},
 		"orgmode":
 		{
 			"selector": "text.orgmode",
 			"except_selector": "orgmode.raw.block",
-			"line_pattern": "^\\s*(?P<table>\\|.*\\|)\\s*$",
-			"cell_patterns": ["\\|(?P<content>.*?)(?=\\|)"],
+			"content_patterns": {
+				"line": "^\\s*(?P<table>\\|.*\\|)\\s*$",
+				"cell": "\\|(?P<content>.*?)(?=\\|)"
+			},
 			// Org Mode has three forms of table markup rows:
-			// 1) Simple separator rows, which are defined as having a single '-' after the opening pipe,
-			//    though there is typically more markup in general.
-			// 2) A grouping row, which is defined as having only a single "/" in the first cell, 
-			//    only "<" and/or ">" in the other cell, or empty cells.
-			// 3) A column width row, which contains only column widths in the form "<10>" (at least such one column), or empty cells.
-			"markup_line_patterns": [
-				"^\\s*(?P<table>\\|-[-+]*\\|)\\s*$",
-				"^\\s*(?P<table>\\|\\s*/\\s*\\|(?:\\s*<?\\s*>?\\s*\\|)*)\\s*$",
-				"^\\s*(?P<table>\\|(?:\\s*\\|)*(?:\\s*<\\d+>\\s*\\|)(?:\\s*(?:<\\d+>)?\\s*\\|)*)\\s*$"
-			],
+			// 1) Simple separator rows - e.g. for headings
+			// 2) A column grouping row
+			// 3) A column width row
 			"markup_patterns": [
-				"^\\|(?P<content>-+)(?=\\+|\\|)",
-				"\\+(?P<content>-+)(?=\\+|\\|)",
-				"^\\|(?P<content>\\s*/\\s*)(?=\\|)",
-				"\\|(?P<content>\\s*<?\\s*>?\\s*)(?=\\|)",
-				"\\|(?P<content>\\s*(<\\d+>)?\\s*)(?=\\|)",
+				{
+					"line": "^\\s*(?P<table>\\|-[-+]*\\|)\\s*$", // Separator rows start with "|-"
+					"cell": [
+						"^\\|(?P<content>-+)(?=\\+|\\|)",
+						"\\+(?P<content>-+)(?=\\+|\\|)" // Inner cells are bordered with '+', not '|'
+					]
+				},
+				{
+					"line": "^\\s*(?P<table>\\|\\s*/\\s*\\|(?:\\s*<?\\s*>?\\s*\\|)*)\\s*$",
+					"cell": [
+						"^\\|(?P<content>\\s*/\\s*)(?=\\|)", // First cell contains "/"
+						"\\|(?P<content>\\s*<?>?\\s*)(?=\\|)" // All other cells are empty, or contain "<" and/or ">""
+					]
+				},
+				{
+					"line": "^\\s*(?P<table>\\|(?:\\s*\\|)*(?:\\s*<\\d+>\\s*\\|)(?:\\s*(?:<\\d+>)?\\s*\\|)*)\\s*$", // At least one cell must have a "<1>" form width, and all other must be empty.
+					"cell": "\\|(?P<content>\\s*(?:<\\d+>)?\\s*)(?=\\|)"
+				}
 			]
 		},
 		"auto_csv":
@@ -78,15 +96,17 @@
 			// be contained in the cell (escaped by double-double-quote), the matching gets a bit
 			// tricky. If the cell starts with a quote (after optional whitespace), then it needs
 			// to end with either a single quote, or three quotes, followed by optional whitespace.
-			// These patterns match one of three scenarios within the <content> group:
+			// _Each_ of these patterns match one of three scenarios within the <content> group:
 			// 1) Empty or whitespace-only cell
 			// 2) Unquoted content
 			// 3) Quoted content
-			"cell_patterns": [
-				"^(?P<content>(?: *)|(?: *[^\" ].*?)|(?: *\"(?:\"{{2}}|[^\"])*?\" *))(?={0})",
-				"{0}(?P<content>(?: *)|(?: *[^\" ].*?)|(?: *\"(?:\"{{2}}|[^\"])*?\" *))(?={0})",
-				"{0}(?P<content>(?: *)|(?: *[^\"].*?)|(?: *\"(?:\"{{2}}|[^\"])*?\" *))$"
-			],
+			"content_patterns": {
+				"cell": [
+					"^(?P<content>(?: *)|(?: *[^\" ].*?)|(?: *\"(?:\"{{2}}|[^\"])*?\" *))(?={0})", // First cell of the line - no preceding delimiter
+					"{0}(?P<content>(?: *)|(?: *[^\" ].*?)|(?: *\"(?:\"{{2}}|[^\"])*?\" *))(?={0})", // Middle cells - delimiters on both ends
+					"{0}(?P<content>(?: *)|(?: *[^\"].*?)|(?: *\"(?:\"{{2}}|[^\"])*?\" *))$" // Last cell of the line - no final delimiter look-ahead
+				]
+			},
 			"enable_explicitly": true, // We'll only infer the auto_csv context if tabnav has been explicitly enabled on a particular view
 			"selector": null, // There is no global selector that matches all CSV syntaxes. This is a special case.
 		}
