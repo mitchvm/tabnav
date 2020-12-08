@@ -229,8 +229,8 @@
 			{
 				"markdown":
 				{
-					"line_pattern": "^(?P<table>\\|.*\\|)$",
-					"markup_line_patterns": ["^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"]
+					"content_patterns": { "line": "^(?P<table>\\|.*\\|)$" },
+					"markup_patterns": { "line": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$" }
 				}
 			}
 		}
@@ -250,8 +250,8 @@
 			{
 				"markdown":
 				{
-					"line_pattern": "^(?P<table>\\|.*\\|)$",
-					"markup_line_patterns": ["^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"]
+					"content_patterns": { "line": "^(?P<table>\\|.*\\|)$" },
+					"markup_patterns": { "line": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$" }
 				}
 			}
 		}

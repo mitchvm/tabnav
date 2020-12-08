@@ -1,0 +1,10 @@
+| Name              | Team | Position         | Height (in) | Weight (lb) |   Age |
+|-------------------+------+------------------+-------------+-------------+-------|
+| /                 |  <>  |                > | <           |             |     > |
+| <15>              |      | <10>             |             |             |       |
+| Tony Armas Jr.    | PIT  | Starting Pitcher |          75 |         225 | 28.84 |
+| Adam LaRoche      | PIT  | First Baseman    |          75 |         180 | 27.32 |
+| Jamie Moyer       | PHI  | Starting Pitcher |          72 |         175 | 44.28 |
+| Frank Catalanotto | TEX  | Outfielder       |          71 |         195 | 32.84 |
+| Mark Prior        | CHC  | Starting Pitcher |          77 |         230 | 26.48 |
+| Mitch Maier       | KC   | Outfielder       |          74 |         210 | 24.67 |
