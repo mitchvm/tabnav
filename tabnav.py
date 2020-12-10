@@ -1,3 +1,4 @@
+from collections import OrderedDict
 import sublime
 import sublime_plugin
 import itertools
@@ -5,6 +6,9 @@ import re
 import logging
 
 log = logging.getLogger(__name__)
+log.setLevel('DEBUG')
+
+capture_levels = OrderedDict(zip(['trimmed', 'content', 'markup', 'cell'], range(4)))
 
 class Direction:
 	RIGHT = (0,1)
@@ -65,19 +69,14 @@ class TabnavContext:
 	Contexts are defined in the settings files. The auto_csv context is a special case
 	for which additional work is done to try to identify the CSV delimiter to use.
 	'''
-	def __init__(self, content_patterns, markup_patterns=None):
-		self._include_markup = None
-		if isinstance(content_patterns, dict):
-			content_patterns = [content_patterns]
-		content_parsers = (RowParser(p['cell'], p.get('line')) for p in content_patterns)
-		if markup_patterns is not None:
-			if isinstance(markup_patterns, dict):
-				markup_patterns = [markup_patterns]
-			# Markup parsers need to be first in the list
-			self._parsers = [RowParser(p['cell'], p.get('line'), is_markup=True) for p in markup_patterns]
-			self._parsers.extend(content_parsers)
-		else:
-			self._parsers = list(content_parsers)
+	def __init__(self, patterns, capture_level):
+		self._capture_level = capture_levels[capture_level]
+		included_levels = reversed([(k,v) for k,v in capture_levels.items() if v <= self._capture_level]) # reversed because we try to capture the closest match first
+		excluded_levels = ((k,v) for k,v in capture_levels.items() if v > self._capture_level)
+		ordered_levels = list(itertools.chain(included_levels, excluded_levels))
+		if isinstance(patterns, dict):
+			patterns = [content_patterns]
+		self._parsers = [RowParser(p['cell'], p.get('line'), ordered_levels) for p in patterns]
 	
 	@property
 	def parsers(self):
@@ -92,8 +91,8 @@ class TabnavContext:
 		return self._except_selector
 
 	@property
-	def include_markup(self):
-		return self._include_markup
+	def capture_level(self):
+		return self._capture_level
 	
 	@staticmethod
 	def get_current_context(view, context_key=None):
@@ -124,11 +123,10 @@ class TabnavContext:
 			context = TabnavContext._get_auto_csv_table_config(view, context_config)
 		else:
 			log.debug("Using tabnav context '%s'", context_key)
-			content_patterns = context_config.get('content_patterns', None)
-			markup_patterns = context_config.get('markup_patterns', None)
-			context = TabnavContext(content_patterns, markup_patterns)
+			patterns = context_config.get('patterns', None)
+			capture_level = TabnavContext._get_current_capture_level(view, context_config)
+			context = TabnavContext(patterns, capture_level)
 		if context is not None:
-			context._include_markup = context_config.get('include_markup', None)
 			context._selector = context_config.get('selector', None)
 			context._except_selector = context_config.get('except_selector', None)
 		return context
@@ -218,28 +216,30 @@ class TabnavContext:
 			return None
 		delimiter = TabnavContext._escaped_delimiters.get(delimiter, delimiter)
 		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
-		content_patterns = context_config['content_patterns']
-		if isinstance(content_patterns, dict):
-			content_patterns = [content_patterns]
-		for pattern_set in content_patterns:
+		patterns = context_config['patterns']
+		if isinstance(patterns, dict):
+			patterns = [patterns]
+		for pattern_set in patterns:
 			if 'line' in pattern_set:
 				pattern_set['line'] = pattern_set['line'].format(delimiter)
 			pattern_set['cell'] = [p.format(delimiter) for p in pattern_set['cell']]
-		# The base auto_csv context has no markup patterns, but handle them in case a user adds some to their user_contexts.
-		markup_patterns = context_config.get('markup_patterns', None)
-		if isinstance(markup_patterns, dict):
-			markup_patterns = [markup_patterns]
-		if markup_patterns is not None:
-			for pattern_set in markup_patterns:
-				if 'line' in pattern_set:
-					pattern_set['line'] = pattern_set['line'].format(delimiter)
-				pattern_set['cell'] = [p.format(delimiter) for p in pattern_set['cell']]
-		return TabnavContext(content_patterns, markup_patterns)
+		capture_level = TabnavContext._get_current_capture_level(view, context_config)
+		return TabnavContext(patterns, capture_level)
+
+	@staticmethod
+	def _get_current_capture_level(view, context_config):
+		capture_level = view.settings().get("tabnav.capture_level")
+		if capture_level is None:
+			capture_level = context_config.get('capture_level', None)
+		if capture_level is None:
+			settings = sublime.load_settings("tabnav.sublime-settings")
+			capture_level = settings.get("capture_level", "content")
+		return capture_level
 
 
 class RowParser:
-	def __init__(self, cell_patterns, line_pattern, is_markup=False):
-		self.is_markup = is_markup
+	def __init__(self, cell_patterns, line_pattern, ordered_capture_levels):
+		self.capture_levels = ordered_capture_levels
 		if isinstance(cell_patterns, str):
 			self.cell_patterns = [re.compile(cell_patterns)]
 		else:
@@ -268,31 +268,44 @@ class RowParser:
 				search_content = line_content[cell_offset:]
 			cell_end = -1
 			for cell_match in pattern.finditer(search_content):
-				if cell_end == cell_match.start(1):
+				if cell_end == cell_match.end():
 					# cell_match is on the final, zero-width match before the final delimiter. This is not a table cell.
 					break
-				col_index = col_index + 1
-				start_point = line_start_point + cell_offset + cell_match.start('content')
-				end_point = line_start_point + cell_offset + cell_match.end('content')
-				cell = TableCell(row, col_index, start_point, end_point, cell_direction, self.is_markup)
-				cells.append(cell)
 				cell_end = cell_match.end()
+				col_index = col_index + 1
+				for name, level in self.capture_levels:
+					try:
+						start_point = line_start_point + cell_offset + cell_match.start(name)
+						end_point = line_start_point + cell_offset + cell_match.end(name)
+						cell = TableCell(row, col_index, start_point, end_point, level, cell_direction)
+						cells.append(cell)
+						break
+					except IndexError:
+						# The cell pattern doesn't include the level as a capture group
+						continue
 		if len(cells) == 0:
 			return None
-		return TableRow(row, cells, self.is_markup)
+		return TableRow(row, cells)
 
+	def _get_region(self, line_start_point, cell_offset, match, group, cell_direction):
+		start_point = line_start_point + cell_offset + cell_match.start(group)
+		end_point = line_start_point + cell_offset + cell_match.end(group)
+		if cell_direction >= 0:
+			return sublime.Region(start_point, end_point)
+		else:
+			return sublime.Region(end_point, start_point)
 
 class TableCell(sublime.Region):
 	'''Extends the base sublime.Region class with logic specific to TabNav's cells.'''
-	def __init__(self, rownum, col_index, start_point, end_point, direction=1, is_markup=False):
+	def __init__(self, rownum, col_index, start_point, end_point, capture_level, direction=1):
 		'''Creates a new TableCell with the following properties:
 
 		* `rownum`: integer index of the row in the view on which the cell is found
 		* `col_index`: integer table column index (not text column index) of the cell
 		* `start_point`: the starting point in the view of the cell
 		* `end_point`: the ending point in the view of the cell
+		* `capture_level`: the numeric value from the capture_levels at which this cell was captured
 		* `direction`: 1 for a left-to-right region (cursor on the right), -1 for a right-to-left region (cursor on the left)
-		* `is_markup`: indicates if this cell is an a markup line of the table
 		'''
 		if direction > 0:
 			super().__init__(start_point, end_point)
@@ -301,7 +314,7 @@ class TableCell(sublime.Region):
 		self._row = rownum
 		self._col = col_index
 		self._cursor_offsets = set()
-		self._is_markup = is_markup
+		self._capture_level = capture_level
 
 	def intersects(self, region):
 		'''Overrides the default `Region.intersects` method.
@@ -337,8 +350,8 @@ class TableCell(sublime.Region):
 		return self._col
 
 	@property
-	def is_markup(self):
-		return self._is_markup	
+	def capture_level(self):
+		return self._capture_level	
 	
 	def add_cursor_offset(self, offset):
 		'''Adds the given offset as the relative position within the cell
@@ -360,25 +373,18 @@ class TableCell(sublime.Region):
 
 class TableRow:
 	'''Stores the TableCell objects parsed from a single line of text.'''
-	def __init__(self, rownum, cells, is_markup=False):
+	def __init__(self, rownum, cells):
 		'''Creates a new TableRow with the following properties:
 
 		* `rownum`: integer index of the row in the view on which the cell is found
 		* `cells`: a list of TableCells that make up this row
-		* `is_markup`: indicates if this cell is an a markup line of the table
 		'''
 		self._row = rownum
 		self._cells = cells
-		self._is_markup = is_markup
 
 	@property
 	def row(self):
-		return self._row
-
-	@property
-	def is_markup(self):
-		return self._is_markup
-	
+		return self._row	
 
 	def __getitem__(self, key):
 		try:
@@ -503,13 +509,12 @@ class TableView:
 class TableNavigator:
 	'''Contains methods to navigate the cells of the given TableView.
 
-	If include_markup is False, then table markup cells are omitted from
-	navigation operations, **unless** the initial selections consist solely
-	of markup lines.
+	The given (numeric) capture level is respected, **unless** all of the cells
+	under the current selections are at a higher capture level.
 	'''
-	def __init__(self, table, include_markup=False):
+	def __init__(self, table, capture_level):
 		self._table = table
-		self.include_markup = include_markup
+		self.capture_level = capture_level
 
 	@property
 	def view(self):
@@ -537,63 +542,71 @@ class TableNavigator:
 				# to maintain the 'direction' of the selection (Comes into play when moving
 				# right, and the current selection is a cell selected in reverse.)
 				lines.append(sel)
-		cursors = []
-		sep_cursors = []
+		cursors_by_level = {}
 		for region in lines:
 			point = region.b
 			r = self.view.rowcol(point)[0]
 			row = self._table[r]
+			line_cells = list(cell for cell in row if cell.intersects(region))
+			if len(line_cells) == 0:
+				# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
+				raise CursorNotInTableError(point)
 			if not move_cursors and region.size() == 0:
-				line_cursors = [region]
+				level = line_cells[0].capture_level
+				cursors = cursors_by_level.get(level, [])
+				cursors.append(region)
+				cursors_by_level[level] = cursors
 			else:
-				line_cells = list(cell for cell in row if cell.intersects(region))
-				if len(line_cells) == 0:
-					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
-					raise CursorNotInTableError(region.begin())
-				if len(line_cells) > 1 or region.size() > 0 or line_cells[0].b != point:
-					selection_changed = True
-				line_cursors = (sublime.Region(cell.b, cell.b) for cell in line_cells)
-			if row.is_markup:
-				sep_cursors = itertools.chain(sep_cursors, line_cursors)
-			else:
-				cursors = itertools.chain(cursors, line_cursors)
+				for cursor, level in ((sublime.Region(cell.b, cell.b), cell.capture_level) for cell in line_cells):
+					cursors = cursors_by_level.get(level, [])
+					cursors.append(cursor)
+					cursors_by_level[level] = cursors
+			if not selection_changed and (region.size() > 0 or len(line_cells) > 1 or line_cells[0].b != point):
+				selection_changed = True
 		if selection_changed:
-			cursors = list(cursors)
-			if self.include_markup or len(cursors) == 0:
-				# If only markup rows are selected, ignore the include_markup setting
-				cursors.extend(sep_cursors)
+			level = self.capture_level
+			cursors = []
+			while len(cursors) == 0:
+				# If no cells at the desired capture level are selected, go up one level at a time until something is selected
+				cursors = list(itertools.chain.from_iterable(c for l, c in cursors_by_level.items() if l <= level))
+				level = level + 1
 			self.view.sel().clear()
 			self.view.sel().add_all(cursors)
 		return selection_changed
 
 
-	def split_and_select_current_cells(self, include_markup=None):
+	def split_and_select_current_cells(self, capture_level=None):
 		'''Selects all of the cells spanned by the current selection.
 
 		Returns True if the selections changed, or False otherwise.
 		'''
-		if include_markup is None:
-			include_markup = self.include_markup
+		if capture_level is None:
+			capture_level = self.capture_level
 		selections = list(self.view.sel())
 		selection_lines = list(itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections)))
 		selection_changed = len(selection_lines) != len(selections)
-		all_markup = True
+		cells_by_level = {}
 		cells = []
 		for region in selection_lines:
 			r = self.view.rowcol(region.begin())[0]
 			row = self._table[r]
-			all_markup = all_markup and row.is_markup
 			line_cells = list(cell for cell in row if cell.intersects(region))
 			if len(line_cells) == 0: 
 				# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
 				raise CursorNotInTableError(region.begin())
 			if len(line_cells) > 1 or line_cells[0] != region:
 				selection_changed = True
-			cells = itertools.chain(cells, line_cells)
+			for cell in line_cells:
+				cells = cells_by_level.get(cell.capture_level, [])
+				cells.append(cell)
+				cells_by_level[cell.capture_level] = cells
 		if selection_changed:
-			if not (include_markup or all_markup):
-				# If only markup rows are selected, ignore the include_markup setting
-				cells = (c for c in cells if c.is_markup == include_markup)
+			level = self.capture_level
+			cells = []
+			while len(cells) == 0:
+				# If no cells at the desired capture level are selected, go up one level at a time until something is selected
+				cells = list(itertools.chain.from_iterable(c for l, c in cells_by_level.items() if l <= level))
+				level = level + 1
 			self.view.sel().clear()
 			self.view.sel().add_all(list(cells))
 		return selection_changed
@@ -699,16 +712,17 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		self.init_settings()
 		self.table = TableView(self.view, self.context, cell_direction)
 		self.table.parse_selected_rows()
-		self.tabnav = TableNavigator(self.table, self.include_markup)
+		self.tabnav = TableNavigator(self.table, self.context.capture_level)
 
 	def init_settings(self):
 		'''Initializes TabNav settings from the context, view, or default settings.'''
-		settings = sublime.load_settings("tabnav.sublime-settings")
-		self.include_markup = self.view.settings().get("tabnav.include_markup")
-		if self.include_markup is None:
-			self.include_markup = self.context.include_markup
-		if self.include_markup is None:
-			self.include_markup = settings.get("include_markup", False)
+		pass
+		# settings = sublime.load_settings("tabnav.sublime-settings")
+		# self.include_markup = self.view.settings().get("tabnav.include_markup")
+		# if self.include_markup is None:
+		# 	self.include_markup = self.context.include_markup
+		# if self.include_markup is None:
+		# 	self.include_markup = settings.get("include_markup", False)
 
 # Move cells:
 
