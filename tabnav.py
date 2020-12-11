@@ -8,7 +8,11 @@ import logging
 log = logging.getLogger(__name__)
 log.setLevel('DEBUG')
 
-capture_levels = OrderedDict(zip(['trimmed', 'content', 'markup', 'cell'], range(4)))
+capture_levels = OrderedDict([
+	('trimmed', (0, 'Trimmed - excludes whitespace')),
+	('content', (1, 'Content - includes whitespace but not markup')),
+	('markup',  (2, 'Markup - includes content and and markup cells'))
+])
 
 class Direction:
 	RIGHT = (0,1)
@@ -70,9 +74,9 @@ class TabnavContext:
 	for which additional work is done to try to identify the CSV delimiter to use.
 	'''
 	def __init__(self, patterns, capture_level):
-		self._capture_level = capture_levels[capture_level]
-		included_levels = reversed([(k,v) for k,v in capture_levels.items() if v <= self._capture_level]) # reversed because we try to capture the closest match first
-		excluded_levels = ((k,v) for k,v in capture_levels.items() if v > self._capture_level)
+		self._capture_level = capture_levels[capture_level][0]
+		included_levels = reversed([(k,v[0]) for k,v in capture_levels.items() if v[0] <= self._capture_level]) # reversed because we try to capture the closest match first
+		excluded_levels = ((k,v[0]) for k,v in capture_levels.items() if v[0] > self._capture_level)
 		ordered_levels = list(itertools.chain(included_levels, excluded_levels))
 		if isinstance(patterns, dict):
 			patterns = [content_patterns]
@@ -561,8 +565,8 @@ class TableNavigator:
 					cursors = cursors_by_level.get(level, [])
 					cursors.append(cursor)
 					cursors_by_level[level] = cursors
-			if not selection_changed and (region.size() > 0 or len(line_cells) > 1 or line_cells[0].b != point):
-				selection_changed = True
+				if not selection_changed and (region.size() > 0 or len(line_cells) > 1 or line_cells[0].b != point):
+					selection_changed = True
 		if selection_changed:
 			level = self.capture_level
 			cursors = []
@@ -601,12 +605,11 @@ class TableNavigator:
 				cells.append(cell)
 				cells_by_level[cell.capture_level] = cells
 		if selection_changed:
-			level = self.capture_level
 			cells = []
 			while len(cells) == 0:
 				# If no cells at the desired capture level are selected, go up one level at a time until something is selected
-				cells = list(itertools.chain.from_iterable(c for l, c in cells_by_level.items() if l <= level))
-				level = level + 1
+				cells = list(itertools.chain.from_iterable(c for l, c in cells_by_level.items() if l <= capture_level))
+				capture_level = capture_level + 1
 			self.view.sel().clear()
 			self.view.sel().add_all(list(cells))
 		return selection_changed
@@ -625,10 +628,9 @@ class TableNavigator:
 			selections = reversed(selections)
 		for region in selections:
 			point = region.b
-			r, ic = self._table.table_coords(point)
-			current_cell = self._table[(r, ic)]
+			current_cell = self._table.cell_at_point(point)
 			try:
-				next_cell = self.get_next_cell(r, ic, dr, dc)
+				next_cell = self.get_next_cell(current_cell, dr, dc)
 			except ColumnIndexError as e:
 				# In a properly-formatted table, this shouldn't happen, so log it as a warning
 				log.info(e)
@@ -645,18 +647,22 @@ class TableNavigator:
 			new_cells.append(next_cell)
 		return new_cells
 
-	def get_next_cell(self, r, ic, dr, dc):
-		'''Gest a table cell relative to the given r and ic table coordinates.'''
-		target_row = r + dr
-		target_col = ic + dc
-		if target_col < 0: # direction == LEFT
-			return self._table[(r,ic)]
-		row = self._table[target_row]
-		if dr != 0 and not self.include_markup:
-			while row.is_markup:
-				target_row = target_row + dr
-				row = self._table[target_row]
-		return row[target_col]
+	def get_next_cell(self, current_cell, dr, dc):
+		'''Gets a table cell relative to the given cell.'''
+		# Use current cell's capture level if it is higher than the configured capture level
+		# to allow movement within a higher capture level, if all current selections are 
+		# already at that capture level.
+		capture_level = max(self.capture_level, current_cell.capture_level)
+		target_row = current_cell.row
+		target_col = current_cell.col
+		while True:
+			target_row = target_row + dr
+			target_col = target_col + dc
+			if target_col < 0: # direction == LEFT
+				return current_cell
+			cell = self._table[(target_row, target_col)]
+			if cell.capture_level <= capture_level: 
+				return cell
 
 	def get_table_column(self, seed_cell):
 		'''Gets all TableCell found in the table column above and below the given seed_cell.
@@ -685,9 +691,7 @@ class TableNavigator:
 				# jump past this cell and keep going
 			except (RowNotInTableError, RowOutOfFileBounds):
 				break
-		if not self.include_markup:
-			cells = (c for c in cells if not c.is_markup)
-		return TableColumn(cells)
+		return TableColumn([c for c in cells if c.capture_level <= self.capture_level])
 
 #### Commands ####
 
@@ -709,20 +713,10 @@ class TabnavCommand(sublime_plugin.TextCommand):
 
 	def init_table(self, cell_direction=1):
 		'''Parses the table rows that intersect the currently selected regions.'''
-		self.init_settings()
 		self.table = TableView(self.view, self.context, cell_direction)
 		self.table.parse_selected_rows()
 		self.tabnav = TableNavigator(self.table, self.context.capture_level)
 
-	def init_settings(self):
-		'''Initializes TabNav settings from the context, view, or default settings.'''
-		pass
-		# settings = sublime.load_settings("tabnav.sublime-settings")
-		# self.include_markup = self.view.settings().get("tabnav.include_markup")
-		# if self.include_markup is None:
-		# 	self.include_markup = self.context.include_markup
-		# if self.include_markup is None:
-		# 	self.include_markup = settings.get("include_markup", False)
 
 # Move cells:
 
@@ -998,12 +992,9 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 				self.view.sel().subtract(last)
 
 	def jumped_markup_row(self, cell, last, direction):
-		if self.include_markup:
-			# If markup rows are included in selections, then they must be selected
-			return False
 		try:
-			# If all rows between the cells are markup rows, consider it a jump
-			return all(self.table[r].is_markup for r in range(last.row+direction, cell.row, direction))
+			# If all rows between the cells are at higher capture levels, consider it a jump
+			return all(self.table[(r, cell.col)].capture_level > self.context.capture_level for r in range(last.row+direction, cell.row, direction))
 		except RowNotInTableError:
 			# don't jump across disjoint tables
 			return False
@@ -1031,14 +1022,16 @@ class TabnavSelectRowCommand(TabnavCommand):
 		'''Selects all cells in all rows intersecting the current selections.'''
 		try:
 			self.init_table(cell_direction)
-			if self.include_markup or all((row.is_markup for row in self.table.rows)):
-				# if only markup rows are currently selected, ignore the include_markup setting
-				cells = [cell for row in self.table.rows for cell in row]
-			else:
-				cells = [cell for row in self.table.rows for cell in row if not row.is_markup]
+			level_key = lambda c: c.capture_level
+			row_cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
+			cells = [c for c in row_cells if c.capture_level <= self.context.capture_level]
+			if len(cells) == 0:
+				# If no cells at the configured capture level are selected, then select everything
+				cells = row_cells
 			if len(cells) > 0:
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
+				return
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
@@ -1050,8 +1043,9 @@ class TabnavSelectColumnCommand(TabnavCommand):
 		'''Selects all cells in all columns intersecting the current selections.'''
 		try:
 			self.init_table(cell_direction)
-			# include markup in the initial selection in case a cursor is in a markup row
-			self.tabnav.split_and_select_current_cells(include_markup=True)
+			# include all capture levels in the initial selection in case a cursor is in a markup row
+			max_level = max(v[0] for v in capture_levels.values())
+			self.tabnav.split_and_select_current_cells(capture_level=max_level)
 			columns = []
 			for region in self.view.sel():
 				cell = self.table.cell_at_point(region.b)
@@ -1082,13 +1076,15 @@ class TabnavSelectAllCommand(TabnavCommand):
 				if len(containing_columns) > 0:
 					continue # This cell is already contained in a previously captured column
 				columns.append(self.tabnav.get_table_column(cell))
-			if self.include_markup:
-				cells = [cell for row in self.table.rows for cell in row]
-			else:
-				cells = [cell for row in self.table.rows for cell in row if not row.is_markup]
+			all_cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
+			cells = [c for c in all_cells if c.capture_level <= self.context.capture_level]
+			if len(cells) == 0:
+				# If no cells at the configured capture level are selected, then select everything
+				cells = all_cells
 			if len(cells) > 0:
 				self.view.sel().clear()
 				self.view.sel().add_all(cells)
+				return
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
@@ -1187,15 +1183,31 @@ class DisableTabnavCommand(sublime_plugin.TextCommand):
 		enabled = self.view.settings().get('tabnav.enabled')
 		return enabled is None or enabled
 
-class TabnavIncludeMarkupCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		'''Causes TabNav to include table markup lines from selections in the current view.'''
-		self.view.settings().set('tabnav.include_markup', True)
+class TabnavSetCaptureLevelCommand(sublime_plugin.TextCommand):
+	def run(self, edit, capture_level):
+		'''Sets the capture level used by TabNav. 
 
-class TabnavExcludeMarkupCommand(sublime_plugin.TextCommand):
+		Available capture levels are defined in the global capture_levels dictionary'''
+		self.view.settings().set('tabnav.capture_level', capture_level)
+
+	def input(self, args):
+		return TabnavCaptureLevelInputHandler()
+
+class TabnavCaptureLevelInputHandler(sublime_plugin.ListInputHandler):
+	def name(self):
+		return 'capture_level'
+
+	def list_items(self):
+		return [(v[1], k) for k, v in capture_levels.items()]
+
+class TabnavSetCaptureLevelMenuCommand(sublime_plugin.TextCommand):
+	'''Shows the command palette to trigger the set capture level command, 
+	so that the input handler is triggered.
+
+	It's a bit hacky, but I'd rather have a consistent input method.'''
 	def run(self, edit):
-		'''Causes TabNav to exclude table markup lines from selections in the current view.'''
-		self.view.settings().set('tabnav.include_markup', False)
+		self.view.window().run_command("show_overlay", args={"overlay":"command_palette", "text":"TabNav: Set capture level"})
+
 
 def is_other_csv_scope(view):
 		scope = view.scope_name(0)
