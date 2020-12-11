@@ -188,5 +188,25 @@
 		"initial_selections": [{"a": 102, "b": 102}, {"a": 151, "b": 151}, {"a": 203, "b": 203}],
 		"expected_selections": [{"a": 68, "b": 68}, {"a": 117, "b": 117}, {"a": 169, "b": 169}],
 		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "2YMG",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture trimmed - Cursor in whitespace after content",
+		"initial_selections": [{"a": 1455, "b": 1455}],
+		"expected_selections": [{"a": 1369, "b": 1369}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "QUSS",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture trimmed - Cursor in whitespace before content",
+		"initial_selections": [{"a": 1323, "b": 1323}],
+		"expected_selections": [{"a": 1245, "b": 1245}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
 	}
 ]

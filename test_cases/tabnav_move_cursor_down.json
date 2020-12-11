@@ -188,5 +188,25 @@
 		"initial_selections": [{"a": 68, "b": 68}, {"a": 117, "b": 117}, {"a": 169, "b": 169}],
 		"expected_selections": [{"a": 102, "b": 102}, {"a": 151, "b": 151}, {"a": 203, "b": 203}],
 		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "U3XC",
+		"command": "tabnav_move_cursor_down",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture trimmed - Cursor in whitespace after content",
+		"initial_selections": [{"a": 1458, "b": 1458}],
+		"expected_selections": [{"a": 1539, "b": 1539}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "R6EK",
+		"command": "tabnav_move_cursor_down",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture trimmed - Cursor in whitespace before content",
+		"initial_selections": [{"a": 1157, "b": 1157}],
+		"expected_selections": [{"a": 1245, "b": 1245}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
 	}
 ]

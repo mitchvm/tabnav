@@ -208,5 +208,15 @@
 		"initial_selections": [{"a": 18, "b": 86}],
 		"expected_selections": [{"a": 11, "b": 11}, {"a": 23, "b": 23}, {"a": 68, "b": 68}, {"a": 79, "b": 79}],
 		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "J42R",
+		"command": "tabnav_move_cursor_start",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture trimmed - cursor before content",
+		"initial_selections": [{"a": 1492, "b": 1492}],
+		"expected_selections": [{"a": 1497, "b": 1497}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
 	}
 ]
