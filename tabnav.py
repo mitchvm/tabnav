@@ -355,6 +355,14 @@ class TableCell(sublime.Region):
 	def capture_level(self):
 		return self._capture_level	
 	
+	@property
+	def cell_start(self):
+		return self._cell_start
+
+	@property
+	def cell_end(self):
+		return self._cell_end
+	
 	def add_cursor_offset(self, offset):
 		'''Adds the given offset as the relative position within the cell
 		as a point at which a cursor should be placed.'''
@@ -481,7 +489,7 @@ class TableView:
 		r = self.view.rowcol(point)[0]
 		row = self.row(r)
 		ic = 0
-		while row[ic].end() < point:
+		while row[ic].cell_end < point:
 			ic = ic + 1
 		return (r, ic)
 
