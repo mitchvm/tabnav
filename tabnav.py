@@ -9,9 +9,10 @@ log = logging.getLogger(__name__)
 log.setLevel('DEBUG')
 
 capture_levels = OrderedDict([
-	('trimmed', (0, 'Trimmed - excludes whitespace')),
-	('content', (1, 'Content - includes whitespace but not markup')),
-	('markup',  (2, 'Markup - includes content and and markup cells'))
+	('trimmed', (0, '0: Trimmed - excludes whitespace')),
+	('content', (1, '1: Content - includes whitespace but not markup')),
+	('markup',  (2, '2: Markup - includes content and and markup cells')),
+	('cell',    (3, '3: Cell - the entire cell, potentially including a delimiter'))
 ])
 
 class Direction:
@@ -303,6 +304,8 @@ class TableCell(sublime.Region):
 		* `col_index`: integer table column index (not text column index) of the cell
 		* `capture_start`: the starting point in the view of the cell
 		* `capture_end`: the ending point in the view of the cell
+		* `cell_start`: the starting point of the cell (excluding delimiter)
+		* `cell_end`: the ending point of the cell (excluding delimiter)
 		* `capture_level`: the numeric value from the capture_levels at which this cell was captured
 		* `direction`: 1 for a left-to-right region (cursor on the right), -1 for a right-to-left region (cursor on the left)
 		'''
@@ -310,12 +313,13 @@ class TableCell(sublime.Region):
 			super().__init__(capture_start, capture_end)
 		else:
 			super().__init__(capture_end, capture_start)
-		self._cell_start = cell_start
-		self._cell_end = cell_end
+		self._cell_start = min(cell_start, capture_start)
+		self._cell_end = max(cell_end, capture_end)
 		self._row = rownum
 		self._col = col_index
 		self._cursor_offsets = set()
 		self._capture_level = capture_level
+		self._direction = direction
 
 	def intersects(self, region):
 		'''Overrides the default `Region.intersects` method.
@@ -355,6 +359,11 @@ class TableCell(sublime.Region):
 	def capture_level(self):
 		return self._capture_level	
 	
+	@property
+	def direction(self):
+		return self._direction
+	
+
 	@property
 	def cell_start(self):
 		return self._cell_start
@@ -487,11 +496,12 @@ class TableView:
 	def table_coords(self, point):
 		'''Gets the row and column indexes of the cell at the given view point.'''
 		r = self.view.rowcol(point)[0]
-		row = self.row(r)
-		ic = 0
-		while row[ic].cell_end < point:
-			ic = ic + 1
-		return (r, ic)
+		cells = [c for c in self.row(r) if c.intersects(sublime.Region(point, point))]
+		if len(cells) > 1 and self._cell_direction < 0:
+			cell = cells[1]
+		else:
+			cell = cells[0]
+		return (r, cell.col)
 
 	def parse_selected_rows(self):
 		selection_lines = itertools.chain.from_iterable((self.view.lines(r) for r in self.view.sel()))
@@ -522,9 +532,13 @@ class TableNavigator:
 	The given (numeric) capture level is respected, **unless** all of the cells
 	under the current selections are at a higher capture level.
 	'''
-	def __init__(self, table, capture_level):
+	def __init__(self, table, capture_level, cell_direction):
 		self._table = table
 		self.capture_level = capture_level
+		if cell_direction > 0:
+			self._point_from_region = lambda region: region.end()
+		else:
+			self._point_from_region = lambda region: region.begin()
 
 	@property
 	def view(self):
@@ -561,6 +575,16 @@ class TableNavigator:
 			if len(line_cells) == 0:
 				# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
 				raise CursorNotInTableError(point)
+			exact_match = [cell for cell in line_cells if cell == region]
+			if len(exact_match) == 1:
+				# exact_match != line_cells if the entire cell, including delimiters, is selected
+				line_cells = exact_match
+			if region.size() == 0 and len(line_cells) > 1:
+				# If capture level is cell, and cursor is right between two cells, it intersects both
+				if line_cells[0].direction > 0:
+					line_cells = [line_cells[0]]
+				else:
+					line_cells = [line_cells[1]]
 			if not move_cursors and region.size() == 0:
 				level = line_cells[0].capture_level
 				cursors = cursors_by_level.get(level, [])
@@ -596,7 +620,6 @@ class TableNavigator:
 		selection_lines = list(itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections)))
 		selection_changed = len(selection_lines) != len(selections)
 		cells_by_level = {}
-		cells = []
 		for region in selection_lines:
 			r = self.view.rowcol(region.begin())[0]
 			row = self._table[r]
@@ -604,8 +627,15 @@ class TableNavigator:
 			if len(line_cells) == 0: 
 				# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
 				raise CursorNotInTableError(region.begin())
-			if len(line_cells) > 1 or line_cells[0] != region:
+			exact_match = [cell for cell in line_cells if cell == region]
+			if len(exact_match) == 1:
+				# exact_match != line_cells if the entire cell, including delimiters, is selected
+				line_cells = exact_match
+			else:
 				selection_changed = True
+				if region.size() == 0 and len(line_cells) == 2:
+					# If capturing the entire cell, and a cursor is right before the delimiter
+					line_cells = [self._table.cell_at_point(region.a)]
 			for cell in line_cells:
 				cells = cells_by_level.get(cell.capture_level, [])
 				cells.append(cell)
@@ -633,7 +663,7 @@ class TableNavigator:
 			# If multiple regions are selected, avoid clobbering one-another
 			selections = reversed(selections)
 		for region in selections:
-			point = region.b
+			point = self._point_from_region(region)
 			current_cell = self._table.cell_at_point(point)
 			try:
 				next_cell = self.get_next_cell(current_cell, dr, dc)
@@ -721,7 +751,7 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		'''Parses the table rows that intersect the currently selected regions.'''
 		self.table = TableView(self.view, self.context, cell_direction)
 		self.table.parse_selected_rows()
-		self.tabnav = TableNavigator(self.table, self.context.capture_level)
+		self.tabnav = TableNavigator(self.table, self.context.capture_level, cell_direction)
 
 
 # Move cells:
@@ -936,6 +966,10 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 		try:
 			self.init_table(cell_direction)
 			if not self.tabnav.split_and_select_current_cells():
+				if cell_direction > 0:
+					self._point_from_region = lambda region: region.end()
+				else:
+					self._point_from_region = lambda region: region.begin()
 				dr, dc = move_direction
 				if dc != 0:
 					self.reduce_cell_selection_row(-dc) # reverse the given direction
@@ -945,7 +979,7 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 			log.info(e)
 
 	def reduce_cell_selection_row(self, direction):
-		points = (region.a for region in self.view.sel())
+		points = (self._point_from_region(r) for r in self.view.sel())
 		selected_cells = [self.table.cell_at_point(p) for p in points]
 		for i, g in itertools.groupby(selected_cells, lambda c: c.row):
 			cells = list(g)
@@ -970,7 +1004,7 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 				self.view.sel().subtract(last)
 
 	def reduce_cell_selection_col(self, direction):
-		points = (region.a for region in self.view.sel())
+		points = (self._point_from_region(r) for r in self.view.sel())
 		selected_cells = sorted((self.table.cell_at_point(p) for p in points), key=lambda c: c.col)
 		for i, g in itertools.groupby(selected_cells, lambda c: c.col):
 			cells = list(g)
@@ -1049,12 +1083,16 @@ class TabnavSelectColumnCommand(TabnavCommand):
 		'''Selects all cells in all columns intersecting the current selections.'''
 		try:
 			self.init_table(cell_direction)
+			if cell_direction > 0:
+				point_from_region = lambda region: region.end()
+			else:
+				point_from_region = lambda region: region.begin()
 			# include all capture levels in the initial selection in case a cursor is in a markup row
 			max_level = max(v[0] for v in capture_levels.values())
 			self.tabnav.split_and_select_current_cells(capture_level=max_level)
 			columns = []
 			for region in self.view.sel():
-				cell = self.table.cell_at_point(region.b)
+				cell = self.table.cell_at_point(point_from_region(region))
 				containing_columns = [col for col in columns if col.contains(cell)]
 				if len(containing_columns) > 0:
 					continue # This cell is already contained in a previously captured column

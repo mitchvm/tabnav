@@ -28,14 +28,14 @@
 					// It contains dashes, and optional colons to indicate text justification.
 					"line": "^(?P<table>(\\|?\\s*[:-]+\\s*(?=\\|))+\\|\\s*[:-]*\\s*)$",
 					"cell": [
-						"\\|?(?P<markup>\\s*[:-]+\\s*)(?=\\|)",
-						"\\|(?P<markup>\\s*[:-]+\\s*)$" // Captures the last cell of a borderless table.
+						"(?P<cell>\\|?(?P<markup>\\s*[:-]+\\s*))(?=\\|)",
+						"(?P<cell>\\|(?P<markup>\\s*[:-]+\\s*))$" // Captures the last cell of a borderless table.
 					]
 				},
 				{
 					"cell":[
-						"\\|?(?P<markup>(?P<content>\\s*?(?P<trimmed>\\B|(?:\\S.*?))\\s*))(?=\\|)",
-						"\\|(?P<markup>(?P<content>\\s*?(?P<trimmed>(?:\\B(?=\\s))|(?:\\S.*?))\\s*))$" // Captures the last cell of a borderless table.
+						"(?P<cell>\\|?(?P<markup>(?P<content>\\s*?(?P<trimmed>\\B|(?:\\S.*?))\\s*)))(?=\\|)",
+						"(?P<cell>\\|(?P<markup>(?P<content>\\s*?(?P<trimmed>(?:\\B(?=\\s))|(?:\\S.*?))\\s*)))$" // Captures the last cell of a borderless table.
 					]
 				}
 			],
@@ -52,24 +52,24 @@
 				{
 					"line": "^\\s*(?P<table>\\|-[-+]*\\|)\\s*$", // Separator rows start with "|-"
 					"cell": [
-						"^\\|(?P<markup>-+)(?=\\+|\\|)",
-						"\\+(?P<markup>-+)(?=\\+|\\|)" // Inner cells are bordered with '+', not '|'
+						"^(?P<cell>\\|(?P<markup>-+))(?=\\+|\\|)",
+						"(?P<cell>\\+(?P<markup>-+))(?=\\+|\\|)" // Inner cells are bordered with '+', not '|'
 					]
 				},
 				{
 					"line": "^\\s*(?P<table>\\|\\s*/\\s*\\|(?:\\s*<?\\s*>?\\s*\\|)*)\\s*$",
 					"cell": [
-						"^\\|(?P<markup>\\s*/\\s*)(?=\\|)", // First cell contains "/"
-						"\\|(?P<markup>\\s*<?>?\\s*)(?=\\|)" // All other cells are empty, or contain "<" and/or ">""
+						"^(?P<cell>\\|(?P<markup>\\s*/\\s*))(?=\\|)", // First cell contains "/"
+						"(?P<cell>\\|(?P<markup>\\s*<?>?\\s*))(?=\\|)" // All other cells are empty, or contain "<" and/or ">""
 					]
 				},
 				{
 					"line": "^\\s*(?P<table>\\|(?:\\s*\\|)*(?:\\s*<\\d+>\\s*\\|)(?:\\s*(?:<\\d+>)?\\s*\\|)*)\\s*$", // At least one cell must have a "<1>" form width, and all other must be empty.
-					"cell": "\\|(?P<markup>\\s*(?:<\\d+>)?\\s*)(?=\\|)"
+					"cell": "(?P<cell>\\|(?P<markup>\\s*(?:<\\d+>)?\\s*))(?=\\|)"
 				},
 				{
 					"line": "^\\s*(?P<table>\\|.*\\|)\\s*$",
-					"cell": "\\|(?P<markup>(?P<content>\\s*?(?P<trimmed>\\B|(?:\\S.*?))\\s*))(?=\\|)"
+					"cell": "(?P<cell>\\|(?P<markup>(?P<content>\\s*?(?P<trimmed>\\B|(?:\\S.*?))\\s*)))(?=\\|)"
 				}
 			]
 		},
@@ -104,9 +104,9 @@
 			// 3) Quoted content
 			"patterns": {
 				"cell": [
-					"^(?P<markup>(?P<content> *?(?P<trimmed>\\B|(?:[^\" ].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *))(?={0})", // First cell of the line - no preceding delimiter
-					"{0}(?P<markup>(?P<content> *?(?P<trimmed>\\B|(?:[^\" ].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *))(?={0})", // Middle cells - delimiters on both ends
-					"{0}(?P<markup>(?P<content> *?(?P<trimmed>\\B|(?:[^\"].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *))$" // Last cell of the line - no final delimiter look-ahead
+					"^(?P<cell>(?P<markup>(?P<content> *?(?P<trimmed>\\B|(?:[^\" ].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *)))(?={0})", // First cell of the line - no preceding delimiter
+					"(?P<cell>{0}(?P<markup>(?P<content> *?(?P<trimmed>\\B|(?:[^\" ].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *)))(?={0})", // Middle cells - delimiters on both ends
+					"(?P<cell>{0}(?P<markup>(?P<content> *?(?P<trimmed>\\B|(?:[^\"].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *)))$" // Last cell of the line - no final delimiter look-ahead
 				]
 			},
 			"enable_explicitly": true, // We'll only infer the auto_csv context if tabnav has been explicitly enabled on a particular view
