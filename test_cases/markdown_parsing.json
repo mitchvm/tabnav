@@ -396,5 +396,45 @@
 		"initial_selections": [{"a": 312, "b": 312}],
 		"expected_selections": [{"a": 311, "b": 311}],
 		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "5X32",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture cell - cursor before first pipe (start of first cell)",
+		"initial_selections": [{"a": 936, "b": 936}],
+		"expected_selections": [{"a": 936, "b": 956}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "YYVL",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture cell - cursor immediately before delimiter between cells",
+		"initial_selections": [{"a": 898, "b": 898}],
+		"expected_selections": [{"a": 879, "b": 898}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "ELQV",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "markdown03_borderless.md",
+		"description": "Capture cell - first cell of borderless (no delimiter)",
+		"initial_selections": [{"a": 266, "b": 266}],
+		"expected_selections": [{"a": 266, "b": 277}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "ZVVN",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Capture cell - entire table",
+		"initial_selections": [{"a": 178, "b": 178}],
+		"expected_selections": [{"a": 0, "b": 12}, {"a": 12, "b": 24}, {"a": 24, "b": 36}, {"a": 36, "b": 48}, {"a": 50, "b": 62}, {"a": 62, "b": 74}, {"a": 74, "b": 86}, {"a": 86, "b": 98}, {"a": 100, "b": 111}, {"a": 111, "b": 119}, {"a": 119, "b": 131}, {"a": 131, "b": 146}, {"a": 148, "b": 191}, {"a": 191, "b": 205}, {"a": 205, "b": 206}, {"a": 206, "b": 224}, {"a": 226, "b": 242}, {"a": 242, "b": 247}, {"a": 247, "b": 279}, {"a": 281, "b": 307}, {"a": 307, "b": 311}, {"a": 311, "b": 346}, {"a": 346, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]

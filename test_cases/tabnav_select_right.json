@@ -168,5 +168,25 @@
 		"initial_selections": [{"a": 68, "b": 78}, {"a": 113, "b": 124}, {"a": 159, "b": 169}],
 		"expected_selections": [{"a": 79, "b": 90}, {"a": 125, "b": 135}, {"a": 159, "b": 169}],
 		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "2GQI",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected forwards",
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1150, "b": 1164}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "K6O4",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected in reverse",
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1150, "b": 1164}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]

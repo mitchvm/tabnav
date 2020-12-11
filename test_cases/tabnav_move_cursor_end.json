@@ -228,5 +228,35 @@
 		"initial_selections": [{"a": 1455, "b": 1455}],
 		"expected_selections": [{"a": 1451, "b": 1451}],
 		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "OEEH",
+		"command": "tabnav_move_cursor_end",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected forwards",
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1150, "b": 1150}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "XTYM",
+		"command": "tabnav_move_cursor_end",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected in reverse",
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1150, "b": 1150}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "6LAY",
+		"command": "tabnav_move_cursor_end",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture cell - cursor before delimiter",
+		"initial_selections": [{"a": 1150, "b": 1150}],
+		"expected_selections": [{"a": 1150, "b": 1150}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]

@@ -98,5 +98,25 @@
 		"initial_selections": [{"a": 648, "b": 635}, {"a": 732, "b": 719}, {"a": 816, "b": 803}, {"a": 900, "b": 887}, {"a": 984, "b": 971}],
 		"expected_selections": [{"a": 648, "b": 635}, {"a": 732, "b": 719}, {"a": 816, "b": 803}, {"a": 900, "b": 887}],
 		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "SV3W",
+		"command": "tabnav_reduce_selection_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture cell - cells selected forwards",
+		"initial_selections": [{"a": 704, "b": 711}, {"a": 711, "b": 730}, {"a": 730, "b": 744}, {"a": 788, "b": 795}, {"a": 795, "b": 814}, {"a": 814, "b": 828}, {"a": 872, "b": 879}, {"a": 879, "b": 898}, {"a": 898, "b": 912}],
+		"expected_selections": [{"a": 704, "b": 711}, {"a": 711, "b": 730}, {"a": 730, "b": 744}, {"a": 788, "b": 795}, {"a": 795, "b": 814}, {"a": 814, "b": 828}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "K5A6",
+		"command": "tabnav_reduce_selection_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture cell - cells selected reverse",
+		"initial_selections": [{"a": 711, "b": 704}, {"a": 730, "b": 711}, {"a": 744, "b": 730}, {"a": 795, "b": 788}, {"a": 814, "b": 795}, {"a": 828, "b": 814}, {"a": 879, "b": 872}, {"a": 898, "b": 879}, {"a": 912, "b": 898}],
+		"expected_selections": [{"a": 711, "b": 704}, {"a": 730, "b": 711}, {"a": 744, "b": 730}, {"a": 795, "b": 788}, {"a": 814, "b": 795}, {"a": 828, "b": 814}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]

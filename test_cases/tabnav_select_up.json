@@ -168,5 +168,25 @@
 		"initial_selections": [{"a": 112, "b": 102}, {"a": 158, "b": 147}, {"a": 203, "b": 193}],
 		"expected_selections": [{"a": 78, "b": 68}, {"a": 124, "b": 113}, {"a": 169, "b": 159}],
 		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "YDRP",
+		"command": "tabnav_select_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected forwards",
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1066, "b": 1047}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "ORYB",
+		"command": "tabnav_select_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected in reverse",
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1066, "b": 1047}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]

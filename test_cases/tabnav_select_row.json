@@ -98,5 +98,25 @@
 		"initial_selections": [{"a": 83, "b": 152}],
 		"expected_selections": [{"a": 68, "b": 78}, {"a": 79, "b": 90}, {"a": 91, "b": 101}, {"a": 102, "b": 112}, {"a": 113, "b": 124}, {"a": 125, "b": 135}, {"a": 136, "b": 146}, {"a": 147, "b": 158}, {"a": 159, "b": 169}],
 		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "WKR6",
+		"command": "tabnav_select_row",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected forwards",
+		"initial_selections": [{"a": 795, "b": 814}],
+		"expected_selections": [{"a": 768, "b": 788}, {"a": 788, "b": 795}, {"a": 795, "b": 814}, {"a": 814, "b": 828}, {"a": 828, "b": 842}, {"a": 842, "b": 850}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "QEGC",
+		"command": "tabnav_select_row",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected in reverse",
+		"initial_selections": [{"a": 814, "b": 795}],
+		"expected_selections": [{"a": 768, "b": 788}, {"a": 788, "b": 795}, {"a": 795, "b": 814}, {"a": 814, "b": 828}, {"a": 828, "b": 842}, {"a": 842, "b": 850}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]

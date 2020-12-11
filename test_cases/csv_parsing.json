@@ -512,5 +512,47 @@
 			"tabnav.enabled": true,
 			"tabnav.capture_level": "content"
 		}
+	},
+	{
+		"id": "XJDF",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"syntax": "Packages/Text/Plain text.tmLanguage",
+		"file": "csv06_justified.csv",
+		"description": "Capture cell - cursor at start of line - no preceding delimiter",
+		"initial_selections": [{"a": 129, "b": 129}],
+		"expected_selections": [{"a": 129, "b": 137}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.capture_level": "cell"
+		}
+	},
+	{
+		"id": "MAJN",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"syntax": "Packages/Text/Plain text.tmLanguage",
+		"file": "csv06_justified.csv",
+		"description": "Capture cell - cursor immediately before delimiter between cells",
+		"initial_selections": [{"a": 146, "b": 146}],
+		"expected_selections": [{"a": 137, "b": 146}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.capture_level": "cell"
+		}
+	},
+	{
+		"id": "MAJN",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"syntax": "Packages/Text/Plain text.tmLanguage",
+		"file": "csv01_comma_quoted.csv",
+		"description": "Capture cell - entire table",
+		"initial_selections": [{"a": 146, "b": 146}],
+		"expected_selections": [{"a": 0, "b": 1}, {"a": 1, "b": 12}, {"a": 12, "b": 36}, {"a": 36, "b": 40}, {"a": 40, "b": 56}, {"a": 57, "b": 60}, {"a": 60, "b": 95}, {"a": 95, "b": 96}, {"a": 96, "b": 140}, {"a": 141, "b": 143}, {"a": 143, "b": 157}, {"a": 157, "b": 175}, {"a": 175, "b": 176}, {"a": 176, "b": 207}, {"a": 207, "b": 208}, {"a": 209, "b": 219}, {"a": 219, "b": 228}, {"a": 228, "b": 240}, {"a": 241, "b": 315}, {"a": 315, "b": 327}, {"a": 327, "b": 346}, {"a": 346, "b": 379}, {"a": 380, "b": 419}, {"a": 419, "b": 423}, {"a": 423, "b": 425}, {"a": 426, "b": 430}, {"a": 430, "b": 451}, {"a": 451, "b": 457}, {"a": 457, "b": 490}, {"a": 491, "b": 492}, {"a": 492, "b": 493}, {"a": 493, "b": 494}, {"a": 494, "b": 495}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.capture_level": "cell"
+		}
 	}
 ]

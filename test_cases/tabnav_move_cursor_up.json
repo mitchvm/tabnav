@@ -208,5 +208,35 @@
 		"initial_selections": [{"a": 1323, "b": 1323}],
 		"expected_selections": [{"a": 1245, "b": 1245}],
 		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "Q2W6",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected forwards",
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1131, "b": 1131}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "6W24",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected in reverse",
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1131, "b": 1131}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "RJCB",
+		"command": "tabnav_move_cursor_up",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Capture cell - cursor before delimiter",
+		"initial_selections": [{"a": 1150, "b": 1150}],
+		"expected_selections": [{"a": 1066, "b": 1066}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]

@@ -208,5 +208,35 @@
 		"initial_selections": [{"a": 2153, "b": 2156}],
 		"expected_selections": [{"a": 2159, "b": 2160}],
 		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "QLAI",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode03_all_markups.org",
+		"description": "Capture cell - cursor before first pipe (start of first cell)",
+		"initial_selections": [{"a": 420, "b": 420}],
+		"expected_selections": [{"a": 420, "b": 440}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "G4YA",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode03_all_markups.org",
+		"description": "Capture cell - cursor immediately before delimiter between cells",
+		"initial_selections": [{"a": 634, "b": 634}],
+		"expected_selections": [{"a": 615, "b": 634}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "2OSZ",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"file": "orgmode03_all_markups.org",
+		"description": "Capture cell - entire table",
+		"initial_selections": [{"a": 178, "b": 178}],
+		"expected_selections": [{"a": 0, "b": 20}, {"a": 20, "b": 27}, {"a": 27, "b": 46}, {"a": 46, "b": 60}, {"a": 60, "b": 74}, {"a": 74, "b": 82}, {"a": 84, "b": 104}, {"a": 104, "b": 111}, {"a": 111, "b": 130}, {"a": 130, "b": 144}, {"a": 144, "b": 158}, {"a": 158, "b": 166}, {"a": 168, "b": 188}, {"a": 188, "b": 195}, {"a": 195, "b": 214}, {"a": 214, "b": 228}, {"a": 228, "b": 242}, {"a": 242, "b": 250}, {"a": 252, "b": 272}, {"a": 272, "b": 279}, {"a": 279, "b": 298}, {"a": 298, "b": 312}, {"a": 312, "b": 326}, {"a": 326, "b": 334}, {"a": 336, "b": 356}, {"a": 356, "b": 363}, {"a": 363, "b": 382}, {"a": 382, "b": 396}, {"a": 396, "b": 410}, {"a": 410, "b": 418}, {"a": 420, "b": 440}, {"a": 440, "b": 447}, {"a": 447, "b": 466}, {"a": 466, "b": 480}, {"a": 480, "b": 494}, {"a": 494, "b": 502}, {"a": 504, "b": 524}, {"a": 524, "b": 531}, {"a": 531, "b": 550}, {"a": 550, "b": 564}, {"a": 564, "b": 578}, {"a": 578, "b": 586}, {"a": 588, "b": 608}, {"a": 608, "b": 615}, {"a": 615, "b": 634}, {"a": 634, "b": 648}, {"a": 648, "b": 662}, {"a": 662, "b": 670}, {"a": 672, "b": 692}, {"a": 692, "b": 699}, {"a": 699, "b": 718}, {"a": 718, "b": 732}, {"a": 732, "b": 746}, {"a": 746, "b": 754}, {"a": 756, "b": 776}, {"a": 776, "b": 783}, {"a": 783, "b": 802}, {"a": 802, "b": 816}, {"a": 816, "b": 830}, {"a": 830, "b": 838}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]

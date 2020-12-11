@@ -118,5 +118,25 @@
 		"initial_selections": [{"a": 73, "b": 75}, {"a": 95, "b": 97}],
 		"expected_selections": [{"a": 0, "b": 10}, {"a": 23, "b": 33}, {"a": 68, "b": 78}, {"a": 91, "b": 101}, {"a": 102, "b": 112}, {"a": 125, "b": 135}, {"a": 136, "b": 146}, {"a": 159, "b": 169}, {"a": 170, "b": 180}, {"a": 193, "b": 203}, {"a": 204, "b": 214}, {"a": 227, "b": 237}],
 		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "RHCI",
+		"command": "tabnav_select_column",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected forwards",
+		"initial_selections": [{"a": 1299, "b": 1318}],
+		"expected_selections": [{"a": 123, "b": 142}, {"a": 207, "b": 226}, {"a": 291, "b": 310}, {"a": 375, "b": 394}, {"a": 459, "b": 478}, {"a": 543, "b": 562}, {"a": 627, "b": 646}, {"a": 711, "b": 730}, {"a": 795, "b": 814}, {"a": 879, "b": 898}, {"a": 963, "b": 982}, {"a": 1047, "b": 1066}, {"a": 1131, "b": 1150}, {"a": 1215, "b": 1234}, {"a": 1299, "b": 1318}, {"a": 1383, "b": 1402}, {"a": 1467, "b": 1486}, {"a": 1551, "b": 1570}, {"a": 1635, "b": 1654}, {"a": 1719, "b": 1738}, {"a": 1803, "b": 1822}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "3AS4",
+		"command": "tabnav_select_column",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected in reverse",
+		"initial_selections": [{"a": 1318, "b": 1299}],
+		"expected_selections": [{"a": 123, "b": 142}, {"a": 207, "b": 226}, {"a": 291, "b": 310}, {"a": 375, "b": 394}, {"a": 459, "b": 478}, {"a": 543, "b": 562}, {"a": 627, "b": 646}, {"a": 711, "b": 730}, {"a": 795, "b": 814}, {"a": 879, "b": 898}, {"a": 963, "b": 982}, {"a": 1047, "b": 1066}, {"a": 1131, "b": 1150}, {"a": 1215, "b": 1234}, {"a": 1299, "b": 1318}, {"a": 1383, "b": 1402}, {"a": 1467, "b": 1486}, {"a": 1551, "b": 1570}, {"a": 1635, "b": 1654}, {"a": 1719, "b": 1738}, {"a": 1803, "b": 1822}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]
