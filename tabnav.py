@@ -279,42 +279,39 @@ class RowParser:
 				col_index = col_index + 1
 				for name, level in self.capture_levels:
 					try:
-						start_point = line_start_point + cell_offset + cell_match.start(name)
-						end_point = line_start_point + cell_offset + cell_match.end(name)
-						cell = TableCell(row, col_index, start_point, end_point, level, cell_direction)
-						cells.append(cell)
-						break
+						capture_start = line_start_point + cell_offset + cell_match.start(name)
+						capture_end = line_start_point + cell_offset + cell_match.end(name)
 					except IndexError:
 						# The cell pattern doesn't include the level as a capture group
 						continue
+					else:
+						markup_start = line_start_point + cell_offset + cell_match.start('markup')
+						markup_end = line_start_point + cell_offset + cell_match.end('markup')
+						cell = TableCell(row, col_index, capture_start, capture_end, markup_start, markup_end, level, cell_direction)
+						cells.append(cell)
+						break
 		if len(cells) == 0:
 			return None
 		return TableRow(row, cells)
 
-	def _get_region(self, line_start_point, cell_offset, match, group, cell_direction):
-		start_point = line_start_point + cell_offset + cell_match.start(group)
-		end_point = line_start_point + cell_offset + cell_match.end(group)
-		if cell_direction >= 0:
-			return sublime.Region(start_point, end_point)
-		else:
-			return sublime.Region(end_point, start_point)
-
 class TableCell(sublime.Region):
 	'''Extends the base sublime.Region class with logic specific to TabNav's cells.'''
-	def __init__(self, rownum, col_index, start_point, end_point, capture_level, direction=1):
+	def __init__(self, rownum, col_index, capture_start, capture_end, cell_start, cell_end, capture_level, direction=1):
 		'''Creates a new TableCell with the following properties:
 
 		* `rownum`: integer index of the row in the view on which the cell is found
 		* `col_index`: integer table column index (not text column index) of the cell
-		* `start_point`: the starting point in the view of the cell
-		* `end_point`: the ending point in the view of the cell
+		* `capture_start`: the starting point in the view of the cell
+		* `capture_end`: the ending point in the view of the cell
 		* `capture_level`: the numeric value from the capture_levels at which this cell was captured
 		* `direction`: 1 for a left-to-right region (cursor on the right), -1 for a right-to-left region (cursor on the left)
 		'''
 		if direction > 0:
-			super().__init__(start_point, end_point)
+			super().__init__(capture_start, capture_end)
 		else:
-			super().__init__(end_point, start_point)
+			super().__init__(capture_end, capture_start)
+		self._cell_start = cell_start
+		self._cell_end = cell_end
 		self._row = rownum
 		self._col = col_index
 		self._cursor_offsets = set()
@@ -323,13 +320,14 @@ class TableCell(sublime.Region):
 	def intersects(self, region):
 		'''Overrides the default `Region.intersects` method.
 
-		Returns True if both cell and the given region include one or more
-		positions in common, including either extreme end. For example, if
-		the end of this cell is coincident with the start of the region, 
-		then true is returned. The default `Region.intersects()` method 
+		Returns True if the given region overlaps the total cell extent,
+		not just the captured region. To overlap, the cell and the region must
+		have one or more positions in common, including either extreme end.
+		For example, if the end of this cell is coincident with the start of
+		the region, then true is returned. The default `Region.intersects()` method 
 		returns false in this scenario.
 		'''
-		c = (self.begin(), self.end())
+		c = (self._cell_start, self._cell_end)
 		r = (region.begin(), region.end())
 		return (r[0] <= c[0] and c[0] <= r[1]) \
 			or (r[0] <= c[1] and c[1] <= r[1]) \
