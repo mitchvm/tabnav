@@ -6,7 +6,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in first cell",
 		"initial_selections": [{"a": 6, "b": 6}],
-		"expected_selections": [{"a": 1, "b": 1}]
+		"expected_selections": [{"a": 1, "b": 1}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "SPKB",
@@ -15,7 +16,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in last cell of row",
 		"initial_selections": [{"a": 138, "b": 138}],
-		"expected_selections": [{"a": 132, "b": 132}]
+		"expected_selections": [{"a": 132, "b": 132}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "NQGK",
@@ -24,7 +26,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor at start of cell in line markup cell",
 		"initial_selections": [{"a": 75, "b": 75}],
-		"expected_selections": [{"a": 63, "b": 63}]
+		"expected_selections": [{"a": 63, "b": 63}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "KSM7",
@@ -33,7 +36,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor already at start of first cell of row",
 		"initial_selections": [{"a": 101, "b": 101}],
-		"expected_selections": [{"a": 101, "b": 101}]
+		"expected_selections": [{"a": 101, "b": 101}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "BEIC",
@@ -42,7 +46,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor already at start of cell",
 		"initial_selections": [{"a": 112, "b": 112}],
-		"expected_selections": [{"a": 101, "b": 101}]
+		"expected_selections": [{"a": 101, "b": 101}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "O4EV",
@@ -51,7 +56,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
 		"initial_selections": [{"a": 206, "b": 206}],
-		"expected_selections": [{"a": 192, "b": 192}]
+		"expected_selections": [{"a": 192, "b": 192}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "47XD",
@@ -60,7 +66,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target cell is an empty cell",
 		"initial_selections": [{"a": 207, "b": 207}],
-		"expected_selections": [{"a": 206, "b": 206}]
+		"expected_selections": [{"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "5Z6J",
@@ -69,7 +76,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some at start of cell, some not",
 		"initial_selections": [{"a": 19, "b": 19}, {"a": 112, "b": 112}, {"a": 180, "b": 180}, {"a": 248, "b": 248}],
-		"expected_selections": [{"a": 13, "b": 13}, {"a": 112, "b": 112}, {"a": 149, "b": 149}, {"a": 248, "b": 248}]
+		"expected_selections": [{"a": 13, "b": 13}, {"a": 112, "b": 112}, {"a": 149, "b": 149}, {"a": 248, "b": 248}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "3DGS",
@@ -78,7 +86,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, all at the start of their respective cells",
 		"initial_selections": [{"a": 37, "b": 37}, {"a": 132, "b": 132}, {"a": 248, "b": 248}, {"a": 347, "b": 347}],
-		"expected_selections": [{"a": 25, "b": 25}, {"a": 120, "b": 120}, {"a": 243, "b": 243}, {"a": 312, "b": 312}]
+		"expected_selections": [{"a": 25, "b": 25}, {"a": 120, "b": 120}, {"a": 243, "b": 243}, {"a": 312, "b": 312}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "EHXK",
@@ -87,7 +96,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some at start of first column",
 		"initial_selections": [{"a": 1, "b": 1}, {"a": 120, "b": 120}, {"a": 227, "b": 227}, {"a": 347, "b": 347}],
-		"expected_selections": [{"a": 1, "b": 1}, {"a": 112, "b": 112}, {"a": 227, "b": 227}, {"a": 312, "b": 312}]
+		"expected_selections": [{"a": 1, "b": 1}, {"a": 112, "b": 112}, {"a": 227, "b": 227}, {"a": 312, "b": 312}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "5XC2",
@@ -96,7 +106,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Two cursors merging to one at start of first cell of colum",
 		"initial_selections": [{"a": 227, "b": 227}, {"a": 243, "b": 243}],
-		"expected_selections": [{"a": 227, "b": 227}]
+		"expected_selections": [{"a": 227, "b": 227}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "JKG6",
@@ -105,7 +116,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors same row, one cursor is the target for another",
 		"initial_selections": [{"a": 112, "b": 112}, {"a": 120, "b": 120}],
-		"expected_selections": [{"a": 101, "b": 101}, {"a": 112, "b": 112}]
+		"expected_selections": [{"a": 101, "b": 101}, {"a": 112, "b": 112}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "HH5L",
@@ -114,7 +126,8 @@
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors at start of cells in multiple tables",
 		"initial_selections": [{"a": 97, "b": 97}, {"a": 285, "b": 285}, {"a": 712, "b": 712}, {"a": 1067, "b": 1067}, {"a": 1417, "b": 1417}, {"a": 1683, "b": 1683}, {"a": 1996, "b": 1996}, {"a": 2162, "b": 2162}],
-		"expected_selections": [{"a": 97, "b": 97}, {"a": 265, "b": 265}, {"a": 705, "b": 705}, {"a": 1048, "b": 1048}, {"a": 1403, "b": 1403}, {"a": 1669, "b": 1669}, {"a": 1982, "b": 1982}, {"a": 2162, "b": 2162}]
+		"expected_selections": [{"a": 97, "b": 97}, {"a": 265, "b": 265}, {"a": 705, "b": 705}, {"a": 1048, "b": 1048}, {"a": 1403, "b": 1403}, {"a": 1669, "b": 1669}, {"a": 1982, "b": 1982}, {"a": 2162, "b": 2162}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "OH6Z",
@@ -123,7 +136,8 @@
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple line markup rows",
 		"initial_selections": [{"a": 208, "b": 208}, {"a": 1906, "b": 1906}],
-		"expected_selections": [{"a": 201, "b": 201}, {"a": 1892, "b": 1892}]
+		"expected_selections": [{"a": 201, "b": 201}, {"a": 1892, "b": 1892}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "DRII",
@@ -132,6 +146,7 @@
 		"file": "markdown03_borderless.md",
 		"description": "Cursors at start of each column",
 		"initial_selections": [{"a": 0, "b": 0}, {"a": 79, "b": 79}, {"a": 125, "b": 125}],
-		"expected_selections": [{"a": 0, "b": 0}, {"a": 68, "b": 68}, {"a": 113, "b": 113}]
+		"expected_selections": [{"a": 0, "b": 0}, {"a": 68, "b": 68}, {"a": 113, "b": 113}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	}
 ]

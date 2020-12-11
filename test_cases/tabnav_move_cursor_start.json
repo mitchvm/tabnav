@@ -6,7 +6,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in first cell",
 		"initial_selections": [{"a": 6, "b": 6}],
-		"expected_selections": [{"a": 1, "b": 1}]
+		"expected_selections": [{"a": 1, "b": 1}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "FQ3N",
@@ -15,7 +16,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in last cell of row",
 		"initial_selections": [{"a": 138, "b": 138}],
-		"expected_selections": [{"a": 132, "b": 132}]
+		"expected_selections": [{"a": 132, "b": 132}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "MZ66",
@@ -24,7 +26,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in line markup cell",
 		"initial_selections": [{"a": 56, "b": 56}],
-		"expected_selections": [{"a": 51, "b": 51}]
+		"expected_selections": [{"a": 51, "b": 51}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "NTGM",
@@ -33,7 +36,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor already at start of first cell of row",
 		"initial_selections": [{"a": 101, "b": 101}],
-		"expected_selections": [{"a": 101, "b": 101}]
+		"expected_selections": [{"a": 101, "b": 101}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "TFBP",
@@ -42,7 +46,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor already at start of cell",
 		"initial_selections": [{"a": 112, "b": 112}],
-		"expected_selections": [{"a": 112, "b": 112}]
+		"expected_selections": [{"a": 112, "b": 112}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "KLJL",
@@ -51,7 +56,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
 		"initial_selections": [{"a": 206, "b": 206}],
-		"expected_selections": [{"a": 206, "b": 206}]
+		"expected_selections": [{"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "E5R2",
@@ -60,7 +66,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors single cell",
 		"initial_selections": [{"a": 152, "b": 152}, {"a": 158, "b": 158}, {"a": 163, "b": 163}, {"a": 170, "b": 170}, {"a": 177, "b": 177}, {"a": 184, "b": 184}],
-		"expected_selections": [{"a": 149, "b": 149}]
+		"expected_selections": [{"a": 149, "b": 149}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "I4DY",
@@ -69,7 +76,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell selected forward",
 		"initial_selections": [{"a": 192, "b": 205}],
-		"expected_selections": [{"a": 192, "b": 192}]
+		"expected_selections": [{"a": 192, "b": 192}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "EP4Y",
@@ -78,7 +86,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell selected reverse",
 		"initial_selections": [{"a": 247, "b": 243}],
-		"expected_selections": [{"a": 243, "b": 243}]
+		"expected_selections": [{"a": 243, "b": 243}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "HFP5",
@@ -87,7 +96,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans a cell plus pipes on either end (3 cells)",
 		"initial_selections": [{"a": 111, "b": 120}],
-		"expected_selections": [{"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 120, "b": 120}]
+		"expected_selections": [{"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 120, "b": 120}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "N6WP",
@@ -96,7 +106,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans three body rows",
 		"initial_selections": [{"a": 123, "b": 244}],
-		"expected_selections": [{"a": 120, "b": 120}, {"a": 132, "b": 132}, {"a": 149, "b": 149}, {"a": 192, "b": 192}, {"a": 206, "b": 206}, {"a": 207, "b": 207}, {"a": 227, "b": 227}, {"a": 243, "b": 243}]
+		"expected_selections": [{"a": 120, "b": 120}, {"a": 132, "b": 132}, {"a": 149, "b": 149}, {"a": 192, "b": 192}, {"a": 206, "b": 206}, {"a": 207, "b": 207}, {"a": 227, "b": 227}, {"a": 243, "b": 243}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "X7DY",
@@ -106,7 +117,7 @@
 		"description": "Region spans body and markup row, markup excluded",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 13, "b": 13}, {"a": 25, "b": 25}, {"a": 37, "b": 37}, {"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 120, "b": 120}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "WTGF",
@@ -116,7 +127,7 @@
 		"description": "Region spans body and markup row, markup included",
 		"initial_selections": [{"a": 14, "b": 128}],
 		"expected_selections": [{"a": 13, "b": 13}, {"a": 25, "b": 25}, {"a": 37, "b": 37}, {"a": 51, "b": 51}, {"a": 63, "b": 63}, {"a": 75, "b": 75}, {"a": 87, "b": 87}, {"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 120, "b": 120}],
-		"view_settings": {"tabnav.include_markup": true}
+		"view_settings": {"tabnav.capture_level": "markup"}
 	},
 	{
 		"id": "3AWG",
@@ -125,7 +136,8 @@
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple tables",
 		"initial_selections": [{"a": 280, "b": 280}, {"a": 763, "b": 763}, {"a": 1395, "b": 1395}, {"a": 1922, "b": 1922}, {"a": 2338, "b": 2338}],
-		"expected_selections": [{"a": 265, "b": 265}, {"a": 759, "b": 759}, {"a": 1384, "b": 1384}, {"a": 1922, "b": 1922}, {"a": 2326, "b": 2326}]
+		"expected_selections": [{"a": 265, "b": 265}, {"a": 759, "b": 759}, {"a": 1384, "b": 1384}, {"a": 1922, "b": 1922}, {"a": 2326, "b": 2326}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "3SGX",
@@ -134,7 +146,8 @@
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple line markup rows",
 		"initial_selections": [{"a": 212, "b": 212}, {"a": 1913, "b": 1913}],
-		"expected_selections": [{"a": 208, "b": 208}, {"a": 1906, "b": 1906}]
+		"expected_selections": [{"a": 208, "b": 208}, {"a": 1906, "b": 1906}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "FJL7",
@@ -143,7 +156,8 @@
 		"file": "markdown03_borderless.md",
 		"description": "Cursor in first column",
 		"initial_selections": [{"a": 75, "b": 75}],
-		"expected_selections": [{"a": 68, "b": 68}]
+		"expected_selections": [{"a": 68, "b": 68}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "IJF6",
@@ -152,7 +166,8 @@
 		"file": "markdown03_borderless.md",
 		"description": "Cursor in last column",
 		"initial_selections": [{"a": 98, "b": 98}],
-		"expected_selections": [{"a": 91, "b": 91}]
+		"expected_selections": [{"a": 91, "b": 91}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "DKGB",
@@ -161,7 +176,8 @@
 		"file": "markdown03_borderless.md",
 		"description": "Cursor at start of first column",
 		"initial_selections": [{"a": 136, "b": 136}],
-		"expected_selections": [{"a": 136, "b": 136}]
+		"expected_selections": [{"a": 136, "b": 136}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "KG6S",
@@ -170,7 +186,8 @@
 		"file": "markdown03_borderless.md",
 		"description": "Cursor in first column of markup",
 		"initial_selections": [{"a": 39, "b": 39}],
-		"expected_selections": [{"a": 34, "b": 34}]
+		"expected_selections": [{"a": 34, "b": 34}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "EQ44",
@@ -179,7 +196,8 @@
 		"file": "markdown03_borderless.md",
 		"description": "Cursor in last column of markup",
 		"initial_selections": [{"a": 62, "b": 62}],
-		"expected_selections": [{"a": 57, "b": 57}]
+		"expected_selections": [{"a": 57, "b": 57}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "J42R",
@@ -189,6 +207,6 @@
 		"description": "Selection spans markup row",
 		"initial_selections": [{"a": 18, "b": 86}],
 		"expected_selections": [{"a": 11, "b": 11}, {"a": 23, "b": 23}, {"a": 68, "b": 68}, {"a": 79, "b": 79}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	}
 ]

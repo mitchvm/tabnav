@@ -13,7 +13,7 @@ This file contains multiple Org Mode tables with only a single line of whitespac
 | Adrian Beltre     | SEA  | Third Baseman    |          71 |         220 |  27.9 |
 | Duaner Sanchez    | NYM  | Relief Pitcher   |          72 |         190 | 27.38 |
 | Mark Kiger        | OAK  | Shortstop        |          71 |         180 | 26.75 |
-| Brian Bannister   | KC   | Starting Pitcher |          74 |         202 |    26 |
+|                   |      |                  |             |             |       |
 | Tom Mastny        | CLE  | Relief Pitcher   |          78 |         220 | 26.07 |
 | Matt Morris       | SF   | Starting Pitcher |          77 |         220 | 32.56 |
 | Tony Pe?a         | ARZ  | Relief Pitcher   |          74 |         190 | 25.14 |
@@ -26,7 +26,7 @@ This file contains multiple Org Mode tables with only a single line of whitespac
     |---+----+-----+-----+-----+---------+------------|
     | / | <> |   < |     |   > |       < |          > |
     | # |  1 |   1 |   1 |   1 |       1 |          1 |
-    | # |  2 |   4 |   8 |  16 |  1.4142 |     1.1892 |
+    |   |    |     |     |     |         |            |
     | # |  3 |   9 |  27 |  81 |  1.7321 |     1.3161 |
     |---+----+-----+-----+-----+---------+------------|
 

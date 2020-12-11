@@ -6,7 +6,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell in top row of file doesn't move",
 		"initial_selections": [{"a": 12, "b": 1}],
-		"expected_selections": [{"a": 12, "b": 1}]
+		"expected_selections": [{"a": 12, "b": 1}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "RJBV",
@@ -15,7 +16,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "First cell of row",
 		"initial_selections": [{"a": 191, "b": 149}],
-		"expected_selections": [{"a": 111, "b": 101}]
+		"expected_selections": [{"a": 111, "b": 101}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "CRRK",
@@ -24,7 +26,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Last cell of row",
 		"initial_selections": [{"a": 224, "b": 207}],
-		"expected_selections": [{"a": 146, "b": 132}]
+		"expected_selections": [{"a": 146, "b": 132}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "XC2B",
@@ -34,7 +37,7 @@
 		"description": "markup excluded - markup row jumped",
 		"initial_selections": [{"a": 146, "b": 132}],
 		"expected_selections": [{"a": 48, "b": 37}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "KWTA",
@@ -44,7 +47,7 @@
 		"description": "markup excluded - multiple sequential markup rows jumped",
 		"initial_selections": [{"a": 1035, "b": 1029}],
 		"expected_selections": [{"a": 699, "b": 693}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "WX5P",
@@ -54,7 +57,7 @@
 		"description": "markup excluded - multiple cells, markup only jumped as applicable",
 		"initial_selections": [{"a": 146, "b": 132}, {"a": 242, "b": 227}],
 		"expected_selections": [{"a": 48, "b": 37}, {"a": 191, "b": 149}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "KLLS",
@@ -64,7 +67,7 @@
 		"description": "Cell in line markup row moves out",
 		"initial_selections": [{"a": 74, "b": 63}],
 		"expected_selections": [{"a": 24, "b": 13}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "EB7Z",
@@ -74,7 +77,7 @@
 		"description": "markup included - moves to markup row",
 		"initial_selections": [{"a": 146, "b": 132}],
 		"expected_selections": [{"a": 98, "b": 87}],
-		"view_settings": {"tabnav.include_markup": true}
+		"view_settings": {"tabnav.capture_level": "markup"}
 	},
 	{
 		"id": "7FXN",
@@ -83,7 +86,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
 		"initial_selections": [{"a": 206, "b": 206}],
-		"expected_selections": [{"a": 131, "b": 120}]
+		"expected_selections": [{"a": 131, "b": 120}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "CPXV",
@@ -92,7 +96,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target cell is an empty cell",
 		"initial_selections": [{"a": 279, "b": 248}],
-		"expected_selections": [{"a": 206, "b": 206}]
+		"expected_selections": [{"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "ZKX7",
@@ -102,7 +107,7 @@
 		"description": "Sequential cells in a column, one in top row merged",
 		"initial_selections": [{"a": 24, "b": 13}, {"a": 119, "b": 112}],
 		"expected_selections": [{"a": 24, "b": 13}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "U2XO",
@@ -111,7 +116,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target row has insufficient columns - cell doesn't move",
 		"initial_selections": [{"a": 354, "b": 347}],
-		"expected_selections": [{"a": 354, "b": 347}]
+		"expected_selections": [{"a": 354, "b": 347}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "CO3J",
@@ -120,7 +126,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells, some move some don't",
 		"initial_selections": [{"a": 36, "b": 25}, {"a": 242, "b": 227}, {"a": 354, "b": 347}],
-		"expected_selections": [{"a": 36, "b": 25}, {"a": 191, "b": 149}, {"a": 354, "b": 347}]
+		"expected_selections": [{"a": 36, "b": 25}, {"a": 191, "b": 149}, {"a": 354, "b": 347}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "APIB",
@@ -129,7 +136,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple sequential cells in a column",
 		"initial_selections": [{"a": 191, "b": 149}, {"a": 242, "b": 227}, {"a": 307, "b": 282}],
-		"expected_selections": [{"a": 111, "b": 101}, {"a": 191, "b": 149}, {"a": 242, "b": 227}]
+		"expected_selections": [{"a": 111, "b": 101}, {"a": 191, "b": 149}, {"a": 242, "b": 227}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "2MVT",
@@ -138,7 +146,8 @@
 		"file": "markdown02_multiple_tables.md",
 		"description": "Cells in top rows of multiple tables",
 		"initial_selections": [{"a": 142, "b": 124}, {"a": 1889, "b": 1876}],
-		"expected_selections": [{"a": 142, "b": 124}, {"a": 1889, "b": 1876}]
+		"expected_selections": [{"a": 142, "b": 124}, {"a": 1889, "b": 1876}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "53LW",
@@ -147,7 +156,8 @@
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cells in multiple tables",
 		"initial_selections": [{"a": 368, "b": 349}, {"a": 646, "b": 628}, {"a": 1514, "b": 1501}, {"a": 2129, "b": 2116}, {"a": 2265, "b": 2252}],
-		"expected_selections": [{"a": 284, "b": 265}, {"a": 562, "b": 544}, {"a": 1430, "b": 1417}, {"a": 2099, "b": 2086}, {"a": 2235, "b": 2222}]
+		"expected_selections": [{"a": 284, "b": 265}, {"a": 562, "b": 544}, {"a": 1430, "b": 1417}, {"a": 2099, "b": 2086}, {"a": 2235, "b": 2222}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "WVHY",
@@ -156,6 +166,7 @@
 		"file": "markdown03_borderless.md",
 		"description": "Cells in borderless table",
 		"initial_selections": [{"a": 112, "b": 102}, {"a": 158, "b": 147}, {"a": 203, "b": 193}],
-		"expected_selections": [{"a": 78, "b": 68}, {"a": 124, "b": 113}, {"a": 169, "b": 159}]
+		"expected_selections": [{"a": 78, "b": 68}, {"a": 124, "b": 113}, {"a": 169, "b": 159}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	}
 ]

@@ -6,7 +6,8 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into cells",
 		"initial_selections": [{"a": 125, "b": 245}],
-		"expected_selections": [{"a": 131, "b": 120}, {"a": 146, "b": 132}, {"a": 191, "b": 149}, {"a": 205, "b": 192}, {"a": 206, "b": 206}, {"a": 224, "b": 207}, {"a": 242, "b": 227}, {"a": 247, "b": 243}]
+		"expected_selections": [{"a": 131, "b": 120}, {"a": 146, "b": 132}, {"a": 191, "b": 149}, {"a": 205, "b": 192}, {"a": 206, "b": 206}, {"a": 224, "b": 207}, {"a": 242, "b": 227}, {"a": 247, "b": 243}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "F6FA",
@@ -16,7 +17,7 @@
 		"description": "Single cell selected - no change",
 		"initial_selections": [{"a": 243, "b": 247}],
 		"expected_selections": [{"a": 243, "b": 247}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "GHJF",
@@ -26,7 +27,7 @@
 		"description": "Multiple disjoint cells selected - no change",
 		"initial_selections": [{"a": 621, "b": 627}, {"a": 796, "b": 814}, {"a": 983, "b": 996}],
 		"expected_selections": [{"a": 621, "b": 627}, {"a": 796, "b": 814}, {"a": 983, "b": 996}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "72RA",
@@ -36,7 +37,7 @@
 		"description": "Cells in single sequence - right cell removed",
 		"initial_selections": [{"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}],
 		"expected_selections": [{"a": 101, "b": 111}, {"a": 112, "b": 119}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "UWF2",
@@ -46,7 +47,7 @@
 		"description": "Multiple selections, some sequences, some not",
 		"initial_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 149, "b": 191}, {"a": 243, "b": 247}, {"a": 248, "b": 279}],
 		"expected_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 149, "b": 191}, {"a": 243, "b": 247}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "PCTG",
@@ -56,7 +57,7 @@
 		"description": "Multiple sequences in multiple tables",
 		"initial_selections": [{"a": 433, "b": 452}, {"a": 453, "b": 459}, {"a": 460, "b": 478}, {"a": 479, "b": 492}, {"a": 493, "b": 506}, {"a": 1105, "b": 1124}, {"a": 1125, "b": 1131}, {"a": 1571, "b": 1584}, {"a": 1585, "b": 1598}, {"a": 1599, "b": 1606}, {"a": 2222, "b": 2235}, {"a": 2236, "b": 2249}],
 		"expected_selections": [{"a": 433, "b": 452}, {"a": 453, "b": 459}, {"a": 460, "b": 478}, {"a": 479, "b": 492}, {"a": 1105, "b": 1124}, {"a": 1571, "b": 1584}, {"a": 1585, "b": 1598}, {"a": 2222, "b": 2235}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "FVKH",
@@ -66,7 +67,7 @@
 		"description": "Sequence in line markup row - right cell removed",
 		"initial_selections": [{"a": 201, "b": 207}, {"a": 208, "b": 226}, {"a": 227, "b": 240}],
 		"expected_selections": [{"a": 201, "b": 207}, {"a": 208, "b": 226}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
 		"id": "KFVY",
@@ -76,6 +77,6 @@
 		"description": "markup excluded - multiple sequences, some in markup",
 		"initial_selections": [{"a": 201, "b": 207}, {"a": 208, "b": 226}, {"a": 227, "b": 240}, {"a": 517, "b": 536}, {"a": 537, "b": 543}],
 		"expected_selections": [{"a": 201, "b": 207}, {"a": 208, "b": 226}, {"a": 517, "b": 536}],
-		"view_settings": {"tabnav.include_markup": false}
+		"view_settings": {"tabnav.capture_level": "content"}
 	}
 ]
