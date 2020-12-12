@@ -914,11 +914,11 @@ class TabnavSelectLeftCommand(TabnavSelectNextCommand):
 
 class TabnavSelectUpCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.UP, -1, context=context)
+		super().run(edit, Direction.UP, 1, context=context)
 		
 class TabnavSelectDownCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.DOWN, -1, context=context)
+		super().run(edit, Direction.DOWN, 1, context=context)
 
 # Extend selection
 
@@ -953,11 +953,11 @@ class TabnavExtendSelectionLeftCommand(TabnavExtendSelectionCommand):
 
 class TabnavExtendSelectionUpCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.UP, -1, context=context)
+		super().run(edit, Direction.UP, 1, context=context)
 		
 class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.DOWN, -1, context=context)
+		super().run(edit, Direction.DOWN, 1, context=context)
 
 # Reduce selection
 
@@ -1049,11 +1049,11 @@ class TabnavReduceSelectionLeftCommand(TabnavReduceSelectionCommand):
 
 class TabnavReduceSelectionUpCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.UP, -1, context)
+		super().run(edit, Direction.UP, 1, context)
 
 class TabnavReduceSelectionDownCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.DOWN, -1, context)
+		super().run(edit, Direction.DOWN, 1, context)
 
 # Select row cells
 

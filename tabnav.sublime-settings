@@ -106,7 +106,7 @@
 				"cell": [
 					"^(?P<cell>(?P<markup>(?P<content> *?(?P<trimmed>\\B|(?:[^\" ].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *)))(?={0})", // First cell of the line - no preceding delimiter
 					"(?P<cell>{0}(?P<markup>(?P<content> *?(?P<trimmed>\\B|(?:[^\" ].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *)))(?={0})", // Middle cells - delimiters on both ends
-					"(?P<cell>{0}(?P<markup>(?P<content> *?(?P<trimmed>\\B|(?:[^\"].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *)))$" // Last cell of the line - no final delimiter look-ahead
+					"(?P<cell>{0}(?P<markup>(?P<content> *?(?P<trimmed>\\B(?=$)|(?:[^\"].*?)|(?:\"(?:\"{{2}}|[^\"])*?\")) *)))$" // Last cell of the line - no final delimiter look-ahead
 				]
 			},
 			"enable_explicitly": true, // We'll only infer the auto_csv context if tabnav has been explicitly enabled on a particular view
