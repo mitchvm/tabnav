@@ -20,8 +20,24 @@
     "command": "disable_tabnav"
   },
   {
-    "caption": "TabNav: Set capture level",
-    "command": "tabnav_set_capture_level"
+    "caption": "TabNav: Set capture level - trimmed",
+    "command": "tabnav_set_capture_level",
+    "args": { "capture_level": "trimmed" }
+  },
+  {
+    "caption": "TabNav: Set capture level - contents",
+    "command": "tabnav_set_capture_level",
+    "args": { "capture_level": "contents" }
+  },
+  {
+    "caption": "TabNav: Set capture level - markup",
+    "command": "tabnav_set_capture_level",
+    "args": { "capture_level": "markup" }
+  },
+  {
+    "caption": "TabNav: Set capture level - cell",
+    "command": "tabnav_set_capture_level",
+    "args": { "capture_level": "cell" }
   },
   {
     "caption": "TabNav: Set CSV delimiter",
@@ -36,88 +52,28 @@
     "command": "tabnav_move_cursor_end"
   },
   {
-    "caption": "TabNav: Move cursor to cell on left",
-    "command": "tabnav_move_cursor_left"
+    "caption": "TabNav: Move cursor...",
+    "command": "tabnav_move_cursor"
   },
   {
-    "caption": "TabNav: Move cursor to cell on right",
-    "command": "tabnav_move_cursor_right"
-  },
-  {
-    "caption": "TabNav: Move cursor to cell above",
-    "command": "tabnav_move_cursor_up"
-  },
-  {
-    "caption": "TabNav: Move cursor to cell below",
-    "command": "tabnav_move_cursor_down"
-  },
-  {
-    "caption": "TabNav: Add cursor to cell on left",
-    "command": "tabnav_add_cursor_left"
-  },
-  {
-    "caption": "TabNav: Add cursor to cell on right",
-    "command": "tabnav_add_cursor_right"
-  },
-  {
-    "caption": "TabNav: Add cursor to cell above",
-    "command": "tabnav_add_cursor_up"
-  },
-  {
-    "caption": "TabNav: Add cursor to cell below",
-    "command": "tabnav_add_cursor_down"
+    "caption": "TabNav: Add cursor...",
+    "command": "tabnav_add_cursor"
   },
   {
     "caption": "TabNav: Select current cell",
     "command": "tabnav_select_current"
   },
   {
-    "caption": "TabNav: Select cell on left",
-    "command": "tabnav_select_left"
+    "caption": "TabNav: Select cell...",
+    "command": "tabnav_select_next"
   },
   {
-    "caption": "TabNav: Select cell on right",
-    "command": "tabnav_select_right"
+    "caption": "TabNav: Extend selection...",
+    "command": "tabnav_extend_selection"
   },
   {
-    "caption": "TabNav: Select cell above",
-    "command": "tabnav_select_up"
-  },
-  {
-    "caption": "TabNav: Select cell below",
-    "command": "tabnav_select_down"
-  },
-  {
-    "caption": "TabNav: Extend selection to cell on left",
-    "command": "tabnav_extend_selection_left"
-  },
-  {
-    "caption": "TabNav: Extend selection to cell on right",
-    "command": "tabnav_extend_selection_right"
-  },
-  {
-    "caption": "TabNav: Extend selection to cell above",
-    "command": "tabnav_extend_selection_up"
-  },
-  {
-    "caption": "TabNav: Extend selection to cell below",
-    "command": "tabnav_extend_selection_down"
-  },
-  {
-    "caption": "TabNav: Reduce selection from the left",
-    "command": "tabnav_reduce_selection_left"
-  },
-  {
-    "caption": "TabNav: Reduce selection from the right",
-    "command": "tabnav_reduce_selection_right"
-  },
-  {
-    "caption": "TabNav: Reduce selection upwards",
-    "command": "tabnav_reduce_selection_up"
-  },
-  {
-    "caption": "TabNav: Reduce selection downwards",
-    "command": "tabnav_reduce_selection_down"
+    "caption": "TabNav: Reduce selection...",
+    "command": "tabnav_reduce_selection"
   },
   {
     "caption": "TabNav: Select row cells",

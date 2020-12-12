@@ -15,12 +15,26 @@ capture_levels = OrderedDict([
 	('cell',    (3, '3: Cell - the entire cell, potentially including a delimiter'))
 ])
 
-class Direction:
-	RIGHT = (0,1)
-	LEFT = (0,-1)
-	DOWN = (1,0)
-	UP = (-1,0)
+move_directions = {
+	"Left": (0,-1),
+	"Right": (0,1),
+	"Up": (-1,0),
+	"Down": (1,0)
+}
 
+cursor_cell_directions = {
+	"Left": -1,
+	"Right": 1,
+	"Up": -1,
+	"Down": -1
+}
+
+selection_cell_directions = {
+	"Left": -1,
+	"Right": 1,
+	"Up": 1,
+	"Down": 1
+}
 
 class ColumnIndexError(Exception):
 	def __init__(self, row, target_index, columns):
@@ -659,7 +673,7 @@ class TableNavigator:
 		new_cells = []
 		dr, dc = direction
 		selections = list(self.view.sel())
-		if direction in [Direction.RIGHT, Direction.DOWN]:
+		if direction in ["Right", "Down"]:
 			# If multiple regions are selected, avoid clobbering one-another
 			selections = reversed(selections)
 		for region in selections:
@@ -753,6 +767,8 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		self.table.parse_selected_rows()
 		self.tabnav = TableNavigator(self.table, self.context.capture_level, cell_direction)
 
+	def input(self, args):
+		return TabnavDirectionInputHandler()
 
 # Move cells:
 
@@ -776,16 +792,13 @@ class TabnavMoveCursorEndCommand(TabnavMoveCursorCurrentCellCommand):
 		super().run(edit, 1, context)
 
 class TabnavMoveCursorCommand(TabnavCommand):
-	def run(self, edit, move_direction, cell_direction=1, move_cursors=False, context=None):
-		'''Moves cursors to the cells adjacent to the currently selected cells in the given Direction.
-
-		The cell_direction inidicates which end of the cells the cursor should be placed.
-		move_cursors=False attempts to maintain the relative offset of the cursors within the cells.
-		move_cursors=True moves the cursors to the "end" of the cell (based on the cell_direction).'''
+	def run(self, edit, move_direction, context=None):
+		'''Moves cursors to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
-			self.init_table(cell_direction)
-			if not self.tabnav.split_and_move_current_cells(move_cursors):
-				self.move_next_cell(move_direction)
+			direction = move_directions[move_direction]
+			self.init_table(cursor_cell_directions[move_direction])
+			if not self.tabnav.split_and_move_current_cells(direction[0]==0):
+				self.move_next_cell(direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
@@ -812,33 +825,29 @@ class TabnavMoveCursorCommand(TabnavCommand):
 
 class TabnavMoveCursorRightCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.RIGHT, 1, True, context=context)
+		super().run(edit, "Right", context=context)
 
 class TabnavMoveCursorLeftCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.LEFT, -1, True, context=context)
+		super().run(edit, "Left", context=context)
 
 class TabnavMoveCursorUpCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.UP, -1, False, context=context)
+		super().run(edit, "Up", context=context)
 		
 class TabnavMoveCursorDownCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.DOWN, -1, False, context=context)
+		super().run(edit, "Down", context=context)
 		
 # Add cells
 
 class TabnavAddCursorCommand(TabnavCommand):
-	def run(self, edit, move_direction, cell_direction=1, move_cursors=False, context=None):
-		'''Adds cursors to the cells adjacent to the currently selected cells in the given Direction.
-
-		The cell_direction inidicates which end of the cells the cursor should be placed.
-		move_cursors=False attempts to maintain the relative offset of the cursors within the cells.
-		move_cursors=True moves the cursors to the "end" of the cell (based on the cell_direction).'''
+	def run(self, edit, move_direction, context=None):
+		'''Adds cursors to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
-			self.init_table(cell_direction)
-			if not self.tabnav.split_and_move_current_cells(move_cursors):
-				self.add_next_cell(move_direction)
+			self.init_table(cursor_cell_directions[move_direction])
+			if not self.tabnav.split_and_move_current_cells(False):
+				self.add_next_cell(move_directions[move_direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
@@ -856,19 +865,19 @@ class TabnavAddCursorCommand(TabnavCommand):
 
 class TabnavAddCursorRightCommand(TabnavAddCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.RIGHT, 1, False, context=context)
+		super().run(edit, "Right", context=context)
 
 class TabnavAddCursorLeftCommand(TabnavAddCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.LEFT, -1, False, context=context)
+		super().run(edit, "Left", context=context)
 
 class TabnavAddCursorUpCommand(TabnavAddCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.UP, -1, False, context=context)
+		super().run(edit, "Up", context=context)
 		
 class TabnavAddCursorDownCommand(TabnavAddCursorCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.DOWN, -1, False, context=context)
+		super().run(edit, "Down", context=context)
 
 # Select cells
 
@@ -882,14 +891,12 @@ class TabnavSelectCurrentCommand(TabnavCommand):
 			log.info(e)
 
 class TabnavSelectNextCommand(TabnavCommand):
-	def run(self, edit, move_direction, cell_direction=1, context=None):
-		'''Moves all selection regions to the cells adjacent to the currently selected cells in the given Direction.
-
-		The cell_direction inidicates which end of the region the cursor should be placed.'''
+	def run(self, edit, move_direction, context=None):
+		'''Moves all selection regions to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
-			self.init_table(cell_direction)
+			self.init_table(selection_cell_directions[move_direction])
 			if not self.tabnav.split_and_select_current_cells():
-				self.select_next_cell(move_direction)
+				self.select_next_cell(move_directions[move_direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)		
 
@@ -906,31 +913,29 @@ class TabnavSelectNextCommand(TabnavCommand):
 
 class TabnavSelectRightCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.RIGHT, 1, context=context)
+		super().run(edit, "Right", context=context)
 
 class TabnavSelectLeftCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.LEFT, -1, context=context)
+		super().run(edit, "Left", context=context)
 
 class TabnavSelectUpCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.UP, 1, context=context)
+		super().run(edit, "Up", context=context)
 		
 class TabnavSelectDownCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.DOWN, 1, context=context)
+		super().run(edit, "Down", context=context)
 
 # Extend selection
 
 class TabnavExtendSelectionCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, context=None):
-		'''Adds selection regions to all cells adjacent to the currently selected cells in the given Direction.
-
-		The cell_direction inidicates which end of the region the cursor should be placed.'''
+		'''Adds selection regions to all cells adjacent to the currently selected cells in the given Direction.'''
 		try:
-			self.init_table(cell_direction)
+			self.init_table(selection_cell_directions[move_direction])
 			if not self.tabnav.split_and_select_current_cells():
-				self.extend_cell_selection(move_direction)
+				self.extend_cell_selection(move_directions[move_direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
@@ -945,32 +950,33 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 
 class TabnavExtendSelectionRightCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.RIGHT, 1, context=context)
+		super().run(edit, "Right", context=context)
 
 class TabnavExtendSelectionLeftCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.LEFT, -1, context=context)
+		super().run(edit, "Left", context=context)
 
 class TabnavExtendSelectionUpCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.UP, 1, context=context)
+		super().run(edit, "Up", context=context)
 		
 class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.DOWN, 1, context=context)
+		super().run(edit, "Down", context=context)
 
 # Reduce selection
 
 class TabnavReduceSelectionCommand(TabnavCommand):
-	def run(self, edit, move_direction, cell_direction=1 , context=None):
+	def run(self, edit, move_direction, context=None):
 		try:
+			cell_direction = selection_cell_directions[move_direction]
 			self.init_table(cell_direction)
 			if not self.tabnav.split_and_select_current_cells():
 				if cell_direction > 0:
 					self._point_from_region = lambda region: region.end()
 				else:
 					self._point_from_region = lambda region: region.begin()
-				dr, dc = move_direction
+				dr, dc = move_directions[move_direction]
 				if dc != 0:
 					self.reduce_cell_selection_row(-dc) # reverse the given direction
 				else:
@@ -1041,27 +1047,27 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 
 class TabnavReduceSelectionRightCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.RIGHT, 1, context)
+		super().run(edit, "Right", context)
 
 class TabnavReduceSelectionLeftCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.LEFT, -1, context)
+		super().run(edit, "Left", context)
 
 class TabnavReduceSelectionUpCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.UP, 1, context)
+		super().run(edit, "Up", context)
 
 class TabnavReduceSelectionDownCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, Direction.DOWN, 1, context)
+		super().run(edit, "Down", context)
 
 # Select row cells
 
 class TabnavSelectRowCommand(TabnavCommand):
-	def run(self, edit, cell_direction=1, context=None):
+	def run(self, edit, context=None):
 		'''Selects all cells in all rows intersecting the current selections.'''
 		try:
-			self.init_table(cell_direction)
+			self.init_table(1)
 			level_key = lambda c: c.capture_level
 			row_cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
 			cells = [c for c in row_cells if c.capture_level <= self.context.capture_level]
@@ -1079,20 +1085,16 @@ class TabnavSelectRowCommand(TabnavCommand):
 # Select column cells
 
 class TabnavSelectColumnCommand(TabnavCommand):
-	def run(self, edit, cell_direction=1, context=None):
+	def run(self, edit, context=None):
 		'''Selects all cells in all columns intersecting the current selections.'''
 		try:
-			self.init_table(cell_direction)
-			if cell_direction > 0:
-				point_from_region = lambda region: region.end()
-			else:
-				point_from_region = lambda region: region.begin()
+			self.init_table(1)
 			# include all capture levels in the initial selection in case a cursor is in a markup row
 			max_level = max(v[0] for v in capture_levels.values())
 			self.tabnav.split_and_select_current_cells(capture_level=max_level)
 			columns = []
 			for region in self.view.sel():
-				cell = self.table.cell_at_point(point_from_region(region))
+				cell = self.table.cell_at_point(region.end())
 				containing_columns = [col for col in columns if col.contains(cell)]
 				if len(containing_columns) > 0:
 					continue # This cell is already contained in a previously captured column
@@ -1108,10 +1110,10 @@ class TabnavSelectColumnCommand(TabnavCommand):
 # Select all table cells
 
 class TabnavSelectAllCommand(TabnavCommand):
-	def run(self, edit, cell_direction=1, context=None):
+	def run(self, edit, context=None):
 		'''Selects all cells in all tables intersecting the current selections.'''
 		try:
-			self.init_table(cell_direction)
+			self.init_table(1)
 			self.tabnav.split_and_select_current_cells()
 			columns = []
 			# Expand the first column in each disjoint table to parse all rows of all selected tables
@@ -1133,6 +1135,14 @@ class TabnavSelectAllCommand(TabnavCommand):
 			log.info(e)
 
 # Other
+
+class TabnavDirectionInputHandler(sublime_plugin.ListInputHandler):
+	def name(self):
+		return "move_direction"
+
+	def list_items(self):
+		return ["Left", "Right", "Up", "Down"]
+
 
 class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
@@ -1233,25 +1243,6 @@ class TabnavSetCaptureLevelCommand(sublime_plugin.TextCommand):
 
 		Available capture levels are defined in the global capture_levels dictionary'''
 		self.view.settings().set('tabnav.capture_level', capture_level)
-
-	def input(self, args):
-		return TabnavCaptureLevelInputHandler()
-
-class TabnavCaptureLevelInputHandler(sublime_plugin.ListInputHandler):
-	def name(self):
-		return 'capture_level'
-
-	def list_items(self):
-		return [(v[1], k) for k, v in capture_levels.items()]
-
-class TabnavSetCaptureLevelMenuCommand(sublime_plugin.TextCommand):
-	'''Shows the command palette to trigger the set capture level command, 
-	so that the input handler is triggered.
-
-	It's a bit hacky, but I'd rather have a consistent input method.'''
-	def run(self, edit):
-		self.view.window().run_command("show_overlay", args={"overlay":"command_palette", "text":"TabNav: Set capture level"})
-
 
 def is_other_csv_scope(view):
 		scope = view.scope_name(0)

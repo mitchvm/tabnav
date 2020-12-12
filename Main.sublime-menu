@@ -15,12 +15,34 @@
             "command": "disable_tabnav"
           },
           {
-            "caption": "Set capture level",
-            "command": "tabnav_set_capture_level_menu"
-          },
-          {
           	"caption": "Set CSV delimiter",
             "command": "tabnav_set_csv_delimiter_menu",
+          },
+          {
+            "caption": "Set capture level",
+            "id": "tabnav_capture_level",
+            "children": [
+              {
+                "caption": "Trimmed contents",
+                "command": "tabnav_set_capture_level",
+                "args": { "capture_level": "trimmed" }
+              },
+              {
+                "caption": "Content including whitespace",
+                "command": "tabnav_set_capture_level",
+                "args": { "capture_level": "content" }
+              },
+              {
+                "caption": "Markup and contents",
+                "command": "tabnav_set_capture_level",
+                "args": { "capture_level": "markup" }
+              },
+              {
+                "caption": "Entire cell",
+                "command": "tabnav_set_capture_level",
+                "args": { "capture_level": "cell" }
+              }
+            ]
           },
           {
             "caption": "-"
