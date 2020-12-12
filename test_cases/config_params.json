@@ -1,0 +1,42 @@
+[
+	{
+		"id": "D4KD",
+		"command": "tabnav_select_current",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Context capture level overrides default",
+		"initial_selections": [{"a": 126, "b": 126}],
+		"expected_selections": [{"a": 121, "b": 130}],
+		"view_settings": {"tabnav.capture_level": null},
+		"package_settings": 
+		{ 
+			"user_contexts":
+			{
+				"markdown":
+				{
+					"capture_level": "trimmed"
+				}
+			}
+		}
+	},
+	{
+		"id": "2KN2",
+		"command": "tabnav_select_current",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "View capture level overrides context",
+		"initial_selections": [{"a": 126, "b": 126}],
+		"expected_selections": [{"a": 119, "b": 131}],
+		"view_settings": {"tabnav.capture_level": "cell"},
+		"package_settings": 
+		{ 
+			"user_contexts":
+			{
+				"markdown":
+				{
+					"capture_level": "trimmed"
+				}
+			}
+		}
+	}
+]

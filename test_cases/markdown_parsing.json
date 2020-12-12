@@ -247,11 +247,11 @@
 					"patterns": [
 						{
 							"line": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$",
-							"cell": "\\|(?P<markup>\\s*[:-]+\\s*)(?=\\|)"
+							"cell": "(?P<cell>\\|(?P<markup>\\s*[:-]+\\s*))(?=\\|)"
 						},
 						{ 
 							"line": "^(?P<table>\\|.*\\|)$",
-							"cell": "\\|(?P<content>\\s*(?P<trimmed>.*?)\\s*)(?=\\|)"
+							"cell": "(?P<cell>\\|(?P<content>\\s*(?P<trimmed>.*?)\\s*))(?=\\|)"
 						}
 					]
 				}
@@ -276,11 +276,11 @@
 					"patterns": [
 						{
 							"line": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$",
-							"cell": "\\|(?P<markup>\\s*[:-]+\\s*)(?=\\|)"
+							"cell": "(?P<cell>\\|(?P<markup>\\s*[:-]+\\s*))(?=\\|)"
 						},
 						{ 
 							"line": "^(?P<table>\\|.*\\|)$",
-							"cell": "\\|(?P<content>\\s*(?P<trimmed>.*?)\\s*)(?=\\|)"
+							"cell": "(?P<cell>\\|(?P<content>\\s*(?P<trimmed>.*?)\\s*))(?=\\|)"
 						}
 					]
 				}
