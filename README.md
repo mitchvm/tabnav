@@ -21,6 +21,7 @@ TabNav also provides the ability to copy only the contents of the table, excludi
   - [Markdown](#markdown)
   - [Org Mode](#org-mode)
   - [CSV](#csv)
+- [Capture Levels](#capture-levels)
 - [Customization](#customization)
   - [Key Bindings](#key-bindings)
   - [Configuration Options](#configuration-options)
@@ -28,6 +29,8 @@ TabNav also provides the ability to copy only the contents of the table, excludi
     - [CSV Context Configuration](#csv-context-configuration)
   - [Custom Contexts](#custom-contexts)
     - [Pattern Definitions](#pattern-definitions)
+      - [`line` capture group](#line-capture-group)
+      - [`cell` capture groups](#cell-capture-groups)
 
 <!-- /MarkdownTOC -->
 
@@ -92,16 +95,15 @@ Beyond the 16 core navigation commands, these additional movement and selection 
 
 These commands will operate even outside the context of a table.
 
-| Name                                 |                                  Windows/Linux Key Binding |                                 macOS Key Binding | Description                                                                                                                                                                                                                 |
-|:-------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Enable on current view               |                               <kbd>Ctrl</kbd>+<kbd>'</kbd> |                         <kbd>⌘</kbd>+<kbd>'</kbd> | Enables TabNav on the current view. Note, once enabled, the key binding is clobbered by the "Move cursor to cell on right" command.                                                                                         |
-| Disable on current view              | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>'</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd>+<kbd>'</kbd> | Disables TabNav on the current view.                                                                                                                                                                                        |
-| Include markup lines in selections   |                                                            |                                                   | Configures TabNav to include lines containing table markup in selections and movements. By default, they are excluded.                                                                                                      |
-| Exclude markup lines from selections |                                                            |                                                   | Configures TabNav to exclude lines containing table markup from selections and movements.                                                                                                                                   |
-| Set CSV delimiter                    |                                                            |                                                   | Sets the delimiter to use for CSV files. See the [CSV](#csv) context section for more information.                                                                                                                          |
-| Trim whitespace from selections      |                                <kbd>Alt</kbd>+<kbd>W</kbd> |                         <kbd>^</kbd>+<kbd>W</kbd> | Removes all whitespace characters from either end of all current selections.                                                                                                                                                |
-| Copy selections as TSV               |                                                            |                                                   | Copies all current selections as tab-delimited data, with all selections on the same row of text tab-separated and a newline between selection row. This is useful, for example, to copy data from a text table into Excel. |
-| Copy selections with delimiter       |                                                            |                                                   | Same as the "Copy selections as TSV" command, but prompts the user to input the delimiter to use.                                                                                                                           |
+| Name                            |                                  Windows/Linux Key Binding |                                 macOS Key Binding | Description                                                                                                                                                                                                                 |
+|:--------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Enable on current view          |                               <kbd>Ctrl</kbd>+<kbd>'</kbd> |                         <kbd>⌘</kbd>+<kbd>'</kbd> | Enables TabNav on the current view. Note, once enabled, the key binding is clobbered by the "Move cursor to cell on right" command.                                                                                         |
+| Disable on current view         | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>'</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd>+<kbd>'</kbd> | Disables TabNav on the current view.                                                                                                                                                                                        |
+| Set capture level               |                                                            |                                                   | Configures the selection [capture level](#capture-levels) in use on the current view.                                                                                                                                       |
+| Set CSV delimiter               |                                                            |                                                   | Sets the delimiter to use for CSV files. See the [CSV](#csv) context section for more information.                                                                                                                          |
+| Trim whitespace from selections |                                <kbd>Alt</kbd>+<kbd>W</kbd> |                         <kbd>^</kbd>+<kbd>W</kbd> | Removes all whitespace characters from either end of all current selections.                                                                                                                                                |
+| Copy selections as TSV          |                                                            |                                                   | Copies all current selections as tab-delimited data, with all selections on the same row of text tab-separated and a newline between selection row. This is useful, for example, to copy data from a text table into Excel. |
+| Copy selections with delimiter  |                                                            |                                                   | Same as the "Copy selections as TSV" command, but prompts the user to input the delimiter to use.                                                                                                                           |
 
 ## Contexts
 
@@ -164,6 +166,19 @@ Finally, if all other methods of determining the delimiter fail, TabNav uses a c
 
 <sup><b>3</b></sup> TabNav only partially supports Rainbow CSV syntaxes. The two restrictions are: only single-character delimiters are supported, and all CSV files are treated as quoted files, regardless if using a Rainbow CSV "simple" syntax.
 
+## Capture Levels
+
+TabNav contexts provide multiple "capture levels" that define how much text to select within a table cell. The available capture levels are listed below. Each level captures the the same text as the level above, and potentially more.
+
+1. **Trimmed**: Only the text contained within the cell, excluding any whitespace on either side. Cells containing only markup are omitted from selections.
+2. **Content**: The text in the cell as well as any whitespace around the text. Cells containing only markup are omitted from selections.
+3. **Markup**: The content of the cell, plus any markup in the cell, but excluding the delimiter. All table cells, including those without any markup, are included in selections.
+4. **Cell**: The entirety of all table cells are included in selections, including the delimiter preceding each cell, if applicable.
+
+Note that not all capture levels are relevant to all contexts - CSV, for example, does not contain any markup beyond the cell delimiter. What's more, most contexts do not mix markup and content within the same cell.
+
+The default capture level is content. The capture level in use on a particular view can be changed with the ["Set capture level"](#other-commands) command. The default capture level can be configured [globally](#configuration-options) or [per-context](#context-configuration).
+
 ## Customization
 
 TabNav offers considerable configuration, or even customizability to modify the default contexts' behaviour or add new contexts.
@@ -180,7 +195,7 @@ To add custom key bindings, select the TabNav "Key Bindings" menu option, which 
 
 Selecting the "TabNav - Settings" menu item opens the TabNav default settings file, as well as your local TabNav settings file. Override the default configurations by placing the parameter into your local settings file. The following global configuration parameters are available:
 
-* `include_markup`: When false, lines containing table markup are skipped when moving and not included in selections. To temporarily include markup lines, use the ["Include markup lines in selections" command](#other-commands). Can also be overridden on a per-context basis. Default: `false`.
+* `capture_level`: The initial [capture level](#capture-levels) to use. The capture level can also be configured per-context, or changed a particular view using the ["Set capture level" command](#other-commands). Options: `trimmed`, `content`, `markup`, `cell`. Default: `content`.
 * `trim_on_copy`: When true, the ["Copy selections" commands](#other-commands) trim whitespace from the selected regions' text prior to putting it on the clipboard. The selections in the view themselves are not altered. Default: `true`.
 * `log_level`: Set to `INFO` or `DEBUG` to see TabNav log messages in the Sublime Text console. Default `WARNING`.
 
@@ -196,12 +211,16 @@ To override a default context's setting, you only need to provide the path to th
   {
     "markdown":
     {
-      "content_patterns": {
-        "line": "^(?P<table>\\|.*\\|)$"
-      },
-      "markup_patterns": {
-        "line": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$"
-      }
+      "patterns": [
+        {
+          "line": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$",
+          "cell": "(?P<cell>\\|(?P<markup>\\s*[:-]+\\s*))(?=\\|)"
+        },
+        { 
+          "line": "^(?P<table>\\|.*\\|)$",
+          "cell": "(?P<cell>\\|(?P<content>\\s*(?P<trimmed>.*?)\\s*))(?=\\|)"
+        }
+      ]
     }
   }
 }
@@ -226,21 +245,74 @@ The following parameters are used to define a TabNav context:
 
 1. `selector`: **Required**. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that identifies the scope within which the context operates. If multiple selections are currently active, only the first selection's scope is checked. If multiple TabNav contexts' selectors match the current scope, then the context with the highest selector "score" (as returned by the Sublime Text API) is used.
 2. `except_selector`: _Optional_. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that overrides the base `selector`. If the first selection matches this selector, then the context is _not_ matched.
-3. `content_patterns`: **Required**. One or more [pattern definitions](#pattern-definitions) used to identify and parse non-markup rows of table content. If only one pattern is provided, it need-not be placed in a JSON array. If multiple patterns are provided, they are applied in sequence until the first match.
-4. `markup_patterns`: _Optional_. One or more [pattern definitions](#pattern-definitions) used to identify and parse markup rows of the table. If only one pattern is provided, it need-not be placed in a JSON array. If multiple patterns are provided, they are applied in sequence until the first match.
+3. `patterns`: **Required**. One or more [pattern definitions](#pattern-definitions) used to identify and parse rows of table content. If only one pattern is provided, it need-not be placed in a JSON array. If multiple patterns are provided, they are applied in sequence until the first match. In general, patterns for markup rows should be placed above patterns for content rows.
 5. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
-6. `include_markup`: _Optional_. A boolean to indicate if markup lines should be included when using this context. Overrides the global `include_markup` setting.
-
-A note on markup vs. content (non-markup) lines: the markup patterns take precedence over the content patterns. That is, if a positive match is made against any of the `markup_patterns`, then the line is assumed to be markup and not content.
+6. `capture_level`: _Optional_. The default [capture level](#capture-levels) to use with this context. Overrides the global `capture_level` setting. Possible values: `trimmed`, `content`, `markup`, `cell`.
 
 #### Pattern Definitions
 
-The `content_patterns` and `markup_patterns` [context parameters](#custom-contexts) are used to:
+The each element of the `patterns` [context parameter](#custom-contexts) defines how to:
 
 1. identify that a line of text is part of a table, and
 2. parse the contents of the table cells of that line of text.
 
-Each pattern contains two elements:
+Each pattern contains two elements, explained in more detail below.
 
-1. `line`: _Optional_. A single [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is part of a table. If used, the `line` expression must return a named `table` group that captures the part of the line to use for matching table content with the `cell` expressions. If a `line` expression is not provided, the entire line of text is parsed using the `cell` expressions.
-2. `cell`: **Required**. One or more [regular expressions](https://docs.python.org/3.3/library/re.html) that are used to identify cell contents from a line of text. Each match of each expression should return a single cell's contents within a named `content` group. Each expression can also, optionally, return a zero-width match immediately prior to the last matching delimiter. This match will be ignored. If multiple expressions are provided in a JSON array, they are processed in sequence until their matches are exhausted. Use this to have, for example, one expression to capture the first cell on the line, a different expression to capture cells in the middle of the row, and a third expression to capture the final cell on the line. If only one expression is provided, it need-not be placed in a JSON array.
+1. `line`: _Optional_. A single [regular expression](https://docs.python.org/3.3/library/re.html) that is used to determine if the line of text is part of a table.
+2. `cell`: **Required**. One or more [regular expressions](https://docs.python.org/3.3/library/re.html) that are used to identify cell contents from a line of text.
+
+##### `line` capture group
+
+The optional `line` expression is used to determine the pattern applies to the line of text and, if so, the portion of the line of text that constitutes the table. If used, the `line` expression must return a named `table` group that captures the part of the line to use for matching table content with the `cell` expressions. If a `line` expression is not provided with the pattern, the entire line of text is parsed using the `cell` expressions.
+
+##### `cell` capture groups
+
+Each element of the `cell` expressions should contain up to four **nested** named capture groups:
+
+```
+(cell (markup (content (trimmed))))
+```
+
+These correspond to the four TabNav [capture levels](#capture-levels). All outer capture groups must be defined if an inner group is to be used, regardless if the outer group captures anything additional to the inner group or not. For example, most table formats do not contain markup within content cells, however, the `markup` group must be included to be able to capture the `content` group.
+
+To define markup-only cells that should not be included in selections at the `content` or `trimmed` levels, omit the `content` and `trimmed` capture groups.
+
+The `cell` capture group should capture the delimiter that **precedes** the content of the cell, if applicable. In "borderless" contexts, such as CSV and borderless Markdown tables, the first cell of the line does not capture a delimiter.
+
+Each match of each expression in the array should return a single cell's contents. Each expression can also, optionally, return a zero-width match immediately prior to the last matching delimiter. This match will be ignored.
+
+If multiple expressions are provided in a JSON array, they are each processed in sequence until their matches are exhausted. Use this to have, for example, one expression to capture the first cell on the line, a different expression to capture cells in the middle of the row, and a third expression to capture the final cell on the line. If only one expression is provided, it need-not be placed in a JSON array.
+
+###### Example
+
+One table format (not _yet_ supported by TabNav) that mixes markup and content in a table cell is [Textile](https://textile-lang.com/doc/tables). Here is a sample row of a Textile table that defines headers. The `_.` at the start of the cell is markup indicating that the cell is a header cell.
+
+```
+|_. First Header  |_. Second Header |
+```
+
+Here is a visual representation of what the four TabNav capture groups should capture from this row:
+
+```
+|_. First Header  |_. Second Header |
+↑↑ ↑↑          ↑ ↑↑↑ ↑↑           ↑↑
+|| |└ trimmed ─┘ ||| |└ trimmed ──┘|
+|| └─ content ───┤|| └─ content─ ──┤
+|└─── markup ────┤|└─── markup ────┤
+└──── cell ──────┘└──── cell ──────┘
+```
+
+Alternatively, presented as a table (how meta):
+
+| Cell # | Capture Group | Result                               |
+|-------:|:--------------|:-------------------------------------|
+|      1 | `trimmed`     | `First Header`                       |
+|      1 | `content`     | ` First Header  `                    |
+|      1 | `markup`      | `_. First Header  `                  |
+|      1 | `cell`        | <code>&vert;_. First Header  </code> |
+|      2 | `trimmed`     | `Second Header`                      |
+|      2 | `content`     | ` Second Header `                    |
+|      2 | `markup`      | `_. Second Header `                  |
+|      2 | `cell`        | <code>&vert;_. Second Header </code> |
+
+Notice that the final `|` is not captured as part of any cell - each cell only captures the _preceding_ delimiter.
