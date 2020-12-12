@@ -269,34 +269,6 @@ class TabnavCommandTestsInputHandler(sublime_plugin.ListInputHandler):
 			return sublime.Html(result)
 
 
-class TabnavContextTestsCommand(sublime_plugin.WindowCommand):
-	def run(self, context_name):
-		launch_tests(self.window, context_name=context_name)
-
-	def input(self, args):
-		return TabnavContextTestsInputHandler()
-
-class TabnavContextTestsInputHandler(sublime_plugin.ListInputHandler):
-	def name(self):
-		return "context_name"
-
-	def list_items(self):
-		context_key = lambda t:t.context_name
-		test_cases = sorted(enumerate_test_cases(), key=context_key)
-		return [("{0} - {1} test cases".format(context_name, len(list(g))), context_name) for context_name, g in itertools.groupby(test_cases, context_key)]
-
-	def preview(self, value):
-		commandkey = lambda t:t.command_name
-		test_cases = sorted(enumerate_test_cases(context_name=value), key=commandkey)
-		if len(test_cases) == 0:
-			return "Context not found"
-		else:
-			result = "<ul>"
-			for command_name, g in itertools.groupby(test_cases, commandkey):
-				result = result + "<li>{0}: {1} test cases</li>".format(command_name, len(list(g)))
-			result = result + "</ul>"
-			return sublime.Html(result)
-
 ## Utility commands
 
 class TabnavNewTestIdsCommand(sublime_plugin.TextCommand):

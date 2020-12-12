@@ -5,8 +5,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell in bottom row of file doesn't move",
-		"initial_selections": [{"a": 311, "b": 308}],
-		"expected_selections": [{"a": 311, "b": 308}],
+		"initial_selections": [{"a": 308, "b": 311}],
+		"expected_selections": [{"a": 308, "b": 311}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -15,8 +15,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "First cell of row",
-		"initial_selections": [{"a": 111, "b": 101}],
-		"expected_selections": [{"a": 191, "b": 149}],
+		"initial_selections": [{"a": 101, "b": 111}],
+		"expected_selections": [{"a": 149, "b": 191}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -25,8 +25,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "Last cell of row",
-		"initial_selections": [{"a": 146, "b": 132}],
-		"expected_selections": [{"a": 224, "b": 207}],
+		"initial_selections": [{"a": 132, "b": 146}],
+		"expected_selections": [{"a": 207, "b": 224}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -35,8 +35,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup excluded - markup row jumped",
-		"initial_selections": [{"a": 24, "b": 13}],
-		"expected_selections": [{"a": 119, "b": 112}],
+		"initial_selections": [{"a": 13, "b": 24}],
+		"expected_selections": [{"a": 112, "b": 119}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -45,8 +45,8 @@
 		"context": "markdown",
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup excluded - multiple sequential markup rows jumped",
-		"initial_selections": [{"a": 693, "b": 699}],
-		"expected_selections": [{"a": 1035, "b": 1029}],
+		"initial_selections": [{"a": 699, "b": 693}],
+		"expected_selections": [{"a": 1029, "b": 1035}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -55,8 +55,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup excluded - multiple cursros, markup only jumped as applicable",
-		"initial_selections": [{"a": 36, "b": 25}, {"a": 119, "b": 112}],
-		"expected_selections": [{"a": 131, "b": 120}, {"a": 205, "b": 192}],
+		"initial_selections": [{"a": 25, "b": 36}, {"a": 112, "b": 119}],
+		"expected_selections": [{"a": 120, "b": 131}, {"a": 192, "b": 205}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -65,8 +65,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell in line markup row moves out",
-		"initial_selections": [{"a": 74, "b": 63}],
-		"expected_selections": [{"a": 119, "b": 112}],
+		"initial_selections": [{"a": 63, "b": 74}],
+		"expected_selections": [{"a": 112, "b": 119}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -75,8 +75,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup included - moves to markup row",
-		"initial_selections": [{"a": 24, "b": 13}],
-		"expected_selections": [{"a": 74, "b": 63}],
+		"initial_selections": [{"a": 13, "b": 24}],
+		"expected_selections": [{"a": 63, "b": 74}],
 		"view_settings": {"tabnav.capture_level": "markup"}
 	},
 	{
@@ -86,7 +86,7 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
 		"initial_selections": [{"a": 206, "b": 206}],
-		"expected_selections": [{"a": 279, "b": 248}],
+		"expected_selections": [{"a": 248, "b": 279}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -95,7 +95,7 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target cell is an empty cell",
-		"initial_selections": [{"a": 131, "b": 120}],
+		"initial_selections": [{"a": 120, "b": 131}],
 		"expected_selections": [{"a": 206, "b": 206}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
@@ -105,8 +105,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "Sequential cells in a column, one in bottom row - merged",
-		"initial_selections": [{"a": 247, "b": 243}, {"a": 311, "b": 308}],
-		"expected_selections": [{"a": 311, "b": 308}],
+		"initial_selections": [{"a": 243, "b": 247}, {"a": 308, "b": 311}],
+		"expected_selections": [{"a": 308, "b": 311}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -115,8 +115,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target row has insufficient columns - cell doesn't move",
-		"initial_selections": [{"a": 224, "b": 207}],
-		"expected_selections": [{"a": 224, "b": 207}],
+		"initial_selections": [{"a": 207, "b": 224}],
+		"expected_selections": [{"a": 207, "b": 224}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -125,8 +125,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells, some move some don't",
-		"initial_selections": [{"a": 111, "b": 101}, {"a": 224, "b": 207}, {"a": 311, "b": 308}],
-		"expected_selections": [{"a": 191, "b": 149}, {"a": 224, "b": 207}, {"a": 311, "b": 308}],
+		"initial_selections": [{"a": 101, "b": 111}, {"a": 207, "b": 224}, {"a": 308, "b": 311}],
+		"expected_selections": [{"a": 149, "b": 191}, {"a": 207, "b": 224}, {"a": 308, "b": 311}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -135,8 +135,8 @@
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
 		"description": "Sequential cells in the same column",
-		"initial_selections": [{"a": 119, "b": 112}, {"a": 205, "b": 192}, {"a": 247, "b": 243}],
-		"expected_selections": [{"a": 205, "b": 192}, {"a": 247, "b": 243}, {"a": 311, "b": 308}],
+		"initial_selections": [{"a": 112, "b": 119}, {"a": 192, "b": 205}, {"a": 243, "b": 247}],
+		"expected_selections": [{"a": 192, "b": 205}, {"a": 243, "b": 247}, {"a": 308, "b": 311}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -145,8 +145,8 @@
 		"context": "markdown",
 		"file": "markdown02_multiple_tables.md",
 		"description": "Cells in bottom rows of multiple tables",
-		"initial_selections": [{"a": 1822, "b": 1804}, {"a": 2819, "b": 2806}],
-		"expected_selections": [{"a": 1822, "b": 1804}, {"a": 2819, "b": 2806}],
+		"initial_selections": [{"a": 1804, "b": 1822}, {"a": 2806, "b": 2819}],
+		"expected_selections": [{"a": 1804, "b": 1822}, {"a": 2806, "b": 2819}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -155,8 +155,8 @@
 		"context": "markdown",
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple tables",
-		"initial_selections": [{"a": 536, "b": 517}, {"a": 982, "b": 964}, {"a": 1500, "b": 1487}, {"a": 2099, "b": 2086}, {"a": 2235, "b": 2222}],
-		"expected_selections": [{"a": 620, "b": 601}, {"a": 1066, "b": 1048}, {"a": 1584, "b": 1571}, {"a": 2129, "b": 2116}, {"a": 2265, "b": 2252}],
+		"initial_selections": [{"a": 517, "b": 536}, {"a": 964, "b": 982}, {"a": 1487, "b": 1500}, {"a": 2086, "b": 2099}, {"a": 2222, "b": 2235}],
+		"expected_selections": [{"a": 601, "b": 620}, {"a": 1048, "b": 1066}, {"a": 1571, "b": 1584}, {"a": 2116, "b": 2129}, {"a": 2252, "b": 2265}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -165,8 +165,8 @@
 		"context": "markdown",
 		"file": "markdown03_borderless.md",
 		"description": "Cells in borderless table",
-		"initial_selections": [{"a": 78, "b": 68}, {"a": 124, "b": 113}, {"a": 169, "b": 159}],
-		"expected_selections": [{"a": 112, "b": 102}, {"a": 158, "b": 147}, {"a": 203, "b": 193}],
+		"initial_selections": [{"a": 68, "b": 78}, {"a": 113, "b": 124}, {"a": 159, "b": 169}],
+		"expected_selections": [{"a": 102, "b": 112}, {"a": 147, "b": 158}, {"a": 193, "b": 203}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -175,8 +175,8 @@
 		"context": "markdown",
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected forwards",
-		"initial_selections": [{"a": 1131, "b": 1150}],
-		"expected_selections": [{"a": 1234, "b": 1215}],
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1215, "b": 1234}],
 		"view_settings": {"tabnav.capture_level": "cell"}
 	},
 	{
@@ -185,8 +185,21 @@
 		"context": "markdown",
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected in reverse",
-		"initial_selections": [{"a": 1150, "b": 1131}],
-		"expected_selections": [{"a": 1234, "b": 1215}],
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1215, "b": 1234}],
 		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "ANNS",
+		"command": "tabnav_select_down",
+		"context": "auto_csv",
+		"file": "csv01_comma_quoted.csv",
+		"description": "Capture cell - empty first cell, move to non-empty cell",
+		"initial_selections": [{"a": 380, "b": 380}],
+		"expected_selections": [{"a": 426, "b": 430}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.capture_level": "cell"
+		}
 	}
 ]
