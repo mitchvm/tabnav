@@ -6,7 +6,6 @@ import re
 import logging
 
 log = logging.getLogger(__name__)
-log.setLevel('DEBUG')
 
 capture_levels = OrderedDict([
 	('trimmed', (0, '0: Trimmed - excludes whitespace')),
@@ -767,9 +766,6 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		self.table.parse_selected_rows()
 		self.tabnav = TableNavigator(self.table, self.context.capture_level, cell_direction)
 
-	def input(self, args):
-		return TabnavDirectionInputHandler()
-
 # Move cells:
 
 class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
@@ -823,6 +819,9 @@ class TabnavMoveCursorCommand(TabnavCommand):
 			self.view.sel().add_all(cursors)
 			self.view.show(self.view.sel())
 
+	def input(self, args):
+		return TabnavDirectionInputHandler()
+
 class TabnavMoveCursorRightCommand(TabnavMoveCursorCommand):
 	def run(self, edit, context=None):
 		super().run(edit, "Right", context=context)
@@ -862,6 +861,9 @@ class TabnavAddCursorCommand(TabnavCommand):
 			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
 			self.view.sel().add_all(cursors)
 			self.view.show(self.view.sel())
+
+	def input(self, args):
+		return TabnavDirectionInputHandler()
 
 class TabnavAddCursorRightCommand(TabnavAddCursorCommand):
 	def run(self, edit, context=None):
@@ -911,6 +913,9 @@ class TabnavSelectNextCommand(TabnavCommand):
 			self.view.sel().add_all(new_cells)
 			self.view.show(self.view.sel())
 
+	def input(self, args):
+		return TabnavDirectionInputHandler()
+
 class TabnavSelectRightCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
 		super().run(edit, "Right", context=context)
@@ -947,6 +952,9 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 		if new_cells is not None:
 			self.view.sel().add_all(new_cells)
 			self.view.show(self.view.sel())
+
+	def input(self, args):
+		return TabnavDirectionInputHandler()
 
 class TabnavExtendSelectionRightCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
@@ -1044,6 +1052,9 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 		except RowNotInTableError:
 			# don't jump across disjoint tables
 			return False
+
+	def input(self, args):
+		return TabnavDirectionInputHandler()
 
 class TabnavReduceSelectionRightCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
