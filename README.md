@@ -297,7 +297,7 @@ Here is a visual representation of what the four TabNav capture groups should ca
 |_. First Header  |_. Second Header |
 ↑↑ ↑↑          ↑ ↑↑↑ ↑↑           ↑↑
 || |└ trimmed ─┘ ||| |└ trimmed ──┘|
-|| └─ content ───┤|| └─ content─ ──┤
+|| └─ content ───┤|| └─ content ───┤
 |└─── markup ────┤|└─── markup ────┤
 └──── cell ──────┘└──── cell ──────┘
 ```
@@ -307,12 +307,12 @@ Alternatively, presented as a table (how meta):
 | Cell # | Capture Group | Result                               |
 |-------:|:--------------|:-------------------------------------|
 |      1 | `trimmed`     | `First Header`                       |
-|      1 | `content`     | ` First Header  `                    |
-|      1 | `markup`      | `_. First Header  `                  |
-|      1 | `cell`        | <code>&vert;_. First Header  </code> |
+|      1 | `content`     | ` First Header  `                    |
+|      1 | `markup`      | `_. First Header  `                  |
+|      1 | `cell`        | <code>&vert;_. First Header  </code> |
 |      2 | `trimmed`     | `Second Header`                      |
-|      2 | `content`     | ` Second Header `                    |
-|      2 | `markup`      | `_. Second Header `                  |
-|      2 | `cell`        | <code>&vert;_. Second Header </code> |
+|      2 | `content`     | ` Second Header `                    |
+|      2 | `markup`      | `_. Second Header `                  |
+|      2 | `cell`        | <code>&vert;_. Second Header </code> |
 
 Notice that the final `|` is not captured as part of any cell - each cell only captures the _preceding_ delimiter.
