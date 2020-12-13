@@ -14,6 +14,10 @@ TabNav also provides the ability to copy only the contents of the table, excludi
 
 <!-- MarkdownTOC -->
 
+- [Installation Instructions](#installation-instructions)
+  - [Package Control](#package-control)
+  - [Git Clone](#git-clone)
+  - [Manual](#manual)
 - [Commands](#commands)
   - [Table Navigation Commands](#table-navigation-commands)
   - [Other Commands](#other-commands)
@@ -33,6 +37,32 @@ TabNav also provides the ability to copy only the contents of the table, excludi
       - [`cell` capture groups](#cell-capture-groups)
 
 <!-- /MarkdownTOC -->
+
+## Installation Instructions
+
+TabNav has been submitted for inclusion in the [Package Control](https://packagecontrol.io/) repository, however, it is still awaiting approval. Until it is approved, there are three methods of installing TabNav available.
+
+### Package Control
+
+Despite not being available in the default Package Control channel, you can still install this package via Package Control, with one extra step.
+
+1. Add this repository as a source repository in your local Package Control:
+    1. In the Sublime Text command palette, run the command: `Package Control: Add Repository`.
+    2. Paste this repository's URL into the input box: `https://github.com/mitchvm/tabnav`
+2. Install the package using Package Manager, as usual.
+    1. In the Sublime Text command palette, run the command: `Package Control: Install Package`.
+    2. Select `tabnav` from the list of available packages.
+
+### Git Clone
+
+1. Clone this repository to your local machine: `git clone https://github.com/mitchvm/tabnav.git`
+2. Create a symbolic of the repository in your local Sublime Text packages directory.
+
+### Manual
+
+1. Download the latest [TabNav release](https://github.com/mitchvm/tabnav/releases) and unzip it to your local packages directory. 
+    1. To find the local packages directory, open the Sublime Text Preferences and select "Browse packages..."
+    2. Note: All of the TabNav files should be directly under a `tabnav` directory in the `Packages` directory. If the files are nested further, Sublime Text will **not** find them.
 
 ## Commands
 

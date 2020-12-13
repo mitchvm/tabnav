@@ -25,9 +25,9 @@
     "args": { "capture_level": "trimmed" }
   },
   {
-    "caption": "TabNav: Set capture level - contents",
+    "caption": "TabNav: Set capture level - content",
     "command": "tabnav_set_capture_level",
-    "args": { "capture_level": "contents" }
+    "args": { "capture_level": "content" }
   },
   {
     "caption": "TabNav: Set capture level - markup",
