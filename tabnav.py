@@ -680,10 +680,6 @@ class TableNavigator:
 			current_cell = self._table.cell_at_point(point)
 			try:
 				next_cell = self.get_next_cell(current_cell, dr, dc)
-			except ColumnIndexError as e:
-				# In a properly-formatted table, this shouldn't happen, so log it as a warning
-				log.info(e)
-				next_cell = current_cell
 			except (RowNotInTableError, RowOutOfFileBounds) as e:
 				log.debug(e.err)
 				# Stop at the last cell in the direction of movement
@@ -709,9 +705,16 @@ class TableNavigator:
 			target_col = target_col + dc
 			if target_col < 0: # direction == LEFT
 				return current_cell
-			cell = self._table[(target_row, target_col)]
-			if cell.capture_level <= capture_level: 
-				return cell
+			try:
+				cell = self._table[(target_row, target_col)]
+				if cell.capture_level <= capture_level: 
+					return cell
+			except ColumnIndexError as e:
+				if dc != 0:
+					return current_cell
+				# This row doesn't have enough cells to find the one we're looking or.
+				# In some contexts this is normal; in others, it is a malformed table
+				log.debug(e)
 
 	def get_table_column(self, seed_cell):
 		'''Gets all TableCell found in the table column above and below the given seed_cell.
@@ -812,12 +815,12 @@ class TabnavMoveCursorCommand(TabnavCommand):
 			new_cells = self.tabnav.get_next_cells(move_direction, offset)
 		except Exception as e:
 			log.info(e)
-			new_cells = None
-		if new_cells is not None:
-			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
-			self.view .sel().clear()
-			self.view.sel().add_all(cursors)
-			self.view.show(self.view.sel())
+		else:	
+			if new_cells is not None:
+				cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
+				self.view .sel().clear()
+				self.view.sel().add_all(cursors)
+				self.view.show(self.view.sel())
 
 	def input(self, args):
 		return TabnavDirectionInputHandler()
@@ -856,11 +859,11 @@ class TabnavAddCursorCommand(TabnavCommand):
 			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Exception as e:
 			log.info(e)
-			new_cells = None
-		if new_cells is not None:
-			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
-			self.view.sel().add_all(cursors)
-			self.view.show(self.view.sel())
+		else:
+			if new_cells is not None:
+				cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
+				self.view.sel().add_all(cursors)
+				self.view.show(self.view.sel())
 
 	def input(self, args):
 		return TabnavDirectionInputHandler()
@@ -907,11 +910,11 @@ class TabnavSelectNextCommand(TabnavCommand):
 			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Exception as e:
 			log.info(e)
-			return False
-		if new_cells is not None:
-			self.view.sel().clear()
-			self.view.sel().add_all(new_cells)
-			self.view.show(self.view.sel())
+		else:
+			if new_cells is not None:
+				self.view.sel().clear()
+				self.view.sel().add_all(new_cells)
+				self.view.show(self.view.sel())
 
 	def input(self, args):
 		return TabnavDirectionInputHandler()
@@ -949,9 +952,10 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 			new_cells = self.tabnav.get_next_cells(move_direction)
 		except Exception as e:
 			log.info(e)
-		if new_cells is not None:
-			self.view.sel().add_all(new_cells)
-			self.view.show(self.view.sel())
+		else:
+			if new_cells is not None:
+				self.view.sel().add_all(new_cells)
+				self.view.show(self.view.sel())
 
 	def input(self, args):
 		return TabnavDirectionInputHandler()
@@ -1031,8 +1035,8 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 				if seq == 0 or cell.row == last.row + direction:
 					# First cell of a new sequence OR continuing an existing sequence
 					seq = seq + 1
-				elif self.jumped_markup_row(cell, last, direction):
-					# We've just jumped over a markup row, so consider the cells a sequence
+				elif all(self.missing_or_higher_capture_level(r, cell.col) for r in range(last.row+direction, cell.row, direction)):
+					# We've just jumped over a markup cell or a missing cell, so consider the cells a sequence
 					seq = seq + 1
 				else:
 					# Current cell is not part of the same sequence
@@ -1045,10 +1049,12 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 				# Final sequence ended with more than one cell
 				self.view.sel().subtract(last)
 
-	def jumped_markup_row(self, cell, last, direction):
+	def missing_or_higher_capture_level(self, r, ic):
 		try:
-			# If all rows between the cells are at higher capture levels, consider it a jump
-			return all(self.table[(r, cell.col)].capture_level > self.context.capture_level for r in range(last.row+direction, cell.row, direction))
+			return self.table[(r, ic)].capture_level > self.context.capture_level
+		except ColumnIndexError:
+			# jump across missing cells in the same table
+			return True
 		except RowNotInTableError:
 			# don't jump across disjoint tables
 			return False
