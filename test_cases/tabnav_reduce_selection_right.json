@@ -90,7 +90,7 @@
 		"view_settings": {"tabnav.capture_level": "cell"}
 	},
 	{
-		"id": "K5A6",
+		"id": "A54B",
 		"command": "tabnav_reduce_selection_right",
 		"context": "markdown",
 		"file": "markdown02_multiple_tables.md",
