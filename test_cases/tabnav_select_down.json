@@ -114,9 +114,9 @@
 		"command": "tabnav_select_down",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Target row has insufficient columns - cell doesn't move",
+		"description": "Selection jumps over row with insufficient columns",
 		"initial_selections": [{"a": 207, "b": 224}],
-		"expected_selections": [{"a": 207, "b": 224}],
+		"expected_selections": [{"a": 347, "b": 354}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -126,7 +126,7 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells, some move some don't",
 		"initial_selections": [{"a": 101, "b": 111}, {"a": 207, "b": 224}, {"a": 308, "b": 311}],
-		"expected_selections": [{"a": 149, "b": 191}, {"a": 207, "b": 224}, {"a": 308, "b": 311}],
+		"expected_selections": [{"a": 149, "b": 191}, {"a": 308, "b": 311}, {"a": 347, "b": 354}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{

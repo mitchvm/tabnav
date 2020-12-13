@@ -118,5 +118,15 @@
 		"initial_selections": [{"a": 711, "b": 704}, {"a": 730, "b": 711}, {"a": 744, "b": 730}, {"a": 795, "b": 788}, {"a": 814, "b": 795}, {"a": 828, "b": 814}, {"a": 879, "b": 872}, {"a": 898, "b": 879}, {"a": 912, "b": 898}],
 		"expected_selections": [{"a": 795, "b": 788}, {"a": 814, "b": 795}, {"a": 828, "b": 814}, {"a": 879, "b": 872}, {"a": 898, "b": 879}, {"a": 912, "b": 898}],
 		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "QRK7",
+		"command": "tabnav_reduce_selection_down",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Jump over rows with insufficient columns",
+		"initial_selections": [{"a": 206, "b": 206}, {"a": 207, "b": 224}, {"a": 248, "b": 279}, {"a": 312, "b": 346}, {"a": 347, "b": 354}],
+		"expected_selections": [{"a": 248, "b": 279}, {"a": 312, "b": 346}, {"a": 347, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	}
 ]

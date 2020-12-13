@@ -134,9 +134,9 @@
 		"command": "tabnav_move_cursor_down",
 		"context": "markdown",
 		"file": "markdown01_unformatted_table.md",
-		"description": "Target row has insufficient columns - cursor doesn't move",
-		"initial_selections": [{"a": 217, "b": 217}],
-		"expected_selections": [{"a": 217, "b": 217}],
+		"description": "Cursor jumps over row with insufficient columns",
+		"initial_selections": [{"a": 210, "b": 210}],
+		"expected_selections": [{"a": 350, "b": 350}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -146,7 +146,7 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some move some don't",
 		"initial_selections": [{"a": 108, "b": 108}, {"a": 195, "b": 195}, {"a": 217, "b": 217}, {"a": 310, "b": 310}],
-		"expected_selections": [{"a": 156, "b": 156}, {"a": 217, "b": 217}, {"a": 246, "b": 246}, {"a": 310, "b": 310}],
+		"expected_selections": [{"a": 156, "b": 156}, {"a": 246, "b": 246}, {"a": 310, "b": 310}, {"a": 354, "b": 354}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
