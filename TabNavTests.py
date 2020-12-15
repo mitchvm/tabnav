@@ -294,3 +294,16 @@ class TabnavSetRegionsFromClipboardCommand(sublime_plugin.TextCommand):
 			return
 		self.view.sel().clear()
 		self.view.sel().add_all(regions)
+
+class TabnavSelectionChangedListener(sublime_plugin.EventListener):
+	def __init__(self):
+		self.key = 'tabnav.region'
+
+	def on_selection_modified(self, view):
+		regions = list(view.sel())
+		if len(regions) > 1:
+			view.erase_status(self.key)
+		elif regions[0].size() == 0:
+			view.set_status(self.key, "Point {0}".format(regions[0].a))
+		else:
+			view.set_status(self.key, "Region {0}".format(regions[0]))
