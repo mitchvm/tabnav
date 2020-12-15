@@ -252,8 +252,8 @@ The following built-in Sublime Text key bindings get overridden by TabNav:
 | Windows, Linux   | <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>/</kbd> | Insert comment                | Extend selection(s) down     |
 | Windows, Linux   | <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>L</kbd> | Split selection(s) into lines | Select cells in table row(s) |
 | macOS            | <kbd>⌘</kbd>+<kbd>[</kbd>                   | Un-indent line(s)             | Select cell(s) up            |
-| macOS            | <kbd>⌘</kbd><kbd>Shift</kbd>+<kbd>[</kbd>    | Fold selection(s)             | Extend selection(s) up       |
-| macOS            | <kbd>⌘</kbd><kbd>Shift</kbd>+<kbd>L</kbd>    | Split selection(s) into lines | Select cells in table row(s) |
+| macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>[</kbd>    | Fold selection(s)             | Extend selection(s) up       |
+| macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>L</kbd>    | Split selection(s) into lines | Select cells in table row(s) |
 
 #### Disable Default TabNav Key Bindings
 
