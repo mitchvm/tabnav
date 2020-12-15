@@ -19,12 +19,6 @@
         "command": "disable_tabnav",
         "context": [{"key": "setting.tabnav.kb_disable_tabnav"}]
     },
-    {
-        // trim whitespace from selections
-        "keys": ["ctrl+w"],
-        "command": "trim_whitespace_from_selection",
-        "context": [{"key": "setting.tabnav.kb_trim_whitespace"}]
-    },
 
     // #### Navigation keybindings: move cell ####
     { 

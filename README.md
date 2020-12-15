@@ -4,6 +4,7 @@ TabNav is a Sublime Text 3 plugin for keyboard navigation of tabular text data. 
 
 * Markdown pipe tables
 * Org Mode tables
+* Textile tables
 * CSV files
 
 TabNav also provides the ability to copy only the contents of the table, excluding markup, in a format that can be readily-pasted into other programs, such as Excel.
@@ -24,10 +25,13 @@ TabNav also provides the ability to copy only the contents of the table, excludi
 - [Contexts](#contexts)
   - [Markdown](#markdown)
   - [Org Mode](#org-mode)
+  - [Textile](#textile)
   - [CSV](#csv)
 - [Capture Levels](#capture-levels)
 - [Customization](#customization)
   - [Key Bindings](#key-bindings)
+    - [Disable Default TabNav Key Bindings](#disable-default-tabnav-key-bindings)
+    - [Custom Key Bindings](#custom-key-bindings)
   - [Configuration Options](#configuration-options)
   - [Context Configuration](#context-configuration)
     - [CSV Context Configuration](#csv-context-configuration)
@@ -106,7 +110,7 @@ The core movement and selection key bindings combine one of four basic modifier 
 
 There are also "Add cursor to cell {direction}" commands without default key bindings. For each active cursor, they add a cursor to the cell in the desired direction.
 
-Beyond the 16 core navigation commands, these additional movement and selection commands are provided. Unlike the core commands, all of these commands are idempotent - that is, they generate the same Sublime Text selections/cursors regardless of how many times they are invoked, or if the current selections/cursors are already aligned with table cells. This might prove useful, for example, if recording a macro.
+Beyond the 20 core navigation commands, these additional movement and selection commands are provided. Unlike the core commands, all of these commands are idempotent - that is, they generate the same Sublime Text selections/cursors regardless of how many times they are invoked, or if the current selections/cursors are already aligned with table cells. This might prove useful, for example, if recording a macro.
 
 | Name                                             |                                  Windows/Linux Key binding |                                 macOS Key binding |
 |:-------------------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|
@@ -131,13 +135,13 @@ These commands will operate even outside the context of a table.
 | Disable on current view         | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>'</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd>+<kbd>'</kbd> | Disables TabNav on the current view.                                                                                                                                                                                        |
 | Set capture level               |                                                            |                                                   | Configures the selection [capture level](#capture-levels) in use on the current view.                                                                                                                                       |
 | Set CSV delimiter               |                                                            |                                                   | Sets the delimiter to use for CSV files. See the [CSV](#csv) context section for more information.                                                                                                                          |
-| Trim whitespace from selections |                                <kbd>Alt</kbd>+<kbd>W</kbd> |                         <kbd>^</kbd>+<kbd>W</kbd> | Removes all whitespace characters from either end of all current selections.                                                                                                                                                |
+| Trim whitespace from selections |                                                            |                                                   | Removes all whitespace characters from either end of all current selections.                                                                                                                                                |
 | Copy selections as TSV          |                                                            |                                                   | Copies all current selections as tab-delimited data, with all selections on the same row of text tab-separated and a newline between selection row. This is useful, for example, to copy data from a text table into Excel. |
 | Copy selections with delimiter  |                                                            |                                                   | Same as the "Copy selections as TSV" command, but prompts the user to input the delimiter to use.                                                                                                                           |
 
 ## Contexts
 
-TabNav operates on the concept of "contexts", which define how it identifies tabular data in a document. By default, it includes context definitions for Markdown and CSV documents.
+TabNav operates on the concept of "contexts", which define how it identifies tabular data in a document. By default, it includes context definitions for Markdown, Org Mode, Textile, and CSV documents.
 
 ### Markdown
 
@@ -169,7 +173,7 @@ If you only use bordered Markdown tables, you can configure TabNav to be more re
 
 ### Org Mode
 
-TabNav is enabled by default in Org Mode documents, using the scopes defined by either the [orgmode](https://github.com/danielmagnussons/orgmode) or [orgextended](https://github.com/ihdavids/orgextended) packages. Tables in "raw" scopes are ignored.
+TabNav is enabled by default in [Org Mode](https://orgmode.org/) documents, using the scopes defined by either the [orgmode](https://github.com/danielmagnussons/orgmode) or [orgextended](https://github.com/ihdavids/orgextended) packages. Tables in "raw" scopes are ignored.
 
 TabNav recognizes three kinds of markup rows in Org Mode tables:
 
@@ -177,9 +181,22 @@ TabNav recognizes three kinds of markup rows in Org Mode tables:
 2. [Column width rows](https://orgmode.org/manual/Column-Width-and-Alignment.html)
 3. [Column group rows](https://orgmode.org/manual/Column-Groups.html)
 
+### Textile
+
+TabNav is enabled by default in [Textile](https://textile-lang.com/) documents. Textile tables differ from most of the other supported markup languages in two ways:
+
+1. Cells and rows may contain inline table markup in addition to content.
+2. Markup rows might not contain "cells" of markup that are aligned with the table cells.
+
+Inline markup directly in the cell respects the current [capture level](#capture-levels) - when set to `trimmed` or `content`, the markup is omitted from selections; when set to `markup` or `cell`, the markup is included in selections - however row markup (styles and classes assigned to the row, before the first pipe) and stand-alone markup rows without a pipe at the end of the row are always ignored, regardless of capture level. Header and footer rows are treated as normal content rows.
+
+Textile also supports cells spanning multiple rows and/or columns, however, TabNav makes no special effort to support row and columns spanning. When moving a single cursor/selection, the behaviour is _mostly_ how you would expect, or at least predictable, but when it comes to selecting regions of the table, cells spanning multiple rows or columns tend to give pretty funky results.
+
+At this time, there is no intention of adding "proper" support for cells spanning multiple rows or columns in Textile tables.
+
 ### CSV
 
-CSV requires special handling, specifically because there are so many permutations of "separated value" documents. TabNav treats CSV as the fall-back context if no other context was positively identified, however TabNav is disabled by default in CSV contexts - use the ["Enable on current view"](#other-commands) command to enable it.
+CSV requires special handling, specifically because there are so many permutations of "separated value" documents. There is no specific scope Sublime Text scope for CSV documents. Rather, TabNav treats CSV as the fall-back context if no other context was positively identified, though TabNav is disabled by default in CSV contexts - use the ["Enable on current view"](#other-commands) command to enable it.
 
 TabNav integrates with both the [Advanced CSV](https://github.com/wadetb/Sublime-Text-Advanced-CSV) and [Rainbow CSV](https://github.com/mechatroner/sublime_rainbow_csv/)<sup>3</sup> packages. If the syntax on the current view comes from either of those packages, the delimiter being used by them is also automatically used by TabNav.
 
@@ -215,9 +232,38 @@ TabNav offers considerable configuration, or even customizability to modify the 
 
 ### Key Bindings
 
-All of the default key bindings can be disabled either globally, or only within specific syntaxes. To disable the key bindings globally, select the "Settings - Global Key Binding Flags" menu option under TabNav Package Settings menu (Settings ❯ Package Settings ❯ TabNav), which opens TabNav's default Preferences file along with your local Preferences file. Copy the appropriate `tabnav.kb_` flag to your local Preferences file and set it to `false`.
+> :warning: **TabNav overrides several default Sublime Text key bindings.**
+
+When all of the following conditions are met, several default TabNav key bindings override built-in Sublime Text key bindings. If any of the conditions are not met, then the TabNav key bindings have no effect.
+
+1. There is a TabNav context configured that matches the current view.
+2. TabNav is enabled on the current view - in most contexts it is enabled by default.
+3. The TabNav key binding has not been disabled either globally, or for the particular syntax (discussed below).
+4. The start point of the first selection is within a table.
+
+The following built-in Sublime Text key bindings get overridden by TabNav:
+
+| Operating System | Key Binding                                  | Sublime Text Command          | TabNav Command               |
+|:-----------------|:---------------------------------------------|:------------------------------|:-----------------------------|
+| Windows, Linux   | <kbd>Ctrl</kbd>+<kbd>;</kbd>                 | Open "go to word" overlay     | Select cell(s) left          |
+| Windows, Linux   | <kbd>Ctrl</kbd>+<kbd>[</kbd>                 | Un-indent line(s)             | Select cell(s) up            |
+| Windows, Linux   | <kbd>Ctrl</kbd>+<kbd>/</kbd>                 | Comment line(s)               | Select cell(s) down          |
+| Windows, Linux   | <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>[</kbd> | Fold selection(s)             | Extend selection(s) up       |
+| Windows, Linux   | <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>/</kbd> | Insert comment                | Extend selection(s) down     |
+| Windows, Linux   | <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>L</kbd> | Split selection(s) into lines | Select cells in table row(s) |
+| macOS            | <kbd>⌘</kbd>+<kbd>[</kbd>                   | Un-indent line(s)             | Select cell(s) up            |
+| macOS            | <kbd>⌘</kbd><kbd>Shift</kbd>+<kbd>[</kbd>    | Fold selection(s)             | Extend selection(s) up       |
+| macOS            | <kbd>⌘</kbd><kbd>Shift</kbd>+<kbd>L</kbd>    | Split selection(s) into lines | Select cells in table row(s) |
+
+#### Disable Default TabNav Key Bindings
+
+To temporarily disable most of the default TabNav keybindings, it is enough to [disable TabNav](#other-commands) on the current view.
+
+To permanently disable any default TabNav keybindings, either globally or only within specific syntaxes, TabNav offers configurable settings for each key binding. To disable the key bindings globally, select the "Settings - Global Key Binding Flags" menu option under TabNav Package Settings menu (Settings ❯ Package Settings ❯ TabNav), which opens TabNav's default Preferences file along with your local Preferences file. Copy the appropriate `tabnav.kb_` flag to your local Preferences file and set it to `false`.
 
 Disabling the default key bindings for a particular syntax follows the same principle, but Sublime Text does not offer a command to open the default TabNav preferences file alongside a syntax-specific preferences file. The "Settings - Default Key Binding Flags" and "Settings - Syntax Specific" menu options open the appropriate files individually.
+
+#### Custom Key Bindings
 
 To add custom key bindings, select the TabNav "Key Bindings" menu option, which will open the default TabNav key bindings file alongside your user key bindings file. Only make changes to your user key bindings file, lest changes to the TabNav key bindings file get removed upon package update. See the [Sublime Text documentation](https://www.sublimetext.com/docs/3/key_bindings.html) for details on how to configure custom key bindings. You most likely do **not** want to keep the `setting.tabnav.kb_` context on your custom key bindings - that is the key binding context that is used to disable the default key bindings.
 
@@ -295,6 +341,8 @@ Each pattern contains two elements, explained in more detail below.
 
 The optional `line` expression is used to determine the pattern applies to the line of text and, if so, the portion of the line of text that constitutes the table. If used, the `line` expression must return a named `table` group that captures the part of the line to use for matching table content with the `cell` expressions. If a `line` expression is not provided with the pattern, the entire line of text is parsed using the `cell` expressions.
 
+There is one scenario where the `line` element is required, and the `cell` element can be omitted: to capture a line of a table, but not parse any cells from the line, include a `line` element _without_ a `table` capture group.
+
 ##### `cell` capture groups
 
 Each element of the `cell` expressions should contain up to four **nested** named capture groups:
@@ -315,7 +363,7 @@ If multiple expressions are provided in a JSON array, they are each processed in
 
 ###### Example
 
-One table format (not _yet_ supported by TabNav) that mixes markup and content in a table cell is [Textile](https://textile-lang.com/doc/tables). Here is a sample row of a Textile table that defines headers. The `_.` at the start of the cell is markup indicating that the cell is a header cell.
+One table format that mixes markup and content in a table cell is [Textile](https://textile-lang.com/doc/tables). Here is a sample row of a Textile table that defines headers. The `_.` at the start of the cell is markup indicating that the cell is a header cell.
 
 ```
 |_. First Header  |_. Second Header |

@@ -73,6 +73,45 @@
 				}
 			]
 		},
+		"textile": 
+		{
+			// There are two relevant selectors. Simple tables only have the `.cell.` scope.
+			// Non-cell markup lines _don't_ have the `.cell.` scope, but we want to capture them
+			// as part of the table.
+			"selector": "markup.other.table.textile | markup.other.table.cell.textile",
+			"except_selector": "text.html.textile",
+			// Textile supports a wide variety of markup.
+			"patterns": [
+				{
+					// Markup lines that don't contain "cells" are recognized, but otherwise ignored
+					// They are identified as lines that start with a pipe, but do not end with a pipe.
+					"line": "^\\|.*(?<!\\|)\\s*$",
+				},
+				{
+					// Column groupling lines begin with a `:` immediately after the first pipe.
+					// They can optionally contain "cells" of markup, which will be captured.
+					"line": "^(?P<table>\\|:.*\\|)\\s*$",
+					"cell": [
+						"^(?P<cell>\\|(?P<markup>:.*?))(?=\\|)",
+						"(?P<cell>\\|(?P<markup>.*?))(?=\\|)"
+					]
+				},
+				{
+					// Row markup can be inserted before the first pipe, followed by a period and a space. That will be ignored.
+					// Types of row attributes:
+					//  * class name. e.g. `(classname)`
+					//  * inline style. e.g. `{color:red}`
+					//  * language code. e.g. `[fr]`
+					"line": "^(?:(?:(?:\\(.*?\\))|(?:\\{.*?\\})|(?:\\[.*?\\]))+\\. )?(?P<table>\\|.*\\|)\\s*$",
+					// Similarly, cell markup can be inserted at the start of each cell. That will be captured as markup.
+					// In addition to the same three attributes that can be used for row markup, these are possible cell markup elements:
+					//  * row/column spans - a slash (\ for colspans, / for rowspans) followed digits
+					//  * heading - an underscore
+					//  * cell alignment - these characters: =>^-~ (center, right, top, middle, bottom)
+					"cell": "(?P<cell>\\|(?P<markup>(?:(?:[_=>^-~]|(?:[\\\\/]\\d+)|(?:\\(.*?\\))|(?:\\{.*?\\})|(?:\\[.*?\\]))+\\.)?(?P<content>\\s*?(?P<trimmed>\\B|(?:\\S.*?))\\s*)))(?=\\|)"
+				}
+			],
+		},
 		"auto_csv":
 		{
 			// This context is handled as a special case in the code. It doesn't automatically

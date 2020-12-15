@@ -81,6 +81,27 @@ def merge_dictionaries(base, override, keys=None):
 	return result
 
 
+def score_tabnav_selectors(view, point, selector, except_selector):
+	'''Score's the given selector and except_selector at the given point to determine if the current point should be captured by the context.
+
+	If selector is None, returns None.
+	If selector is not None, and except_selector is None, returns the selector's score.
+	If the selector's score is greater than the except_selector's score, returns the selector's score.
+	If the except_selector's score is greater than the selector's score, returns -1, which
+	  indicates that these selectors had a match, but the point isn't in a table. (This is to avoid
+	  falling back to the auto_csv context.)
+	'''
+	if selector is None:
+		return None
+	score = view.score_selector(point, selector)
+	if except_selector is None:
+		return score
+	except_score = view.score_selector(point, except_selector)
+	if except_score > score:
+		return -1
+	return score
+
+
 class TabnavContext:
 	'''Contains information about the current context of the view.
 
@@ -94,7 +115,7 @@ class TabnavContext:
 		ordered_levels = list(itertools.chain(included_levels, excluded_levels))
 		if isinstance(patterns, dict):
 			patterns = [content_patterns]
-		self._parsers = [RowParser(p['cell'], p.get('line'), ordered_levels) for p in patterns]
+		self._parsers = [RowParser(p.get('cell'), p.get('line'), ordered_levels) for p in patterns]
 	
 	@property
 	def parsers(self):
@@ -170,15 +191,9 @@ class TabnavContext:
 		for key in context_configs:
 			config = context_configs[key]
 			selector = config.get('selector', None)
-			if selector is None:
-				continue
-			score = view.score_selector(point, selector)
 			except_selector = config.get('except_selector', None)
-			if except_selector is not None:
-				except_score = view.score_selector(point, except_selector)
-				if except_score > 0:
-					score = -1
-			if (max_context is None and score != 0) or (max_context is not None and score > max_context[1]):
+			score = score_tabnav_selectors(view, point, selector, except_selector)
+			if score is not None and ((max_context is None and score != 0) or (max_context is not None and score > max_context[1])):
 				max_context = (key, score)
 		if max_context is not None:
 			return max_context
@@ -258,7 +273,9 @@ class TabnavContext:
 class RowParser:
 	def __init__(self, cell_patterns, line_pattern, ordered_capture_levels):
 		self.capture_levels = ordered_capture_levels
-		if isinstance(cell_patterns, str):
+		if cell_patterns is None:
+			self.cell_patterns = []
+		elif isinstance(cell_patterns, str):
 			self.cell_patterns = [re.compile(cell_patterns)]
 		else:
 			self.cell_patterns = [re.compile(p) for p in cell_patterns]
@@ -272,8 +289,12 @@ class RowParser:
 			line_match = self.line_pattern.search(line_content)
 			if line_match is None:
 				return None
-			line_start_point = line_start_point + line_match.start('table')
-			line_content = line_match.group('table')
+			try:
+				line_start_point = line_start_point + line_match.start('table')
+				line_content = line_match.group('table')
+			except IndexError:
+				log.debug("Line pattern '%s' does not contain a named capture group '<table>'. The line will be captured but ignored.", self.line_pattern.pattern)
+				return TableRow(row, [])
 		cells = []
 		cell_end = -1
 		col_index = -1
@@ -526,8 +547,8 @@ class TableView:
 		if self.view.rowcol(point)[0] != row_num:
 			# text_point returns the last point in the file if the inputs are beyond the file bounds.
 			raise RowOutOfFileBounds(row_num)
-		if (self._context.selector is not None and not self.view.match_selector(point, self._context.selector)) \
-			or (self._context.except_selector is not None and self.view.match_selector(point, self._context.except_selector)):
+		score = score_tabnav_selectors(self.view, point, self._context.selector, self._context.except_selector)
+		if score is not None and score <= 0:
 			raise RowNotInTableError(row_num)
 		line = self.view.line(point)
 		line_content = self.view.substr(line)
@@ -586,8 +607,12 @@ class TableNavigator:
 			row = self._table[r]
 			line_cells = list(cell for cell in row if cell.intersects(region))
 			if len(line_cells) == 0:
-				# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
-				raise CursorNotInTableError(point)
+				if len(row) > 0:
+					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
+					raise CursorNotInTableError(point)
+				else:
+					# This is a row that contains no cells, but was captured as part of the table.
+					continue
 			exact_match = [cell for cell in line_cells if cell == region]
 			if len(exact_match) == 1:
 				# exact_match != line_cells if the entire cell, including delimiters, is selected
@@ -637,9 +662,13 @@ class TableNavigator:
 			r = self.view.rowcol(region.begin())[0]
 			row = self._table[r]
 			line_cells = list(cell for cell in row if cell.intersects(region))
-			if len(line_cells) == 0: 
-				# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
-				raise CursorNotInTableError(region.begin())
+			if len(line_cells) == 0:
+				if len(row) > 0:
+					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
+					raise CursorNotInTableError(region.begin())
+				else:
+					# This is a row that contains no cells, but was captured as part of the table.
+					continue
 			exact_match = [cell for cell in line_cells if cell == region]
 			if len(exact_match) == 1:
 				# exact_match != line_cells if the entire cell, including delimiters, is selected
@@ -1315,33 +1344,36 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 	def on_query_context(self, key, operator, operand, match_all):
 		if key != 'is_tabnav_context':
 			return None
+		is_context = None
 		if len(self.view.sel()) == 0:
-			return False
-		enabled = self.view.settings().get('tabnav.enabled')
-		if enabled is not None and not enabled:
-			# TabNav is explicitly disabled
-			return False
-		if isinstance(operand, str):
-			context_key = operand
-		else:
-			context_key = None
-		context = TabnavContext.get_current_context(self.view, context_key)
-		if context is None:
 			is_context = False
 		else:
-			table = TableView(self.view, context)
-			try:
-				if match_all:
-					# parse all of the current selections
-					table.parse_selected_rows()
-				else:
-					point = self.view.sel()[0].begin()
-					r = self.view.rowcol(point)[0]
-					table[r]
-			except RowNotInTableError:
+			enabled = self.view.settings().get('tabnav.enabled')
+			if enabled is not None and not enabled:
+				# TabNav is explicitly disabled
+				is_context = False
+		if is_context is None:
+			if isinstance(operand, str):
+				context_key = operand
+			else:
+				context_key = None
+			context = TabnavContext.get_current_context(self.view, context_key)
+			if context is None:
 				is_context = False
 			else:
-				is_context = True
+				table = TableView(self.view, context)
+				try:
+					if match_all:
+						# parse all of the current selections
+						table.parse_selected_rows()
+					else:
+						point = self.view.sel()[0].begin()
+						r = self.view.rowcol(point)[0]
+						table[r]
+				except RowNotInTableError:
+					is_context = False
+				else:
+					is_context = True
 		if (operator == sublime.OP_NOT_EQUAL):
 			return not is_context
 		return is_context
