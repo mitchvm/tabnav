@@ -1,0 +1,8 @@
+1,Header Row,Does Not Require Quotes,But,Other Rows Will
+2.1,"For example, this cell is quoted",,"And this cell contains ""escaped"" quotes"
+pi,The row above,had an empty cell,,"and|look, there's another ->",
+"this row",has	only,three cells
+"Here's a cell with a comma, as well as quotes that have been ""escaped""",what's more,the escaped quotes,were at the very end of the cell
+,this row _started_;with an empty cell ,and,I
+need,"one, more ""line""", with,"complex ""cells"", in multiple"
+,,,,

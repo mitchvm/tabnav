@@ -1,0 +1,192 @@
+[
+	{
+		"id": "U5HP",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in first cell",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 1, "b": 12}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "BP6J",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in last cell of row",
+		"initial_selections": [{"a": 138, "b": 138}],
+		"expected_selections": [{"a": 132, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HAYY",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cell in line markup row already selected",
+		"initial_selections": [{"a": 63, "b": 74}],
+		"expected_selections": [{"a": 75, "b": 86}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "XCK2",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Last cell of row already selected, reverse",
+		"initial_selections": [{"a": 146, "b": 132}],
+		"expected_selections": [{"a": 132, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "TUPB",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Last cell of row already selected, forward",
+		"initial_selections": [{"a": 132, "b": 146}],
+		"expected_selections": [{"a": 132, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "ZOBX",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cell already selected, reverse",
+		"initial_selections": [{"a": 247, "b": 243}],
+		"expected_selections": [{"a": 248, "b": 279}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "P4KF",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cell already selected, forward",
+		"initial_selections": [{"a": 243, "b": 247}],
+		"expected_selections": [{"a": 248, "b": 279}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "XHRS",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 207, "b": 224}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "CN6I",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Target cell is an empty cell",
+		"initial_selections": [{"a": 192, "b": 205}],
+		"expected_selections": [{"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "PNMG",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple regions, some cells selected, some not",
+		"initial_selections": [{"a": 101, "b": 111}, {"a": 205, "b": 192}, {"a": 245, "b": 245}],
+		"expected_selections": [{"a": 101, "b": 111}, {"a": 192, "b": 205}, {"a": 243, "b": 247}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "Y4GI",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cells selected",
+		"initial_selections": [{"a": 120, "b": 131}, {"a": 243, "b": 247}, {"a": 282, "b": 307}],
+		"expected_selections": [{"a": 132, "b": 146}, {"a": 248, "b": 279}, {"a": 308, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VZUJ",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cells selected, some in last column",
+		"initial_selections": [{"a": 132, "b": 146}, {"a": 248, "b": 279}, {"a": 308, "b": 311}],
+		"expected_selections": [{"a": 132, "b": 146}, {"a": 248, "b": 279}, {"a": 312, "b": 346}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "RE7A",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Two regions merging to one at in last column",
+		"initial_selections": [{"a": 120, "b": 131}, {"a": 132, "b": 146}],
+		"expected_selections": [{"a": 132, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "URCP",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple adjacent cells same row",
+		"initial_selections": [{"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}],
+		"expected_selections": [{"a": 112, "b": 119}, {"a": 120, "b": 131}, {"a": 132, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "GFPR",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Multiple cells in multiple tables",
+		"initial_selections": [{"a": 376, "b": 394}, {"a": 1125, "b": 1131}, {"a": 1982, "b": 1995}, {"a": 2326, "b": 2339}],
+		"expected_selections": [{"a": 395, "b": 408}, {"a": 1132, "b": 1150}, {"a": 1996, "b": 2009}, {"a": 2326, "b": 2339}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "JFZW",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Multiple cells in multiple line markup rows",
+		"initial_selections": [{"a": 201, "b": 207}, {"a": 227, "b": 240}, {"a": 1892, "b": 1905}],
+		"expected_selections": [{"a": 208, "b": 226}, {"a": 241, "b": 254}, {"a": 1906, "b": 1919}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "LHVP",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown03_borderless.md",
+		"description": "Cells at selected in each column",
+		"initial_selections": [{"a": 68, "b": 78}, {"a": 113, "b": 124}, {"a": 159, "b": 169}],
+		"expected_selections": [{"a": 79, "b": 90}, {"a": 125, "b": 135}, {"a": 159, "b": 169}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "2GQI",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected forwards",
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1150, "b": 1164}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "K6O4",
+		"command": "tabnav_select_right",
+		"context": "markdown",
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected in reverse",
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1150, "b": 1164}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	}
+]

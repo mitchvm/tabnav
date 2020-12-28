@@ -1,0 +1,22 @@
+[
+	{
+		"id": "52HQ",
+		"command": "tabnav_add_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Region split into one cursor per cell",
+		"initial_selections": [{"a": 125, "b": 245}],
+		"expected_selections": [{"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "G4VI",
+		"command": "tabnav_add_cursor_right",
+		"context": "markdown",
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cursors, some added, some not",
+		"initial_selections": [{"a": 18, "b": 18}, {"a": 139, "b": 139}, {"a": 197, "b": 197}, {"a": 227, "b": 227}, {"a": 310, "b": 310}],
+		"expected_selections": [{"a": 18, "b": 18}, {"a": 30, "b": 30}, {"a": 139, "b": 139}, {"a": 197, "b": 197}, {"a": 206, "b": 206}, {"a": 227, "b": 227}, {"a": 243, "b": 243}, {"a": 310, "b": 310}, {"a": 314, "b": 314}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	}
+]

@@ -1,0 +1,242 @@
+[
+	{
+		"id": "55BH",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Parse Org Mode table row - cells",
+		"initial_selections": [{"a": 954, "b": 980}],
+		"expected_selections": [{"a": 944, "b": 963}, {"a": 964, "b": 970}, {"a": 971, "b": 989}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "N5IQ",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Parse Org Mode separator markup row - cells",
+		"initial_selections": [{"a": 280, "b": 348}],
+		"expected_selections": [{"a": 272, "b": 291}, {"a": 292, "b": 298}, {"a": 299, "b": 317}, {"a": 318, "b": 331}, {"a": 332, "b": 345}, {"a": 346, "b": 353}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "MDE2",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Parse Org Mode grouping markup row - cells",
+		"initial_selections": [{"a": 2071, "b": 2108}],
+		"expected_selections": [{"a": 2069, "b": 2072}, {"a": 2073, "b": 2077}, {"a": 2078, "b": 2083}, {"a": 2084, "b": 2089}, {"a": 2090, "b": 2095}, {"a": 2096, "b": 2105}, {"a": 2106, "b": 2118}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "F4AS",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Parse Org Mode column width markup row - cells",
+		"initial_selections": [{"a": 2564, "b": 2571}],
+		"expected_selections": [{"a": 2553, "b": 2566}, {"a": 2567, "b": 2599}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "E3NJ",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Parse Org Mode regions spanning markup rows - markup excluded",
+		"initial_selections": [{"a": 221, "b": 390}, {"a": 1980, "b": 2147}, {"a": 2519, "b": 2617}],
+		"expected_selections": [{"a": 215, "b": 233}, {"a": 234, "b": 247}, {"a": 248, "b": 261}, {"a": 262, "b": 269}, {"a": 356, "b": 375}, {"a": 376, "b": 382}, {"a": 383, "b": 401}, {"a": 1978, "b": 1983}, {"a": 1984, "b": 1993}, {"a": 1994, "b": 2006}, {"a": 2125, "b": 2128}, {"a": 2129, "b": 2133}, {"a": 2134, "b": 2139}, {"a": 2140, "b": 2145}, {"a": 2146, "b": 2151}, {"a": 2518, "b": 2550}, {"a": 2602, "b": 2615}, {"a": 2616, "b": 2648}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "GOR2",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Parse Org Mode region spanning markup row cells - markup included",
+		"initial_selections": [{"a": 221, "b": 390}, {"a": 1980, "b": 2147}, {"a": 2519, "b": 2617}],
+		"expected_selections": [{"a": 215, "b": 233}, {"a": 234, "b": 247}, {"a": 248, "b": 261}, {"a": 262, "b": 269}, {"a": 272, "b": 291}, {"a": 292, "b": 298}, {"a": 299, "b": 317}, {"a": 318, "b": 331}, {"a": 332, "b": 345}, {"a": 346, "b": 353}, {"a": 356, "b": 375}, {"a": 376, "b": 382}, {"a": 383, "b": 401}, {"a": 1978, "b": 1983}, {"a": 1984, "b": 1993}, {"a": 1994, "b": 2006}, {"a": 2013, "b": 2016}, {"a": 2017, "b": 2021}, {"a": 2022, "b": 2027}, {"a": 2028, "b": 2033}, {"a": 2034, "b": 2039}, {"a": 2040, "b": 2049}, {"a": 2050, "b": 2062}, {"a": 2069, "b": 2072}, {"a": 2073, "b": 2077}, {"a": 2078, "b": 2083}, {"a": 2084, "b": 2089}, {"a": 2090, "b": 2095}, {"a": 2096, "b": 2105}, {"a": 2106, "b": 2118}, {"a": 2125, "b": 2128}, {"a": 2129, "b": 2133}, {"a": 2134, "b": 2139}, {"a": 2140, "b": 2145}, {"a": 2146, "b": 2151}, {"a": 2518, "b": 2550}, {"a": 2553, "b": 2566}, {"a": 2567, "b": 2599}, {"a": 2602, "b": 2615}, {"a": 2616, "b": 2648}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "O7IF",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Single cursor after last pipe (not in table)",
+		"initial_selections": [{"a": 1446, "b": 1446}],
+		"expected_selections": [{"a": 1446, "b": 1446}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "ZX24",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Single cursor before first pipe (not in table)",
+		"initial_selections": [{"a": 1027, "b": 1027}],
+		"expected_selections": [{"a": 1027, "b": 1027}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "UTQ2",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Cursors in whitespace before first pipe (not in table)",
+		"initial_selections": [{"a": 1955, "b": 1955}, {"a": 2011, "b": 2011}, {"a": 2067, "b": 2067}, {"a": 2123, "b": 2123}],
+		"expected_selections": [{"a": 1955, "b": 1955}, {"a": 2011, "b": 2011}, {"a": 2067, "b": 2067}, {"a": 2123, "b": 2123}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "PSHT",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Cursor in empty line between tables (not in table)",
+		"initial_selections": [{"a": 1951, "b": 1951}],
+		"expected_selections": [{"a": 1951, "b": 1951}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "YV7G",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Single region spans multiple tables (no change)",
+		"initial_selections": [{"a": 1557, "b": 2149}],
+		"expected_selections": [{"a": 1557, "b": 2149}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "QNL6",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Cursor in simple literal table (technically not raw scope)",
+		"initial_selections": [{"a": 2949, "b": 2949}],
+		"expected_selections": [{"a": 2949, "b": 2949}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "M5XG",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Cursor in raw scope",
+		"initial_selections": [{"a": 3209, "b": 3209}],
+		"expected_selections": [{"a": 3209, "b": 3209}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "TTGE",
+		"command": "tabnav_move_cursor_end",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Multiple cursors - one in raw code scope",
+		"initial_selections": [{"a": 2191, "b": 2191}, {"a": 3239, "b": 3239}],
+		"expected_selections": [{"a": 2191, "b": 2191}, {"a": 3239, "b": 3239}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "57CQ",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Region in simple literal table (technically not raw scope)",
+		"initial_selections": [{"a": 2917, "b": 2962}],
+		"expected_selections": [{"a": 2917, "b": 2962}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "R57W",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Region in raw scope",
+		"initial_selections": [{"a": 3151, "b": 3216}],
+		"expected_selections": [{"a": 3151, "b": 3216}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HQDG",
+		"command": "tabnav_select_down",
+		"context": "None",
+		"file": "orgmode02_markup_like.org",
+		"description": "Org Mode non-markup cells that match markup regex",
+		"initial_selections": [{"a": 5, "b": 9}, {"a": 166, "b": 171}, {"a": 236, "b": 245}],
+		"expected_selections": [{"a": 161, "b": 165}, {"a": 218, "b": 223}, {"a": 288, "b": 297}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "EVM2",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"file": "orgmode03_all_markups.org",
+		"description": "All styles of Org Mode markup lines in a row - markup excluded",
+		"initial_selections": [{"a": 539, "b": 539}],
+		"expected_selections": [{"a": 1, "b": 20}, {"a": 21, "b": 27}, {"a": 28, "b": 46}, {"a": 47, "b": 60}, {"a": 61, "b": 74}, {"a": 75, "b": 82}, {"a": 337, "b": 356}, {"a": 357, "b": 363}, {"a": 364, "b": 382}, {"a": 383, "b": 396}, {"a": 397, "b": 410}, {"a": 411, "b": 418}, {"a": 421, "b": 440}, {"a": 441, "b": 447}, {"a": 448, "b": 466}, {"a": 467, "b": 480}, {"a": 481, "b": 494}, {"a": 495, "b": 502}, {"a": 505, "b": 524}, {"a": 525, "b": 531}, {"a": 532, "b": 550}, {"a": 551, "b": 564}, {"a": 565, "b": 578}, {"a": 579, "b": 586}, {"a": 589, "b": 608}, {"a": 609, "b": 615}, {"a": 616, "b": 634}, {"a": 635, "b": 648}, {"a": 649, "b": 662}, {"a": 663, "b": 670}, {"a": 673, "b": 692}, {"a": 693, "b": 699}, {"a": 700, "b": 718}, {"a": 719, "b": 732}, {"a": 733, "b": 746}, {"a": 747, "b": 754}, {"a": 757, "b": 776}, {"a": 777, "b": 783}, {"a": 784, "b": 802}, {"a": 803, "b": 816}, {"a": 817, "b": 830}, {"a": 831, "b": 838}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "76WL",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"file": "orgmode03_all_markups.org",
+		"description": "All styles of Org Mode markup lines in a row - markup included",
+		"initial_selections": [{"a": 539, "b": 539}],
+		"expected_selections": [{"a": 1, "b": 20}, {"a": 21, "b": 27}, {"a": 28, "b": 46}, {"a": 47, "b": 60}, {"a": 61, "b": 74}, {"a": 75, "b": 82}, {"a": 85, "b": 104}, {"a": 105, "b": 111}, {"a": 112, "b": 130}, {"a": 131, "b": 144}, {"a": 145, "b": 158}, {"a": 159, "b": 166}, {"a": 169, "b": 188}, {"a": 189, "b": 195}, {"a": 196, "b": 214}, {"a": 215, "b": 228}, {"a": 229, "b": 242}, {"a": 243, "b": 250}, {"a": 253, "b": 272}, {"a": 273, "b": 279}, {"a": 280, "b": 298}, {"a": 299, "b": 312}, {"a": 313, "b": 326}, {"a": 327, "b": 334}, {"a": 337, "b": 356}, {"a": 357, "b": 363}, {"a": 364, "b": 382}, {"a": 383, "b": 396}, {"a": 397, "b": 410}, {"a": 411, "b": 418}, {"a": 421, "b": 440}, {"a": 441, "b": 447}, {"a": 448, "b": 466}, {"a": 467, "b": 480}, {"a": 481, "b": 494}, {"a": 495, "b": 502}, {"a": 505, "b": 524}, {"a": 525, "b": 531}, {"a": 532, "b": 550}, {"a": 551, "b": 564}, {"a": 565, "b": 578}, {"a": 579, "b": 586}, {"a": 589, "b": 608}, {"a": 609, "b": 615}, {"a": 616, "b": 634}, {"a": 635, "b": 648}, {"a": 649, "b": 662}, {"a": 663, "b": 670}, {"a": 673, "b": 692}, {"a": 693, "b": 699}, {"a": 700, "b": 718}, {"a": 719, "b": 732}, {"a": 733, "b": 746}, {"a": 747, "b": 754}, {"a": 757, "b": 776}, {"a": 777, "b": 783}, {"a": 784, "b": 802}, {"a": 803, "b": 816}, {"a": 817, "b": 830}, {"a": 831, "b": 838}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "IKSQ",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Capture trimmed Org Mode",
+		"initial_selections": [{"a": 1146, "b": 1146}, {"a": 2267, "b": 2267}],
+		"expected_selections": [{"a": 189, "b": 193}, {"a": 209, "b": 213}, {"a": 216, "b": 224}, {"a": 235, "b": 246}, {"a": 249, "b": 260}, {"a": 265, "b": 268}, {"a": 357, "b": 371}, {"a": 377, "b": 380}, {"a": 384, "b": 400}, {"a": 412, "b": 414}, {"a": 425, "b": 428}, {"a": 431, "b": 436}, {"a": 441, "b": 453}, {"a": 461, "b": 464}, {"a": 468, "b": 481}, {"a": 496, "b": 498}, {"a": 509, "b": 512}, {"a": 515, "b": 520}, {"a": 525, "b": 536}, {"a": 545, "b": 548}, {"a": 552, "b": 568}, {"a": 580, "b": 582}, {"a": 593, "b": 596}, {"a": 599, "b": 604}, {"a": 609, "b": 626}, {"a": 629, "b": 632}, {"a": 636, "b": 646}, {"a": 664, "b": 666}, {"a": 677, "b": 680}, {"a": 683, "b": 688}, {"a": 693, "b": 703}, {"a": 713, "b": 716}, {"a": 720, "b": 736}, {"a": 748, "b": 750}, {"a": 761, "b": 764}, {"a": 767, "b": 772}, {"a": 777, "b": 788}, {"a": 797, "b": 799}, {"a": 804, "b": 814}, {"a": 832, "b": 834}, {"a": 845, "b": 848}, {"a": 851, "b": 856}, {"a": 861, "b": 874}, {"a": 881, "b": 884}, {"a": 888, "b": 897}, {"a": 916, "b": 918}, {"a": 929, "b": 932}, {"a": 935, "b": 940}, {"a": 945, "b": 957}, {"a": 965, "b": 968}, {"a": 972, "b": 986}, {"a": 1000, "b": 1002}, {"a": 1013, "b": 1016}, {"a": 1019, "b": 1024}, {"a": 1029, "b": 1042}, {"a": 1049, "b": 1052}, {"a": 1056, "b": 1069}, {"a": 1084, "b": 1086}, {"a": 1097, "b": 1100}, {"a": 1104, "b": 1108}, {"a": 1113, "b": 1127}, {"a": 1133, "b": 1136}, {"a": 1140, "b": 1154}, {"a": 1168, "b": 1170}, {"a": 1181, "b": 1184}, {"a": 1187, "b": 1192}, {"a": 1197, "b": 1207}, {"a": 1217, "b": 1220}, {"a": 1224, "b": 1233}, {"a": 1252, "b": 1254}, {"a": 1265, "b": 1268}, {"a": 1271, "b": 1276}, {"a": 1280, "b": 1280}, {"a": 1300, "b": 1300}, {"a": 1307, "b": 1307}, {"a": 1326, "b": 1326}, {"a": 1340, "b": 1340}, {"a": 1354, "b": 1354}, {"a": 1365, "b": 1375}, {"a": 1385, "b": 1388}, {"a": 1392, "b": 1406}, {"a": 1420, "b": 1422}, {"a": 1433, "b": 1436}, {"a": 1439, "b": 1444}, {"a": 1449, "b": 1460}, {"a": 1469, "b": 1471}, {"a": 1476, "b": 1492}, {"a": 1504, "b": 1506}, {"a": 1517, "b": 1520}, {"a": 1523, "b": 1528}, {"a": 1533, "b": 1542}, {"a": 1553, "b": 1556}, {"a": 1560, "b": 1574}, {"a": 1588, "b": 1590}, {"a": 1601, "b": 1604}, {"a": 1607, "b": 1612}, {"a": 1617, "b": 1630}, {"a": 1637, "b": 1640}, {"a": 1644, "b": 1658}, {"a": 1672, "b": 1674}, {"a": 1685, "b": 1688}, {"a": 1691, "b": 1696}, {"a": 1701, "b": 1715}, {"a": 1721, "b": 1724}, {"a": 1728, "b": 1744}, {"a": 1756, "b": 1758}, {"a": 1769, "b": 1772}, {"a": 1775, "b": 1780}, {"a": 1785, "b": 1796}, {"a": 1805, "b": 1808}, {"a": 1812, "b": 1826}, {"a": 1840, "b": 1842}, {"a": 1853, "b": 1856}, {"a": 1859, "b": 1864}, {"a": 1869, "b": 1880}, {"a": 1889, "b": 1892}, {"a": 1896, "b": 1906}, {"a": 1924, "b": 1926}, {"a": 1937, "b": 1940}, {"a": 1944, "b": 1948}, {"a": 1957, "b": 1957}, {"a": 1963, "b": 1964}, {"a": 1967, "b": 1970}, {"a": 1973, "b": 1976}, {"a": 1979, "b": 1982}, {"a": 1985, "b": 1992}, {"a": 1995, "b": 2005}, {"a": 2126, "b": 2127}, {"a": 2131, "b": 2132}, {"a": 2137, "b": 2138}, {"a": 2143, "b": 2144}, {"a": 2149, "b": 2150}, {"a": 2159, "b": 2160}, {"a": 2172, "b": 2173}, {"a": 2181, "b": 2181}, {"a": 2185, "b": 2185}, {"a": 2190, "b": 2190}, {"a": 2196, "b": 2196}, {"a": 2202, "b": 2202}, {"a": 2208, "b": 2208}, {"a": 2218, "b": 2218}, {"a": 2238, "b": 2239}, {"a": 2243, "b": 2244}, {"a": 2249, "b": 2250}, {"a": 2254, "b": 2256}, {"a": 2260, "b": 2262}, {"a": 2266, "b": 2272}, {"a": 2279, "b": 2285}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "63LB",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode01_tables_raw.org",
+		"description": "Capture trimmed - selection in trimmed whitespace",
+		"initial_selections": [{"a": 2153, "b": 2156}],
+		"expected_selections": [{"a": 2159, "b": 2160}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "QLAI",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode03_all_markups.org",
+		"description": "Capture cell - cursor before first pipe (start of first cell)",
+		"initial_selections": [{"a": 420, "b": 420}],
+		"expected_selections": [{"a": 420, "b": 440}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "G4YA",
+		"command": "tabnav_select_current",
+		"context": "None",
+		"file": "orgmode03_all_markups.org",
+		"description": "Capture cell - cursor immediately before delimiter between cells",
+		"initial_selections": [{"a": 634, "b": 634}],
+		"expected_selections": [{"a": 615, "b": 634}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "2OSZ",
+		"command": "tabnav_select_all",
+		"context": "None",
+		"file": "orgmode03_all_markups.org",
+		"description": "Capture cell - entire table",
+		"initial_selections": [{"a": 178, "b": 178}],
+		"expected_selections": [{"a": 0, "b": 20}, {"a": 20, "b": 27}, {"a": 27, "b": 46}, {"a": 46, "b": 60}, {"a": 60, "b": 74}, {"a": 74, "b": 82}, {"a": 84, "b": 104}, {"a": 104, "b": 111}, {"a": 111, "b": 130}, {"a": 130, "b": 144}, {"a": 144, "b": 158}, {"a": 158, "b": 166}, {"a": 168, "b": 188}, {"a": 188, "b": 195}, {"a": 195, "b": 214}, {"a": 214, "b": 228}, {"a": 228, "b": 242}, {"a": 242, "b": 250}, {"a": 252, "b": 272}, {"a": 272, "b": 279}, {"a": 279, "b": 298}, {"a": 298, "b": 312}, {"a": 312, "b": 326}, {"a": 326, "b": 334}, {"a": 336, "b": 356}, {"a": 356, "b": 363}, {"a": 363, "b": 382}, {"a": 382, "b": 396}, {"a": 396, "b": 410}, {"a": 410, "b": 418}, {"a": 420, "b": 440}, {"a": 440, "b": 447}, {"a": 447, "b": 466}, {"a": 466, "b": 480}, {"a": 480, "b": 494}, {"a": 494, "b": 502}, {"a": 504, "b": 524}, {"a": 524, "b": 531}, {"a": 531, "b": 550}, {"a": 550, "b": 564}, {"a": 564, "b": 578}, {"a": 578, "b": 586}, {"a": 588, "b": 608}, {"a": 608, "b": 615}, {"a": 615, "b": 634}, {"a": 634, "b": 648}, {"a": 648, "b": 662}, {"a": 662, "b": 670}, {"a": 672, "b": 692}, {"a": 692, "b": 699}, {"a": 699, "b": 718}, {"a": 718, "b": 732}, {"a": 732, "b": 746}, {"a": 746, "b": 754}, {"a": 756, "b": 776}, {"a": 776, "b": 783}, {"a": 783, "b": 802}, {"a": 802, "b": 816}, {"a": 816, "b": 830}, {"a": 830, "b": 838}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	}
+]
