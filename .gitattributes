@@ -1,0 +1,12 @@
+.gitattributes export-ignore
+
+*.gif export-ignore
+*.png export-ignore
+*.jpg export-ignore
+
+TabNavTests.py export-ignore
+Test.sublime-commands export-ignore
+test_cases/** export-ignore
+test_cases export-ignore
+test_files/** export-ignore
+test_files export-ignore

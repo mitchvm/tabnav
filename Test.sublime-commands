@@ -1,0 +1,30 @@
+[
+  {
+    "caption": "TabNav: Run All Tests",
+    "command": "tabnav_run_test_cases"
+  },
+  {
+    "caption": "TabNav: Run Single Test",
+    "command": "tabnav_run_single_test"
+  },
+  {
+    "caption": "TabNav: Run Tests for Command",
+    "command": "tabnav_command_tests"
+  },
+  {
+    "caption": "TabNav: Run Tests for Context",
+    "command": "tabnav_context_tests"
+  },
+  {
+    "caption": "TabNav: New Test IDs",
+    "command": "tabnav_new_test_ids"
+  },
+  {
+    "caption": "TabNav: Copy Region Coords",
+    "command": "tabnav_copy_region_coords"
+  },
+  {
+    "caption": "TabNav: Set Regions from clipboard",
+    "command": "tabnav_set_regions_from_clipboard"
+  }
+]
