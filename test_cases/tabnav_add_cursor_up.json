@@ -1,8 +1,12 @@
 [
 	{
 		"id": "HIFZ",
-		"command": "tabnav_add_cursor_up",
-		"context": "markdown",
+		"command": "tabnav_add_cursor",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "up"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into one cursor per cell",
 		"initial_selections": [{"a": 125, "b": 245}],
@@ -11,8 +15,12 @@
 	},
 	{
 		"id": "5AI3",
-		"command": "tabnav_add_cursor_up",
-		"context": "markdown",
+		"command": "tabnav_add_cursor",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "up"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some added, some not",
 		"initial_selections": [{"a": 19, "b": 19}, {"a": 126, "b": 126}, {"a": 227, "b": 227}, {"a": 264, "b": 264}, {"a": 351, "b": 351}],

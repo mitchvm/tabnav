@@ -1,8 +1,12 @@
 [
 	{
 		"id": "XBNN",
-		"command": "tabnav_add_cursor_left",
-		"context": "markdown",
+		"command": "tabnav_add_cursor",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "left"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into one cursor per cell",
 		"initial_selections": [{"a": 125, "b": 245}],
@@ -11,8 +15,12 @@
 	},
 	{
 		"id": "HPT7",
-		"command": "tabnav_add_cursor_left",
-		"context": "markdown",
+		"command": "tabnav_add_cursor",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "left"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some added, some not",
 		"initial_selections": [{"a": 7, "b": 7}, {"a": 130, "b": 130}, {"a": 217, "b": 217}, {"a": 243, "b": 243}],

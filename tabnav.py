@@ -15,24 +15,24 @@ capture_levels = OrderedDict([
 ])
 
 move_directions = {
-	"Left": (0,-1),
-	"Right": (0,1),
-	"Up": (-1,0),
-	"Down": (1,0)
+	"left": (0,-1),
+	"right": (0,1),
+	"up": (-1,0),
+	"down": (1,0)
 }
 
 cursor_cell_directions = {
-	"Left": -1,
-	"Right": 1,
-	"Up": -1,
-	"Down": -1
+	"left": -1,
+	"right": 1,
+	"up": -1,
+	"down": -1
 }
 
 selection_cell_directions = {
-	"Left": -1,
-	"Right": 1,
-	"Up": 1,
-	"Down": 1
+	"left": -1,
+	"right": 1,
+	"up": 1,
+	"down": 1
 }
 
 class ColumnIndexError(Exception):
@@ -701,7 +701,7 @@ class TableNavigator:
 		new_cells = []
 		dr, dc = direction
 		selections = list(self.view.sel())
-		if direction in ["Right", "Down"]:
+		if direction in ["right", "down"]:
 			# If multiple regions are selected, avoid clobbering one-another
 			selections = reversed(selections)
 		for region in selections:
@@ -798,7 +798,6 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		self.table.parse_selected_rows()
 		self.tabnav = TableNavigator(self.table, self.context.capture_level, cell_direction)
 
-# Move cells:
 
 class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
@@ -812,7 +811,7 @@ class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
 			log.info(e)
 
 class TabnavMoveCursorCommand(TabnavCommand):
-	def run(self, edit, move_direction="Right", context=None):
+	def run(self, edit, move_direction="right", context=None):
 		'''Moves cursors to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
 			direction = move_directions[move_direction]
@@ -845,11 +844,10 @@ class TabnavMoveCursorCommand(TabnavCommand):
 
 	def input(self, args):
 		return TabnavDirectionInputHandler()
-		
-# Add cells
 
+	
 class TabnavAddCursorCommand(TabnavCommand):
-	def run(self, edit, move_direction, context=None):
+	def run(self, edit, move_direction="Right", context=None):
 		'''Adds cursors to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
 			self.init_table(cursor_cell_directions[move_direction])
@@ -873,21 +871,6 @@ class TabnavAddCursorCommand(TabnavCommand):
 	def input(self, args):
 		return TabnavDirectionInputHandler()
 
-class TabnavAddCursorRightCommand(TabnavAddCursorCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "Right", context=context)
-
-class TabnavAddCursorLeftCommand(TabnavAddCursorCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "Left", context=context)
-
-class TabnavAddCursorUpCommand(TabnavAddCursorCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "Up", context=context)
-		
-class TabnavAddCursorDownCommand(TabnavAddCursorCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "Down", context=context)
 
 # Select cells
 
@@ -926,19 +909,19 @@ class TabnavSelectNextCommand(TabnavCommand):
 
 class TabnavSelectRightCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Right", context=context)
+		super().run(edit, "right", context=context)
 
 class TabnavSelectLeftCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Left", context=context)
+		super().run(edit, "left", context=context)
 
 class TabnavSelectUpCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Up", context=context)
+		super().run(edit, "up", context=context)
 		
 class TabnavSelectDownCommand(TabnavSelectNextCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Down", context=context)
+		super().run(edit, "down", context=context)
 
 # Extend selection
 
@@ -967,19 +950,19 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 
 class TabnavExtendSelectionRightCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Right", context=context)
+		super().run(edit, "right", context=context)
 
 class TabnavExtendSelectionLeftCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Left", context=context)
+		super().run(edit, "left", context=context)
 
 class TabnavExtendSelectionUpCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Up", context=context)
+		super().run(edit, "up", context=context)
 		
 class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Down", context=context)
+		super().run(edit, "down", context=context)
 
 # Reduce selection
 
@@ -1069,19 +1052,19 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 
 class TabnavReduceSelectionRightCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Right", context)
+		super().run(edit, "right", context)
 
 class TabnavReduceSelectionLeftCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Left", context)
+		super().run(edit, "left", context)
 
 class TabnavReduceSelectionUpCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Up", context)
+		super().run(edit, "up", context)
 
 class TabnavReduceSelectionDownCommand(TabnavReduceSelectionCommand):
 	def run(self, edit, context=None):
-		super().run(edit, "Down", context)
+		super().run(edit, "down", context)
 
 # Select row cells
 
@@ -1163,7 +1146,7 @@ class TabnavDirectionInputHandler(sublime_plugin.ListInputHandler):
 		return "move_direction"
 
 	def list_items(self):
-		return ["Left", "Right", "Up", "Down"]
+		return ["left", "right", "up", "down"]
 
 
 class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):

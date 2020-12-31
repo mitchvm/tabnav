@@ -25,7 +25,7 @@
         // move to cell on left
         "keys": ["ctrl+;"],
         "command": "tabnav_move_cursor",
-        "args": { "move_direction": "Left" },
+        "args": { "move_direction": "left" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_left" },
@@ -36,7 +36,7 @@
         // move to cell on right
         "keys": ["ctrl+'"],
         "command": "tabnav_move_cursor",
-        "args": { "move_direction": "Right" },
+        "args": { "move_direction": "right" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_right" },
@@ -47,7 +47,7 @@
         // move to cell above
         "keys": ["ctrl+["],
         "command": "tabnav_move_cursor",
-        "args": { "move_direction": "Up" },
+        "args": { "move_direction": "up" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_up" },
@@ -58,7 +58,7 @@
         // move to cell below
         "keys": ["ctrl+/"],
         "command": "tabnav_move_cursor",
-        "args": { "move_direction": "Down" },
+        "args": { "move_direction": "down" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_down" },

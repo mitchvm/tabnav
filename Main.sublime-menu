@@ -60,38 +60,42 @@
           {
             "caption": "Move cursor to cell on left",
             "command": "tabnav_move_cursor",
-            "args": { "move_direction": "Left" }
+            "args": { "move_direction": "left" }
           },
           {
             "caption": "Move cursor to cell on right",
             "command": "tabnav_move_cursor",
-            "args": { "move_direction": "Right" }
+            "args": { "move_direction": "right" }
           },
           {
             "caption": "Move cursor to cell above",
             "command": "tabnav_move_cursor",
-            "args": { "move_direction": "Up" }
+            "args": { "move_direction": "up" }
           },
           {
             "caption": "Move cursor to cell below",
             "command": "tabnav_move_cursor",
-            "args": { "move_direction": "Down" }
+            "args": { "move_direction": "down" }
           },
           {
             "caption": "Add cursor to cell on left",
-            "command": "tabnav_add_cursor_left"
+            "command": "tabnav_add_cursor",
+            "args": { "move_direction": "left" }
           },
           {
             "caption": "Add cursor to cell on right",
-            "command": "tabnav_add_cursor_right"
+            "command": "tabnav_add_cursor",
+            "args": { "move_direction": "right" }
           },
           {
             "caption": "Add cursor to cell above",
-            "command": "tabnav_add_cursor_up"
+            "command": "tabnav_add_cursor",
+            "args": { "move_direction": "up" }
           },
           {
             "caption": "Add cursor to cell below",
-            "command": "tabnav_add_cursor_down"
+            "command": "tabnav_add_cursor",
+            "args": { "move_direction": "down" }
           },
           {
             "caption": "-"

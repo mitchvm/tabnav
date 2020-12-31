@@ -1,8 +1,12 @@
 [
 	{
 		"id": "52HQ",
-		"command": "tabnav_add_cursor_right",
-		"context": "markdown",
+		"command": "tabnav_add_cursor",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "right"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into one cursor per cell",
 		"initial_selections": [{"a": 125, "b": 245}],
@@ -11,8 +15,12 @@
 	},
 	{
 		"id": "G4VI",
-		"command": "tabnav_add_cursor_right",
-		"context": "markdown",
+		"command": "tabnav_add_cursor",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "right"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some added, some not",
 		"initial_selections": [{"a": 18, "b": 18}, {"a": 139, "b": 139}, {"a": 197, "b": 197}, {"a": 227, "b": 227}, {"a": 310, "b": 310}],

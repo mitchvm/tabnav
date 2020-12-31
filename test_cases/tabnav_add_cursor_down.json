@@ -1,8 +1,12 @@
 [
 	{
 		"id": "7JN7",
-		"command": "tabnav_add_cursor_down",
-		"context": "markdown",
+		"command": "tabnav_add_cursor",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into one cursor per cell",
 		"initial_selections": [{"a": 125, "b": 245}],
@@ -11,8 +15,12 @@
 	},
 	{
 		"id": "R3DS",
-		"command": "tabnav_add_cursor_down",
-		"context": "markdown",
+		"command": "tabnav_add_cursor",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some added, some not",
 		"initial_selections": [{"a": 20, "b": 20}, {"a": 126, "b": 126}, {"a": 218, "b": 218}, {"a": 227, "b": 227}, {"a": 325, "b": 325}],
