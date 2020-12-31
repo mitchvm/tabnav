@@ -74,6 +74,10 @@ TabNav adds the following commands to Sublime Text. They are all accessible via 
 
 ### Table Navigation Commands
 
+> :warning: **TabNav overrides several default Sublime Text key bindings.**
+>
+> See the [key bindings](#key_bindings) section of the README for details, including how to disable the default key bindings.
+
 The table navigation commands below only operate within the context of a table. All of the table commands are compatible with multiple cursors, and even multiple cursors in multiple, disjoint tables.
 
 The default key bindings are intended for use on a US-English QWERTY keyboard. They make heavy use of the cluster of four keys immediately to the left of the <kbd>Enter</kbd> key. If you are using a different keyboard layout, or simply want to customize your key bindings, all of the default key bindings can be individually disabled. See [Customization](#customization).
@@ -232,13 +236,11 @@ TabNav offers considerable configuration, or even customizability to modify the 
 
 ### Key Bindings
 
-> :warning: **TabNav overrides several default Sublime Text key bindings.**
+Simply due to the nature of the package, TabNav requires many key bindings, so it comes with many key bindings enabled by default, including several that override built-in Sublime Text key bindings. Effort has been made to minimize the impact on the default Sublime Text key bindings, by having the TabNav key bindings take effect under very specific circumstances. If any of the following conditions are not met, then the TabNav key bindings have no effect.
 
-When all of the following conditions are met, several default TabNav key bindings override built-in Sublime Text key bindings. If any of the conditions are not met, then the TabNav key bindings have no effect.
-
-1. There is a TabNav context configured that matches the current view.
+1. There is a TabNav [context](#contexts) configured that matches the current view.
 2. TabNav is enabled on the current view - in most contexts it is enabled by default.
-3. The TabNav key binding has not been disabled either globally, or for the particular syntax (discussed below).
+3. The particular TabNav key binding has not been disabled either globally, or for the particular syntax (discussed below).
 4. The start point of the first selection is within a table.
 
 The following built-in Sublime Text key bindings get overridden by TabNav:
@@ -257,7 +259,7 @@ The following built-in Sublime Text key bindings get overridden by TabNav:
 
 #### Disable Default TabNav Key Bindings
 
-To temporarily disable most of the default TabNav keybindings, it is enough to [disable TabNav](#other-commands) on the current view.
+To temporarily disable most of the default TabNav keybindings, it is enough to [disable TabNav](#other-commands) on the current view. The only key bindings that are not disabled by doing this are the key bindings to enable and disable TabNav on the view.
 
 To permanently disable any default TabNav keybindings, either globally or only within specific syntaxes, TabNav offers configurable settings for each key binding. To disable the key bindings globally, select the "Settings - Global Key Binding Flags" menu option under TabNav Package Settings menu (Settings ❯ Package Settings ❯ TabNav), which opens TabNav's default Preferences file along with your local Preferences file. Copy the appropriate `tabnav.kb_` flag to your local Preferences file and set it to `false`.
 
