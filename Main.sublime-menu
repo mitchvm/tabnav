@@ -106,19 +106,23 @@
           },
           {
             "caption": "Select cell on left",
-            "command": "tabnav_select_left"
+            "command": "tabnav_select_next",
+            "args": { "move_direction": "left" }
           },
           {
             "caption": "Select cell on right",
-            "command": "tabnav_select_right"
+            "command": "tabnav_select_next",
+            "args": { "move_direction": "right" }
           },
           {
             "caption": "Select cell above",
-            "command": "tabnav_select_up"
+            "command": "tabnav_select_next",
+            "args": { "move_direction": "up" }
           },
           {
             "caption": "Select cell below",
-            "command": "tabnav_select_down"
+            "command": "tabnav_select_next",
+            "args": { "move_direction": "down" }
           },
           {
             "caption": "Extend selection to cell on left",

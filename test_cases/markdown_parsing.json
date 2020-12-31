@@ -275,7 +275,8 @@
 	},
 	{
 		"id": "NFNL",
-		"command": "tabnav_select_down",
+		"command": "tabnav_select_next",
+		"args": { "move_direction": "down" },
 		"file": "markdown04_markup_like.md",
 		"description": "Markdown non-markup cells that match line markup regex",
 		"initial_selections": [{"a": 214, "b": 210}],

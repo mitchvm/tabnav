@@ -71,7 +71,8 @@
     { 
         // select cell on left
         "keys": ["ctrl+;"],
-        "command": "tabnav_select_left",
+        "command": "tabnav_select_next",
+        "args": { "move_direction": "left" },
         "context":
         [
             { "key": "setting.tabnav.kb_select_left" },
@@ -81,7 +82,8 @@
     { 
         // select cell on right
         "keys": ["ctrl+'"],
-        "command": "tabnav_select_right",
+        "command": "tabnav_select_next",
+        "args": { "move_direction": "right" },
         "context":
         [
             { "key": "setting.tabnav.kb_select_right" },
@@ -91,7 +93,8 @@
     { 
         // select cell above
         "keys": ["ctrl+["],
-        "command": "tabnav_select_up",
+        "command": "tabnav_select_next",
+        "args": { "move_direction": "up" },
         "context":
         [
             { "key": "setting.tabnav.kb_select_up" },
@@ -101,7 +104,8 @@
     { 
         // select cell below
         "keys": ["ctrl+/"],
-        "command": "tabnav_select_down",
+        "command": "tabnav_select_next",
+        "args": { "move_direction": "down" },
         "context":
         [
             { "key": "setting.tabnav.kb_select_down" },

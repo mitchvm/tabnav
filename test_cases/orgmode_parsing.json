@@ -146,7 +146,8 @@
 	},
 	{
 		"id": "HQDG",
-		"command": "tabnav_select_down",
+		"command": "tabnav_select_next",
+		"args": { "move_direction": "down" },
 		"file": "orgmode02_markup_like.org",
 		"description": "Org Mode non-markup cells that match markup regex",
 		"initial_selections": [{"a": 5, "b": 9}, {"a": 166, "b": 171}, {"a": 236, "b": 245}],

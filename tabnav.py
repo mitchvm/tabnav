@@ -872,8 +872,6 @@ class TabnavAddCursorCommand(TabnavCommand):
 		return TabnavDirectionInputHandler()
 
 
-# Select cells
-
 class TabnavSelectCurrentCommand(TabnavCommand):
 	def run(self, edit, cell_direction=1, context=None):
 		'''Selects the contents of all table cells that intersect the current selection regions.'''
@@ -882,6 +880,7 @@ class TabnavSelectCurrentCommand(TabnavCommand):
 			self.tabnav.split_and_select_current_cells()
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
+
 
 class TabnavSelectNextCommand(TabnavCommand):
 	def run(self, edit, move_direction, context=None):
@@ -907,21 +906,6 @@ class TabnavSelectNextCommand(TabnavCommand):
 	def input(self, args):
 		return TabnavDirectionInputHandler()
 
-class TabnavSelectRightCommand(TabnavSelectNextCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "right", context=context)
-
-class TabnavSelectLeftCommand(TabnavSelectNextCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "left", context=context)
-
-class TabnavSelectUpCommand(TabnavSelectNextCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "up", context=context)
-		
-class TabnavSelectDownCommand(TabnavSelectNextCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "down", context=context)
 
 # Extend selection
 

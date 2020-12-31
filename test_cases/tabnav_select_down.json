@@ -1,8 +1,12 @@
 [
 	{
 		"id": "CXWI",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell in bottom row of file doesn't move",
 		"initial_selections": [{"a": 308, "b": 311}],
@@ -11,8 +15,12 @@
 	},
 	{
 		"id": "AHR4",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "First cell of row",
 		"initial_selections": [{"a": 101, "b": 111}],
@@ -21,8 +29,12 @@
 	},
 	{
 		"id": "NHTA",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Last cell of row",
 		"initial_selections": [{"a": 132, "b": 146}],
@@ -31,8 +43,12 @@
 	},
 	{
 		"id": "3DHK",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup excluded - markup row jumped",
 		"initial_selections": [{"a": 13, "b": 24}],
@@ -41,8 +57,12 @@
 	},
 	{
 		"id": "PFKW",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup excluded - multiple sequential markup rows jumped",
 		"initial_selections": [{"a": 699, "b": 693}],
@@ -51,8 +71,12 @@
 	},
 	{
 		"id": "YUUF",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup excluded - multiple cursros, markup only jumped as applicable",
 		"initial_selections": [{"a": 25, "b": 36}, {"a": 112, "b": 119}],
@@ -61,8 +85,12 @@
 	},
 	{
 		"id": "SZZW",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell in line markup row moves out",
 		"initial_selections": [{"a": 63, "b": 74}],
@@ -71,8 +99,12 @@
 	},
 	{
 		"id": "SY5V",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup included - moves to markup row",
 		"initial_selections": [{"a": 13, "b": 24}],
@@ -81,8 +113,12 @@
 	},
 	{
 		"id": "TXOK",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
 		"initial_selections": [{"a": 206, "b": 206}],
@@ -91,8 +127,12 @@
 	},
 	{
 		"id": "W7CY",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target cell is an empty cell",
 		"initial_selections": [{"a": 120, "b": 131}],
@@ -101,8 +141,12 @@
 	},
 	{
 		"id": "TCTI",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Sequential cells in a column, one in bottom row - merged",
 		"initial_selections": [{"a": 243, "b": 247}, {"a": 308, "b": 311}],
@@ -111,8 +155,12 @@
 	},
 	{
 		"id": "ORBP",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Selection jumps over row with insufficient columns",
 		"initial_selections": [{"a": 207, "b": 224}],
@@ -121,8 +169,12 @@
 	},
 	{
 		"id": "XH2O",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells, some move some don't",
 		"initial_selections": [{"a": 101, "b": 111}, {"a": 207, "b": 224}, {"a": 308, "b": 311}],
@@ -131,8 +183,12 @@
 	},
 	{
 		"id": "K4TA",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Sequential cells in the same column",
 		"initial_selections": [{"a": 112, "b": 119}, {"a": 192, "b": 205}, {"a": 243, "b": 247}],
@@ -141,8 +197,12 @@
 	},
 	{
 		"id": "UPU7",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Cells in bottom rows of multiple tables",
 		"initial_selections": [{"a": 1804, "b": 1822}, {"a": 2806, "b": 2819}],
@@ -151,8 +211,12 @@
 	},
 	{
 		"id": "36JP",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple tables",
 		"initial_selections": [{"a": 517, "b": 536}, {"a": 964, "b": 982}, {"a": 1487, "b": 1500}, {"a": 2086, "b": 2099}, {"a": 2222, "b": 2235}],
@@ -161,8 +225,12 @@
 	},
 	{
 		"id": "VSL4",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Cells in borderless table",
 		"initial_selections": [{"a": 68, "b": 78}, {"a": 113, "b": 124}, {"a": 159, "b": 169}],
@@ -171,8 +239,12 @@
 	},
 	{
 		"id": "NLQX",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected forwards",
 		"initial_selections": [{"a": 1150, "b": 1131}],
@@ -181,8 +253,12 @@
 	},
 	{
 		"id": "LPOP",
-		"command": "tabnav_select_down",
-		"context": "markdown",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected in reverse",
 		"initial_selections": [{"a": 1131, "b": 1150}],
@@ -191,8 +267,12 @@
 	},
 	{
 		"id": "ANNS",
-		"command": "tabnav_select_down",
-		"context": "auto_csv",
+		"command": "tabnav_select_next",
+		"args":
+		{
+			"context": "auto_csv",
+			"move_direction": "down"
+		},
 		"file": "csv01_comma_quoted.csv",
 		"description": "Capture cell - empty first cell, move to non-empty cell",
 		"initial_selections": [{"a": 380, "b": 380}],
