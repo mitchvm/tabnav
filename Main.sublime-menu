@@ -49,27 +49,33 @@
           },
           {
             "caption": "Move cursor to start of current cell",
-            "command": "tabnav_move_cursor_start"
+            "command": "tabnav_move_cursor_current_cell",
+            "args": { "cell_direction": -1 }
           },
           {
             "caption": "Move cursor to end of current cell",
-            "command": "tabnav_move_cursor_end"
+            "command": "tabnav_move_cursor_current_cell",
+            "args": { "cell_direction": 1} 
           },
           {
             "caption": "Move cursor to cell on left",
-            "command": "tabnav_move_cursor_left"
+            "command": "tabnav_move_cursor",
+            "args": { "move_direction": "Left" }
           },
           {
             "caption": "Move cursor to cell on right",
-            "command": "tabnav_move_cursor_right"
+            "command": "tabnav_move_cursor",
+            "args": { "move_direction": "Right" }
           },
           {
             "caption": "Move cursor to cell above",
-            "command": "tabnav_move_cursor_up"
+            "command": "tabnav_move_cursor",
+            "args": { "move_direction": "Up" }
           },
           {
             "caption": "Move cursor to cell below",
-            "command": "tabnav_move_cursor_down"
+            "command": "tabnav_move_cursor",
+            "args": { "move_direction": "Down" }
           },
           {
             "caption": "Add cursor to cell on left",

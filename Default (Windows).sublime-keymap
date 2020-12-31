@@ -24,7 +24,8 @@
     { 
         // move to cell on left
         "keys": ["alt+;"],
-        "command": "tabnav_move_cursor_left",
+        "command": "tabnav_move_cursor",
+        "args": { "move_direction": "Left" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_left" },
@@ -34,7 +35,8 @@
     { 
         // move to cell on right
         "keys": ["alt+'"],
-        "command": "tabnav_move_cursor_right",
+        "command": "tabnav_move_cursor",
+        "args": { "move_direction": "Right" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_right" },
@@ -44,7 +46,8 @@
     { 
         // move to cell above
         "keys": ["alt+["],
-        "command": "tabnav_move_cursor_up",
+        "command": "tabnav_move_cursor",
+        "args": { "move_direction": "Up" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_up" },
@@ -54,7 +57,8 @@
     { 
         // move to cell below
         "keys": ["alt+/"],
-        "command": "tabnav_move_cursor_down",
+        "command": "tabnav_move_cursor",
+        "args": { "move_direction": "Down" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_down" },

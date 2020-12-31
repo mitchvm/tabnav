@@ -2,7 +2,7 @@
 	{
 		"id": "D4KD",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Context capture level overrides default",
 		"initial_selections": [{"a": 126, "b": 126}],
@@ -22,7 +22,7 @@
 	{
 		"id": "2KN2",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "View capture level overrides context",
 		"initial_selections": [{"a": 126, "b": 126}],

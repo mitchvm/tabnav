@@ -2,7 +2,6 @@
 	{
 		"id": "OIKD",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Disabled in plain text CSV by default",
@@ -13,7 +12,6 @@
 	{
 		"id": "GUKO",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, unquoted, first cell",
@@ -28,7 +26,6 @@
 	{
 		"id": "R7ZU",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, quoted, first cell",
@@ -43,7 +40,6 @@
 	{
 		"id": "P3PP",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, quoted with comma and quotes, first cell",
@@ -58,7 +54,6 @@
 	{
 		"id": "5TZE",
 		"command": "tabnav_extend_selection_right",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, empty, first cell",
@@ -73,7 +68,6 @@
 	{
 		"id": "DFVG",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, unquoted, middle cell",
@@ -88,7 +82,6 @@
 	{
 		"id": "IBIG",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, quoted, middle cell",
@@ -103,7 +96,6 @@
 	{
 		"id": "5OD7",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, quoted with comma and quotes, middle cell",
@@ -118,7 +110,6 @@
 	{
 		"id": "3WPO",
 		"command": "tabnav_extend_selection_left",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, empty, middle cell",
@@ -133,7 +124,6 @@
 	{
 		"id": "U3ZU",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, unquoted, last cell",
@@ -148,7 +138,6 @@
 	{
 		"id": "KLIJ",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, quoted, last cell",
@@ -163,7 +152,6 @@
 	{
 		"id": "RPJ7",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, quoted with comma and quotes, last cell",
@@ -178,7 +166,6 @@
 	{
 		"id": "MR6J",
 		"command": "tabnav_extend_selection_left",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, empty, last cell",
@@ -193,7 +180,6 @@
 	{
 		"id": "ZPYK",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Plain CSV: comma, select all",
@@ -208,7 +194,6 @@
 	{
 		"id": "AP5Y",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv02_pipe_quoted.csv",
 		"description": "Plain CSV: pipe, select all",
@@ -223,7 +208,6 @@
 	{
 		"id": "MT5C",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv03_semicolon_quoted.csv",
 		"description": "Plain CSV: semicolon, select all",
@@ -238,7 +222,6 @@
 	{
 		"id": "D7W2",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv04_tab_quoted.csv",
 		"description": "Plain CSV: tab, select all",
@@ -253,7 +236,6 @@
 	{
 		"id": "SIW7",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Plain CSV: fallback comma delimiter",
@@ -268,7 +250,6 @@
 	{
 		"id": "GTZE",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Plain CSV: explicit comma delimiter",
@@ -283,7 +264,6 @@
 	{
 		"id": "VD4E",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Plain CSV: explicit semicolon delimiter",
@@ -298,7 +278,6 @@
 	{
 		"id": "PLIU",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Plain CSV: explicit pipe delimiter",
@@ -313,7 +292,6 @@
 	{
 		"id": "SCTI",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Plain CSV: explicit escaped pipe delimiter",
@@ -328,7 +306,6 @@
 	{
 		"id": "Z3G5",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Plain CSV: explicit escaped tab delimiter",
@@ -343,7 +320,6 @@
 	{
 		"id": "B6MA",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv06_justified.csv",
 		"description": "Plain CSV: Capture trimmed, justified columns",
@@ -357,7 +333,6 @@
 	{
 		"id": "HTYY",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Advanced CSV: comma",
@@ -372,7 +347,6 @@
 	{
 		"id": "Q5XF",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Advanced CSV: semicolon",
@@ -387,7 +361,6 @@
 	{
 		"id": "IRAS",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Advanced CSV: pipe",
@@ -402,7 +375,6 @@
 	{
 		"id": "54BY",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Advanced CSV: escaped pipe",
@@ -417,7 +389,6 @@
 	{
 		"id": "VJPI",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Advanced CSV/AdvancedCSV.tmLanguage",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Advanced CSV: escaped tab",
@@ -432,7 +403,6 @@
 	{
 		"id": "R7SM",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_2c_quoted_rfc.sublime-syntax",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Rainbow CSV: comma RFC",
@@ -446,7 +416,6 @@
 	{
 		"id": "PIU5",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_2c_Simple.sublime-syntax",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Rainbow CSV: comma Simple",
@@ -460,7 +429,6 @@
 	{
 		"id": "7EZB",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_3b_quoted_rfc.sublime-syntax",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Rainbow CSV: semicolon RFC",
@@ -474,7 +442,6 @@
 	{
 		"id": "WE7P",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_3b_Simple.sublime-syntax",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Rainbow CSV: semicolon Simple",
@@ -488,7 +455,6 @@
 	{
 		"id": "6VLM",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/rainbow_csv/pregenerated_grammars/Rainbow_CSV_hex_7c_Simple.sublime-syntax",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Rainbow CSV: pipe",
@@ -502,7 +468,6 @@
 	{
 		"id": "X2SU",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/rainbow_csv/pregenerated_grammars/TSV (Rainbow).sublime-syntax",
 		"file": "csv05_mixed_unquoted.csv",
 		"description": "Rainbow CSV: tab",
@@ -516,7 +481,6 @@
 	{
 		"id": "XJDF",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv06_justified.csv",
 		"description": "Capture cell - cursor at start of line - no preceding delimiter",
@@ -530,7 +494,6 @@
 	{
 		"id": "MAJN",
 		"command": "tabnav_select_current",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv06_justified.csv",
 		"description": "Capture cell - cursor immediately before delimiter between cells",
@@ -544,7 +507,6 @@
 	{
 		"id": "MAJN",
 		"command": "tabnav_select_all",
-		"context": "None",
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Capture cell - entire table",

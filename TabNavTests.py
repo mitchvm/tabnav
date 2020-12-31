@@ -23,10 +23,7 @@ class TestCase():
 		self.test_case_file = test_case_file
 		self.test_id = test_definition['id']
 		self.command_name = test_definition['command']
-		if test_definition['context'] == "None":
-			self.context_name = None
-		else:
-			self.context_name = test_definition['context']
+		self.command_args = test_definition.get('args', {})
 		self.file_name = test_definition['file']
 		self.description = test_definition['description']
 		self.initial_selections = [(s['a'], s['b']) for s in test_definition['initial_selections']]
@@ -37,7 +34,7 @@ class TestCase():
 
 	@property
 	def html_preview(self):
-		return "<b>ID:</b> {0}<br><b>Context:</b> {1}<br><b>Command:</b> {2}<br><b>Description:</b> {3}".format(self.test_id, self.context_name, self.command_name, self.description)
+		return "<b>ID:</b> {0}<br><b>Arguments:</b> {1}<br><b>Command:</b> {2}<br><b>Description:</b> {3}".format(self.test_id, self.command_args, self.command_name, self.description)
 
 class TestResult():
 	def __init__(self, test_case, success, message = None):
@@ -91,7 +88,7 @@ class TestSetResults():
 			yield '--' + output
 
 
-def enumerate_test_cases(command_name=None, context_name=None, file_name=None, test_id=None):
+def enumerate_test_cases(command_name=None, file_name=None, test_id=None):
 	for dirpath, dirnames, filenames in os.walk(test_cases_dir):
 		for filename in (f for f in filenames if os.path.splitext(f)[1] == '.json'):
 			with open(os.path.join(dirpath, filename)) as f:
@@ -101,17 +98,16 @@ def enumerate_test_cases(command_name=None, context_name=None, file_name=None, t
 					raise Exception("Failed to read test cases from file {0}.".format(filename), e)
 			for test in test_cases:
 				if (command_name is None or test.command_name == command_name) \
-					and (context_name is None or test.context_name == context_name) \
 					and (file_name is None or test.file_name == file_name) \
 					and (test_id is None or test.test_id == test_id):
 					yield test
 
 
-def launch_tests(window, command_name=None, context_name=None, file_name=None, test_id=None):
+def launch_tests(window, command_name=None, file_name=None, test_id=None):
 	global pending_test_files, output_panel, start_time
 	start_time = datetime.now()
 	filekey = lambda t:t.file_name
-	test_cases = sorted(enumerate_test_cases(command_name, context_name, file_name, test_id), key=filekey)
+	test_cases = sorted(enumerate_test_cases(command_name, file_name, test_id), key=filekey)
 	for file_name, tests in itertools.groupby(test_cases, filekey):
 		any_tests = True
 		pending_test_files[file_name] = list(tests)
@@ -158,7 +154,7 @@ def run_test_case(view, test):
 			package_settings.set(setting, test.package_settings[setting])
 		view.sel().clear()
 		view.sel().add_all([sublime.Region(a, b) for a,b in test.initial_selections])
-		view.run_command(test.command_name, args={"context":test.context_name})
+		view.run_command(test.command_name, args=test.command_args)
 		selections = list(view.sel())
 		assert (len(selections) == len(test.expected_selections)), "Expected {0} selections but got {1}: {2}".format(len(test.expected_selections), len(selections), selections)
 		for region in selections:
@@ -229,7 +225,7 @@ class TabnavSingleTestInputHandler(sublime_plugin.ListInputHandler):
 		return "test_id"
 
 	def list_items(self):
-		return [("{0} [{1}; {2}; {3}]".format(test.description, test.command_name, test.context_name, test.test_id), test.test_id) for test in enumerate_test_cases()]
+		return [("{0} [{1}; {2}]".format(test.description, test.command_name, test.test_id), test.test_id) for test in enumerate_test_cases()]
 
 	def preview(self, value):
 		test_cases = list(enumerate_test_cases(test_id=value))
@@ -257,14 +253,14 @@ class TabnavCommandTestsInputHandler(sublime_plugin.ListInputHandler):
 		return [("{0} - {1} test cases".format(command_name, len(list(g))), command_name) for command_name, g in itertools.groupby(test_cases, commandkey)]
 
 	def preview(self, value):
-		contextkey = lambda t:t.context_name
-		test_cases = sorted(enumerate_test_cases(command_name=value), key=contextkey)
+		commandkey = lambda t:t.command_name
+		test_cases = sorted(enumerate_test_cases(command_name=value), key=commandkey)
 		if len(test_cases) == 0:
 			return "Command not found"
 		else:
 			result = "<ul>"
-			for context_name, g in itertools.groupby(test_cases, contextkey):
-				result = result + "<li>{0}: {1} test cases</li>".format(context_name, len(list(g)))
+			for command_name, g in itertools.groupby(test_cases, commandkey):
+				result = result + "<li>{0}: {1} test cases</li>".format(command_name, len(list(g)))
 			result = result + "</ul>"
 			return sublime.Html(result)
 

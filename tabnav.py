@@ -811,16 +811,8 @@ class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
-class TabnavMoveCursorStartCommand(TabnavMoveCursorCurrentCellCommand):
-	def run(self, edit, context=None):
-		super().run(edit, -1, context)
-
-class TabnavMoveCursorEndCommand(TabnavMoveCursorCurrentCellCommand):
-	def run(self, edit, context=None):
-		super().run(edit, 1, context)
-
 class TabnavMoveCursorCommand(TabnavCommand):
-	def run(self, edit, move_direction, context=None):
+	def run(self, edit, move_direction="Right", context=None):
 		'''Moves cursors to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
 			direction = move_directions[move_direction]
@@ -853,22 +845,6 @@ class TabnavMoveCursorCommand(TabnavCommand):
 
 	def input(self, args):
 		return TabnavDirectionInputHandler()
-
-class TabnavMoveCursorRightCommand(TabnavMoveCursorCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "Right", context=context)
-
-class TabnavMoveCursorLeftCommand(TabnavMoveCursorCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "Left", context=context)
-
-class TabnavMoveCursorUpCommand(TabnavMoveCursorCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "Up", context=context)
-		
-class TabnavMoveCursorDownCommand(TabnavMoveCursorCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "Down", context=context)
 		
 # Add cells
 

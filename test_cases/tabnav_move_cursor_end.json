@@ -1,8 +1,12 @@
 [
 	{
 		"id": "RKGZ",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in first cell",
 		"initial_selections": [{"a": 6, "b": 6}],
@@ -11,8 +15,12 @@
 	},
 	{
 		"id": "7STJ",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in last cell of row",
 		"initial_selections": [{"a": 138, "b": 138}],
@@ -21,8 +29,12 @@
 	},
 	{
 		"id": "TEMV",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in line markup cell",
 		"initial_selections": [{"a": 56, "b": 56}],
@@ -31,8 +43,12 @@
 	},
 	{
 		"id": "KXHP",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor already at end of cell",
 		"initial_selections": [{"a": 111, "b": 111}],
@@ -41,8 +57,12 @@
 	},
 	{
 		"id": "65KK",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor already at end of last cell of row",
 		"initial_selections": [{"a": 146, "b": 146}],
@@ -51,8 +71,12 @@
 	},
 	{
 		"id": "3W7Q",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
 		"initial_selections": [{"a": 206, "b": 206}],
@@ -61,8 +85,12 @@
 	},
 	{
 		"id": "LYSY",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors single cell",
 		"initial_selections": [{"a": 152, "b": 152}, {"a": 158, "b": 158}, {"a": 163, "b": 163}, {"a": 170, "b": 170}, {"a": 177, "b": 177}, {"a": 184, "b": 184}],
@@ -71,8 +99,12 @@
 	},
 	{
 		"id": "7UAV",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell selected forward",
 		"initial_selections": [{"a": 192, "b": 205}],
@@ -81,8 +113,12 @@
 	},
 	{
 		"id": "OOXZ",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell selected reverse",
 		"initial_selections": [{"a": 247, "b": 243}],
@@ -91,8 +127,12 @@
 	},
 	{
 		"id": "6GRX",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans a cell plus pipes on either end (3 cells)",
 		"initial_selections": [{"a": 111, "b": 120}],
@@ -101,8 +141,12 @@
 	},
 	{
 		"id": "HICB",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans three body rows",
 		"initial_selections": [{"a": 123, "b": 244}],
@@ -111,8 +155,12 @@
 	},
 	{
 		"id": "HICB",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "Region spans three markup rows",
 		"initial_selections": [{"a": 790, "b": 958}],
@@ -121,8 +169,12 @@
 	},
 	{
 		"id": "PTUN",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans body and markup row, markup excluded",
 		"initial_selections": [{"a": 14, "b": 128}],
@@ -131,8 +183,12 @@
 	},
 	{
 		"id": "NPWG",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans body and markup row, markup included",
 		"initial_selections": [{"a": 14, "b": 128}],
@@ -141,8 +197,12 @@
 	},
 	{
 		"id": "2UF4",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple tables",
 		"initial_selections": [{"a": 280, "b": 280}, {"a": 763, "b": 763}, {"a": 1395, "b": 1395}, {"a": 1922, "b": 1922}, {"a": 2338, "b": 2338}],
@@ -151,8 +211,12 @@
 	},
 	{
 		"id": "BGP3",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple line markup rows",
 		"initial_selections": [{"a": 212, "b": 212}, {"a": 1913, "b": 1913}],
@@ -161,8 +225,12 @@
 	},
 	{
 		"id": "L5EO",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Cursor in first column",
 		"initial_selections": [{"a": 75, "b": 75}],
@@ -171,8 +239,12 @@
 	},
 	{
 		"id": "4MHS",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Cursor in last column",
 		"initial_selections": [{"a": 98, "b": 98}],
@@ -181,8 +253,12 @@
 	},
 	{
 		"id": "3JFE",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Cursor at start of first column",
 		"initial_selections": [{"a": 136, "b": 136}],
@@ -191,8 +267,12 @@
 	},
 	{
 		"id": "67MF",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Cursor in first column of markup",
 		"initial_selections": [{"a": 39, "b": 39}],
@@ -201,8 +281,12 @@
 	},
 	{
 		"id": "RQJE",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Cursor in last column of markup",
 		"initial_selections": [{"a": 62, "b": 62}],
@@ -211,8 +295,12 @@
 	},
 	{
 		"id": "RAFL",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Selection spans markup row",
 		"initial_selections": [{"a": 18, "b": 86}],
@@ -221,8 +309,12 @@
 	},
 	{
 		"id": "J42R",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture trimmed - cursor after content",
 		"initial_selections": [{"a": 1455, "b": 1455}],
@@ -231,8 +323,12 @@
 	},
 	{
 		"id": "OEEH",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected forwards",
 		"initial_selections": [{"a": 1131, "b": 1150}],
@@ -241,8 +337,12 @@
 	},
 	{
 		"id": "XTYM",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected in reverse",
 		"initial_selections": [{"a": 1150, "b": 1131}],
@@ -251,8 +351,12 @@
 	},
 	{
 		"id": "6LAY",
-		"command": "tabnav_move_cursor_end",
-		"context": "markdown",
+		"command": "tabnav_move_cursor_current_cell",
+		"args":
+		{
+			"context": "markdown",
+			"cell_direction": 1
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell - cursor before delimiter",
 		"initial_selections": [{"a": 1150, "b": 1150}],
