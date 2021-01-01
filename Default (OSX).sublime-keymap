@@ -25,7 +25,7 @@
         // move to cell on left
         "keys": ["ctrl+;"],
         "command": "tabnav_move_cursor",
-        "args": { "move_direction": "left" },
+        "args": { "direction": "left" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_left" },
@@ -36,7 +36,7 @@
         // move to cell on right
         "keys": ["ctrl+'"],
         "command": "tabnav_move_cursor",
-        "args": { "move_direction": "right" },
+        "args": { "direction": "right" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_right" },
@@ -47,7 +47,7 @@
         // move to cell above
         "keys": ["ctrl+["],
         "command": "tabnav_move_cursor",
-        "args": { "move_direction": "up" },
+        "args": { "direction": "up" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_up" },
@@ -58,7 +58,7 @@
         // move to cell below
         "keys": ["ctrl+/"],
         "command": "tabnav_move_cursor",
-        "args": { "move_direction": "down" },
+        "args": { "direction": "down" },
         "context":
         [
             { "key": "setting.tabnav.kb_move_down" },
@@ -72,7 +72,7 @@
         // select cell on left
         "keys": ["command+;"],
         "command": "tabnav_select_next",
-        "args": { "move_direction": "left" },
+        "args": { "direction": "left" },
         "context":
         [
             { "key": "setting.tabnav.kb_select_left" },
@@ -83,7 +83,7 @@
         // select cell on right
         "keys": ["command+'"],
         "command": "tabnav_select_next",
-        "args": { "move_direction": "right" },
+        "args": { "direction": "right" },
         "context":
         [
             { "key": "setting.tabnav.kb_select_right" },
@@ -94,7 +94,7 @@
         // select cell above
         "keys": ["command+["],
         "command": "tabnav_select_next",
-        "args": { "move_direction": "up" },
+        "args": { "direction": "up" },
         "context":
         [
             { "key": "setting.tabnav.kb_select_up" },
@@ -105,7 +105,7 @@
         // select cell below
         "keys": ["command+/"],
         "command": "tabnav_select_next",
-        "args": { "move_direction": "down" },
+        "args": { "direction": "down" },
         "context":
         [
             { "key": "setting.tabnav.kb_select_down" },
@@ -119,7 +119,7 @@
         // extend selection to cell on left
         "keys": ["command+shift+;"],
         "command": "tabnav_extend_selection",
-        "args": { "move_direction": "left" },
+        "args": { "direction": "left" },
         "context":
         [
             { "key": "setting.tabnav.kb_extend_left" },
@@ -130,7 +130,7 @@
         // extend selection to cell on right
         "keys": ["command+shift+'"],
         "command": "tabnav_extend_selection",
-        "args": { "move_direction": "right" },
+        "args": { "direction": "right" },
         "context":
         [
             { "key": "setting.tabnav.kb_extend_right" },
@@ -141,7 +141,7 @@
         // extend selection to cell above
         "keys": ["command+shift+["],
         "command": "tabnav_extend_selection",
-        "args": { "move_direction": "up" },
+        "args": { "direction": "up" },
         "context":
         [
             { "key": "setting.tabnav.kb_extend_up" },
@@ -152,7 +152,7 @@
         // extend selection to cell below
         "keys": ["command+shift+/"],
         "command": "tabnav_extend_selection",
-        "args": { "move_direction": "down" },
+        "args": { "direction": "down" },
         "context":
         [
             { "key": "setting.tabnav.kb_extend_down" },
@@ -166,7 +166,7 @@
         // reduce selection from the left
         "keys": ["ctrl+shift+;"],
         "command": "tabnav_reduce_selection",
-        "args": { "move_direction": "left" },
+        "args": { "direction": "left" },
         "context":
         [
             { "key": "setting.tabnav.kb_reduce_left" },
@@ -177,7 +177,7 @@
         // reduce selection from the right
         "keys": ["ctrl+shift+'"],
         "command": "tabnav_reduce_selection",
-        "args": { "move_direction": "right" },
+        "args": { "direction": "right" },
         "context":
         [
             { "key": "setting.tabnav.kb_reduce_right" },
@@ -188,7 +188,7 @@
         // reduce selection upwards
         "keys": ["ctrl+shift+["],
         "command": "tabnav_reduce_selection",
-        "args": { "move_direction": "up" },
+        "args": { "direction": "up" },
         "context":
         [
             { "key": "setting.tabnav.kb_reduce_up" },
@@ -199,7 +199,7 @@
         // reduce selection downwards
         "keys": ["ctrl+shift+/"],
         "command": "tabnav_reduce_selection",
-        "args": { "move_direction": "down" },
+        "args": { "direction": "down" },
         "context":
         [
             { "key": "setting.tabnav.kb_reduce_down" },

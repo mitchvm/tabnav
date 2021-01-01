@@ -5,7 +5,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell in bottom row of file doesn't move",
@@ -19,7 +19,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "First cell of row",
@@ -33,7 +33,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Last cell of row",
@@ -47,7 +47,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup excluded - markup row jumped",
@@ -61,7 +61,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup excluded - multiple sequential markup rows jumped",
@@ -75,7 +75,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup excluded - multiple cursros, markup only jumped as applicable",
@@ -89,7 +89,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell in line markup row moves out",
@@ -103,7 +103,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup included - moves to markup row",
@@ -117,7 +117,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
@@ -131,7 +131,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target cell is an empty cell",
@@ -145,7 +145,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Sequential cells in a column, one in bottom row - merged",
@@ -159,7 +159,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Selection jumps over row with insufficient columns",
@@ -173,7 +173,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells, some move some don't",
@@ -187,7 +187,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Sequential cells in the same column",
@@ -201,7 +201,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Cells in bottom rows of multiple tables",
@@ -215,7 +215,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple tables",
@@ -229,7 +229,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown03_borderless.md",
 		"description": "Cells in borderless table",
@@ -243,7 +243,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected forwards",
@@ -257,7 +257,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected in reverse",
@@ -271,7 +271,7 @@
 		"args":
 		{
 			"context": "auto_csv",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "csv01_comma_quoted.csv",
 		"description": "Capture cell - empty first cell, move to non-empty cell",

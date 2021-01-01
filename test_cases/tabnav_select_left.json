@@ -5,7 +5,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in first cell",
@@ -19,7 +19,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in last cell of row",
@@ -33,7 +33,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell in line markup row already selected",
@@ -47,7 +47,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "First cell of row already selected, reverse",
@@ -61,7 +61,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "First cell of row already selected, forward",
@@ -75,7 +75,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell already selected, reverse",
@@ -89,7 +89,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell already selected, forward",
@@ -103,7 +103,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
@@ -117,7 +117,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target cell is an empty cell",
@@ -131,7 +131,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple regions, some cells selected, some not",
@@ -145,7 +145,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells selected",
@@ -159,7 +159,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells selected, some in first column",
@@ -173,7 +173,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Two regions merging to one at in first column",
@@ -187,7 +187,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple adjacent cells same row",
@@ -201,7 +201,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cells in multiple tables",
@@ -215,7 +215,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cells in multiple line markup rows",
@@ -229,7 +229,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown03_borderless.md",
 		"description": "Cells at selected in each column",
@@ -243,7 +243,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected forwards",
@@ -257,7 +257,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected in reverse",

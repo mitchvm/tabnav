@@ -5,7 +5,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in first cell",
@@ -19,7 +19,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in last cell of row",
@@ -33,7 +33,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor at start of cell in line markup cell",
@@ -47,7 +47,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor already at start of first cell of row",
@@ -61,7 +61,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor already at start of cell",
@@ -75,7 +75,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
@@ -89,7 +89,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target cell is an empty cell",
@@ -103,7 +103,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some at start of cell, some not",
@@ -117,7 +117,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, all at the start of their respective cells",
@@ -131,7 +131,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some at start of first column",
@@ -145,7 +145,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Two cursors merging to one at start of first cell of colum",
@@ -159,7 +159,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors same row, one cursor is the target for another",
@@ -173,7 +173,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors at start of cells in multiple tables",
@@ -187,7 +187,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple line markup rows",
@@ -201,7 +201,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown03_borderless.md",
 		"description": "Cursors at start of each column",
@@ -215,7 +215,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected forwards",
@@ -229,7 +229,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected in reverse",
@@ -243,7 +243,7 @@
 		"args": 
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell - cursor before delimiter",

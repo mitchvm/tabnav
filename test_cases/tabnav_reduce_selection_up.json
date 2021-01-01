@@ -5,7 +5,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into cells",
@@ -19,7 +19,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cell selected - no change",
@@ -33,7 +33,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple disjoint cells selected - no change",
@@ -47,7 +47,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cells in single sequence - bottom cell removed",
@@ -61,7 +61,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple selections, some sequences some not",
@@ -75,7 +75,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple sequences in multiple tables",
@@ -89,7 +89,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Full column sequences of same column index in adjacent, but separate tables",
@@ -103,7 +103,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup excluded - sequences jump line markup",
@@ -117,7 +117,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup included - sequences do not jump line markup",
@@ -131,7 +131,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup included - sequences ends on line markup",
@@ -145,7 +145,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell - cells selected forwards",
@@ -159,7 +159,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell - cells selected reverse",
@@ -173,7 +173,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Jump over rows with insufficient columns",

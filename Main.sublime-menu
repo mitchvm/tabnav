@@ -50,52 +50,52 @@
           {
             "caption": "Move cursor to start of current cell",
             "command": "tabnav_move_cursor_current_cell",
-            "args": { "cell_direction": -1 }
+            "args": { "direction": "left" }
           },
           {
             "caption": "Move cursor to end of current cell",
             "command": "tabnav_move_cursor_current_cell",
-            "args": { "cell_direction": 1} 
+            "args": { "direction": "right" } 
           },
           {
             "caption": "Move cursor to cell on left",
             "command": "tabnav_move_cursor",
-            "args": { "move_direction": "left" }
+            "args": { "direction": "left" }
           },
           {
             "caption": "Move cursor to cell on right",
             "command": "tabnav_move_cursor",
-            "args": { "move_direction": "right" }
+            "args": { "direction": "right" }
           },
           {
             "caption": "Move cursor to cell above",
             "command": "tabnav_move_cursor",
-            "args": { "move_direction": "up" }
+            "args": { "direction": "up" }
           },
           {
             "caption": "Move cursor to cell below",
             "command": "tabnav_move_cursor",
-            "args": { "move_direction": "down" }
+            "args": { "direction": "down" }
           },
           {
             "caption": "Add cursor to cell on left",
             "command": "tabnav_add_cursor",
-            "args": { "move_direction": "left" }
+            "args": { "direction": "left" }
           },
           {
             "caption": "Add cursor to cell on right",
             "command": "tabnav_add_cursor",
-            "args": { "move_direction": "right" }
+            "args": { "direction": "right" }
           },
           {
             "caption": "Add cursor to cell above",
             "command": "tabnav_add_cursor",
-            "args": { "move_direction": "up" }
+            "args": { "direction": "up" }
           },
           {
             "caption": "Add cursor to cell below",
             "command": "tabnav_add_cursor",
-            "args": { "move_direction": "down" }
+            "args": { "direction": "down" }
           },
           {
             "caption": "-"
@@ -107,62 +107,62 @@
           {
             "caption": "Select cell on left",
             "command": "tabnav_select_next",
-            "args": { "move_direction": "left" }
+            "args": { "direction": "left" }
           },
           {
             "caption": "Select cell on right",
             "command": "tabnav_select_next",
-            "args": { "move_direction": "right" }
+            "args": { "direction": "right" }
           },
           {
             "caption": "Select cell above",
             "command": "tabnav_select_next",
-            "args": { "move_direction": "up" }
+            "args": { "direction": "up" }
           },
           {
             "caption": "Select cell below",
             "command": "tabnav_select_next",
-            "args": { "move_direction": "down" }
+            "args": { "direction": "down" }
           },
           {
             "caption": "Extend selection to cell on left",
             "command": "tabnav_extend_selection",
-            "args": { "move_direction": "left" }
+            "args": { "direction": "left" }
           },
           {
             "caption": "Extend selection to cell on right",
             "command": "tabnav_extend_selection",
-            "args": { "move_direction": "right" }
+            "args": { "direction": "right" }
           },
           {
             "caption": "Extend selection to cell above",
             "command": "tabnav_extend_selection",
-            "args": { "move_direction": "up" }
+            "args": { "direction": "up" }
           },
           {
             "caption": "Extend selection to cell below",
             "command": "tabnav_extend_selection",
-            "args": { "move_direction": "down" }
+            "args": { "direction": "down" }
           },
           { 
             "caption": "Reduce selection to the left",
             "command": "tabnav_reduce_selection",
-            "args": { "move_direction": "left" }
+            "args": { "direction": "left" }
           },
           { 
             "caption": "Reduce selection to the right",
             "command": "tabnav_reduce_selection",
-            "args": { "move_direction": "right" }
+            "args": { "direction": "right" }
           },
           { 
             "caption": "Reduce selection upwards",
             "command": "tabnav_reduce_selection",
-            "args": { "move_direction": "up" }
+            "args": { "direction": "up" }
           },
           { 
             "caption": "Reduce selection downwards",
             "command": "tabnav_reduce_selection",
-            "args": { "move_direction": "down" }
+            "args": { "direction": "down" }
           },
           {
             "caption": "-"

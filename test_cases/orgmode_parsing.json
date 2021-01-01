@@ -119,7 +119,7 @@
 	{
 		"id": "TTGE",
 		"command": "tabnav_move_cursor_current_cell",
-		"args": { "cell_direction": 1 },
+		"args": { "direction": "right" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Multiple cursors - one in raw code scope",
 		"initial_selections": [{"a": 2191, "b": 2191}, {"a": 3239, "b": 3239}],
@@ -147,7 +147,7 @@
 	{
 		"id": "HQDG",
 		"command": "tabnav_select_next",
-		"args": { "move_direction": "down" },
+		"args": { "direction": "down" },
 		"file": "orgmode02_markup_like.org",
 		"description": "Org Mode non-markup cells that match markup regex",
 		"initial_selections": [{"a": 5, "b": 9}, {"a": 166, "b": 171}, {"a": 236, "b": 245}],

@@ -801,24 +801,24 @@ class TabnavCommand(sublime_plugin.TextCommand):
 
 
 class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
-	def run(self, edit, cell_direction=1, context=None):
+	def run(self, edit, direction, context=None):
 		'''Places cursors at one end of each cell that intersects the currently selected regions.
 
-		The cell_direction indicates which end of the cell the cursor should be placed at.'''
+		The direction indicates which end of the cell the cursor should be placed at (left or right)'''
 		try:
-			self.init_table(cell_direction)
+			self.init_table(cursor_cell_directions[direction])
 			self.tabnav.split_and_move_current_cells(True)
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
 class TabnavMoveCursorCommand(TabnavCommand):
-	def run(self, edit, move_direction, context=None):
+	def run(self, edit, direction, context=None):
 		'''Moves cursors to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
-			direction = move_directions[move_direction]
-			self.init_table(cursor_cell_directions[move_direction])
-			if not self.tabnav.split_and_move_current_cells(direction[0]==0):
-				self.move_next_cell(direction)
+			move_direction = move_directions[direction]
+			self.init_table(cursor_cell_directions[direction])
+			if not self.tabnav.split_and_move_current_cells(move_direction[0]==0):
+				self.move_next_cell(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
@@ -848,19 +848,19 @@ class TabnavMoveCursorCommand(TabnavCommand):
 
 	
 class TabnavAddCursorCommand(TabnavCommand):
-	def run(self, edit, move_direction, context=None):
+	def run(self, edit, direction, context=None):
 		'''Adds cursors to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
-			self.init_table(cursor_cell_directions[move_direction])
+			self.init_table(cursor_cell_directions[direction])
 			if not self.tabnav.split_and_move_current_cells(False):
-				self.add_next_cell(move_directions[move_direction])
+				self.add_next_cell(move_directions[direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
-	def add_next_cell(self, move_direction):
+	def add_next_cell(self, direction):
 		initial_selections = list(self.view.sel())
 		try:
-			new_cells = self.tabnav.get_next_cells(move_direction)
+			new_cells = self.tabnav.get_next_cells(direction)
 		except Exception as e:
 			log.info(e)
 		else:
@@ -874,28 +874,30 @@ class TabnavAddCursorCommand(TabnavCommand):
 
 
 class TabnavSelectCurrentCommand(TabnavCommand):
-	def run(self, edit, cell_direction=1, context=None):
-		'''Selects the contents of all table cells that intersect the current selection regions.'''
+	def run(self, edit, direction="right", context=None):
+		'''Selects the contents of all table cells that intersect the current selection regions.
+
+		The direction determines which the direction of the selected region.'''
 		try:
-			self.init_table(cell_direction)
+			self.init_table(cursor_cell_directions[direction])
 			self.tabnav.split_and_select_current_cells()
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
 
 class TabnavSelectNextCommand(TabnavCommand):
-	def run(self, edit, move_direction, context=None):
+	def run(self, edit, direction, context=None):
 		'''Moves all selection regions to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
-			self.init_table(selection_cell_directions[move_direction])
+			self.init_table(selection_cell_directions[direction])
 			if not self.tabnav.split_and_select_current_cells():
-				self.select_next_cell(move_directions[move_direction])
+				self.select_next_cell(move_directions[direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)		
 
-	def select_next_cell(self, move_direction):
+	def select_next_cell(self, direction):
 		try:
-			new_cells = self.tabnav.get_next_cells(move_direction)
+			new_cells = self.tabnav.get_next_cells(direction)
 		except Exception as e:
 			log.info(e)
 		else:
@@ -909,18 +911,18 @@ class TabnavSelectNextCommand(TabnavCommand):
 
 
 class TabnavExtendSelectionCommand(TabnavCommand):
-	def run(self, edit, move_direction, cell_direction=1, context=None):
+	def run(self, edit, direction, context=None):
 		'''Adds selection regions to all cells adjacent to the currently selected cells in the given Direction.'''
 		try:
-			self.init_table(selection_cell_directions[move_direction])
+			self.init_table(selection_cell_directions[direction])
 			if not self.tabnav.split_and_select_current_cells():
-				self.extend_cell_selection(move_directions[move_direction])
+				self.extend_cell_selection(move_directions[direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
-	def extend_cell_selection(self, move_direction):
+	def extend_cell_selection(self, direction):
 		try:
-			new_cells = self.tabnav.get_next_cells(move_direction)
+			new_cells = self.tabnav.get_next_cells(direction)
 		except Exception as e:
 			log.info(e)
 		else:
@@ -933,16 +935,16 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 
 
 class TabnavReduceSelectionCommand(TabnavCommand):
-	def run(self, edit, move_direction, context=None):
+	def run(self, edit, direction, context=None):
 		try:
-			cell_direction = selection_cell_directions[move_direction]
+			cell_direction = selection_cell_directions[direction]
 			self.init_table(cell_direction)
 			if not self.tabnav.split_and_select_current_cells():
 				if cell_direction > 0:
 					self._point_from_region = lambda region: region.end()
 				else:
 					self._point_from_region = lambda region: region.begin()
-				dr, dc = move_directions[move_direction]
+				dr, dc = move_directions[direction]
 				if dc != 0:
 					self.reduce_cell_selection_row(-dc) # reverse the given direction
 				else:
@@ -1089,7 +1091,7 @@ class TabnavSelectAllCommand(TabnavCommand):
 
 class TabnavDirectionInputHandler(sublime_plugin.ListInputHandler):
 	def name(self):
-		return "move_direction"
+		return "direction"
 
 	def list_items(self):
 		return ["left", "right", "up", "down"]

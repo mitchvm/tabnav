@@ -5,7 +5,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into cells",
@@ -19,7 +19,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells, some added, some not",
@@ -33,7 +33,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "up"
+			"direction": "up"
 		},
 		"file": "csv01_comma_quoted.csv",
 		"description": "Capture cell - empty first cell, move to non-empty cell",

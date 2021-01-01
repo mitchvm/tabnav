@@ -83,7 +83,7 @@
 	{
 		"id": "7DMN",
 		"command": "tabnav_move_cursor_current_cell",
-		"args": { "cell_direction": 1 },
+		"args": { "direction": "right" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile table row - cursors",
 		"initial_selections": [{"a": 801, "b": 950}],
@@ -93,7 +93,7 @@
 	{
 		"id": "5D2O",
 		"command": "tabnav_move_cursor_current_cell",
-		"args": { "cell_direction": 1 },
+		"args": { "direction": "right" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile markup row - cursors",
 		"initial_selections": [{"a": 423, "b": 464}],
@@ -103,7 +103,7 @@
 	{
 		"id": "6VI4",
 		"command": "tabnav_move_cursor_current_cell",
-		"args": { "cell_direction": 1 },
+		"args": { "direction": "right" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile region spanning markup row cursors - markup excluded",
 		"initial_selections": [{"a": 346, "b": 801}],
@@ -113,7 +113,7 @@
 	{
 		"id": "WLGT",
 		"command": "tabnav_move_cursor_current_cell",
-		"args": { "cell_direction": 1 },
+		"args": { "direction": "right" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile region spanning markup rows with and without cells cursors - markup include",
 		"initial_selections": [{"a": 346, "b": 801}],

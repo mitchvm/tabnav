@@ -5,7 +5,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cursor in bottom row of file doesn't move",
@@ -19,7 +19,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in first cell of row",
@@ -33,7 +33,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in last cell of row",
@@ -47,7 +47,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup excluded - markup row jumped",
@@ -61,7 +61,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup excluded - multiple sequential markup rows jumped",
@@ -75,7 +75,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup excluded - multiple cursros, markup only jumped as applicable",
@@ -89,7 +89,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cursor in line markup row moves out",
@@ -103,7 +103,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup included - moves to markup row",
@@ -117,7 +117,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Move to shorter cell, go to end of cell",
@@ -131,7 +131,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
@@ -145,7 +145,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target cell is an empty cell",
@@ -159,7 +159,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Relatively aligned cursors, one in bottom row - merged",
@@ -173,7 +173,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors in a single cell - all move",
@@ -187,7 +187,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cursor jumps over row with insufficient columns",
@@ -201,7 +201,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some move some don't",
@@ -215,7 +215,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Target location already selected by another cursor",
@@ -229,7 +229,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Cursors in bottom rows of multiple tables",
@@ -243,7 +243,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple tables",
@@ -257,7 +257,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown03_borderless.md",
 		"description": "Cursors in borderless table",
@@ -271,7 +271,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture trimmed - Cursor in whitespace after content",
@@ -285,7 +285,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture trimmed - Cursor in whitespace before content",
@@ -299,7 +299,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected forwards",
@@ -313,7 +313,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected in reverse",
@@ -327,7 +327,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "down"
+			"direction": "down"
 		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell - cursor before delimiter",

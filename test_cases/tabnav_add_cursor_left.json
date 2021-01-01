@@ -5,7 +5,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into one cursor per cell",
@@ -19,7 +19,7 @@
 		"args":
 		{
 			"context": "markdown",
-			"move_direction": "left"
+			"direction": "left"
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors, some added, some not",
