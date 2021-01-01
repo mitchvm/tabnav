@@ -774,6 +774,7 @@ class TableNavigator:
 				break
 		return TableColumn([c for c in cells if c.capture_level <= self.capture_level])
 
+
 #### Commands ####
 
 class TabnavCommand(sublime_plugin.TextCommand):
@@ -811,7 +812,7 @@ class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
 			log.info(e)
 
 class TabnavMoveCursorCommand(TabnavCommand):
-	def run(self, edit, move_direction="right", context=None):
+	def run(self, edit, move_direction, context=None):
 		'''Moves cursors to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
 			direction = move_directions[move_direction]
@@ -847,7 +848,7 @@ class TabnavMoveCursorCommand(TabnavCommand):
 
 	
 class TabnavAddCursorCommand(TabnavCommand):
-	def run(self, edit, move_direction="Right", context=None):
+	def run(self, edit, move_direction, context=None):
 		'''Adds cursors to the cells adjacent to the currently selected cells in the given Direction.'''
 		try:
 			self.init_table(cursor_cell_directions[move_direction])
@@ -930,7 +931,6 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 	def input(self, args):
 		return TabnavDirectionInputHandler()
 
-# Reduce selection
 
 class TabnavReduceSelectionCommand(TabnavCommand):
 	def run(self, edit, move_direction, context=None):
@@ -1016,23 +1016,6 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 	def input(self, args):
 		return TabnavDirectionInputHandler()
 
-class TabnavReduceSelectionRightCommand(TabnavReduceSelectionCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "right", context)
-
-class TabnavReduceSelectionLeftCommand(TabnavReduceSelectionCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "left", context)
-
-class TabnavReduceSelectionUpCommand(TabnavReduceSelectionCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "up", context)
-
-class TabnavReduceSelectionDownCommand(TabnavReduceSelectionCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "down", context)
-
-# Select row cells
 
 class TabnavSelectRowCommand(TabnavCommand):
 	def run(self, edit, context=None):
@@ -1052,8 +1035,6 @@ class TabnavSelectRowCommand(TabnavCommand):
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
-
-# Select column cells
 
 class TabnavSelectColumnCommand(TabnavCommand):
 	def run(self, edit, context=None):
@@ -1077,8 +1058,6 @@ class TabnavSelectColumnCommand(TabnavCommand):
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
-
-# Select all table cells
 
 class TabnavSelectAllCommand(TabnavCommand):
 	def run(self, edit, context=None):
@@ -1105,7 +1084,8 @@ class TabnavSelectAllCommand(TabnavCommand):
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
-# Other
+
+# Other Commands
 
 class TabnavDirectionInputHandler(sublime_plugin.ListInputHandler):
 	def name(self):

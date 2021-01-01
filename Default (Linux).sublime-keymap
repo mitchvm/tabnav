@@ -165,7 +165,8 @@
     { 
         // reduce selection from the left
         "keys": ["alt+shift+;"],
-        "command": "tabnav_reduce_selection_left",
+        "command": "tabnav_reduce_selection",
+        "args": { "move_direction": "left" },
         "context":
         [
             { "key": "setting.tabnav.kb_reduce_left" },
@@ -175,7 +176,8 @@
     { 
         // reduce selection from the right
         "keys": ["alt+shift+'"],
-        "command": "tabnav_reduce_selection_right",
+        "command": "tabnav_reduce_selection",
+        "args": { "move_direction": "right" },
         "context":
         [
             { "key": "setting.tabnav.kb_reduce_right" },
@@ -185,7 +187,8 @@
     { 
         // reduce selection upwards
         "keys": ["alt+shift+["],
-        "command": "tabnav_reduce_selection_up",
+        "command": "tabnav_reduce_selection",
+        "args": { "move_direction": "up" },
         "context":
         [
             { "key": "setting.tabnav.kb_reduce_up" },
@@ -195,7 +198,8 @@
     { 
         // reduce selection downwards
         "keys": ["alt+shift+/"],
-        "command": "tabnav_reduce_selection_down",
+        "command": "tabnav_reduce_selection",
+        "args": { "move_direction": "down" },
         "context":
         [
             { "key": "setting.tabnav.kb_reduce_down" },

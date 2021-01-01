@@ -145,20 +145,24 @@
             "args": { "move_direction": "down" }
           },
           { 
-            "caption": "Reduce selection from the left",
-            "command": "tabnav_reduce_selection_left"
+            "caption": "Reduce selection to the left",
+            "command": "tabnav_reduce_selection",
+            "args": { "move_direction": "left" }
           },
           { 
-            "caption": "Reduce selection from the right",
-            "command": "tabnav_reduce_selection_right"
+            "caption": "Reduce selection to the right",
+            "command": "tabnav_reduce_selection",
+            "args": { "move_direction": "right" }
           },
           { 
             "caption": "Reduce selection upwards",
-            "command": "tabnav_reduce_selection_up"
+            "command": "tabnav_reduce_selection",
+            "args": { "move_direction": "up" }
           },
           { 
             "caption": "Reduce selection downwards",
-            "command": "tabnav_reduce_selection_down"
+            "command": "tabnav_reduce_selection",
+            "args": { "move_direction": "down" }
           },
           {
             "caption": "-"

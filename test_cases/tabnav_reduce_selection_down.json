@@ -1,8 +1,12 @@
 [
 	{
 		"id": "YOQT",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into cells",
 		"initial_selections": [{"a": 125, "b": 245}],
@@ -11,8 +15,12 @@
 	},
 	{
 		"id": "Q3GZ",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cell selected - no change",
 		"initial_selections": [{"a": 243, "b": 247}],
@@ -21,8 +29,12 @@
 	},
 	{
 		"id": "CP2B",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple disjoint cells selected - no change",
 		"initial_selections": [{"a": 621, "b": 627}, {"a": 796, "b": 814}, {"a": 983, "b": 996}],
@@ -31,8 +43,12 @@
 	},
 	{
 		"id": "RTG5",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cells in single sequence - top cell removed",
 		"initial_selections": [{"a": 119, "b": 112}, {"a": 205, "b": 192}, {"a": 247, "b": 243}],
@@ -41,8 +57,12 @@
 	},
 	{
 		"id": "WSPL",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple selections, some sequences some not",
 		"initial_selections": [{"a": 433, "b": 452}, {"a": 517, "b": 536}, {"a": 601, "b": 620}, {"a": 685, "b": 704}, {"a": 815, "b": 828}, {"a": 899, "b": 912}, {"a": 983, "b": 996}, {"a": 1067, "b": 1080}, {"a": 1125, "b": 1131}],
@@ -51,8 +71,12 @@
 	},
 	{
 		"id": "ZMVI",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple sequences in multiple tables",
 		"initial_selections": [{"a": 796, "b": 814}, {"a": 880, "b": 898}, {"a": 964, "b": 982}, {"a": 2132, "b": 2145}, {"a": 2162, "b": 2175}, {"a": 2192, "b": 2205}],
@@ -61,8 +85,12 @@
 	},
 	{
 		"id": "BKYM",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Full column sequences of same column index in adjacent, but separate tables",
 		"initial_selections": [{"a": 97, "b": 116}, {"a": 265, "b": 284}, {"a": 349, "b": 368}, {"a": 433, "b": 452}, {"a": 517, "b": 536}, {"a": 601, "b": 620}, {"a": 685, "b": 704}, {"a": 769, "b": 788}, {"a": 853, "b": 872}, {"a": 937, "b": 956}, {"a": 1021, "b": 1040}, {"a": 1105, "b": 1124}, {"a": 1189, "b": 1208}, {"a": 1273, "b": 1292}, {"a": 1357, "b": 1376}, {"a": 1441, "b": 1460}, {"a": 1525, "b": 1544}, {"a": 1609, "b": 1628}, {"a": 1693, "b": 1712}, {"a": 1777, "b": 1796}, {"a": 1862, "b": 1875}, {"a": 1922, "b": 1935}, {"a": 1952, "b": 1965}, {"a": 1982, "b": 1995}, {"a": 2012, "b": 2025}, {"a": 2042, "b": 2055}, {"a": 2072, "b": 2085}, {"a": 2102, "b": 2115}, {"a": 2132, "b": 2145}, {"a": 2162, "b": 2175}, {"a": 2192, "b": 2205}, {"a": 2222, "b": 2235}, {"a": 2252, "b": 2265}, {"a": 2282, "b": 2295}, {"a": 2312, "b": 2325}, {"a": 2342, "b": 2355}, {"a": 2372, "b": 2385}, {"a": 2402, "b": 2415}, {"a": 2432, "b": 2445}, {"a": 2462, "b": 2475}, {"a": 2492, "b": 2505}, {"a": 2522, "b": 2535}, {"a": 2552, "b": 2565}, {"a": 2582, "b": 2595}, {"a": 2612, "b": 2625}, {"a": 2642, "b": 2655}, {"a": 2672, "b": 2685}, {"a": 2702, "b": 2715}, {"a": 2732, "b": 2745}, {"a": 2762, "b": 2775}, {"a": 2792, "b": 2805}],
@@ -71,8 +99,12 @@
 	},
 	{
 		"id": "GL54",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup excluded - sequences jump line markup",
 		"initial_selections": [{"a": 551, "b": 564}, {"a": 635, "b": 648}, {"a": 693, "b": 699}, {"a": 719, "b": 732}, {"a": 1029, "b": 1035}, {"a": 1055, "b": 1068}, {"a": 1139, "b": 1152}, {"a": 1223, "b": 1236}],
@@ -81,8 +113,12 @@
 	},
 	{
 		"id": "2WAY",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup included - sequences do not jump line markup",
 		"initial_selections": [{"a": 551, "b": 564}, {"a": 635, "b": 648}, {"a": 693, "b": 699}, {"a": 719, "b": 732}, {"a": 1029, "b": 1035}, {"a": 1055, "b": 1068}, {"a": 1139, "b": 1152}, {"a": 1223, "b": 1236}],
@@ -91,8 +127,12 @@
 	},
 	{
 		"id": "5AUV",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown05_multiple_markup.md",
 		"description": "markup included - sequences ends on line markup",
 		"initial_selections": [{"a": 803, "b": 816}, {"a": 887, "b": 900}, {"a": 971, "b": 984}, {"a": 1055, "b": 1068}, {"a": 1139, "b": 1152}],
@@ -101,8 +141,12 @@
 	},
 	{
 		"id": "5QIE",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell",
 		"initial_selections": [{"a": 704, "b": 711}, {"a": 711, "b": 730}, {"a": 730, "b": 744}, {"a": 788, "b": 795}, {"a": 795, "b": 814}, {"a": 814, "b": 828}, {"a": 872, "b": 879}, {"a": 879, "b": 898}, {"a": 898, "b": 912}],
@@ -111,8 +155,12 @@
 	},
 	{
 		"id": "QFDT",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell - cells selected reverse",
 		"initial_selections": [{"a": 711, "b": 704}, {"a": 730, "b": 711}, {"a": 744, "b": 730}, {"a": 795, "b": 788}, {"a": 814, "b": 795}, {"a": 828, "b": 814}, {"a": 879, "b": 872}, {"a": 898, "b": 879}, {"a": 912, "b": 898}],
@@ -121,8 +169,12 @@
 	},
 	{
 		"id": "QRK7",
-		"command": "tabnav_reduce_selection_down",
-		"context": "markdown",
+		"command": "tabnav_reduce_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "down"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Jump over rows with insufficient columns",
 		"initial_selections": [{"a": 206, "b": 206}, {"a": 207, "b": 224}, {"a": 248, "b": 279}, {"a": 312, "b": 346}, {"a": 347, "b": 354}],

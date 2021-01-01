@@ -2,7 +2,7 @@
 	{
 		"id": "TF4W",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in first cell",
 		"initial_selections": [{"a": 6, "b": 6}],
@@ -12,7 +12,7 @@
 	{
 		"id": "PK62",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in last cell of row",
 		"initial_selections": [{"a": 138, "b": 138}],
@@ -22,7 +22,7 @@
 	{
 		"id": "GCZL",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in line markup cell",
 		"initial_selections": [{"a": 56, "b": 56}],
@@ -32,7 +32,7 @@
 	{
 		"id": "7TXP",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor at start of cell",
 		"initial_selections": [{"a": 112, "b": 112}],
@@ -42,7 +42,7 @@
 	{
 		"id": "NLQS",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor at end of cell",
 		"initial_selections": [{"a": 191, "b": 191}],
@@ -52,7 +52,7 @@
 	{
 		"id": "CUYU",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor in empty cell",
 		"initial_selections": [{"a": 206, "b": 206}],
@@ -62,7 +62,7 @@
 	{
 		"id": "TICE",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor after last pipe (not in table)",
 		"initial_selections": [{"a": 280, "b": 280}],
@@ -72,7 +72,7 @@
 	{
 		"id": "2Q6Z",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor before first pipe (not in table)",
 		"initial_selections": [{"a": 100, "b": 100}],
@@ -82,7 +82,7 @@
 	{
 		"id": "F4MU",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cursors single cell",
 		"initial_selections": [{"a": 152, "b": 152}, {"a": 158, "b": 158}, {"a": 163, "b": 163}, {"a": 170, "b": 170}, {"a": 177, "b": 177}, {"a": 184, "b": 184}],
@@ -92,7 +92,7 @@
 	{
 		"id": "CZ3T",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell already selected, forward",
 		"initial_selections": [{"a": 192, "b": 205}],
@@ -102,7 +102,7 @@
 	{
 		"id": "UHHL",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Cell already selected, reverse",
 		"initial_selections": [{"a": 205, "b": 192}],
@@ -112,7 +112,7 @@
 	{
 		"id": "USRZ",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans a cell plus pipes on either end (3 cells)",
 		"initial_selections": [{"a": 111, "b": 120}],
@@ -122,7 +122,7 @@
 	{
 		"id": "WM7K",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans three body rows",
 		"initial_selections": [{"a": 123, "b": 244}],
@@ -132,7 +132,7 @@
 	{
 		"id": "YJ2V",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown05_multiple_markup.md",
 		"description": "Region spans three markup rows",
 		"initial_selections": [{"a": 790, "b": 958}],
@@ -142,7 +142,7 @@
 	{
 		"id": "WQYH",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans body and markup row, markup excluded",
 		"initial_selections": [{"a": 14, "b": 128}],
@@ -152,7 +152,7 @@
 	{
 		"id": "4ZRW",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spans body and markup row, markup included",
 		"initial_selections": [{"a": 14, "b": 128}],
@@ -162,7 +162,7 @@
 	{
 		"id": "MNIB",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Subset of a cell selected",
 		"initial_selections": [{"a": 162, "b": 171}],
@@ -172,7 +172,7 @@
 	{
 		"id": "5QGC",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple tables",
 		"initial_selections": [{"a": 280, "b": 280}, {"a": 763, "b": 763}, {"a": 1395, "b": 1395}, {"a": 1922, "b": 1922}, {"a": 2338, "b": 2338}],
@@ -182,7 +182,7 @@
 	{
 		"id": "LSVE",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Cursor in empty line between tables (not in table)",
 		"initial_selections": [{"a": 1860, "b": 1860}],
@@ -192,7 +192,7 @@
 	{
 		"id": "UOFD",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors in multiple line markup rows",
 		"initial_selections": [{"a": 212, "b": 212}, {"a": 1913, "b": 1913}],
@@ -202,7 +202,7 @@
 	{
 		"id": "QPLW",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown03_borderless.md",
 		"description": "Cursor at start of first column",
 		"initial_selections": [{"a": 68, "b": 68}],
@@ -212,7 +212,7 @@
 	{
 		"id": "6JYN",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown03_borderless.md",
 		"description": "Cursor at end of last column",
 		"initial_selections": [{"a": 135, "b": 135}],
@@ -222,7 +222,7 @@
 	{
 		"id": "GXZP",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown03_borderless.md",
 		"description": "Cursor at start of first column of markup",
 		"initial_selections": [{"a": 34, "b": 34}],
@@ -232,7 +232,7 @@
 	{
 		"id": "7SKV",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown03_borderless.md",
 		"description": "Cursor at end of last column of markup",
 		"initial_selections": [{"a": 67, "b": 67}],
@@ -242,7 +242,7 @@
 	{
 		"id": "XOHX",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown03_borderless.md",
 		"description": "Selection spans markup row",
 		"initial_selections": [{"a": 18, "b": 86}],
@@ -252,7 +252,7 @@
 	{
 		"id": "ZSWA",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected forwards",
 		"initial_selections": [{"a": 795, "b": 814}],
@@ -262,7 +262,7 @@
 	{
 		"id": "4J5D",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected in reverse",
 		"initial_selections": [{"a": 814, "b": 795}],
@@ -272,7 +272,7 @@
 	{
 		"id": "OXHQ",
 		"command": "tabnav_select_current",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell - cursor immediately before delimiter",
 		"initial_selections": [{"a": 1150, "b": 1150}],

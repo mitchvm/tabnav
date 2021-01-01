@@ -2,7 +2,7 @@
 	{
 		"id": "KVRJ",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "First column",
 		"initial_selections": [{"a": 7, "b": 7}],
@@ -12,7 +12,7 @@
 	{
 		"id": "HIBD",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region spanning multiple columns",
 		"initial_selections": [{"a": 105, "b": 116}],
@@ -22,7 +22,7 @@
 	{
 		"id": "YQEP",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple disjoint selections",
 		"initial_selections": [{"a": 106, "b": 106}, {"a": 255, "b": 268}],
@@ -32,7 +32,7 @@
 	{
 		"id": "G34O",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple selections, one in markup row",
 		"initial_selections": [{"a": 69, "b": 69}, {"a": 106, "b": 106}],
@@ -42,7 +42,7 @@
 	{
 		"id": "UNXS",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Only selection in markup row",
 		"initial_selections": [{"a": 68, "b": 68}],
@@ -52,7 +52,7 @@
 	{
 		"id": "TNVM",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown05_multiple_markup.md",
 		"description": "Multiple markup in sequence jumped",
 		"initial_selections": [{"a": 581, "b": 581}],
@@ -62,7 +62,7 @@
 	{
 		"id": "4VY3",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "markup included",
 		"initial_selections": [{"a": 198, "b": 198}],
@@ -72,7 +72,7 @@
 	{
 		"id": "POFJ",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Column with missing cell",
 		"initial_selections": [{"a": 221, "b": 221}],
@@ -82,7 +82,7 @@
 	{
 		"id": "LZZL",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Column already selected",
 		"initial_selections": [{"a": 13, "b": 24}, {"a": 112, "b": 119}, {"a": 192, "b": 205}, {"a": 243, "b": 247}, {"a": 308, "b": 311}],
@@ -92,7 +92,7 @@
 	{
 		"id": "F7OQ",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Last column",
 		"initial_selections": [{"a": 848, "b": 848}],
@@ -102,7 +102,7 @@
 	{
 		"id": "B3GS",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Non-overlapping columns in multiple tables",
 		"initial_selections": [{"a": 687, "b": 693}, {"a": 1069, "b": 1076}, {"a": 2091, "b": 2095}],
@@ -112,7 +112,7 @@
 	{
 		"id": "K5YV",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown03_borderless.md",
 		"description": "Select columns in borderless table",
 		"initial_selections": [{"a": 73, "b": 75}, {"a": 95, "b": 97}],
@@ -122,7 +122,7 @@
 	{
 		"id": "RHCI",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected forwards",
 		"initial_selections": [{"a": 1299, "b": 1318}],
@@ -132,7 +132,7 @@
 	{
 		"id": "3AS4",
 		"command": "tabnav_select_column",
-		"context": "markdown",
+		"args": { "context": "markdown" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Entire cell selected in reverse",
 		"initial_selections": [{"a": 1318, "b": 1299}],

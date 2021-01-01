@@ -45,11 +45,13 @@
   },
   {
     "caption": "TabNav: Move cursor to start of current cell",
-    "command": "tabnav_move_cursor_start"
+    "command": "tabnav_move_cursor_current",
+    "args": { "cell_direction": -1 }
   },
   {
     "caption": "TabNav: Move cursor to end of current cell",
-    "command": "tabnav_move_cursor_end"
+    "command": "tabnav_move_cursor_current",
+    "args": { "cell_direction": 1 }
   },
   {
     "caption": "TabNav: Move cursor...",
