@@ -53,7 +53,8 @@
 	},
 	{
 		"id": "5TZE",
-		"command": "tabnav_extend_selection_right",
+		"command": "tabnav_extend_selection",
+		"args": { "move_direction": "right" },
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, empty, first cell",
@@ -109,7 +110,8 @@
 	},
 	{
 		"id": "3WPO",
-		"command": "tabnav_extend_selection_left",
+		"command": "tabnav_extend_selection",
+		"args": { "move_direction": "left" },
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, empty, middle cell",
@@ -165,7 +167,8 @@
 	},
 	{
 		"id": "MR6J",
-		"command": "tabnav_extend_selection_left",
+		"command": "tabnav_extend_selection",
+		"args": { "move_direction": "left" },
 		"syntax": "Packages/Text/Plain text.tmLanguage",
 		"file": "csv01_comma_quoted.csv",
 		"description": "Parse CSV: comma, empty, last cell",

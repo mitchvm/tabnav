@@ -113,6 +113,53 @@
         ]
     },
 
+    // #### Navigation keybindings: extend selection ####
+
+    { 
+        // extend selection to cell on left
+        "keys": ["ctrl+shift+;"],
+        "command": "tabnav_extend_selection",
+        "args": { "move_direction": "left" },
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_left" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // extend selection to cell on right
+        "keys": ["ctrl+shift+'"],
+        "command": "tabnav_extend_selection",
+        "args": { "move_direction": "right" },
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_right" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // extend selection to cell above
+        "keys": ["ctrl+shift+["],
+        "command": "tabnav_extend_selection",
+        "args": { "move_direction": "up" },
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_up" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+    { 
+        // extend selection to cell below
+        "keys": ["ctrl+shift+/"],
+        "command": "tabnav_extend_selection",
+        "args": { "move_direction": "down" },
+        "context":
+        [
+            { "key": "setting.tabnav.kb_extend_down" },
+            { "key": "is_tabnav_context"},
+        ]
+    },
+
     // #### Navigation keybindings: reduce selection ####
 
     { 
@@ -152,49 +199,6 @@
         "context":
         [
             { "key": "setting.tabnav.kb_reduce_down" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-
-    // #### Navigation keybindings: extend selection ####
-
-    { 
-        // extend selection to cell on left
-        "keys": ["ctrl+shift+;"],
-        "command": "tabnav_extend_selection_left",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_extend_left" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // extend selection to cell on right
-        "keys": ["ctrl+shift+'"],
-        "command": "tabnav_extend_selection_right",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_extend_right" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // extend selection to cell above
-        "keys": ["ctrl+shift+["],
-        "command": "tabnav_extend_selection_up",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_extend_up" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // extend selection to cell below
-        "keys": ["ctrl+shift+/"],
-        "command": "tabnav_extend_selection_down",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_extend_down" },
             { "key": "is_tabnav_context"},
         ]
     },

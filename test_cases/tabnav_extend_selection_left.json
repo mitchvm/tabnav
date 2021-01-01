@@ -1,8 +1,12 @@
 [
 	{
 		"id": "S7K2",
-		"command": "tabnav_extend_selection_left",
-		"context": "markdown",
+		"command": "tabnav_extend_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "left"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Region split into cells",
 		"initial_selections": [{"a": 125, "b": 245}],
@@ -11,8 +15,12 @@
 	},
 	{
 		"id": "PUOM",
-		"command": "tabnav_extend_selection_left",
-		"context": "markdown",
+		"command": "tabnav_extend_selection",
+		"args":
+		{
+			"context": "markdown",
+			"move_direction": "left"
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Multiple cells, some added, some not",
 		"initial_selections": [{"a": 12, "b": 1}, {"a": 131, "b": 120}, {"a": 146, "b": 132}, {"a": 224, "b": 207}, {"a": 247, "b": 243}],

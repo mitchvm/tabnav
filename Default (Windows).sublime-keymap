@@ -118,7 +118,8 @@
     { 
         // extend selection to cell on left
         "keys": ["ctrl+shift+;"],
-        "command": "tabnav_extend_selection_left",
+        "command": "tabnav_extend_selection",
+        "args": { "move_direction": "left" },
         "context":
         [
             { "key": "setting.tabnav.kb_extend_left" },
@@ -128,7 +129,8 @@
     { 
         // extend selection to cell on right
         "keys": ["ctrl+shift+'"],
-        "command": "tabnav_extend_selection_right",
+        "command": "tabnav_extend_selection",
+        "args": { "move_direction": "right" },
         "context":
         [
             { "key": "setting.tabnav.kb_extend_right" },
@@ -138,7 +140,8 @@
     { 
         // extend selection to cell above
         "keys": ["ctrl+shift+["],
-        "command": "tabnav_extend_selection_up",
+        "command": "tabnav_extend_selection",
+        "args": { "move_direction": "up" },
         "context":
         [
             { "key": "setting.tabnav.kb_extend_up" },
@@ -148,7 +151,8 @@
     { 
         // extend selection to cell below
         "keys": ["ctrl+shift+/"],
-        "command": "tabnav_extend_selection_down",
+        "command": "tabnav_extend_selection",
+        "args": { "move_direction": "down" },
         "context":
         [
             { "key": "setting.tabnav.kb_extend_down" },

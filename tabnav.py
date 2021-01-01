@@ -907,8 +907,6 @@ class TabnavSelectNextCommand(TabnavCommand):
 		return TabnavDirectionInputHandler()
 
 
-# Extend selection
-
 class TabnavExtendSelectionCommand(TabnavCommand):
 	def run(self, edit, move_direction, cell_direction=1, context=None):
 		'''Adds selection regions to all cells adjacent to the currently selected cells in the given Direction.'''
@@ -931,22 +929,6 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 
 	def input(self, args):
 		return TabnavDirectionInputHandler()
-
-class TabnavExtendSelectionRightCommand(TabnavExtendSelectionCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "right", context=context)
-
-class TabnavExtendSelectionLeftCommand(TabnavExtendSelectionCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "left", context=context)
-
-class TabnavExtendSelectionUpCommand(TabnavExtendSelectionCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "up", context=context)
-		
-class TabnavExtendSelectionDownCommand(TabnavExtendSelectionCommand):
-	def run(self, edit, context=None):
-		super().run(edit, "down", context=context)
 
 # Reduce selection
 
