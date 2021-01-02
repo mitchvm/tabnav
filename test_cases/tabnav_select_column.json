@@ -138,5 +138,19 @@
 		"initial_selections": [{"a": 1318, "b": 1299}],
 		"expected_selections": [{"a": 123, "b": 142}, {"a": 207, "b": 226}, {"a": 291, "b": 310}, {"a": 375, "b": 394}, {"a": 459, "b": 478}, {"a": 543, "b": 562}, {"a": 627, "b": 646}, {"a": 711, "b": 730}, {"a": 795, "b": 814}, {"a": 879, "b": 898}, {"a": 963, "b": 982}, {"a": 1047, "b": 1066}, {"a": 1131, "b": 1150}, {"a": 1215, "b": 1234}, {"a": 1299, "b": 1318}, {"a": 1383, "b": 1402}, {"a": 1467, "b": 1486}, {"a": 1551, "b": 1570}, {"a": 1635, "b": 1654}, {"a": 1719, "b": 1738}, {"a": 1803, "b": 1822}],
 		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "JFOL",
+		"command": "tabnav_select_column",
+		"args": 
+		{ 
+			"context": "markdown",
+			"direction": "left"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column with direction=left",
+		"initial_selections": [{"a": 7, "b": 7}],
+		"expected_selections": [{"a": 12, "b": 1}, {"a": 111, "b": 101}, {"a": 191, "b": 149}, {"a": 242, "b": 227}, {"a": 307, "b": 282}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	}
 ]

@@ -1020,10 +1020,10 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 
 
 class TabnavSelectRowCommand(TabnavCommand):
-	def run(self, edit, context=None):
+	def run(self, edit, direction="right", context=None):
 		'''Selects all cells in all rows intersecting the current selections.'''
 		try:
-			self.init_table(1)
+			self.init_table(cursor_cell_directions[direction])
 			level_key = lambda c: c.capture_level
 			row_cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
 			cells = [c for c in row_cells if c.capture_level <= self.context.capture_level]
@@ -1039,10 +1039,10 @@ class TabnavSelectRowCommand(TabnavCommand):
 
 
 class TabnavSelectColumnCommand(TabnavCommand):
-	def run(self, edit, context=None):
+	def run(self, edit, direction="right", context=None):
 		'''Selects all cells in all columns intersecting the current selections.'''
 		try:
-			self.init_table(1)
+			self.init_table(cursor_cell_directions[direction])
 			# include all capture levels in the initial selection in case a cursor is in a markup row
 			max_level = max(v[0] for v in capture_levels.values())
 			self.tabnav.split_and_select_current_cells(capture_level=max_level)
@@ -1062,10 +1062,10 @@ class TabnavSelectColumnCommand(TabnavCommand):
 
 
 class TabnavSelectAllCommand(TabnavCommand):
-	def run(self, edit, context=None):
+	def run(self, edit, direction="right", context=None):
 		'''Selects all cells in all tables intersecting the current selections.'''
 		try:
-			self.init_table(1)
+			self.init_table(cursor_cell_directions[direction])
 			self.tabnav.split_and_select_current_cells()
 			columns = []
 			# Expand the first column in each disjoint table to parse all rows of all selected tables

@@ -278,5 +278,19 @@
 		"initial_selections": [{"a": 1150, "b": 1150}],
 		"expected_selections": [{"a": 1131, "b": 1150}],
 		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "BX7X",
+		"command": "tabnav_select_current",
+		"args": 
+		{ 
+			"context": "markdown",
+			"direction": "left"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current in left direction",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 12, "b": 1}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	}
 ]

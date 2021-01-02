@@ -118,5 +118,19 @@
 		"initial_selections": [{"a": 814, "b": 795}],
 		"expected_selections": [{"a": 768, "b": 788}, {"a": 788, "b": 795}, {"a": 795, "b": 814}, {"a": 814, "b": 828}, {"a": 828, "b": 842}, {"a": 842, "b": 850}],
 		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "MFSZ",
+		"command": "tabnav_select_row",
+		"args": 
+		{ 
+			"context": "markdown",
+			"direction": "left"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select row with direction=left",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 12, "b": 1}, {"a": 24, "b": 13}, {"a": 36, "b": 25}, {"a": 48, "b": 37}],
+		"view_settings": {"tabnav.capture_level": "content"}
 	}
 ]
