@@ -184,7 +184,11 @@
           },
           {
             "caption": "Trim whitespace from selections",
-            "command": "trim_whitespace_from_selection"
+            "command": "tabnav_trim_whitespace_from_selection"
+          },
+          {
+            "caption": "Merge adjacent selections",
+            "command": "tabnav_merge_adjacent_selections"
           },
           {
             "caption": "Copy selections as TSV",

@@ -1097,7 +1097,7 @@ class TabnavDirectionInputHandler(sublime_plugin.ListInputHandler):
 		return ["left", "right", "up", "down"]
 
 
-class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
+class TabnavTrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		'''Reduces all currently selected regions to exclude any whitespace characters on either end.'''
 		for region in self.view.sel():
@@ -1115,6 +1115,28 @@ class TrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 					trimmed = sublime.Region(end, start)
 			self.view.sel().subtract(region)
 			self.view.sel().add(trimmed)
+
+
+class TabnavMergeAdjacentSelectionsCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		'''Combines all regions that end/begin at a common point into a single region.'''
+		regions = list(self.view.sel())
+		if len(regions) < 2:
+			return
+		current = regions[0]
+		merged = []
+		any_merged = False
+		for r in regions[1:]:
+			if current.end() == r.begin():
+				current = current.cover(r)
+				any_merged = True
+			else:
+				merged.append(current)
+				current = r
+		merged.append(current)
+		if any_merged:
+			self.view.sel().clear()
+			self.view.sel().add_all(merged)
 
 
 def copy_delimited_regions(view, delimiter):

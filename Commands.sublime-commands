@@ -1,7 +1,11 @@
 [
   {
     "caption": "TabNav: Trim whitespace from selections",
-    "command": "trim_whitespace_from_selection"
+    "command": "tabnav_trim_whitespace_from_selection"
+  },
+  {
+    "caption": "TabNav: Merge adjacent selections",
+    "command": "tabnav_merge_adjacent_selections"
   },
   {
     "caption": "TabNav: Copy selections with delimiter",
