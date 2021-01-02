@@ -1,242 +1,168 @@
-[
-    // #### Non-navigation keybindings ####
 
-    {
-        // enable tabnav on current view
-        // Note: this keybinding gets clobbered by the "select cell on right" keybindings
-        // once tabnav is enabled. In a CSV file, what this means is that the first press
-        // of this keybinding enables tabnav, and the next press selects the current cell.
-        "keys": ["command+'"],
-        "command": "enable_tabnav",
-        "context": [{"key": "setting.tabnav.kb_enable_tabnav"}]
-    },
-    {
-        // disable tabnav on current view
-        // Note: by default, tabnav is neither enabled _nor_ disabled on a given view.
-        // Some contexts require that tabnav be explicitly enabled to work, while others
-        // are assumed to be enabled unless tabnav has been explicitly disabled.
-        "keys": ["command+ctrl+shift+'"],
-        "command": "disable_tabnav",
-        "context": [{"key": "setting.tabnav.kb_disable_tabnav"}]
-    },
+//     // =================== TabNav Key Bindings =========================
 
-    // #### Navigation keybindings: move cell ####
-    { 
-        // move to cell on left
-        "keys": ["ctrl+;"],
-        "command": "tabnav_move_cursor",
-        "args": { "direction": "left" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_move_left" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // move to cell on right
-        "keys": ["ctrl+'"],
-        "command": "tabnav_move_cursor",
-        "args": { "direction": "right" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_move_right" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // move to cell above
-        "keys": ["ctrl+["],
-        "command": "tabnav_move_cursor",
-        "args": { "direction": "up" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_move_up" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // move to cell below
-        "keys": ["ctrl+/"],
-        "command": "tabnav_move_cursor",
-        "args": { "direction": "down" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_move_down" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
+//     // #### TabNav: Non-navigation keybindings ####
 
-    // #### Navigation keybindings: select cell ####
+//     {
+//         // Enable TabNav on current view
+//         // Note: this keybinding gets clobbered by the "select cell on right" keybindings
+//         // once TabNav is enabled. In a CSV file, what this means is that the first press
+//         // of this keybinding enables TabNav, and the next press selects the current cell.
+//         "keys": ["command+'"],
+//         "command": "enable_tabnav",
+//         "context": [{"key": "setting.tabnav.kb_enable_tabnav"}]
+//     },
+//     {
+//         // Disable TabNav on current view
+//         // Note: by default, TabNav is neither enabled _nor_ disabled on a given view.
+//         // Some contexts require that TabNav be explicitly enabled to work, while others
+//         // are assumed to be enabled unless TabNav has been explicitly disabled.
+//         "keys": ["command+ctrl+shift+'"],
+//         "command": "disable_tabnav",
+//         "context": [{"key": "setting.tabnav.kb_disable_tabnav"}]
+//     },
 
-    { 
-        // select cell on left
-        "keys": ["command+;"],
-        "command": "tabnav_select_next",
-        "args": { "direction": "left" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_select_left" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // select cell on right
-        "keys": ["command+'"],
-        "command": "tabnav_select_next",
-        "args": { "direction": "right" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_select_right" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // select cell above
-        "keys": ["command+["],
-        "command": "tabnav_select_next",
-        "args": { "direction": "up" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_select_up" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // select cell below
-        "keys": ["command+/"],
-        "command": "tabnav_select_next",
-        "args": { "direction": "down" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_select_down" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
+//     // #### TabNav: move cursor ####
+//     { 
+//         // move to cell on left
+//         "keys": ["ctrl+;"],
+//         "command": "tabnav_move_cursor",
+//         "args": { "direction": "left" },
+//         "context": [ { "key": "setting.tabnav.kb_move_left" } ]
+//     },
+//     { 
+//         // move to cell on right
+//         "keys": ["ctrl+'"],
+//         "command": "tabnav_move_cursor",
+//         "args": { "direction": "right" },
+//         "context": [ { "key": "setting.tabnav.kb_move_right" } ]
+//     },
+//     { 
+//         // move to cell above
+//         "keys": ["ctrl+["],
+//         "command": "tabnav_move_cursor",
+//         "args": { "direction": "up" },
+//         "context": [ { "key": "setting.tabnav.kb_move_up" } ]
+//     },
+//     { 
+//         // move to cell below
+//         "keys": ["ctrl+/"],
+//         "command": "tabnav_move_cursor",
+//         "args": { "direction": "down" },
+//         "context": [ { "key": "setting.tabnav.kb_move_down" } ]
+//     },
 
-    // #### Navigation keybindings: extend selection ####
+//     // #### TabNav: select next cell ####
 
-    { 
-        // extend selection to cell on left
-        "keys": ["command+shift+;"],
-        "command": "tabnav_extend_selection",
-        "args": { "direction": "left" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_extend_left" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // extend selection to cell on right
-        "keys": ["command+shift+'"],
-        "command": "tabnav_extend_selection",
-        "args": { "direction": "right" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_extend_right" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // extend selection to cell above
-        "keys": ["command+shift+["],
-        "command": "tabnav_extend_selection",
-        "args": { "direction": "up" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_extend_up" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // extend selection to cell below
-        "keys": ["command+shift+/"],
-        "command": "tabnav_extend_selection",
-        "args": { "direction": "down" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_extend_down" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
+//     { 
+//         // select cell on left
+//         "keys": ["command+;"],
+//         "command": "tabnav_select_next",
+//         "args": { "direction": "left" },
+//         "context": [ { "key": "setting.tabnav.kb_select_left" } ]
+//     },
+//     { 
+//         // select cell on right
+//         "keys": ["command+'"],
+//         "command": "tabnav_select_next",
+//         "args": { "direction": "right" },
+//         "context": [ { "key": "setting.tabnav.kb_select_right" } ]
+//     },
+//     { 
+//         // select cell above
+//         "keys": ["command+["],
+//         "command": "tabnav_select_next",
+//         "args": { "direction": "up" },
+//         "context": [ { "key": "setting.tabnav.kb_select_up" } ]
+//     },
+//     { 
+//         // select cell below
+//         "keys": ["command+/"],
+//         "command": "tabnav_select_next",
+//         "args": { "direction": "down" },
+//         "context": [ { "key": "setting.tabnav.kb_select_down" } ]
+//     },
 
-    // #### Navigation keybindings: reduce selection ####
+//     // #### TabNav: extend selection ####
 
-    { 
-        // reduce selection from the left
-        "keys": ["ctrl+shift+;"],
-        "command": "tabnav_reduce_selection",
-        "args": { "direction": "left" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_reduce_left" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // reduce selection from the right
-        "keys": ["ctrl+shift+'"],
-        "command": "tabnav_reduce_selection",
-        "args": { "direction": "right" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_reduce_right" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // reduce selection upwards
-        "keys": ["ctrl+shift+["],
-        "command": "tabnav_reduce_selection",
-        "args": { "direction": "up" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_reduce_up" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // reduce selection downwards
-        "keys": ["ctrl+shift+/"],
-        "command": "tabnav_reduce_selection",
-        "args": { "direction": "down" },
-        "context":
-        [
-            { "key": "setting.tabnav.kb_reduce_down" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
+//     { 
+//         // extend selection to cell on left
+//         "keys": ["command+shift+;"],
+//         "command": "tabnav_extend_selection",
+//         "args": { "direction": "left" },
+//         "context": [ { "key": "setting.tabnav.kb_extend_left" } ]
+//     },
+//     { 
+//         // extend selection to cell on right
+//         "keys": ["command+shift+'"],
+//         "command": "tabnav_extend_selection",
+//         "args": { "direction": "right" },
+//         "context": [ { "key": "setting.tabnav.kb_extend_right" } ]
+//     },
+//     { 
+//         // extend selection to cell above
+//         "keys": ["command+shift+["],
+//         "command": "tabnav_extend_selection",
+//         "args": { "direction": "up" },
+//         "context": [ { "key": "setting.tabnav.kb_extend_up" } ]
+//     },
+//     { 
+//         // extend selection to cell below
+//         "keys": ["command+shift+/"],
+//         "command": "tabnav_extend_selection",
+//         "args": { "direction": "down" },
+//         "context": [ { "key": "setting.tabnav.kb_extend_down" } ]
+//     },
 
-    // #### Navigation keybindings: select row/column/table ####
+//     // #### TabNav: reduce selection ####
 
-    { 
-        // select row cells
-        "keys": ["command+shift+l"],
-        "command": "tabnav_select_row",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_select_row" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // select column cells
-        "keys": ["command+shift+c"],
-        "command": "tabnav_select_column",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_select_column" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-    { 
-        // select all table cells
-        "keys": ["command+ctrl+shift+c"],
-        "command": "tabnav_select_all",
-        "context":
-        [
-            { "key": "setting.tabnav.kb_select_table" },
-            { "key": "is_tabnav_context"},
-        ]
-    },
-]
+//     { 
+//         // reduce selection from the left
+//         "keys": ["ctrl+shift+;"],
+//         "command": "tabnav_reduce_selection",
+//         "args": { "direction": "left" },
+//         "context": [ { "key": "setting.tabnav.kb_reduce_left" } ]
+//     },
+//     { 
+//         // reduce selection from the right
+//         "keys": ["ctrl+shift+'"],
+//         "command": "tabnav_reduce_selection",
+//         "args": { "direction": "right" },
+//         "context": [ { "key": "setting.tabnav.kb_reduce_right" } ]
+//     },
+//     { 
+//         // reduce selection upwards
+//         "keys": ["ctrl+shift+["],
+//         "command": "tabnav_reduce_selection",
+//         "args": { "direction": "up" },
+//         "context": [ { "key": "setting.tabnav.kb_reduce_up" } ]
+//     },
+//     { 
+//         // reduce selection downwards
+//         "keys": ["ctrl+shift+/"],
+//         "command": "tabnav_reduce_selection",
+//         "args": { "direction": "down" },
+//         "context": [ { "key": "setting.tabnav.kb_reduce_down" } ]
+//     },
+
+//     // #### TabNav: select row/column/table ####
+
+//     { 
+//         // select row cells
+//         "keys": ["command+shift+l"],
+//         "command": "tabnav_select_row",
+//         "context": [ { "key": "setting.tabnav.kb_select_row" } ]
+//     },
+//     { 
+//         // select column cells
+//         "keys": ["command+shift+c"],
+//         "command": "tabnav_select_column",
+//         "context": [ { "key": "setting.tabnav.kb_select_column" } ]
+//     },
+//     { 
+//         // select all table cells
+//         "keys": ["command+ctrl+shift+c"],
+//         "command": "tabnav_select_all",
+//         "context": [ { "key": "setting.tabnav.kb_select_table" } ]
+//     },
+//     // =================== End: TabNav Key Bindings =====================

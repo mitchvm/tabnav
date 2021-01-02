@@ -1,6 +1,6 @@
 # TabNav - Keyboard Navigation of Tabular Data
 
-TabNav is a Sublime Text 3 plugin for keyboard navigation of tabular text data. Quickly move and select "cells" of text in the following formats, without taking your hands off the keyboard:
+TabNav is a Sublime Text plugin for keyboard navigation of tabular text data. Quickly move and select "cells" of text in the following formats, without taking your hands off the keyboard:
 
 * Markdown pipe tables
 * Org Mode tables
@@ -16,29 +16,29 @@ TabNav also provides the ability to copy only the contents of the table, excludi
 <!-- MarkdownTOC -->
 
 - [Installation Instructions](#installation-instructions)
-  - [Package Control](#package-control)
-  - [Git Clone](#git-clone)
-  - [Manual](#manual)
+	- [Package Control](#package-control)
+	- [Git Clone](#git-clone)
+	- [Manual](#manual)
+- [Recommended Key Bindings](#recommended-key-bindings)
 - [Commands](#commands)
-  - [Table Navigation Commands](#table-navigation-commands)
-  - [Other Commands](#other-commands)
+	- [Table Navigation Commands](#table-navigation-commands)
+	- [Other Commands](#other-commands)
 - [Contexts](#contexts)
-  - [Markdown](#markdown)
-  - [Org Mode](#org-mode)
-  - [Textile](#textile)
-  - [CSV](#csv)
+	- [Markdown](#markdown)
+	- [Org Mode](#org-mode)
+	- [Textile](#textile)
+	- [CSV](#csv)
 - [Capture Levels](#capture-levels)
+- [Key Bindings](#key-bindings)
+	- [Custom Key Bindings](#custom-key-bindings)
 - [Customization](#customization)
-  - [Key Bindings](#key-bindings)
-    - [Disable Default TabNav Key Bindings](#disable-default-tabnav-key-bindings)
-    - [Custom Key Bindings](#custom-key-bindings)
-  - [Configuration Options](#configuration-options)
-  - [Context Configuration](#context-configuration)
-    - [CSV Context Configuration](#csv-context-configuration)
-  - [Custom Contexts](#custom-contexts)
-    - [Pattern Definitions](#pattern-definitions)
-      - [`line` capture group](#line-capture-group)
-      - [`cell` capture groups](#cell-capture-groups)
+	- [Configuration Options](#configuration-options)
+	- [Context Configuration](#context-configuration)
+		- [CSV Context Configuration](#csv-context-configuration)
+	- [Custom Contexts](#custom-contexts)
+		- [Pattern Definitions](#pattern-definitions)
+			- [`line` capture group](#line-capture-group)
+			- [`cell` capture groups](#cell-capture-groups)
 
 <!-- /MarkdownTOC -->
 
@@ -51,11 +51,11 @@ TabNav has been submitted for inclusion in the [Package Control](https://package
 Despite not being available in the default Package Control channel, you can still install this package via Package Control, with one extra step.
 
 1. Add this repository as a source repository in your local Package Control:
-    1. In the Sublime Text command palette, run the command: `Package Control: Add Repository`.
-    2. Paste this repository's URL into the input box: `https://github.com/mitchvm/tabnav`
+	1. In the Sublime Text command palette, run the command: `Package Control: Add Repository`.
+	2. Paste this repository's URL into the input box: `https://github.com/mitchvm/tabnav`
 2. Install the package using Package Manager, as usual.
-    1. In the Sublime Text command palette, run the command: `Package Control: Install Package`.
-    2. Select `tabnav` from the list of available packages.
+	1. In the Sublime Text command palette, run the command: `Package Control: Install Package`.
+	2. Select `tabnav` from the list of available packages.
 
 ### Git Clone
 
@@ -65,24 +65,56 @@ Despite not being available in the default Package Control channel, you can stil
 ### Manual
 
 1. Download the latest [TabNav release](https://github.com/mitchvm/tabnav/releases) and unzip it to your local packages directory. 
-    1. To find the local packages directory, open the Sublime Text Preferences and select "Browse packages..."
-    2. Note: All of the TabNav files should be directly under a `tabnav` directory in the `Packages` directory. If the files are nested further, Sublime Text will **not** find them.
+	1. To find the local packages directory, open the Sublime Text Preferences and select "Browse packages..."
+	2. Note: All of the TabNav files should be directly under a `tabnav` directory in the `Packages` directory. If the files are nested further, Sublime Text will **not** find them.
+
+## Recommended Key Bindings
+
+> :warning: TabNav has **no** keybindings enabled on initial install.
+
+A package like TabNav will obviously require many key bindings. In an effort to not clobber either the default Sublime Text key bindings, or the key bindings of other packages you may have installed, while also allowing maximum flexibility for configuring key bindings based on your own personal preferences and keyboard layout, no key bindings are configured by default.
+
+A set of recommended key bindings is provided in the package's key bindings files, however they are all commented out. The recommended key bindings are based on a US-English QWERTY keyboard. They make heavy use of the cluster of four keys immediately to the left of the <kbd>Enter</kbd> key.
+
+To use the recommended key bindings:
+
+1. From the Sublime Text Main menu, select _Preferences_ ❯ _Package Settings_ ❯ _TabNav_ ❯ _Key Bindings_ 
+	1. This will open the the TabNav key bindings package key bindings file (on the left) along with your user key bindings file (on the right) in a new window. Notice that all of the default key bindings have been commented out with `//` at the start of each line.
+2. Copy commented-out key TabNav bindings to into your user key bindings array.
+	1. You must paste the key bindings **inside** of the outer-most array brackets in your user key bindings file.
+3. With the copied key bindings still selected (and still commented out), un-comment the entire selection. (Main menu: _Edit_ ❯ _Comment_ ❯ _Toggle Comment_)
+	1. If you have no other custom key bindings, your user key bindings file should look like this. Notice the brackets - `[` and `]` - on the first and last lines, respectively, and no `//` at the start of each line.
+
+	```
+	[
+	    // =================== TabNav Key Bindings =========================
+
+	    // #### TabNav: Non-navigation keybindings ####
+
+	    {
+	        // Enable TabNav on current view
+	        // Note: this keybinding gets clobbered by the "select cell on right" keybindings
+	        // once TabNav is enabled. In a CSV file, what this means is that the first press
+	        // of this keybinding enables TabNav, and the next press selects the current cell.
+	        "keys": ["ctrl+'"],
+	        "command": "enable_tabnav"
+	    },
+	... (a lot more key bindings here)
+	    // =================== End: TabNav Key Bindings =====================
+	]
+	```
+
+See the [Key Bindings](#key-bindings) section for more details on the recommended key bindings, as well as how to use custom key bindings.
 
 ## Commands
 
-TabNav adds the following commands to Sublime Text. They are all accessible via the Command Palette, as well as the the TabNav submenu under the Selection menu.
+TabNav adds the following commands to Sublime Text. They are all accessible via the Command Palette, as well as the _TabNav_ submenu under the _Selection_ menu.
 
 ### Table Navigation Commands
 
-> :warning: **TabNav overrides several default Sublime Text key bindings.**
->
-> See the [key bindings](#key_bindings) section of the README for details, including how to disable the default key bindings.
-
 The table navigation commands below only operate within the context of a table. All of the table commands are compatible with multiple cursors, and even multiple cursors in multiple, disjoint tables.
 
-The default key bindings are intended for use on a US-English QWERTY keyboard. They make heavy use of the cluster of four keys immediately to the left of the <kbd>Enter</kbd> key. If you are using a different keyboard layout, or simply want to customize your key bindings, all of the default key bindings can be individually disabled. See [Customization](#customization).
-
-The core movement and selection key bindings combine one of four basic modifier key combinations together with with one of the four direction keys:
+As noted [above](#recommended_key_bindings), TabNav has no key bindings enabled by default. The key bindings shown below are the _recommended_. The core movement and selection key bindings combine one of four basic modifier key combinations together with with one of the four direction keys:
 
 
 | Name                   | Windows/Linux                   | macOS                    | Description                                                                                                  |
@@ -112,7 +144,7 @@ The core movement and selection key bindings combine one of four basic modifier 
 </tbody>
 </table>
 
-There are also "Add cursor to cell {direction}" commands without default key bindings. For each active cursor, they add a cursor to the cell in the desired direction.
+There are also "Add cursor to cell {direction}" commands without recommended key bindings. For each active cursor, they add a cursor to the cell in the desired direction.
 
 Beyond the 20 core navigation commands, these additional movement and selection commands are provided. Unlike the core commands, all of these commands are idempotent - that is, they generate the same Sublime Text selections/cursors regardless of how many times they are invoked, or if the current selections/cursors are already aligned with table cells. This might prove useful, for example, if recording a macro.
 
@@ -135,7 +167,7 @@ These commands will operate even outside the context of a table.
 
 | Name                            |                                  Windows/Linux Key Binding |                                 macOS Key Binding | Description                                                                                                                                                                                                                 |
 |:--------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Enable on current view          |                               <kbd>Ctrl</kbd>+<kbd>'</kbd> |                         <kbd>⌘</kbd>+<kbd>'</kbd> | Enables TabNav on the current view. Note, once enabled, the key binding is clobbered by the "Move cursor to cell on right" command.                                                                                         |
+| Enable on current view          |                               <kbd>Ctrl</kbd>+<kbd>'</kbd> |                         <kbd>⌘</kbd>+<kbd>'</kbd> | Enables TabNav on the current view. Note, once enabled, the key binding is clobbered by the "Move cursor to cell on right" command (if using the recommended key bindings).                                                 |
 | Disable on current view         | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd>+<kbd>'</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd>+<kbd>'</kbd> | Disables TabNav on the current view.                                                                                                                                                                                        |
 | Set capture level               |                                                            |                                                   | Configures the selection [capture level](#capture-levels) in use on the current view.                                                                                                                                       |
 | Set CSV delimiter               |                                                            |                                                   | Sets the delimiter to use for CSV files. See the [CSV](#csv) context section for more information.                                                                                                                          |
@@ -209,7 +241,7 @@ If the syntaxes provided by those two packages are not in use on the current vie
 1. Comma: `,`
 2. Semi-colon: `;`
 3. Pipe: `|`
-3. Tab: `   `
+3. Tab
 
 You can also specify a particular delimiter to use (when not in an Advanced CSV or Rainbow CSV syntax) with the ["Set CSV delimiter"](#other-commands) command. Note that a space cannot be used as the delimiter for the built-in CSV context.
 
@@ -230,20 +262,15 @@ Note that not all capture levels are relevant to all contexts - CSV, for example
 
 The default capture level is content. The capture level in use on a particular view can be changed with the ["Set capture level"](#other-commands) command. The default capture level can be configured [globally](#configuration-options) or [per-context](#context-configuration).
 
-## Customization
+## Key Bindings
 
-TabNav offers considerable configuration, or even customizability to modify the default contexts' behaviour or add new contexts.
-
-### Key Bindings
-
-Simply due to the nature of the package, TabNav requires many key bindings, so it comes with many key bindings enabled by default, including several that override built-in Sublime Text key bindings. Effort has been made to minimize the impact on the default Sublime Text key bindings, by having the TabNav key bindings take effect under very specific circumstances. If any of the following conditions are not met, then the TabNav key bindings have no effect.
+Simply due to the nature of the package, TabNav requires many key bindings. The [recommended key bindings](#recommended_key_bindings) include several that override built-in Sublime Text key bindings. Effort has been made to minimize the impact on the default Sublime Text key bindings by having the TabNav key bindings take effect only under very specific circumstances. If any of the following conditions are _not_ met, then the TabNav key bindings have no effect. 
 
 1. There is a TabNav [context](#contexts) configured that matches the current view.
 2. TabNav is enabled on the current view - in most contexts it is enabled by default.
-3. The particular TabNav key binding has not been disabled either globally, or for the particular syntax (discussed below).
 4. The start point of the first selection is within a table.
 
-The following built-in Sublime Text key bindings get overridden by TabNav:
+The following built-in Sublime Text key bindings get overridden by the recommended TabNav key bindings:
 
 | Operating System | Key Binding                                  | Sublime Text Command          | TabNav Command               |
 |:-----------------|:---------------------------------------------|:------------------------------|:-----------------------------|
@@ -257,21 +284,25 @@ The following built-in Sublime Text key bindings get overridden by TabNav:
 | macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>[</kbd>    | Fold selection(s)             | Extend selection(s) up       |
 | macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>L</kbd>    | Split selection(s) into lines | Select cells in table row(s) |
 
-#### Disable Default TabNav Key Bindings
+To temporarily disable most of the recommended TabNav keybindings, it is enough to [disable TabNav](#other-commands) on the current view. The only key bindings that are not disabled by doing this are the key bindings to enable and disable TabNav on the view.
 
-To temporarily disable most of the default TabNav keybindings, it is enough to [disable TabNav](#other-commands) on the current view. The only key bindings that are not disabled by doing this are the key bindings to enable and disable TabNav on the view.
+### Custom Key Bindings
 
-To permanently disable any default TabNav keybindings, either globally or only within specific syntaxes, TabNav offers configurable settings for each key binding. To disable the key bindings globally, select the "Settings - Global Key Binding Flags" menu option under TabNav Package Settings menu (Settings ❯ Package Settings ❯ TabNav), which opens TabNav's default Preferences file along with your local Preferences file. Copy the appropriate `tabnav.kb_` flag to your local Preferences file and set it to `false`.
+Of course, it is entirely valid to ignore the recommended key bindings and use your own custom key bindings, or add more key bindings for commands not covered by the recommended bindings.
 
-Disabling the default key bindings for a particular syntax follows the same principle, but Sublime Text does not offer a command to open the default TabNav preferences file alongside a syntax-specific preferences file. The "Settings - Default Key Binding Flags" and "Settings - Syntax Specific" menu options open the appropriate files individually.
+All of the available commands are enumerated in the [`Main.sublime-menu`](https://github.com/mitchvm/tabnav/blob/main/Main.sublime-menu) file.
 
-#### Custom Key Bindings
+All of navigation commands take a `direction` parameter. When moving from one cell to another, or extending/reducing the selection, the `direction` parameter is required and defines the direction of movement. For these commands, the possible values are: `left`, `right`, `up`, or `down`. When selecting the current cell, or all cells in the current row/column/table, the parameter defines the "direction" of the selected regions, and is optional. The "direction" of a selection determines at which end the cursor is placed. For these commands, the possible values are `left` or `right`.
 
-To add custom key bindings, select the TabNav "Key Bindings" menu option, which will open the default TabNav key bindings file alongside your user key bindings file. Only make changes to your user key bindings file, lest changes to the TabNav key bindings file get removed upon package update. See the [Sublime Text documentation](https://www.sublimetext.com/docs/3/key_bindings.html) for details on how to configure custom key bindings. You most likely do **not** want to keep the `setting.tabnav.kb_` context on your custom key bindings - that is the key binding context that is used to disable the default key bindings.
+For each navigation key binding, it is recommended to add the `is_tabnav_context` key binding context to limit the scopes within which the key binding will take effect, as described above.
+
+## Customization
+
+TabNav offers considerable configuration, or even customizability to modify the default contexts' behaviour or add new contexts.
 
 ### Configuration Options
 
-Selecting the "TabNav - Settings" menu item opens the TabNav default settings file, as well as your local TabNav settings file. Override the default configurations by placing the parameter into your local settings file. The following global configuration parameters are available:
+Selecting the _Preferences_ ❯ _Package Settings_ ❯ _TabNav_ ❯ _Settings - TabNav_ menu item opens the TabNav default settings file, as well as your local TabNav settings file. Override the default configurations by placing the parameter into your local settings file. The following global configuration parameters are available:
 
 * `capture_level`: The initial [capture level](#capture-levels) to use. The capture level can also be configured per-context, or changed a particular view using the ["Set capture level" command](#other-commands). Options: `trimmed`, `content`, `markup`, `cell`. Default: `content`.
 * `trim_on_copy`: When true, the ["Copy selections" commands](#other-commands) trim whitespace from the selected regions' text prior to putting it on the clipboard. The selections in the view themselves are not altered. Default: `true`.
@@ -287,19 +318,19 @@ To override a default context's setting, you only need to provide the path to th
 {
   "user_contexts":
   {
-    "markdown":
-    {
-      "patterns": [
-        {
-          "line": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$",
-          "cell": "(?P<cell>\\|(?P<markup>\\s*[:-]+\\s*))(?=\\|)"
-        },
-        { 
-          "line": "^(?P<table>\\|.*\\|)$",
-          "cell": "(?P<cell>\\|(?P<content>\\s*(?P<trimmed>.*?)\\s*))(?=\\|)"
-        }
-      ]
-    }
+	"markdown":
+	{
+	  "patterns": [
+		{
+		  "line": "^(?P<table>(\\|\\s*[:-]+\\s*(?=\\|))+\\|)$",
+		  "cell": "(?P<cell>\\|(?P<markup>\\s*[:-]+\\s*))(?=\\|)"
+		},
+		{ 
+		  "line": "^(?P<table>\\|.*\\|)$",
+		  "cell": "(?P<cell>\\|(?P<content>\\s*(?P<trimmed>.*?)\\s*))(?=\\|)"
+		}
+	  ]
+	}
   }
 }
 ```
@@ -317,7 +348,7 @@ The `auto_csv` context is a special case with several custom parameters in addit
 
 ### Custom Contexts
 
-Additional contexts can also be defined in the `user_contexts` element. For examples, see the `tabnav.sublime-settings` file (Settings ❯ Package Settings ❯ TabNav ❯ Settings - TabNav) to see the default contexts, which are generously commented.
+Additional contexts can also be defined in the `user_contexts` element. For examples, see the `tabnav.sublime-settings` file (_Preferences_ ❯ _Package Settings_ ❯ _TabNav_ ❯ _Settings - TabNav_) to see the default contexts, which are generously commented.
 
 The following parameters are used to define a TabNav context:
 
@@ -384,15 +415,11 @@ Here is a visual representation of what the four TabNav capture groups should ca
 
 Alternatively, presented as a table (how meta):
 
-| Cell # | Capture Group | Result                               |
-|-------:|:--------------|:-------------------------------------|
-|      1 | `trimmed`     | `First Header`                       |
-|      1 | `content`     | ` First Header  `                    |
-|      1 | `markup`      | `_. First Header  `                  |
-|      1 | `cell`        | <code>&vert;_. First Header  </code> |
-|      2 | `trimmed`     | `Second Header`                      |
-|      2 | `content`     | ` Second Header `                    |
-|      2 | `markup`      | `_. Second Header `                  |
-|      2 | `cell`        | <code>&vert;_. Second Header </code> |
+| Capture Group | First Cell Selection                               | Second Cell Selection                       |
+|:--------------|:---------------------------------------------------|:--------------------------------------------|
+| `cell`        | <code>&vert;_. First Header  </code> | <code>&vert;_. Second Header </code> |
+| `markup`      | `_. First Header  `                  | `_. Second Header `                  |
+| `content`     | ` First Header  `             | ` Second Header `             |
+| `trimmed`     | `First Header`                                     | `Second Header`                             |
 
 Notice that the final `|` is not captured as part of any cell - each cell only captures the _preceding_ delimiter.

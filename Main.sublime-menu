@@ -219,37 +219,12 @@
                 }
               },
               {
-                "caption": "-"
-              },
-              {
                 "caption": "Key Bindings",
                 "command": "edit_settings",
                 "args": {
                   "base_file": "${packages}/tabnav/Default ($platform).sublime-keymap",
                   "default": "[\n\t$0\n]\n"
                 }
-              },
-              {
-                "caption": "Settings – Global Key Binding Flags",
-                "command": "edit_settings",
-                "args": {
-                  "base_file": "${packages}/tabnav/Preferences.sublime-settings",
-                  "default": "{\n\t$0\n}\n"
-                }
-              },
-              {
-                "caption": "-"
-              },
-              {
-                "caption": "Settings – Default Key Binding Flags",
-                "command": "open_file",
-                "args": {
-                  "file": "${packages}/tabnav/Preferences.sublime-settings"
-                }
-              },
-              {
-                "caption": "Settings – Syntax Specific",
-                "command": "open_file_settings"
               }
             ]
           }
