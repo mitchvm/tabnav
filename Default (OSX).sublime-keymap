@@ -1,4 +1,4 @@
-
+[
 //     // =================== TabNav Key Bindings =========================
 
 //     // #### TabNav: Non-navigation keybindings ####
@@ -166,3 +166,4 @@
 //         "context": [ { "key": "setting.tabnav.kb_select_table" } ]
 //     },
 //     // =================== End: TabNav Key Bindings =====================
+]

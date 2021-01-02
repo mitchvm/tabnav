@@ -1,4 +1,4 @@
-
+[
 //     // =================== TabNav Key Bindings =========================
 
 //     // #### TabNav: Non-navigation keybindings ####
@@ -164,3 +164,4 @@
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     // =================== End: TabNav Key Bindings =====================
+]
