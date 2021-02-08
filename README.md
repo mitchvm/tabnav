@@ -20,6 +20,7 @@ TabNav also provides the ability to copy only the contents of the table, excludi
 	- [Git Clone](#git-clone)
 	- [Manual](#manual)
 - [Recommended Key Bindings](#recommended-key-bindings)
+	- [Recommended key binding setup:](#recommended-key-binding-setup)
 - [Commands](#commands)
 	- [Table Navigation Commands](#table-navigation-commands)
 	- [Other Commands](#other-commands)
@@ -76,14 +77,14 @@ A package like TabNav will obviously require many key bindings. In an effort to 
 
 A set of recommended key bindings is provided in the package's key bindings files, however they are all commented out. The recommended key bindings are based on a US-English QWERTY keyboard. They make heavy use of the cluster of four keys immediately to the left of the <kbd>Enter</kbd> key.
 
-To use the recommended key bindings:
+### Recommended key binding setup:
 
 1. From the Sublime Text Main menu, select _Preferences_ ❯ _Package Settings_ ❯ _TabNav_ ❯ _Key Bindings_ 
 	1. This will open the the TabNav key bindings package key bindings file (on the left) along with your user key bindings file (on the right) in a new window. Notice that all of the default key bindings have been commented out with `//` at the start of each line.
 2. Copy commented-out key TabNav bindings to into your user key bindings array.
 	1. You must paste the key bindings **inside** of the outer-most array brackets in your user key bindings file.
 3. With the copied key bindings still selected (and still commented out), un-comment the entire selection. (Main menu: _Edit_ ❯ _Comment_ ❯ _Toggle Comment_)
-	1. If you have no other custom key bindings, your user key bindings file should look like this. Notice the brackets - `[` and `]` - on the first and last lines, respectively, and no `//` at the start of each line.
+	1. If you have no other custom key bindings, your user key bindings file should look like this. Notice the brackets - `[` and `]` - on the first and last lines, respectively, and no `//` at the start of each line other than comment lines.
 
 	```
 	[
@@ -114,15 +115,15 @@ TabNav adds the following commands to Sublime Text. They are all accessible via 
 
 The table navigation commands below only operate within the context of a table. All of the table commands are compatible with multiple cursors, and even multiple cursors in multiple, disjoint tables.
 
-As noted [above](#recommended_key_bindings), TabNav has no key bindings enabled by default. The key bindings shown below are the _recommended_. The core movement and selection key bindings combine one of four basic modifier key combinations together with with one of the four direction keys:
+As noted [above](#recommended_key_bindings), TabNav has no key bindings enabled by default. The key bindings shown below are the _recommended_ bindings. The core movement and selection key bindings combine one of four basic modifier key combinations together with with one of the four direction keys:
 
-
-| Name                   | Windows/Linux                   | macOS                    | Description                                                                                                  |
-|:-----------------------|:--------------------------------|:-------------------------|:-------------------------------------------------------------------------------------------------------------|
-| Move cursor to cell... | <kbd>Alt</kbd>                  | <kbd>^</kbd>             | Moves all cursors to the next cell in the desired direction.                                                 |
-| Select cell...         | <kbd>Ctrl</kbd>                 | <kbd>⌘</kbd>             | Moves all selections to the next cell in the desired direction.                                              |
-| Extend selection...    | <kbd>Ctrl</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd> | Adds the next cell in the desired direction to the current selections.                                       |
-| Reduce selection...    | <kbd>Alt</kbd><kbd>Shift</kbd>  | <kbd>^</kbd><kbd>⇧</kbd> | When two or more cells in sequence are selected, removes the selection from a cell in the desired direction. |
+| Name                   | Windows/Linux                   | macOS                    | Description                                                                                                                                        |
+|:-----------------------|:--------------------------------|:-------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
+| Move cursor to cell... | <kbd>Alt</kbd>                  | <kbd>^</kbd>             | Moves all cursors to the next cell in the desired direction.                                                                                       |
+| Select cell...         | <kbd>Ctrl</kbd>                 | <kbd>⌘</kbd>             | Moves all selections to the next cell in the desired direction.                                                                                    |
+| Extend selection...    | <kbd>Ctrl</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd> | Adds the next cell in the desired direction to the current selections.                                                                             |
+| Reduce selection...    | <kbd>Alt</kbd><kbd>Shift</kbd>  | <kbd>^</kbd><kbd>⇧</kbd> | When two or more cells in sequence are selected, removes the selection from a cell in the desired direction.                                       |
+| Add cursor to cell...  |                                 |                          | For each active cursor, add an additional cursor to the cell in the desired direction. The recommended key bindings do not include these commands. |
 
 <table>
 <thead>
@@ -144,9 +145,7 @@ As noted [above](#recommended_key_bindings), TabNav has no key bindings enabled 
 </tbody>
 </table>
 
-There are also "Add cursor to cell {direction}" commands without recommended key bindings. For each active cursor, they add a cursor to the cell in the desired direction.
-
-Beyond the 20 core navigation commands, these additional movement and selection commands are provided. Unlike the core commands, all of these commands are idempotent - that is, they generate the same Sublime Text selections/cursors regardless of how many times they are invoked, or if the current selections/cursors are already aligned with table cells. This might prove useful, for example, if recording a macro.
+Beyond the 20 core navigation commands, these additional movement and selection commands are provided. Unlike the core commands, all of these commands are idempotent - that is, they generate the same Sublime Text selections/cursors regardless of how many times they are invoked, even if the current selections/cursors are already aligned with table cells. This might prove useful, for example, if recording a macro.
 
 | Name                                             |                                  Windows/Linux Key binding |                                 macOS Key binding |
 |:-------------------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|
@@ -204,7 +203,7 @@ Alternatively, the same table as a "bordered" table would look like this:
 
 By default, TabNav supports both borderless and bordered tables. To be able to support borderless tables, however, any line of (non-raw) text containing a pipe character is considered to be part of a table. 
 
-So if I put a pipe right here | then this line of text is considered to be a table.
+Since this is a Markdown file, if I put a pipe right here | then this line of text is considered to be a table with two cells.
 
 If you only use bordered Markdown tables, you can configure TabNav to be more restrictive in what it considers to be a table. See [Context Configuration](#context-configuration).
 
@@ -225,15 +224,15 @@ TabNav is enabled by default in [Textile](https://textile-lang.com/) documents. 
 1. Cells and rows may contain inline table markup in addition to content.
 2. Markup rows might not contain "cells" of markup that are aligned with the table cells.
 
-Inline markup directly in the cell respects the current [capture level](#capture-levels) - when set to `trimmed` or `content`, the markup is omitted from selections; when set to `markup` or `cell`, the markup is included in selections - however row markup (styles and classes assigned to the row, before the first pipe) and stand-alone markup rows without a pipe at the end of the row are always ignored, regardless of capture level. Header and footer rows are treated as normal content rows.
+Inline markup directly in the cell respects the current [capture level](#capture-levels) - when set to `trimmed` or `content`, the markup is omitted from selections; when set to `markup` or `cell`, the markup is included in selections. However, row markup - that is, styles and classes assigned to the row, before the first pipe - and stand-alone markup rows without a pipe at the end of the row are always ignored, regardless of capture level. Header and footer rows are treated as normal content rows.
 
-Textile also supports cells spanning multiple rows and/or columns, however, TabNav makes no special effort to support row and columns spanning. When moving a single cursor/selection, the behaviour is _mostly_ how you would expect, or at least predictable, but when it comes to selecting regions of the table, cells spanning multiple rows or columns tend to give pretty funky results.
+Textile also supports cells spanning multiple rows and/or columns, though TabNav makes no special effort to support row and column spanning. When moving a single cursor/selection, the behaviour is _mostly_ how you would expect, or at least predictable, but when it comes to selecting regions of the table, cells spanning multiple rows or columns tend to give pretty funky results.
 
 At this time, there is no intention of adding "proper" support for cells spanning multiple rows or columns in Textile tables.
 
 ### CSV
 
-CSV requires special handling, specifically because there are so many permutations of "separated value" documents. There is no specific scope Sublime Text scope for CSV documents. Rather, TabNav treats CSV as the fall-back context if no other context was positively identified, though TabNav is disabled by default in CSV contexts - use the ["Enable on current view"](#other-commands) command to enable it.
+CSV requires special handling, specifically because there are so many permutations of "separated value" documents. There is no specific Sublime Text scope for CSV documents. Rather, TabNav treats CSV as the fall-back context if no other context was positively identified, though TabNav is disabled by default in CSV contexts - use the ["Enable on current view"](#other-commands) command to enable it.
 
 TabNav integrates with both the [Advanced CSV](https://github.com/wadetb/Sublime-Text-Advanced-CSV) and [Rainbow CSV](https://github.com/mechatroner/sublime_rainbow_csv/)<sup>3</sup> packages. If the syntax on the current view comes from either of those packages, the delimiter being used by them is also automatically used by TabNav.
 
@@ -252,7 +251,7 @@ Finally, if all other methods of determining the delimiter fail, TabNav uses a c
 
 ## Capture Levels
 
-TabNav contexts provide multiple "capture levels" that define how much text to select within a table cell. The available capture levels are listed below. Each level captures the the same text as the level above, and potentially more.
+TabNav contexts provide multiple "capture levels" that define how much text to select within a table cell. The available capture levels are listed below. Each level captures all of the text as the level above, and potentially more.
 
 1. **Trimmed**: Only the text contained within the cell, excluding any whitespace on either side. Cells containing only markup are omitted from selections.
 2. **Content**: The text in the cell as well as any whitespace around the text. Cells containing only markup are omitted from selections.
@@ -261,7 +260,7 @@ TabNav contexts provide multiple "capture levels" that define how much text to s
 
 Note that not all capture levels are relevant to all contexts - CSV, for example, does not contain any markup beyond the cell delimiter. What's more, most contexts do not mix markup and content within the same cell.
 
-The default capture level is content. The capture level in use on a particular view can be changed with the ["Set capture level"](#other-commands) command. The default capture level can be configured [globally](#configuration-options) or [per-context](#context-configuration).
+The default capture level is `content`. The capture level in use on a particular view can be changed with the ["Set capture level"](#other-commands) command. The default capture level can be configured [globally](#configuration-options) or [per-context](#context-configuration).
 
 ## Key Bindings
 
@@ -305,7 +304,7 @@ TabNav offers considerable configuration, or even customizability to modify the 
 
 Selecting the _Preferences_ ❯ _Package Settings_ ❯ _TabNav_ ❯ _Settings - TabNav_ menu item opens the TabNav default settings file, as well as your local TabNav settings file. Override the default configurations by placing the parameter into your local settings file. The following global configuration parameters are available:
 
-* `capture_level`: The initial [capture level](#capture-levels) to use. The capture level can also be configured per-context, or changed a particular view using the ["Set capture level" command](#other-commands). Options: `trimmed`, `content`, `markup`, `cell`. Default: `content`.
+* `capture_level`: The initial [capture level](#capture-levels) to use. The capture level can also be configured per-context, or changed on the active view using the ["Set capture level" command](#other-commands). Options: `trimmed`, `content`, `markup`, `cell`. Default: `content`.
 * `trim_on_copy`: When true, the ["Copy selections" commands](#other-commands) trim whitespace from the selected regions' text prior to putting it on the clipboard. The selections in the view themselves are not altered. Default: `true`.
 * `log_level`: Set to `INFO` or `DEBUG` to see TabNav log messages in the Sublime Text console. Default `WARNING`.
 
@@ -373,7 +372,7 @@ Each pattern contains two elements, explained in more detail below.
 
 ##### `line` capture group
 
-The optional `line` expression is used to determine the pattern applies to the line of text and, if so, the portion of the line of text that constitutes the table. If used, the `line` expression must return a named `table` group that captures the part of the line to use for matching table content with the `cell` expressions. If a `line` expression is not provided with the pattern, the entire line of text is parsed using the `cell` expressions.
+The optional `line` expression is used to determine if the pattern applies to the line of text and, if so, the portion of the line of text that constitutes the table. If used, the `line` expression must return a named `table` group that captures the part of the line to use for matching table content with the `cell` expressions. If a `line` expression is not provided with the pattern, the entire line of text is parsed using the `cell` expressions.
 
 There is one scenario where the `line` element is required, and the `cell` element can be omitted: to capture a line of a table, but not parse any cells from the line, include a `line` element _without_ a `table` capture group.
 
@@ -393,11 +392,11 @@ The `cell` capture group should capture the delimiter that **precedes** the cont
 
 Each match of each expression in the array should return a single cell's contents. Each expression can also, optionally, return a zero-width match immediately prior to the last matching delimiter. This match will be ignored.
 
-If multiple expressions are provided in a JSON array, they are each processed in sequence until their matches are exhausted. Use this to have, for example, one expression to capture the first cell on the line, a different expression to capture cells in the middle of the row, and a third expression to capture the final cell on the line. If only one expression is provided, it need-not be placed in a JSON array.
+If multiple expressions are provided in a JSON array, they are each processed in sequence until their matches are exhausted. Use this to have, for example, one expression to capture the first cell of the row, a different expression to capture cells in the middle of the row, and a third expression to capture the final cell. If only one expression is provided, it need-not be placed in a JSON array.
 
 ###### Example
 
-One table format that mixes markup and content in a table cell is [Textile](https://textile-lang.com/doc/tables). Here is a sample row of a Textile table that defines headers. The `_.` at the start of the cell is markup indicating that the cell is a header cell.
+One table format that mixes markup and content in a table cell is [Textile](https://textile-lang.com/doc/tables). Here is a sample row of a Textile table that defines headers. Cells are pipe-delimited, and the `_.` at the start of the cell is markup indicating that the cell is a header cell.
 
 ```
 |_. First Header  |_. Second Header |
