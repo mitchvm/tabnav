@@ -13,7 +13,7 @@ preferences and keyboard layout, no key bindings are configured by default.
 A set of recommended key bindings is provided in the package's key bindings
 files, however they are all commented out. The recommended key bindings are
 based on a US-English QWERTY keyboard. They make heavy use of the cluster of
-four keys immediately to the left of the <kbd>Enter</kbd> key.
+four keys immediately to the left of the Enter key.
 
 To use the recommended key bindings:
 
