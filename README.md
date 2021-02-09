@@ -45,23 +45,16 @@ TabNav also provides the ability to copy only the contents of the table, excludi
 
 ## Installation Instructions
 
-TabNav has been submitted for inclusion in the [Package Control](https://packagecontrol.io/) repository, however, it is still awaiting approval. Until it is approved, there are three methods of installing TabNav available.
-
 ### Package Control
 
-Despite not being available in the default Package Control channel, you can still install this package via Package Control, with one extra step.
-
-1. Add this repository as a source repository in your local Package Control:
-	1. In the Sublime Text command palette, run the command: `Package Control: Add Repository`.
-	2. Paste this repository's URL into the input box: `https://github.com/mitchvm/tabnav`
-2. Install the package using Package Manager, as usual.
-	1. In the Sublime Text command palette, run the command: `Package Control: Install Package`.
-	2. Select `tabnav` from the list of available packages.
+1. If you haven't already, install [Package Control](https://packagecontrol.io/installation).
+2. In the Sublime Text command palette, run the command: `Package Control: Install Package`.
+3. Select `TabNav` from the list of available packages.
 
 ### Git Clone
 
 1. Clone this repository to your local machine: `git clone https://github.com/mitchvm/tabnav.git`
-2. Create a symbolic of the repository in your local Sublime Text packages directory.
+2. If you didn't clone directly to the Sublime Text packages directory, create a symbolic link to the repository in your local Sublime Text packages directory.
 
 ### Manual
 
