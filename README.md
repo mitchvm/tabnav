@@ -1,3 +1,7 @@
+![License](https://img.shields.io/github/license/mitchvm/tabnav?style=flat-square)
+![Release](https://img.shields.io/github/v/release/mitchvm/tabnav?sort=semver&style=flat-square)
+![Downloads](https://img.shields.io/packagecontrol/dt/TabNav?style=flat-square)
+
 # TabNav - Keyboard Navigation of Tabular Data
 
 TabNav is a Sublime Text plugin for keyboard navigation of tabular text data. Quickly move and select "cells" of text in the following formats, without taking your hands off the keyboard:
