@@ -74,6 +74,10 @@
     "command": "tabnav_select_next"
   },
   {
+    "caption": "TabNav: Jump to end...",
+    "command": "tabnav_jump_end"
+  },
+  {
     "caption": "TabNav: Extend selection...",
     "command": "tabnav_extend_selection"
   },

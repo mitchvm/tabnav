@@ -48,136 +48,192 @@
             "caption": "-"
           },
           {
-            "caption": "Move cursor to start of current cell",
-            "command": "tabnav_move_cursor_current_cell",
-            "args": { "direction": "left" }
+            "caption": "Move cursor to...",
+            "id": "tabnav_move_cursor",
+            "children": [
+              {
+                "caption": "Start of current cell",
+                "command": "tabnav_move_cursor_current_cell",
+                "args": { "direction": "left" }
+              },
+              {
+                "caption": "End of current cell",
+                "command": "tabnav_move_cursor_current_cell",
+                "args": { "direction": "right" } 
+              },
+              {
+                "caption": "Cell on left",
+                "command": "tabnav_move_cursor",
+                "args": { "direction": "left" }
+              },
+              {
+                "caption": "Cell on right",
+                "command": "tabnav_move_cursor",
+                "args": { "direction": "right" }
+              },
+              {
+                "caption": "Cell above",
+                "command": "tabnav_move_cursor",
+                "args": { "direction": "up" }
+              },
+              {
+                "caption": "Cell below",
+                "command": "tabnav_move_cursor",
+                "args": { "direction": "down" }
+              }
+            ],
           },
           {
-            "caption": "Move cursor to end of current cell",
-            "command": "tabnav_move_cursor_current_cell",
-            "args": { "direction": "right" } 
+            "caption": "Add cursor to cell...",
+            "id": "tabnav_add_cursor",
+            "children": [
+              {
+                "caption": "On left",
+                "command": "tabnav_add_cursor",
+                "args": { "direction": "left" }
+              },
+              {
+                "caption": "On right",
+                "command": "tabnav_add_cursor",
+                "args": { "direction": "right" }
+              },
+              {
+                "caption": "Above",
+                "command": "tabnav_add_cursor",
+                "args": { "direction": "up" }
+              },
+              {
+                "caption": "Below",
+                "command": "tabnav_add_cursor",
+                "args": { "direction": "down" }
+              }
+            ]
           },
           {
-            "caption": "Move cursor to cell on left",
-            "command": "tabnav_move_cursor",
-            "args": { "direction": "left" }
+            "caption": "Select cell...",
+            "id": "tabnav_select_cell",
+            "children": [
+              {
+                "caption": "Current",
+                "command": "tabnav_select_current"
+              },
+              {
+                "caption": "On left",
+                "command": "tabnav_select_next",
+                "args": { "direction": "left" }
+              },
+              {
+                "caption": "On right",
+                "command": "tabnav_select_next",
+                "args": { "direction": "right" }
+              },
+              {
+                "caption": "Above",
+                "command": "tabnav_select_next",
+                "args": { "direction": "up" }
+              },
+              {
+                "caption": "Below",
+                "command": "tabnav_select_next",
+                "args": { "direction": "down" }
+              }
+            ]
           },
           {
-            "caption": "Move cursor to cell on right",
-            "command": "tabnav_move_cursor",
-            "args": { "direction": "right" }
+            "caption": "Jump to cell at...",
+            "id": "tabnav_jump_end",
+            "children": [
+              {
+                "caption": "Start of row",
+                "command": "tabnav_jump_end",
+                "args": { "direction": "left" }
+              },
+              {
+                "caption": "End of row",
+                "command": "tabnav_jump_end",
+                "args": { "direction": "right" }
+              },
+              {
+                "caption": "Top of column",
+                "command": "tabnav_jump_end",
+                "args": { "direction": "up" }
+              },
+              {
+                "caption": "Bottom of column",
+                "command": "tabnav_jump_end",
+                "args": { "direction": "down" }
+              }
+            ]
           },
           {
-            "caption": "Move cursor to cell above",
-            "command": "tabnav_move_cursor",
-            "args": { "direction": "up" }
+            "caption": "Extend selection to cell...",
+            "id": "tabnav_extend_selection",
+            "children": [
+              {
+                "caption": "On left",
+                "command": "tabnav_extend_selection",
+                "args": { "direction": "left" }
+              },
+              {
+                "caption": "On right",
+                "command": "tabnav_extend_selection",
+                "args": { "direction": "right" }
+              },
+              {
+                "caption": "Above",
+                "command": "tabnav_extend_selection",
+                "args": { "direction": "up" }
+              },
+              {
+                "caption": "Below",
+                "command": "tabnav_extend_selection",
+                "args": { "direction": "down" }
+              }
+            ]
           },
           {
-            "caption": "Move cursor to cell below",
-            "command": "tabnav_move_cursor",
-            "args": { "direction": "down" }
+            "caption": "Reduce selection...",
+            "id": "tabnav_reduce_selection",
+            "children": [
+              { 
+                "caption": "To the left",
+                "command": "tabnav_reduce_selection",
+                "args": { "direction": "left" }
+              },
+              { 
+                "caption": "To the right",
+                "command": "tabnav_reduce_selection",
+                "args": { "direction": "right" }
+              },
+              { 
+                "caption": "Upwards",
+                "command": "tabnav_reduce_selection",
+                "args": { "direction": "up" }
+              },
+              { 
+                "caption": "Downwards",
+                "command": "tabnav_reduce_selection",
+                "args": { "direction": "down" }
+              }
+            ]
           },
           {
-            "caption": "Add cursor to cell on left",
-            "command": "tabnav_add_cursor",
-            "args": { "direction": "left" }
-          },
-          {
-            "caption": "Add cursor to cell on right",
-            "command": "tabnav_add_cursor",
-            "args": { "direction": "right" }
-          },
-          {
-            "caption": "Add cursor to cell above",
-            "command": "tabnav_add_cursor",
-            "args": { "direction": "up" }
-          },
-          {
-            "caption": "Add cursor to cell below",
-            "command": "tabnav_add_cursor",
-            "args": { "direction": "down" }
-          },
-          {
-            "caption": "-"
-          },
-          {
-            "caption": "Select current cell",
-            "command": "tabnav_select_current"
-          },
-          {
-            "caption": "Select cell on left",
-            "command": "tabnav_select_next",
-            "args": { "direction": "left" }
-          },
-          {
-            "caption": "Select cell on right",
-            "command": "tabnav_select_next",
-            "args": { "direction": "right" }
-          },
-          {
-            "caption": "Select cell above",
-            "command": "tabnav_select_next",
-            "args": { "direction": "up" }
-          },
-          {
-            "caption": "Select cell below",
-            "command": "tabnav_select_next",
-            "args": { "direction": "down" }
-          },
-          {
-            "caption": "Extend selection to cell on left",
-            "command": "tabnav_extend_selection",
-            "args": { "direction": "left" }
-          },
-          {
-            "caption": "Extend selection to cell on right",
-            "command": "tabnav_extend_selection",
-            "args": { "direction": "right" }
-          },
-          {
-            "caption": "Extend selection to cell above",
-            "command": "tabnav_extend_selection",
-            "args": { "direction": "up" }
-          },
-          {
-            "caption": "Extend selection to cell below",
-            "command": "tabnav_extend_selection",
-            "args": { "direction": "down" }
-          },
-          { 
-            "caption": "Reduce selection to the left",
-            "command": "tabnav_reduce_selection",
-            "args": { "direction": "left" }
-          },
-          { 
-            "caption": "Reduce selection to the right",
-            "command": "tabnav_reduce_selection",
-            "args": { "direction": "right" }
-          },
-          { 
-            "caption": "Reduce selection upwards",
-            "command": "tabnav_reduce_selection",
-            "args": { "direction": "up" }
-          },
-          { 
-            "caption": "Reduce selection downwards",
-            "command": "tabnav_reduce_selection",
-            "args": { "direction": "down" }
-          },
-          {
-            "caption": "-"
-          },
-          {
-            "caption": "Select row cells",
-            "command": "tabnav_select_row"
-          },
-          {
-            "caption": "Select column cells",
-            "command": "tabnav_select_column"
-          },
-          {
-            "caption": "Select all table cells",
-            "command": "tabnav_select_all"
+            "caption": "Select...",
+            "id": "tabnav_select_set",
+            "children": [
+              {
+                "caption": "Row cells",
+                "command": "tabnav_select_row"
+              },
+              {
+                "caption": "Column cells",
+                "command": "tabnav_select_column"
+              },
+              {
+                "caption": "All table cells",
+                "command": "tabnav_select_all"
+              }
+            ]
           },
           {
             "caption": "-"

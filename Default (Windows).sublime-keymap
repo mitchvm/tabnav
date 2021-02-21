@@ -81,6 +81,37 @@
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 
+//     // #### TabNav: jump to end ####
+
+//     { 
+//         // select left-most cell in row
+//         "keys": ["ctrl+alt+;"],
+//         "command": "tabnav_jump_end",
+//         "args": { "direction": "left" },
+//         "context": [ { "key": "is_tabnav_context"} ]
+//     },
+//     { 
+//         // select right-most in row
+//         "keys": ["ctrl+alt+'"],
+//         "command": "tabnav_jump_end",
+//         "args": { "direction": "right" },
+//         "context": [ { "key": "is_tabnav_context"} ]
+//     },
+//     { 
+//         // select top cell in column
+//         "keys": ["ctrl+alt+["],
+//         "command": "tabnav_jump_end",
+//         "args": { "direction": "up" },
+//         "context": [ { "key": "is_tabnav_context"} ]
+//     },
+//     { 
+//         // select bottom cell in column
+//         "keys": ["ctrl+alt+/"],
+//         "command": "tabnav_jump_end",
+//         "args": { "direction": "down" },
+//         "context": [ { "key": "is_tabnav_context"} ]
+//     },
+
 //     // #### TabNav: extend selection ####
 
 //     { 

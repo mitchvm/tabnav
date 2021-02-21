@@ -1,6 +1,6 @@
-================================
-Thank you for trying out TabNav!
-================================
+## TabNav
+
+**Thank you for trying out TabNav!**
 
 TabNav has **no** keybindings enabled on initial install, but it will obviously
 require many key bindings to function.
@@ -30,7 +30,7 @@ To use the recommended key bindings:
      un-comment the entire selection.
      Main menu: Edit ❯ Comment ❯ Toggle Comment
 
-** Quick start with the recommended key bindings **
+### Quick start with the recommended key bindings
 
 The four keys to the left of the Enter key are used as directional control:
 
@@ -45,15 +45,17 @@ Windows/Linux:
 
 * Alt        : Move cursors
 * Ctrl       : Select cell
+* Ctrl+Alt   : Jump to end
 * Ctrl+Shift : Extend selection
 * Alt+Shift  : Reduce selection
 
 macOS:
 
-* Control       : Move cursors
-* Command       : Select cell
-* Command+Shift : Extend selection
-* Control+Shift : Reduce selection
+* Control         : Move cursors
+* Command         : Select cell
+* Command+Control : Jump to end
+* Command+Shift   : Extend selection
+* Control+Shift   : Reduce selection
 
 Additional commands for selecting rows, columns, or tables of cells; copying
 cell contents; trimming whitespace from selections. See the README for those

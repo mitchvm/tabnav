@@ -1,0 +1,215 @@
+[
+	{
+		"id": "BHA6",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cell in bottom row of file doesn't move",
+		"initial_selections": [{"a": 308, "b": 311}],
+		"expected_selections": [{"a": 308, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "IKHU",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "First cell of row",
+		"initial_selections": [{"a": 101, "b": 111}],
+		"expected_selections": [{"a": 282, "b": 307}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "M4QF",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Last cell of row",
+		"initial_selections": [{"a": 132, "b": 146}],
+		"expected_selections": [{"a": 347, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "KXTU",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown06_markup_top_bottom.md",
+		"description": "Bottom row is markup; content capture level",
+		"initial_selections": [{"a": 467, "b": 480}],
+		"expected_selections": [{"a": 1811, "b": 1824}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "4UTG",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown06_markup_top_bottom.md",
+		"description": "Bottom row is markup, Bottom row selected; content capture level",
+		"initial_selections": [{"a": 1876, "b": 1894}],
+		"expected_selections": [{"a": 1876, "b": 1894}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "L7RY",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown06_markup_top_bottom.md",
+		"description": "Bottom row is markup; markup capture level",
+		"initial_selections": [{"a": 467, "b": 480}],
+		"expected_selections": [{"a": 1895, "b": 1908}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "VEEV",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 312, "b": 346}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "4AUB",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Sequential cells in a column, one in bottom row - merged",
+		"initial_selections": [{"a": 243, "b": 247}, {"a": 308, "b": 311}],
+		"expected_selections": [{"a": 308, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "SG2G",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown07_different_row_lengths.md",
+		"description": "Different row lengths",
+		"initial_selections": [{"a": 238, "b": 257}, {"a": 258, "b": 264}, {"a": 265, "b": 283}, {"a": 284, "b": 297}, {"a": 298, "b": 311}, {"a": 312, "b": 319}],
+		"expected_selections": [{"a": 936, "b": 943}, {"a": 1006, "b": 1019}, {"a": 1068, "b": 1081}, {"a": 1111, "b": 1129}, {"a": 1152, "b": 1158}, {"a": 1161, "b": 1180}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "NANR",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cells, some move some don't",
+		"initial_selections": [{"a": 101, "b": 111}, {"a": 207, "b": 224}, {"a": 308, "b": 311}],
+		"expected_selections": [{"a": 282, "b": 307}, {"a": 308, "b": 311}, {"a": 347, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "K7PU",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Sequential cells in the same column",
+		"initial_selections": [{"a": 112, "b": 119}, {"a": 192, "b": 205}, {"a": 243, "b": 247}],
+		"expected_selections": [{"a": 308, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "LPT4",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Cells in bottom rows of multiple tables",
+		"initial_selections": [{"a": 1804, "b": 1822}, {"a": 2806, "b": 2819}],
+		"expected_selections": [{"a": 1804, "b": 1822}, {"a": 2806, "b": 2819}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "XJEZ",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Multiple cursors in multiple tables",
+		"initial_selections": [{"a": 517, "b": 536}, {"a": 964, "b": 982}, {"a": 1487, "b": 1500}, {"a": 2086, "b": 2099}, {"a": 2222, "b": 2235}],
+		"expected_selections": [{"a": 1777, "b": 1796}, {"a": 1804, "b": 1822}, {"a": 1823, "b": 1836}, {"a": 2792, "b": 2805}, {"a": 2806, "b": 2819}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "SKH7",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Cells in borderless table",
+		"initial_selections": [{"a": 68, "b": 78}, {"a": 113, "b": 124}, {"a": 159, "b": 169}],
+		"expected_selections": [{"a": 204, "b": 214}, {"a": 215, "b": 226}, {"a": 227, "b": 237}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "EDNU",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "auto_csv",
+			"direction": "down"
+		},
+		"file": "csv01_comma_quoted.csv",
+		"description": "Capture cell - empty first cell",
+		"initial_selections": [{"a": 380, "b": 380}],
+		"expected_selections": [{"a": 491, "b": 491}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.capture_level": "cell"
+		}
+	}
+]

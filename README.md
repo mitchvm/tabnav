@@ -108,6 +108,8 @@ See the [Key Bindings](#key-bindings) section for more details on the recommende
 
 TabNav adds the following commands to Sublime Text. They are all accessible via the Command Palette, as well as the _TabNav_ submenu under the _Selection_ menu.
 
+> Note: If you're reading this on packagecontrol.io, the tables render more clearly when read on [GitHub](https://github.com/mitchvm/tabnav/blob/main/README.md).
+
 ### Table Navigation Commands
 
 The table navigation commands below only operate within the context of a table. All of the table commands are compatible with multiple cursors, and even multiple cursors in multiple, disjoint tables.
@@ -117,7 +119,8 @@ As noted [above](#recommended_key_bindings), TabNav has no key bindings enabled 
 | Name                   | Windows/Linux                   | macOS                    | Description                                                                                                                                        |
 |:-----------------------|:--------------------------------|:-------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
 | Move cursor to cell... | <kbd>Alt</kbd>                  | <kbd>^</kbd>             | Moves all cursors to the next cell in the desired direction.                                                                                       |
-| Select cell...         | <kbd>Ctrl</kbd>                 | <kbd>⌘</kbd>             | Moves all selections to the next cell in the desired direction.                                                                                    |
+| Select next cell...    | <kbd>Ctrl</kbd>                 | <kbd>⌘</kbd>             | Moves all selections to the adjacent cell in the desired direction.                                                                                |
+| Select last cell...    | <kbd>Ctrl</kbd><kbd>Alt</kbd>   | <kbd>⌘</kbd><kbd>^</kbd> | Moves all selections to the furthest cell in the row/column in the desired direction.                                                              |
 | Extend selection...    | <kbd>Ctrl</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>⇧</kbd> | Adds the next cell in the desired direction to the current selections.                                                                             |
 | Reduce selection...    | <kbd>Alt</kbd><kbd>Shift</kbd>  | <kbd>^</kbd><kbd>⇧</kbd> | When two or more cells in sequence are selected, removes the selection from a cell in the desired direction.                                       |
 | Add cursor to cell...  |                                 |                          | For each active cursor, add an additional cursor to the cell in the desired direction. The recommended key bindings do not include these commands. |
@@ -142,7 +145,7 @@ As noted [above](#recommended_key_bindings), TabNav has no key bindings enabled 
 </tbody>
 </table>
 
-Beyond the 20 core navigation commands, these additional movement and selection commands are provided. Unlike the core commands, all of these commands are idempotent - that is, they generate the same Sublime Text selections/cursors regardless of how many times they are invoked, even if the current selections/cursors are already aligned with table cells. This might prove useful, for example, if recording a macro.
+Beyond the core navigation commands, these additional movement and selection commands are provided. Unlike most of the core commands, all of these commands are idempotent - that is, they generate the same Sublime Text selections/cursors regardless of how many times they are invoked, even if the current selections/cursors are already aligned with table cells. This might prove useful, for example, if recording a macro.
 
 | Name                                             |                                  Windows/Linux Key binding |                                 macOS Key binding |
 |:-------------------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|
@@ -155,7 +158,7 @@ Beyond the 20 core navigation commands, these additional movement and selection 
 
 <sup>1</sup> On initial invocation, the core move cursor left/right commands will also move the cursor to the start/end of the current cell, respectively, if not all selections are already at that position.
 
-<sup>2</sup> On initial invocation, all of the core select and extend selection commands will also select the current cell, if not all existing selections line up with table cells.
+<sup>2</sup> On initial invocation, the core select next and extend selection commands will also select the current cell, if not all existing selections line up with table cells.
 
 ### Other Commands
 
