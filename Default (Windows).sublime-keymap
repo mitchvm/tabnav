@@ -10,15 +10,7 @@
 //         // of this keybinding enables TabNav, and the next press selects the current cell.
 //         "keys": ["ctrl+'"],
 //         "command": "enable_tabnav"
-//     },
-//     {
-//         // Disable TabNav on current view
-//         // Note: by default, TabNav is neither enabled _nor_ disabled on a given view.
-//         // Some contexts require that TabNav be explicitly enabled to work, while others
-//         // are assumed to be enabled unless TabNav has been explicitly disabled.
-//         "keys": ["ctrl+alt+shift+'"],
-//         "command": "disable_tabnav"
-//     },
+//     }
 
 //     // #### TabNav: move cursor ####
 //     { 
@@ -139,6 +131,37 @@
 //         // extend selection to cell below
 //         "keys": ["ctrl+shift+/"],
 //         "command": "tabnav_extend_selection",
+//         "args": { "direction": "down" },
+//         "context": [ { "key": "is_tabnav_context"} ]
+//     },
+
+//     // #### TabNav: extend selection to end ####
+
+//     { 
+//         // extend selection to left-most cell in row
+//         "keys": ["ctrl+alt+shift+;"],
+//         "command": "tabnav_extend_end",
+//         "args": { "direction": "left" },
+//         "context": [ { "key": "is_tabnav_context"} ]
+//     },
+//     { 
+//         // extend selection to right-most cell in row
+//         "keys": ["ctrl+alt+shift+'"],
+//         "command": "tabnav_extend_end",
+//         "args": { "direction": "right" },
+//         "context": [ { "key": "is_tabnav_context"} ]
+//     },
+//     { 
+//         // extend selection to top of column
+//         "keys": ["ctrl+alt+shift+["],
+//         "command": "tabnav_extend_end",
+//         "args": { "direction": "up" },
+//         "context": [ { "key": "is_tabnav_context"} ]
+//     },
+//     { 
+//         // extend selection to bottom of row
+//         "keys": ["ctrl+alt+shift+/"],
+//         "command": "tabnav_extend_end",
 //         "args": { "direction": "down" },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },

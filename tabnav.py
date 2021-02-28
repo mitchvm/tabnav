@@ -805,6 +805,35 @@ class TableNavigator:
 			column_ends.append(target_cell)
 		return column_ends
 
+	def get_row_cells(self, dc):
+		key = lambda cell: cell.col
+		if dc > 0:
+			extremum = lambda cells: min(cells, key=key)
+			step = 1
+		else:
+			extremum = lambda cells: max(cells, key=key)
+			step = -1
+		selected_cells = [self._table.cell_at_point(self._point_from_region(r)) for r in self.view.sel()]
+		extended_cells = []
+		for i, g in itertools.groupby(selected_cells, lambda c: c.row):
+			seed_cell = extremum(g)
+			full_row = self._table[seed_cell.row]
+			extended_cells = itertools.chain(extended_cells, full_row[seed_cell.col::step])
+		return list(extended_cells)
+
+	def get_column_cells(self, dr):
+		if dr > 0:
+			regions = list(self.view.sel())
+		else:
+			regions = reversed(list(self.view.sel()))
+		columns = []
+		for region in regions:
+			cell = self._table.cell_at_point(self._point_from_region(region))
+			containing_columns = [col for col in columns if col.contains(cell)]
+			if len(containing_columns) > 0:
+				continue # This cell is already contained in a previously captured column
+			columns.append(self.get_table_column(cell, dr))
+		return [cell for col in columns for cell in col]
 
 	def get_table_column(self, seed_cell, dr=None):
 		'''Gets all TableCell found in the table column above and below the given seed_cell.
@@ -1111,6 +1140,31 @@ class TabnavJumpEndCommand(TabnavCommand):
 			select_cells(self.view, end_cells, self.context.capture_level)
 		except Exception as e:
 			log.info(e)
+
+	def input(self, args):
+			return TabnavDirectionInputHandler()
+
+
+class TabnavExtendEndCommand(TabnavCommand):
+	def run(self, edit, direction, context=None):
+		'''Selects all cells between the current selection and the last cell of the same row or column in the given Direction.'''
+		try:
+			self.init_table(selection_cell_directions[direction])
+			self.tabnav.split_and_select_current_cells()
+			self.select_to_end_cell(move_directions[direction])
+		except (CursorNotInTableError, RowNotInTableError) as e:
+			log.info(e)
+
+	def select_to_end_cell(self, direction):
+		try:
+			if direction[0] == 0:
+				extended_cells = self.tabnav.get_row_cells(direction[1])
+			else:
+				extended_cells = self.tabnav.get_column_cells(direction[0])
+		except Exception as e:
+			log.info(e)
+		else:
+			select_cells(self.view, extended_cells, self.context.capture_level)
 
 	def input(self, args):
 			return TabnavDirectionInputHandler()

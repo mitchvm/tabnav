@@ -74,12 +74,16 @@
     "command": "tabnav_select_next"
   },
   {
-    "caption": "TabNav: Jump to end...",
+    "caption": "TabNav: Select last cell...",
     "command": "tabnav_jump_end"
   },
   {
     "caption": "TabNav: Extend selection...",
     "command": "tabnav_extend_selection"
+  },
+  {
+    "caption": "TabNav: Extend selection to end...",
+    "command": "tabnav_extend_end"
   },
   {
     "caption": "TabNav: Reduce selection...",

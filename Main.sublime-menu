@@ -140,7 +140,7 @@
             ]
           },
           {
-            "caption": "Jump to cell at...",
+            "caption": "Select last cell...",
             "id": "tabnav_jump_end",
             "children": [
               {
@@ -166,27 +166,47 @@
             ]
           },
           {
-            "caption": "Extend selection to cell...",
+            "caption": "Extend selection to...",
             "id": "tabnav_extend_selection",
             "children": [
               {
-                "caption": "On left",
+                "caption": "Cell on left",
                 "command": "tabnav_extend_selection",
                 "args": { "direction": "left" }
               },
               {
-                "caption": "On right",
+                "caption": "Cell on right",
                 "command": "tabnav_extend_selection",
                 "args": { "direction": "right" }
               },
               {
-                "caption": "Above",
+                "caption": "Cell above",
                 "command": "tabnav_extend_selection",
                 "args": { "direction": "up" }
               },
               {
-                "caption": "Below",
+                "caption": "Cell below",
                 "command": "tabnav_extend_selection",
+                "args": { "direction": "down" }
+              },
+              {
+                "caption": "Start of row",
+                "command": "tabnav_extend_end",
+                "args": { "direction": "left" }
+              },
+              {
+                "caption": "End of row",
+                "command": "tabnav_extend_end",
+                "args": { "direction": "right" }
+              },
+              {
+                "caption": "Top of column",
+                "command": "tabnav_extend_end",
+                "args": { "direction": "up" }
+              },
+              {
+                "caption": "Bottom of row",
+                "command": "tabnav_extend_end",
                 "args": { "direction": "down" }
               }
             ]

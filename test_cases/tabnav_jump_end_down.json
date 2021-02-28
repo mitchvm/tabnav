@@ -211,5 +211,19 @@
 			"tabnav.enabled": true,
 			"tabnav.capture_level": "cell"
 		}
+	},
+	{
+		"id": "OVFG",
+		"command": "tabnav_jump_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "down"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Selection spans multiple columns",
+		"initial_selections": [{"a": 623, "b": 664}],
+		"expected_selections": [{"a": 1797, "b": 1803}, {"a": 1804, "b": 1822}, {"a": 1823, "b": 1836}, {"a": 1837, "b": 1850}],
+		"view_settings": { "tabnav.capture_level": "content" }
 	}
 ]

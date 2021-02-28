@@ -1,0 +1,229 @@
+[
+	{
+		"id": "LQRS",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Cell in top row of file doesn't move",
+		"initial_selections": [{"a": 1, "b": 12}],
+		"expected_selections": [{"a": 1, "b": 12}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "URLS",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "First cell of row",
+		"initial_selections": [{"a": 149, "b": 191}],
+		"expected_selections": [{"a": 1, "b": 12}, {"a": 101, "b": 111}, {"a": 149, "b": 191}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VU6Y",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Last cell of row",
+		"initial_selections": [{"a": 207, "b": 224}],
+		"expected_selections": [{"a": 37, "b": 48}, {"a": 132, "b": 146}, {"a": 207, "b": 224}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HXA4",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown06_markup_top_bottom.md",
+		"description": "Top row is markup; content capture level",
+		"initial_selections": [{"a": 467, "b": 480}],
+		"expected_selections": [{"a": 131, "b": 144}, {"a": 299, "b": 312}, {"a": 383, "b": 396}, {"a": 467, "b": 480}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "WXVW",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown06_markup_top_bottom.md",
+		"description": "Top row is markup, top row selected; content capture level",
+		"initial_selections": [{"a": 131, "b": 144}],
+		"expected_selections": [{"a": 131, "b": 144}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "7CMM",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown06_markup_top_bottom.md",
+		"description": "Top row is markup; markup capture level",
+		"initial_selections": [{"a": 467, "b": 480}],
+		"expected_selections": [{"a": 47, "b": 60}, {"a": 131, "b": 144}, {"a": 215, "b": 228}, {"a": 299, "b": 312}, {"a": 383, "b": 396}, {"a": 467, "b": 480}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "GQDA",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 25, "b": 36}, {"a": 120, "b": 131}, {"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "E4UZ",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cells in a column",
+		"initial_selections": [{"a": 13, "b": 24}, {"a": 243, "b": 247}],
+		"expected_selections": [{"a": 13, "b": 24}, {"a": 112, "b": 119}, {"a": 192, "b": 205}, {"a": 243, "b": 247}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "7YWS",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown07_different_row_lengths.md",
+		"description": "Different row lengths",
+		"initial_selections": [{"a": 862, "b": 881}, {"a": 882, "b": 888}, {"a": 889, "b": 907}, {"a": 908, "b": 921}, {"a": 922, "b": 935}, {"a": 936, "b": 943}],
+		"expected_selections": [{"a": 1, "b": 20}, {"a": 23, "b": 42}, {"a": 43, "b": 49}, {"a": 52, "b": 71}, {"a": 72, "b": 78}, {"a": 79, "b": 97}, {"a": 100, "b": 119}, {"a": 120, "b": 126}, {"a": 127, "b": 145}, {"a": 146, "b": 159}, {"a": 162, "b": 181}, {"a": 182, "b": 188}, {"a": 189, "b": 207}, {"a": 208, "b": 221}, {"a": 222, "b": 235}, {"a": 238, "b": 257}, {"a": 258, "b": 264}, {"a": 265, "b": 283}, {"a": 284, "b": 297}, {"a": 298, "b": 311}, {"a": 312, "b": 319}, {"a": 322, "b": 341}, {"a": 342, "b": 348}, {"a": 349, "b": 367}, {"a": 368, "b": 381}, {"a": 382, "b": 395}, {"a": 396, "b": 403}, {"a": 406, "b": 425}, {"a": 426, "b": 432}, {"a": 433, "b": 451}, {"a": 452, "b": 465}, {"a": 466, "b": 479}, {"a": 482, "b": 501}, {"a": 502, "b": 508}, {"a": 509, "b": 527}, {"a": 528, "b": 541}, {"a": 544, "b": 563}, {"a": 564, "b": 570}, {"a": 571, "b": 589}, {"a": 592, "b": 611}, {"a": 612, "b": 618}, {"a": 619, "b": 637}, {"a": 640, "b": 659}, {"a": 660, "b": 666}, {"a": 667, "b": 685}, {"a": 686, "b": 699}, {"a": 702, "b": 721}, {"a": 722, "b": 728}, {"a": 729, "b": 747}, {"a": 748, "b": 761}, {"a": 762, "b": 775}, {"a": 778, "b": 797}, {"a": 798, "b": 804}, {"a": 805, "b": 823}, {"a": 824, "b": 837}, {"a": 838, "b": 851}, {"a": 852, "b": 859}, {"a": 862, "b": 881}, {"a": 882, "b": 888}, {"a": 889, "b": 907}, {"a": 908, "b": 921}, {"a": 922, "b": 935}, {"a": 936, "b": 943}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "MATM",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple cells, some extended some not",
+		"initial_selections": [{"a": 25, "b": 36}, {"a": 227, "b": 242}, {"a": 347, "b": 354}],
+		"expected_selections": [{"a": 1, "b": 12}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 101, "b": 111}, {"a": 132, "b": 146}, {"a": 149, "b": 191}, {"a": 207, "b": 224}, {"a": 227, "b": 242}, {"a": 347, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "Y3K3",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple sequential cells in a column",
+		"initial_selections": [{"a": 149, "b": 191}, {"a": 227, "b": 242}, {"a": 282, "b": 307}],
+		"expected_selections": [{"a": 1, "b": 12}, {"a": 101, "b": 111}, {"a": 149, "b": 191}, {"a": 227, "b": 242}, {"a": 282, "b": 307}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "NQ5B",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Cells in top rows of multiple tables",
+		"initial_selections": [{"a": 124, "b": 142}, {"a": 1876, "b": 1889}],
+		"expected_selections": [{"a": 124, "b": 142}, {"a": 1876, "b": 1889}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "S4OU",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Multiple cells in multiple tables",
+		"initial_selections": [{"a": 349, "b": 368}, {"a": 628, "b": 646}, {"a": 1501, "b": 1514}, {"a": 2116, "b": 2129}, {"a": 2252, "b": 2265}],
+		"expected_selections": [{"a": 97, "b": 116}, {"a": 124, "b": 142}, {"a": 157, "b": 170}, {"a": 265, "b": 284}, {"a": 292, "b": 310}, {"a": 325, "b": 338}, {"a": 349, "b": 368}, {"a": 376, "b": 394}, {"a": 409, "b": 422}, {"a": 460, "b": 478}, {"a": 493, "b": 506}, {"a": 544, "b": 562}, {"a": 577, "b": 590}, {"a": 628, "b": 646}, {"a": 661, "b": 674}, {"a": 745, "b": 758}, {"a": 829, "b": 842}, {"a": 913, "b": 926}, {"a": 997, "b": 1010}, {"a": 1081, "b": 1094}, {"a": 1165, "b": 1178}, {"a": 1249, "b": 1262}, {"a": 1333, "b": 1346}, {"a": 1417, "b": 1430}, {"a": 1501, "b": 1514}, {"a": 1862, "b": 1875}, {"a": 1876, "b": 1889}, {"a": 1922, "b": 1935}, {"a": 1936, "b": 1949}, {"a": 1952, "b": 1965}, {"a": 1966, "b": 1979}, {"a": 1982, "b": 1995}, {"a": 1996, "b": 2009}, {"a": 2012, "b": 2025}, {"a": 2026, "b": 2039}, {"a": 2042, "b": 2055}, {"a": 2056, "b": 2069}, {"a": 2072, "b": 2085}, {"a": 2086, "b": 2099}, {"a": 2102, "b": 2115}, {"a": 2116, "b": 2129}, {"a": 2132, "b": 2145}, {"a": 2162, "b": 2175}, {"a": 2192, "b": 2205}, {"a": 2222, "b": 2235}, {"a": 2252, "b": 2265}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "IS7O",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Region spanning multiple columns",
+		"initial_selections": [{"a": 618, "b": 662}],
+		"expected_selections": [{"a": 97, "b": 116}, {"a": 117, "b": 123}, {"a": 124, "b": 142}, {"a": 143, "b": 156}, {"a": 157, "b": 170}, {"a": 265, "b": 284}, {"a": 285, "b": 291}, {"a": 292, "b": 310}, {"a": 311, "b": 324}, {"a": 325, "b": 338}, {"a": 349, "b": 368}, {"a": 369, "b": 375}, {"a": 376, "b": 394}, {"a": 395, "b": 408}, {"a": 409, "b": 422}, {"a": 433, "b": 452}, {"a": 453, "b": 459}, {"a": 460, "b": 478}, {"a": 479, "b": 492}, {"a": 493, "b": 506}, {"a": 517, "b": 536}, {"a": 537, "b": 543}, {"a": 544, "b": 562}, {"a": 563, "b": 576}, {"a": 577, "b": 590}, {"a": 601, "b": 620}, {"a": 621, "b": 627}, {"a": 628, "b": 646}, {"a": 647, "b": 660}, {"a": 661, "b": 674}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "EAZS",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "markdown",
+			"direction": "up"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Cells in borderless table",
+		"initial_selections": [{"a": 102, "b": 112}, {"a": 147, "b": 158}, {"a": 193, "b": 203}],
+		"expected_selections": [{"a": 0, "b": 10}, {"a": 11, "b": 22}, {"a": 23, "b": 33}, {"a": 68, "b": 78}, {"a": 79, "b": 90}, {"a": 91, "b": 101}, {"a": 102, "b": 112}, {"a": 113, "b": 124}, {"a": 125, "b": 135}, {"a": 147, "b": 158}, {"a": 159, "b": 169}, {"a": 193, "b": 203}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "YXX6",
+		"command": "tabnav_extend_end",
+		"args":
+		{
+			"context": "auto_csv",
+			"direction": "up"
+		},
+		"file": "csv01_comma_quoted.csv",
+		"description": "Capture cell - empty first cell, move to non-empty cell",
+		"initial_selections": [{"a": 380, "b": 380}],
+		"expected_selections": [{"a": 0, "b": 1}, {"a": 57, "b": 60}, {"a": 141, "b": 143}, {"a": 209, "b": 219}, {"a": 241, "b": 315}, {"a": 380, "b": 380}],
+		"view_settings": {
+			"tabnav.enabled": true,
+			"tabnav.capture_level": "cell"
+		}
+	}
+]
