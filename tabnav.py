@@ -5,6 +5,14 @@ import itertools
 import re
 import logging
 
+plugin_logger = logging.getLogger(__package__)
+plugin_logger.propagate = False
+if not plugin_logger.handlers:
+    plugin_logger_handler = logging.StreamHandler()
+    plugin_logger_formatter = logging.Formatter("[{name}] {levelname}: {message}", style='{')
+    plugin_logger_handler.setFormatter(plugin_logger_formatter)
+    plugin_logger.addHandler(plugin_logger_handler)
+plugin_logger.setLevel(logging.WARNING)
 log = logging.getLogger(__name__)
 
 capture_levels = OrderedDict([
@@ -769,12 +777,7 @@ class TableNavigator:
 			target_col = 0
 		else:
 			target_col = -1
-		row_ends = [self._table[(row, target_col)] for row in distinct_rows]
-		cells = [c for c in row_ends if c.capture_level <= self.capture_level]
-		if len(cells) == 0:
-			# If no cells at the configured capture level are selected, then select everything
-			cells = row_ends
-		return cells
+		return [self._table[(row, target_col)] for row in distinct_rows]
 
 	def get_column_end_cells(self, dr):
 		'''Gets the cell at the top/bottom of each selected table column.'''
@@ -800,11 +803,8 @@ class TableNavigator:
 			if target_cell is None:
 				target_cell = column_cells[0]
 			column_ends.append(target_cell)
-		cells = [c for c in column_ends if c.capture_level <= self.capture_level]
-		if len(cells) == 0:
-			# If no cells at the configured capture level are selected, then select everything
-			cells = column_ends
-		return cells
+		return column_ends
+
 
 	def get_table_column(self, seed_cell, dr=None):
 		'''Gets all TableCell found in the table column above and below the given seed_cell.
@@ -837,7 +837,7 @@ class TableNavigator:
 					# jump past this cell and keep going
 				except (RowNotInTableError, RowOutOfFileBounds):
 					break
-		return TableColumn([c for c in cells if c.capture_level <= self.capture_level])
+		return TableColumn(cells)
 
 
 #### Commands ####
@@ -974,30 +974,6 @@ class TabnavSelectNextCommand(TabnavCommand):
 	def input(self, args):
 		return TabnavDirectionInputHandler()
 
-class TabnavJumpEndCommand(TabnavCommand):
-	def run(self, edit, direction, context=None):
-		'''Moves all selection regions to the last cell of the same row or column in the given Direction.'''
-		try:
-			self.init_table(selection_cell_directions[direction])
-			self.tabnav.split_and_select_current_cells()
-			# Jump to end even if the initial selection didn't line up with table cells
-			self.select_end_cell(move_directions[direction])
-		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
-
-	def select_end_cell(self, direction):
-		try:
-			new_cells = self.tabnav.get_end_cells(direction)
-		except Exception as e:
-			log.info(e)
-		else:
-			if new_cells is not None:
-				self.view.sel().clear()
-				self.view.sel().add_all(new_cells)
-				self.view.show(self.view.sel())
-
-	def input(self, args):
-		return TabnavDirectionInputHandler()
 
 class TabnavExtendSelectionCommand(TabnavCommand):
 	def run(self, edit, direction, context=None):
@@ -1108,20 +1084,45 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 		return TabnavDirectionInputHandler()
 
 
+def select_cells(view, selected_cells, capture_level):
+		cells = [c for c in selected_cells if c.capture_level <= capture_level]
+		if len(cells) == 0:
+			# If no cells at the configured capture level are selected, then select everything
+			cells = selected_cells
+		if len(cells) > 0:
+			view.sel().clear()
+			view.sel().add_all(cells)
+
+
+class TabnavJumpEndCommand(TabnavCommand):
+	def run(self, edit, direction, context=None):
+		'''Moves all selection regions to the last cell of the same row or column in the given Direction.'''
+		try:
+			self.init_table(selection_cell_directions[direction])
+			self.tabnav.split_and_select_current_cells()
+			# Jump to end even if the initial selection didn't line up with table cells
+			self.select_end_cell(move_directions[direction])
+		except (CursorNotInTableError, RowNotInTableError) as e:
+			log.info(e)
+
+	def select_end_cell(self, direction):
+		try:
+			end_cells = self.tabnav.get_end_cells(direction)
+			select_cells(self.view, end_cells, self.context.capture_level)
+		except Exception as e:
+			log.info(e)
+
+	def input(self, args):
+			return TabnavDirectionInputHandler()
+
+
 class TabnavSelectRowCommand(TabnavCommand):
 	def run(self, edit, direction="right", context=None):
 		'''Selects all cells in all rows intersecting the current selections.'''
 		try:
 			self.init_table(cursor_cell_directions[direction])
 			row_cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
-			cells = [c for c in row_cells if c.capture_level <= self.context.capture_level]
-			if len(cells) == 0:
-				# If no cells at the configured capture level are selected, then select everything
-				cells = row_cells
-			if len(cells) > 0:
-				self.view.sel().clear()
-				self.view.sel().add_all(cells)
-				return
+			select_cells(self.view, row_cells, self.context.capture_level)
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
@@ -1141,10 +1142,8 @@ class TabnavSelectColumnCommand(TabnavCommand):
 				if len(containing_columns) > 0:
 					continue # This cell is already contained in a previously captured column
 				columns.append(self.tabnav.get_table_column(cell))
-			cells = [cell for col in columns for cell in col]
-			if len(cells) > 0:
-				self.view.sel().clear()
-				self.view.sel().add_all(cells)
+			column_cells = [cell for col in columns for cell in col]
+			select_cells(self.view, column_cells, self.context.capture_level)
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
@@ -1163,14 +1162,7 @@ class TabnavSelectAllCommand(TabnavCommand):
 					continue # This cell is already contained in a previously captured column
 				columns.append(self.tabnav.get_table_column(cell))
 			all_cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
-			cells = [c for c in all_cells if c.capture_level <= self.context.capture_level]
-			if len(cells) == 0:
-				# If no cells at the configured capture level are selected, then select everything
-				cells = all_cells
-			if len(cells) > 0:
-				self.view.sel().clear()
-				self.view.sel().add_all(cells)
-				return
+			select_cells(self.view, all_cells, self.context.capture_level)
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e)
 
