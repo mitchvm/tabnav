@@ -292,5 +292,15 @@
 		"initial_selections": [{"a": 6, "b": 6}],
 		"expected_selections": [{"a": 12, "b": 1}],
 		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "5GEJ",
+		"command": "tabnav_select_current",
+		"args": { "context": "markdown" },
+		"file": "markdown01_unformatted_table.md",
+		"description": "Capture cell - selection ends at cell border",
+		"initial_selections": [{"a": 112, "b": 119}],
+		"expected_selections": [{"a": 111, "b": 119}],
+		"view_settings": {"tabnav.capture_level": "cell"}
 	}
 ]

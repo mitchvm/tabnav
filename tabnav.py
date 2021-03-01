@@ -88,6 +88,12 @@ def merge_dictionaries(base, override, keys=None):
 			result[key] = o_val
 	return result
 
+def point_from_region_func(cell_direction):
+	if cell_direction > 0:
+		return sublime.Region.end
+	else:
+		return sublime.Region.begin
+
 
 def score_tabnav_selectors(view, point, selector, except_selector):
 	'''Score's the given selector and except_selector at the given point to determine if the current point should be captured by the context.
@@ -337,6 +343,7 @@ class RowParser:
 			return None
 		return TableRow(row, cells)
 
+
 class TableCell(sublime.Region):
 	'''Extends the base sublime.Region class with logic specific to TabNav's cells.'''
 	def __init__(self, rownum, col_index, capture_start, capture_end, cell_start, cell_end, capture_level, direction=1):
@@ -355,15 +362,19 @@ class TableCell(sublime.Region):
 			super().__init__(capture_start, capture_end)
 		else:
 			super().__init__(capture_end, capture_start)
-		self._cell_start = min(cell_start, capture_start)
-		self._cell_end = max(cell_end, capture_end)
+		self._full_extent = (min(cell_start, capture_start), max(cell_end, capture_end))
+		if col_index == 0:
+			# Always use the full extent of the cell for the first column to the row
+			self._cell_extent = self._full_extent
+		else:
+			self._cell_extent = (cell_start, cell_end)
+		self._cursor_offsets = set()
 		self._row = rownum
 		self._col = col_index
-		self._cursor_offsets = set()
 		self._capture_level = capture_level
 		self._direction = direction
 
-	def intersects(self, region):
+	def intersects(self, region, full_extent=True):
 		'''Overrides the default `Region.intersects` method.
 
 		Returns True if the given region overlaps the total cell extent,
@@ -373,7 +384,10 @@ class TableCell(sublime.Region):
 		the region, then true is returned. The default `Region.intersects()` method 
 		returns false in this scenario.
 		'''
-		c = (self._cell_start, self._cell_end)
+		if full_extent:
+			c = self._full_extent
+		else:
+			c = self._cell_extent
 		r = (region.begin(), region.end())
 		return (r[0] <= c[0] and c[0] <= r[1]) \
 			or (r[0] <= c[1] and c[1] <= r[1]) \
@@ -404,16 +418,7 @@ class TableCell(sublime.Region):
 	@property
 	def direction(self):
 		return self._direction
-	
 
-	@property
-	def cell_start(self):
-		return self._cell_start
-
-	@property
-	def cell_end(self):
-		return self._cell_end
-	
 	def add_cursor_offset(self, offset):
 		'''Adds the given offset as the relative position within the cell
 		as a point at which a cursor should be placed.'''
@@ -543,7 +548,7 @@ class TableView:
 	def table_coords(self, point):
 		'''Gets the row and column indexes of the cell at the given view point.'''
 		r = self.view.rowcol(point)[0]
-		cells = [c for c in self.row(r) if c.intersects(sublime.Region(point, point))]
+		cells = [c for c in self.row(r) if c.intersects(sublime.Region(point, point), full_extent=True)]
 		if len(cells) > 1 and self._cell_direction < 0:
 			cell = cells[1]
 		else:
@@ -582,10 +587,7 @@ class TableNavigator:
 	def __init__(self, table, capture_level, cell_direction):
 		self._table = table
 		self.capture_level = capture_level
-		if cell_direction > 0:
-			self._point_from_region = lambda region: region.end()
-		else:
-			self._point_from_region = lambda region: region.begin()
+		self._point_from_region = point_from_region_func(cell_direction)
 
 	@property
 	def view(self):
@@ -615,10 +617,10 @@ class TableNavigator:
 				lines.append(sel)
 		cursors_by_level = {}
 		for region in lines:
-			point = region.b
+			point = self._point_from_region(region)
 			r = self.view.rowcol(point)[0]
 			row = self._table[r]
-			line_cells = list(cell for cell in row if cell.intersects(region))
+			line_cells = list(cell for cell in row if cell.intersects(region, full_extent=True))
 			if len(line_cells) == 0:
 				if len(row) > 0:
 					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
@@ -672,13 +674,14 @@ class TableNavigator:
 		selection_changed = len(selection_lines) != len(selections)
 		cells_by_level = {}
 		for region in selection_lines:
-			r = self.view.rowcol(region.begin())[0]
+			point = self._point_from_region(region)
+			r = self.view.rowcol(point)[0]
 			row = self._table[r]
-			line_cells = list(cell for cell in row if cell.intersects(region))
+			line_cells = list(cell for cell in row if cell.intersects(region, full_extent=False))
 			if len(line_cells) == 0:
 				if len(row) > 0:
 					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
-					raise CursorNotInTableError(region.begin())
+					raise CursorNotInTableError(point)
 				else:
 					# This is a row that contains no cells, but was captured as part of the table.
 					continue
@@ -690,7 +693,7 @@ class TableNavigator:
 				selection_changed = True
 				if region.size() == 0 and len(line_cells) == 2:
 					# If capturing the entire cell, and a cursor is right before the delimiter
-					line_cells = [self._table.cell_at_point(region.a)]
+					line_cells = [self._table.cell_at_point(point)]
 			for cell in line_cells:
 				cells = cells_by_level.get(cell.capture_level, [])
 				cells.append(cell)
@@ -1034,10 +1037,7 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 			cell_direction = selection_cell_directions[direction]
 			self.init_table(cell_direction)
 			if not self.tabnav.split_and_select_current_cells():
-				if cell_direction > 0:
-					self._point_from_region = lambda region: region.end()
-				else:
-					self._point_from_region = lambda region: region.begin()
+				self._point_from_region = point_from_region_func(cell_direction)
 				dr, dc = move_directions[direction]
 				if dc != 0:
 					self.reduce_cell_selection_row(-dc) # reverse the given direction
