@@ -48,25 +48,25 @@ class ColumnIndexError(Exception):
 		self.row = row
 		self.columns = columns
 		self.target_index = target_index
-		self.err = "Line {0} contains {1} table columns, but currently targeting column {2}.".format(row+1, columns, target_index+1)
+		self.err = "TabNav: Line {0} contains {1} table columns, but currently targeting column {2}.".format(row+1, columns, target_index+1)
 		super().__init__(self.err)
 
 class RowNotInTableError(Exception):
 	def __init__(self, row):
 		self.row = row
-		self.err = "Line {0} is not part of a table.".format(row+1)
+		self.err = "TabNav: Line {0} is not part of a table.".format(row+1)
 		super().__init__(self.err)
 
 class RowOutOfFileBounds(Exception):
 	def __init__(self, row):
 		self.row = row
-		self.err = "Line {0} is out of bounds of the file contents.".format(row+1)
+		self.err = "TabNav: Line {0} is out of bounds of the file contents.".format(row+1)
 		super().__init__(self.err)
 
 class CursorNotInTableError(Exception):
 	def __init__(self, cursor):
 		self.cursor = cursor
-		self.err = "Cursor at position {0} is not within a table.".format(cursor)
+		self.err = "TabNav: Cursor at position {0} is not within a table.".format(cursor)
 
 
 def merge_dictionaries(base, override, keys=None):
@@ -164,13 +164,13 @@ class TabnavContext:
 		try:
 			context_config = context_configs[context_key]
 		except KeyError:
-			log.info("Context '%s' not found in tabnav settings.", context_key)
+			log.info("TabNav: Context '%s' not found in settings.", context_key)
 			return None
 		if context_config.get('enable_explicitly', False):
 			# This context requires that tabnav be explicilty enabled on the view.
 			enabled = view.settings().get('tabnav.enabled')
 			if enabled is None or not enabled:
-				log.debug("Context '%s' requires that tabnav be explicitly enabled.", context_key)
+				log.debug("TabNav: Context '%s' requires that tabnav be explicitly enabled.", context_key)
 				return None
 		if context_key == "auto_csv":
 			context = TabnavContext._get_auto_csv_table_config(view, context_config)
@@ -236,13 +236,13 @@ class TabnavContext:
 		delimiter = None
 		# If an explicit delimiter is set, use that
 		if re.search(r'text\.advanced_csv', scope) is not None:
-			log.debug("Using Advanced CSV delimiter.")
+			log.debug("TabNav: Using Advanced CSV delimiter.")
 			delimiter = view.settings().get('delimiter') # this is the Advnaced CSV delimiter
 		if delimiter is None:
 			try:
 				rainbow_match = re.search(r'text\.rbcs(?:m|t)n(?P<delimiter>\d+)',scope)
 				delimiter = chr(int(rainbow_match.group('delimiter')))
-				log.debug("Using Rainbow CSV delimiter.")
+				log.debug("TabNav: Using Rainbow CSV delimiter.")
 			except:
 				pass
 		if delimiter is None:
@@ -254,15 +254,15 @@ class TabnavContext:
 			if len(matches) == 1:
 				# If we hit on exactly one delimiter, then we'll assume it's the one to use
 				delimiter = matches[0]
-				log.debug("Inferred delimiter: %s", delimiter)
+				log.debug("TabNav: Inferred delimiter: %s", delimiter)
 			else:
-				log.debug('Not exactly one auto delimiter matched: %s.', matches)
+				log.debug('TabNav: Not exactly one auto delimiter matched: %s.', matches)
 		if delimiter is None:
 			delimiter = context_config.get("default_delimiter", None)
 		if delimiter is None:
 			return None
 		delimiter = TabnavContext._escaped_delimiters.get(delimiter, delimiter)
-		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
+		log.debug("TabNav: Using 'auto_csv' context with delimiter '%s'", delimiter)
 		patterns = context_config['patterns']
 		if isinstance(patterns, dict):
 			patterns = [patterns]
@@ -307,7 +307,7 @@ class RowParser:
 				line_start_point = line_start_point + line_match.start('table')
 				line_content = line_match.group('table')
 			except IndexError:
-				log.debug("Line pattern '%s' does not contain a named capture group '<table>'. The line will be captured but ignored.", self.line_pattern.pattern)
+				log.debug("TabNav: Line pattern '%s' does not contain a named capture group '<table>'. The line will be captured but ignored.", self.line_pattern.pattern)
 				return TableRow(row, [])
 		cells = []
 		cell_end = -1
@@ -759,7 +759,7 @@ class TableNavigator:
 					return current_cell
 				# This row doesn't have enough cells to find the one we're looking for.
 				# In some contexts this is normal; in others, it is a malformed table
-				log.debug(e)
+				log.debug(e.err)
 
 
 	def get_end_cells(self, direction):
@@ -853,7 +853,7 @@ class TableNavigator:
 				try:
 					cells.append(self._table[(r, seed_cell.col)])
 				except ColumnIndexError as e:
-					log.info(e)
+					log.info(e.err)
 					# jump past this cell and keep going
 				except RowNotInTableError:
 					break # at the start of the table
@@ -865,7 +865,7 @@ class TableNavigator:
 				try:
 					cells.append(self._table[(r, seed_cell.col)])
 				except ColumnIndexError as e:
-					log.info(e)
+					log.info(e.err)
 					# jump past this cell and keep going
 				except (RowNotInTableError, RowOutOfFileBounds):
 					break
@@ -906,7 +906,7 @@ class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
 			self.init_table(cursor_cell_directions[direction])
 			self.tabnav.split_and_move_current_cells(True)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 class TabnavMoveCursorCommand(TabnavCommand):
 	def run(self, edit, direction, context=None):
@@ -917,7 +917,7 @@ class TabnavMoveCursorCommand(TabnavCommand):
 			if not self.tabnav.split_and_move_current_cells(move_direction[0]==0):
 				self.move_next_cell(move_direction)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 	def move_next_cell(self, move_direction):
 		moved = False
@@ -932,7 +932,7 @@ class TabnavMoveCursorCommand(TabnavCommand):
 				offset = None
 			new_cells = self.tabnav.get_next_cells(move_direction, offset)
 		except Exception as e:
-			log.info(e)
+			log.info(e.err)
 		else:	
 			if new_cells is not None:
 				cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
@@ -952,14 +952,14 @@ class TabnavAddCursorCommand(TabnavCommand):
 			if not self.tabnav.split_and_move_current_cells(False):
 				self.add_next_cell(move_directions[direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 	def add_next_cell(self, direction):
 		initial_selections = list(self.view.sel())
 		try:
 			new_cells = self.tabnav.get_next_cells(direction)
 		except Exception as e:
-			log.info(e)
+			log.info(e.err)
 		else:
 			if new_cells is not None:
 				cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
@@ -979,7 +979,7 @@ class TabnavSelectCurrentCommand(TabnavCommand):
 			self.init_table(cursor_cell_directions[direction])
 			self.tabnav.split_and_select_current_cells()
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 
 class TabnavSelectNextCommand(TabnavCommand):
@@ -990,13 +990,13 @@ class TabnavSelectNextCommand(TabnavCommand):
 			if not self.tabnav.split_and_select_current_cells():
 				self.select_next_cell(move_directions[direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)		
+			log.info(e.err)
 
 	def select_next_cell(self, direction):
 		try:
 			new_cells = self.tabnav.get_next_cells(direction)
 		except Exception as e:
-			log.info(e)
+			log.info(e.err)
 		else:
 			if new_cells is not None:
 				self.view.sel().clear()
@@ -1015,7 +1015,7 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 			if not self.tabnav.split_and_select_current_cells():
 				self.extend_cell_selection(move_directions[direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 	def extend_cell_selection(self, direction):
 		try:
@@ -1044,7 +1044,7 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 				else:
 					self.reduce_cell_selection_col(-dr)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 	def reduce_cell_selection_row(self, direction):
 		points = (self._point_from_region(r) for r in self.view.sel())
@@ -1132,7 +1132,7 @@ class TabnavJumpEndCommand(TabnavCommand):
 			# Jump to end even if the initial selection didn't line up with table cells
 			self.select_end_cell(move_directions[direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 	def select_end_cell(self, direction):
 		try:
@@ -1153,7 +1153,7 @@ class TabnavExtendEndCommand(TabnavCommand):
 			self.tabnav.split_and_select_current_cells()
 			self.select_to_end_cell(move_directions[direction])
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 	def select_to_end_cell(self, direction):
 		try:
@@ -1162,7 +1162,7 @@ class TabnavExtendEndCommand(TabnavCommand):
 			else:
 				extended_cells = self.tabnav.get_column_cells(direction[0])
 		except Exception as e:
-			log.info(e)
+			log.info(e.err)
 		else:
 			select_cells(self.view, extended_cells, self.context.capture_level)
 
@@ -1178,7 +1178,7 @@ class TabnavSelectRowCommand(TabnavCommand):
 			row_cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
 			select_cells(self.view, row_cells, self.context.capture_level)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 
 class TabnavSelectColumnCommand(TabnavCommand):
@@ -1199,7 +1199,7 @@ class TabnavSelectColumnCommand(TabnavCommand):
 			column_cells = [cell for col in columns for cell in col]
 			select_cells(self.view, column_cells, self.context.capture_level)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 
 class TabnavSelectAllCommand(TabnavCommand):
@@ -1218,7 +1218,7 @@ class TabnavSelectAllCommand(TabnavCommand):
 			all_cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
 			select_cells(self.view, all_cells, self.context.capture_level)
 		except (CursorNotInTableError, RowNotInTableError) as e:
-			log.info(e)
+			log.info(e.err)
 
 
 # Other Commands
@@ -1364,7 +1364,7 @@ def is_other_csv_scope(view):
 class TabnavSetCsvDelimiterCommand(sublime_plugin.TextCommand):
 	def run(self, edit, delimiter=None):
 		'''Sets the delimiter to use for CSV files.'''
-		log.debug('Setting CSV delimiter: %s', delimiter)
+		log.debug('TabNav: Setting CSV delimiter: %s', delimiter)
 		if delimiter == '':
 			delimiter = None
 		self.view.settings().set('tabnav.delimiter', delimiter)
@@ -1409,11 +1409,13 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 			return None
 		is_context = None
 		if len(self.view.sel()) == 0:
+			log.debug("TabNav: No active selections")
 			is_context = False
 		else:
 			enabled = self.view.settings().get('tabnav.enabled')
 			if enabled is not None and not enabled:
 				# TabNav is explicitly disabled
+				log.debug("TabNav: Disabled on current view")
 				is_context = False
 		if is_context is None:
 			if isinstance(operand, str):
@@ -1433,10 +1435,12 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 						point = self.view.sel()[0].begin()
 						r = self.view.rowcol(point)[0]
 						table[r]
-				except RowNotInTableError:
+				except RowNotInTableError as e:
+					log.debug(e.err)
 					is_context = False
 				else:
 					is_context = True
+		log.debug("TabNav: Is TabNav Context: %s", is_context)
 		if (operator == sublime.OP_NOT_EQUAL):
 			return not is_context
 		return is_context
@@ -1445,7 +1449,7 @@ def update_log_level():
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
 	log_level = package_settings.get('log_level', 'WARNING').upper()
 	log.setLevel(log_level)
-	log.info("TabNav log level: %s", log_level)
+	log.info("TabNav: Log level: %s", log_level)
 
 def plugin_loaded():
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
