@@ -41,7 +41,14 @@
                 "caption": "Entire cell",
                 "command": "tabnav_set_capture_level",
                 "args": { "capture_level": "cell" }
-              }
+              },
+              {
+                "caption": "-"
+              },
+              {
+                "caption": "Reset to previous",
+                "command": "tabnav_reset_capture_level"
+              },
             ]
           },
           {

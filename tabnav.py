@@ -1350,8 +1350,26 @@ class TabnavSetCaptureLevelCommand(sublime_plugin.TextCommand):
 	def run(self, edit, capture_level):
 		'''Sets the capture level used by TabNav. 
 
-		Available capture levels are defined in the global capture_levels dictionary'''
+		Available capture levels are defined in the global capture_levels dictionary.'''
+		stack = self.view.settings().get('tabnav.capture_level_stack', [])
+		current_level = self.view.settings().get('tabnav.capture_level')
+		if current_level is not None:
+			stack.append(current_level)
+			self.view.settings().set('tabnav.capture_level_stack', stack)
 		self.view.settings().set('tabnav.capture_level', capture_level)
+
+class TabnavResetCaptureLevelCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		'''Resets the capture level to the previous capture level on the stack.'''
+		stack = self.view.settings().get('tabnav.capture_level_stack', [])
+		try:
+			previous_level = stack.pop()
+			self.view.settings().set('tabnav.capture_level_stack', stack)
+			self.view.settings().set('tabnav.capture_level', previous_level)
+		except IndexError:
+			self.view.settings().erase('tabnav.capture_level')
+
+
 
 def is_other_csv_scope(view):
 		scope = view.scope_name(0)

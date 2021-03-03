@@ -24,24 +24,28 @@
     "command": "disable_tabnav"
   },
   {
-    "caption": "TabNav: Set capture level - trimmed",
+    "caption": "TabNav: Capture level - Trimmed",
     "command": "tabnav_set_capture_level",
     "args": { "capture_level": "trimmed" }
   },
   {
-    "caption": "TabNav: Set capture level - content",
+    "caption": "TabNav: Capture level - Content",
     "command": "tabnav_set_capture_level",
     "args": { "capture_level": "content" }
   },
   {
-    "caption": "TabNav: Set capture level - markup",
+    "caption": "TabNav: Capture level - Markup",
     "command": "tabnav_set_capture_level",
     "args": { "capture_level": "markup" }
   },
   {
-    "caption": "TabNav: Set capture level - cell",
+    "caption": "TabNav: Capture level - Cell",
     "command": "tabnav_set_capture_level",
     "args": { "capture_level": "cell" }
+  },
+  {
+    "caption": "TabNav: Capture level - Reset to previous",
+    "command": "tabnav_reset_capture_level"
   },
   {
     "caption": "TabNav: Set CSV delimiter",
