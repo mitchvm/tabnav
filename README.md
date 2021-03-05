@@ -24,7 +24,7 @@ TabNav also provides the ability to copy only the contents of the table, excludi
 	- [Git Clone](#git-clone)
 	- [Manual](#manual)
 - [Recommended Key Bindings](#recommended-key-bindings)
-	- [Recommended key binding setup:](#recommended-key-binding-setup)
+	- [Key binding setup](#key-binding-setup)
 - [Commands](#commands)
 	- [Table Navigation Commands](#table-navigation-commands)
 	- [Other Commands](#other-commands)
@@ -74,7 +74,7 @@ A package like TabNav will obviously require many key bindings. In an effort to 
 
 A set of recommended key bindings is provided in the package's key bindings files, however they are all commented out. The recommended key bindings are based on a US-English QWERTY keyboard. They make heavy use of the cluster of four keys immediately to the left of the <kbd>Enter</kbd> key.
 
-### Recommended key binding setup:
+### Key binding setup
 
 1. From the Sublime Text Main menu, select _Preferences_ ❯ _Package Settings_ ❯ _TabNav_ ❯ _Key Bindings_ 
 	1. This will open the the TabNav key bindings package key bindings file (on the left) along with your user key bindings file (on the right) in a new window. Notice that all of the default key bindings have been commented out with `//` at the start of each line.
@@ -286,15 +286,13 @@ The following built-in Sublime Text key bindings get overridden by the recommend
 | macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>[</kbd>    | Fold selection(s)             | Extend selection(s) up       |
 | macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>L</kbd>    | Split selection(s) into lines | Select cells in table row(s) |
 
-To temporarily disable most of the recommended TabNav keybindings, it is enough to [disable TabNav](#other-commands) on the current view. The only key bindings that are not disabled by doing this are the key bindings to enable and disable TabNav on the view.
+To temporarily disable most of the recommended TabNav keybindings, it is enough to [disable TabNav](#other-commands) on the current view. The only key (recommended) binding that is not disabled by doing this is the binding to enable TabNav on the view.
 
 ### Custom Key Bindings
 
 Of course, it is entirely valid to ignore the recommended key bindings and use your own custom key bindings, or add more key bindings for commands not covered by the recommended bindings.
 
-All of the available commands are enumerated in the [`Main.sublime-menu`](https://github.com/mitchvm/tabnav/blob/main/Main.sublime-menu) file.
-
-All of navigation commands take a `direction` parameter. When moving from one cell to another, or extending/reducing the selection, the `direction` parameter is required and defines the direction of movement. For these commands, the possible values are: `left`, `right`, `up`, or `down`. When selecting the current cell, or all cells in the current row/column/table, the parameter defines the "direction" of the selected regions, and is optional. The "direction" of a selection determines at which end the cursor is placed. For these commands, the possible values are `left` or `right`.
+All of the available commands are and arguments enumerated in the [`CommandListing`](CommandListing.md) file.
 
 For each navigation key binding, it is recommended to add the `is_tabnav_context` key binding context to limit the scopes within which the key binding will take effect, as described above.
 
