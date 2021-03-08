@@ -217,5 +217,343 @@
 //         "command": "tabnav_select_all",
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
+
+    // ####==== Start: TabNav CellNav Mode Key Bindings ====####
+
+    // #### TabNav: CellNav select next cell ####
+
+    { 
+        // select cell on left
+        "keys": ["left"],
+        "command": "tabnav_select_next",
+        "args": { "direction": "left" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select cell on left
+        "keys": ["shift+tab"],
+        "command": "tabnav_select_next",
+        "args": { "direction": "left" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select cell on right
+        "keys": ["right"],
+        "command": "tabnav_select_next",
+        "args": { "direction": "right" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select cell on right
+        "keys": ["tab"],
+        "command": "tabnav_select_next",
+        "args": { "direction": "right" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select cell above
+        "keys": ["up"],
+        "command": "tabnav_select_next",
+        "args": { "direction": "up" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select cell above
+        "keys": ["shift+enter"],
+        "command": "tabnav_select_next",
+        "args": { "direction": "up" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select cell below
+        "keys": ["down"],
+        "command": "tabnav_select_next",
+        "args": { "direction": "down" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select cell below
+        "keys": ["enter"],
+        "command": "tabnav_select_next",
+        "args": { "direction": "down" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+
+    // #### TabNav: CellNav jump to end ####
+
+    { 
+        // select left-most cell in row
+        "keys": ["ctrl+left"],
+        "command": "tabnav_jump_end",
+        "args": { "direction": "left" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select right-most in row
+        "keys": ["ctrl+right"],
+        "command": "tabnav_jump_end",
+        "args": { "direction": "right" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select top cell in column
+        "keys": ["ctrl+up"],
+        "command": "tabnav_jump_end",
+        "args": { "direction": "up" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // select bottom cell in column
+        "keys": ["ctrl+down"],
+        "command": "tabnav_jump_end",
+        "args": { "direction": "down" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+
+    // #### TabNav: CellNav extend selection ####
+
+    { 
+        // extend selection to cell on left
+        "keys": ["shift+left"],
+        "command": "tabnav_extend_selection",
+        "args": { "direction": "left" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // extend selection to cell on right
+        "keys": ["shift+right"],
+        "command": "tabnav_extend_selection",
+        "args": { "direction": "right" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // extend selection to cell above
+        "keys": ["shift+up"],
+        "command": "tabnav_extend_selection",
+        "args": { "direction": "up" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // extend selection to cell below
+        "keys": ["shift+down"],
+        "command": "tabnav_extend_selection",
+        "args": { "direction": "down" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+
+    // #### TabNav: CellNav extend selection to end ####
+
+    { 
+        // extend selection to left-most cell in row
+        "keys": ["ctrl+shift+left"],
+        "command": "tabnav_extend_end",
+        "args": { "direction": "left" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // extend selection to right-most cell in row
+        "keys": ["ctrl+shift+right"],
+        "command": "tabnav_extend_end",
+        "args": { "direction": "right" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // extend selection to top of column
+        "keys": ["ctrl+shift+up"],
+        "command": "tabnav_extend_end",
+        "args": { "direction": "up" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // extend selection to bottom of row
+        "keys": ["ctrl+shift+down"],
+        "command": "tabnav_extend_end",
+        "args": { "direction": "down" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+
+    // #### TabNav: CellNav reduce selection ####
+
+    { 
+        // reduce selection from the left
+        "keys": ["alt+shift+left"],
+        "command": "tabnav_reduce_selection",
+        "args": { "direction": "left" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // reduce selection from the right
+        "keys": ["alt+shift+right"],
+        "command": "tabnav_reduce_selection",
+        "args": { "direction": "right" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // reduce selection upwards
+        "keys": ["alt+shift+up"],
+        "command": "tabnav_reduce_selection",
+        "args": { "direction": "up" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    { 
+        // reduce selection downwards
+        "keys": ["alt+shift+down"],
+        "command": "tabnav_reduce_selection",
+        "args": { "direction": "down" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+
+    // #### TabNav: Enter/Exit Cell Edit Mode ####
+
+    {
+        // Enter cell edit mode, retaining current cell contents
+        "keys": ["f2"],
+        "command": "tabnav_edit_cell",
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    {
+        // Enter cell edit mode, replacing contents with the key's character
+        "keys": ["<character>"],
+        "command": "tabnav_edit_cell",
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    {
+        // Exit cell edit mode
+        "keys": ["escape"],
+        "command": "tabnav_exit_cell",
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode" }
+        ]
+    },
+
+    // #### TabNav: Cell Edit move cursor ####
+    { 
+        // move to start of cell
+        "keys": ["home"],
+        "command": "tabnav_move_cursor_current",
+        "args": { "direction": "left" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode" }
+        ]
+    },
+    { 
+        // move to cell on right
+        "keys": ["end"],
+        "command": "tabnav_move_cursor_current",
+        "args": { "direction": "right" },
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode" }
+        ]
+    },
 //     // =================== End: TabNav Key Bindings =====================
 ]

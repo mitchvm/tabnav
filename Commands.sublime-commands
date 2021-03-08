@@ -24,6 +24,14 @@
     "command": "disable_tabnav"
   },
   {
+    "caption": "TabNav: Enable Cell Nav mode on current view",
+    "command": "tabnav_enable_cell_nav_mode"
+  },
+  {
+    "caption": "TabNav: Disable Cell Nav on current view",
+    "command": "tabnav_disable_cell_nav_mode"
+  },
+  {
     "caption": "TabNav: Capture level - Trimmed",
     "command": "tabnav_set_capture_level",
     "args": { "capture_level": "trimmed" }
