@@ -1,4 +1,4 @@
-// [
+[
 //     // =================== TabNav Key Bindings =========================
 
 //     // #### TabNav: Non-navigation keybindings ####
@@ -288,6 +288,38 @@
 //         "args": { "scope": "table" },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
-    
-//     // =================== End: TabNav Key Bindings =====================
-// ]
+
+    // #### TabNav: Enter/Exit Cell Edit Mode ####
+
+    {
+        // Enter cell edit mode, retaining current cell contents
+        "keys": ["f2"],
+        "command": "tabnav_edit_cell",
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    {
+        // Enter cell edit mode, replacing contents with the key's character
+        "keys": ["<character>"],
+        "command": "tabnav_edit_cell",
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode", "operand": "false" }
+        ]
+    },
+    {
+        // Exit cell edit mode
+        "keys": ["escape"],
+        "command": "tabnav_exit_cell",
+        "context": [ 
+            { "key": "is_tabnav_context", "match_all": "true"},
+            { "key": "is_tabnav_cell_nav_mode" },
+            { "key": "is_tabnav_cell_edit_mode" }
+        ]
+    },
+// =================== End: TabNav Key Bindings =====================
+]
