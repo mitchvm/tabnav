@@ -1,10 +1,7 @@
 {
+	// The default capture level to use. Options are, in order from narrowest to broadest, are:
+	// trimmed, content, markup, cell
 	"capture_level": "content",
-
-	// When false, table markup lines are skipped when moving and not included in selections.
-	// To temporarily include markup lines, use the "Include markup lines in selections" command.
-	// Can also be overridden on a per-context basis.
-	"include_markup": false,
 
 	// When true, whitespace is trimmed from the selected regions' text prior to putting it 
 	// on the clipboard with the "Copy selections" commands. The Sublime Text selections themselves
@@ -18,6 +15,7 @@
 	{
 		"markdown": 
 		{
+			// No need for a file_selector separate from the main selector.
 			"selector": "text.html.markdown",
 			"except_selector": "markup.raw",
 			// These patterns match both "bordered" and "borderless" Markdown tables.
@@ -42,6 +40,7 @@
 		},
 		"orgmode":
 		{
+			// No need for a file_selector separate from the main selector.
 			"selector": "text.orgmode",
 			"except_selector": "orgmode.raw.block",
 			// Org Mode has three forms of table markup rows:
@@ -80,6 +79,12 @@
 			// as part of the table.
 			"selector": "markup.other.table.textile | markup.other.table.cell.textile",
 			"except_selector": "text.html.textile",
+			// The main context `selector` is restrictive to specifically tables.
+			// To determine if a given file is a Textile file at all, we check the
+			// first position of the file against the file_selector (if specified)
+			// or the main selector (if not), so we need the broadest-possible selector
+			// that limits it to Textile.
+			"file_selector": "text.html.textile",
 			// Textile supports a wide variety of markup.
 			"patterns": [
 				{
@@ -88,7 +93,7 @@
 					"line": "^\\|.*(?<!\\|)\\s*$",
 				},
 				{
-					// Column groupling lines begin with a `:` immediately after the first pipe.
+					// Column grouping lines begin with a `:` immediately after the first pipe.
 					// They can optionally contain "cells" of markup, which will be captured.
 					"line": "^(?P<table>\\|:.*\\|)\\s*$",
 					"cell": [

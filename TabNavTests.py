@@ -113,15 +113,16 @@ def launch_tests(window, command_name=None, file_name=None, test_id=None):
 		pending_test_files[file_name] = list(tests)
 		file_path = os.path.join(test_files_dir, file_name)
 		file_view = window.open_file(file_path)
-		if not file_view.is_loading():
-			run_test_cases(file_view, file_name, close_file=False)
+		if file_view.settings().get('tabnav.implicit_enable') is not None:
+			# The file is already loaded and TabNav has been initialized on it
+			run_test_cases(file_view, close_file=False)
 		# If the view is still loading, the test run will be picked up by the event listener
 	if len(test_cases) > 0 and len(pending_test_files) == 0:
 		print_test_results()
 
 
-
-def run_test_cases(view, file_name, close_file=True):
+def run_test_cases(view, close_file=True):
+	file_name = os.path.basename(view.file_name())
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
 	initial_user_contexts = package_settings.get('user_contexts')
 	package_settings.set('user_contexts', {})
@@ -136,6 +137,8 @@ def run_test_cases(view, file_name, close_file=True):
 	if close_file:
 		view.close()
 	package_settings.set('user_contexts', initial_user_contexts)
+	if len(pending_test_files) == 0:
+		print_test_results()
 
 
 def run_test_case(view, test):
@@ -199,13 +202,29 @@ def print_test_results():
 	test_results.clear()
 
 
-class TestRunnerListener(sublime_plugin.EventListener):
-	def on_load(self, view):
-		file_name = os.path.basename(view.file_name())
+class TestRunnerListener(sublime_plugin.ViewEventListener):
+	@classmethod
+	def is_applicable(cls, settings):
+		global pending_test_files
+		return len(pending_test_files) > 0
+
+	def on_load(self):
+		file_name = os.path.basename(self.view.file_name())
 		if file_name in pending_test_files:
-			run_test_cases(view, file_name)
-			if len(pending_test_files) == 0:
-				print_test_results()
+			# We can't run the tests immediately, since we need the main 
+			# TabNav view listener's on_activated method to be run, first.
+			# Set a listener to wait for the `implicit_enable` setting to
+			# be added to the view's settings to trigger the test run
+			self.view.settings().add_on_change('tabnav_test_listener', self.on_settings_changed)
+			# Call on_settings_changed() immediately in case the file's on_load listener ran first
+			self.on_settings_changed()
+
+	def on_settings_changed(self):
+		file_name = os.path.basename(self.view.file_name())
+		implicit_enable = self.view.settings().get('tabnav.implicit_enable')
+		if implicit_enable is not None:
+			self.view.settings().clear_on_change('tabnav_test_listener')
+			run_test_cases(self.view)
 
 
 class TabnavRunTestCasesCommand(sublime_plugin.WindowCommand):

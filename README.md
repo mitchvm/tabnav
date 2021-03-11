@@ -306,6 +306,7 @@ Selecting the _Preferences_ ❯ _Package Settings_ ❯ _TabNav_ ❯ _Settings - 
 
 * `capture_level`: The initial [capture level](#capture-levels) to use. The capture level can also be configured per-context, or changed on the active view using the ["Set capture level" command](#other-commands). Options: `trimmed`, `content`, `markup`, `cell`. Default: `content`.
 * `trim_on_copy`: When true, the ["Copy selections" commands](#other-commands) trim whitespace from the selected regions' text prior to putting it on the clipboard. The selections in the view themselves are not altered. Default: `true`.
+* `enable_explicitly`: When false, TabNav is assumed to be enabled if a [context](#contexts) is successfully matched to the file. When true, TabNav must be explicitly enabled on each view. This setting can also be configured per-context. Default: `false`.
 * `log_level`: Set to `INFO` or `DEBUG` to see TabNav log messages in the Sublime Text console. Default `WARNING`.
 
 ### Context Configuration
@@ -355,7 +356,7 @@ The following parameters are used to define a TabNav context:
 1. `selector`: **Required**. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that identifies the scope within which the context operates. If multiple selections are currently active, only the first selection's scope is checked. If multiple TabNav contexts' selectors match the current scope, then the context with the highest selector "score" (as returned by the Sublime Text API) is used.
 2. `except_selector`: _Optional_. A [Sublime Text selector](https://www.sublimetext.com/docs/3/selectors.html) that overrides the base `selector`. If the first selection matches this selector, then the context is _not_ matched.
 3. `patterns`: **Required**. One or more [pattern definitions](#pattern-definitions) used to identify and parse rows of table content. If only one pattern is provided, it need-not be placed in a JSON array. If multiple patterns are provided, they are applied in sequence until the first match. In general, patterns for markup rows should be placed above patterns for content rows.
-5. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Default `false`.
+5. `enable_explicitly`: _Optional_. A boolean to indicate if the TabNav must be explicitly enabled when this context is matched. Overrides the global `enable_explicitly` setting. Default `false`.
 6. `capture_level`: _Optional_. The default [capture level](#capture-levels) to use with this context. Overrides the global `capture_level` setting. Possible values: `trimmed`, `content`, `markup`, `cell`.
 
 #### Pattern Definitions

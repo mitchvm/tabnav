@@ -15,6 +15,9 @@ if not plugin_logger.handlers:
 plugin_logger.setLevel(logging.WARNING)
 log = logging.getLogger(__name__)
 
+implicit_selectors = None # The selectors for which TabNav gets implicitly enabled (pipe-delimited string)
+settings_listeners = [] # The view settings objects being listened to for changes
+
 capture_levels = OrderedDict([
 	('trimmed', (0, '0: Trimmed - excludes whitespace')),
 	('content', (1, '1: Content - includes whitespace but not markup')),
@@ -48,25 +51,25 @@ class ColumnIndexError(Exception):
 		self.row = row
 		self.columns = columns
 		self.target_index = target_index
-		self.err = "TabNav: Line {0} contains {1} table columns, but currently targeting column {2}.".format(row+1, columns, target_index+1)
+		self.err = "Line {0} contains {1} table columns, but currently targeting column {2}.".format(row+1, columns, target_index+1)
 		super().__init__(self.err)
 
 class RowNotInTableError(Exception):
 	def __init__(self, row):
 		self.row = row
-		self.err = "TabNav: Line {0} is not part of a table.".format(row+1)
+		self.err = "Line {0} is not part of a table.".format(row+1)
 		super().__init__(self.err)
 
 class RowOutOfFileBounds(Exception):
 	def __init__(self, row):
 		self.row = row
-		self.err = "TabNav: Line {0} is out of bounds of the file contents.".format(row+1)
+		self.err = "Line {0} is out of bounds of the file contents.".format(row+1)
 		super().__init__(self.err)
 
 class CursorNotInTableError(Exception):
 	def __init__(self, cursor):
 		self.cursor = cursor
-		self.err = "TabNav: Cursor at position {0} is not within a table.".format(cursor)
+		self.err = "Cursor at position {0} is not within a table.".format(cursor)
 
 
 def merge_dictionaries(base, override, keys=None):
@@ -115,6 +118,18 @@ def score_tabnav_selectors(view, point, selector, except_selector):
 		return -1
 	return score
 
+def get_merged_context_configs(context_key=None):
+	settings = sublime.load_settings("tabnav.sublime-settings")
+	configs = settings.get("contexts", {})
+	user_configs = settings.get("user_contexts", {})
+	if context_key is not None:
+		if context_key not in user_configs:
+			return configs
+		else:
+			context_keys = [context_key]
+	else:
+		context_keys = user_configs.keys()
+	return merge_dictionaries(configs, user_configs)
 
 class TabnavContext:
 	'''Contains information about the current context of the view.
@@ -154,23 +169,24 @@ class TabnavContext:
 		If a particular context_key is provided, it is the only context configured. If no key is provided,
 		all contexts in the configuration are checked.
 		'''
-		context_configs = TabnavContext._merge_context_configs(context_key)
+		context_configs = get_merged_context_configs(context_key)
 		if context_key is None:
 			context_key, score = TabnavContext._get_context_by_config_selector(view, context_configs)
 			if score < 0:
+				log.debug("Matched context '%s' but the current scope matches the except_selector.", context_key)
 				return None
 		if context_key is None:
 			context_key = "auto_csv"
 		try:
 			context_config = context_configs[context_key]
 		except KeyError:
-			log.info("TabNav: Context '%s' not found in settings.", context_key)
+			log.info("Context '%s' not found in settings.", context_key)
 			return None
 		if context_config.get('enable_explicitly', False):
 			# This context requires that tabnav be explicilty enabled on the view.
 			enabled = view.settings().get('tabnav.enabled')
 			if enabled is None or not enabled:
-				log.debug("TabNav: Context '%s' requires that tabnav be explicitly enabled.", context_key)
+				log.debug("Context '%s' requires that TabNav be explicitly enabled.", context_key)
 				return None
 		if context_key == "auto_csv":
 			context = TabnavContext._get_auto_csv_table_config(view, context_config)
@@ -183,20 +199,6 @@ class TabnavContext:
 			context._selector = context_config.get('selector', None)
 			context._except_selector = context_config.get('except_selector', None)
 		return context
-
-	@staticmethod
-	def _merge_context_configs(context_key=None):
-		settings = sublime.load_settings("tabnav.sublime-settings")
-		configs = settings.get("contexts", {})
-		user_configs = settings.get("user_contexts", {})
-		if context_key is not None:
-			if context_key not in user_configs:
-				return configs
-			else:
-				context_keys = [context_key]
-		else:
-			context_keys = user_configs.keys()
-		return merge_dictionaries(configs, user_configs)
 
 	@staticmethod
 	def _get_context_by_config_selector(view, context_configs):
@@ -236,13 +238,13 @@ class TabnavContext:
 		delimiter = None
 		# If an explicit delimiter is set, use that
 		if re.search(r'text\.advanced_csv', scope) is not None:
-			log.debug("TabNav: Using Advanced CSV delimiter.")
+			log.debug("Using Advanced CSV delimiter.")
 			delimiter = view.settings().get('delimiter') # this is the Advnaced CSV delimiter
 		if delimiter is None:
 			try:
 				rainbow_match = re.search(r'text\.rbcs(?:m|t)n(?P<delimiter>\d+)',scope)
 				delimiter = chr(int(rainbow_match.group('delimiter')))
-				log.debug("TabNav: Using Rainbow CSV delimiter.")
+				log.debug("Using Rainbow CSV delimiter.")
 			except:
 				pass
 		if delimiter is None:
@@ -254,15 +256,15 @@ class TabnavContext:
 			if len(matches) == 1:
 				# If we hit on exactly one delimiter, then we'll assume it's the one to use
 				delimiter = matches[0]
-				log.debug("TabNav: Inferred delimiter: %s", delimiter)
+				log.debug("Inferred delimiter: %s", delimiter)
 			else:
-				log.debug('TabNav: Not exactly one auto delimiter matched: %s.', matches)
+				log.debug('Not exactly one auto delimiter matched: %s.', matches)
 		if delimiter is None:
 			delimiter = context_config.get("default_delimiter", None)
 		if delimiter is None:
 			return None
 		delimiter = TabnavContext._escaped_delimiters.get(delimiter, delimiter)
-		log.debug("TabNav: Using 'auto_csv' context with delimiter '%s'", delimiter)
+		log.debug("Using 'auto_csv' context with delimiter '%s'", delimiter)
 		patterns = context_config['patterns']
 		if isinstance(patterns, dict):
 			patterns = [patterns]
@@ -307,7 +309,7 @@ class RowParser:
 				line_start_point = line_start_point + line_match.start('table')
 				line_content = line_match.group('table')
 			except IndexError:
-				log.debug("TabNav: Line pattern '%s' does not contain a named capture group '<table>'. The line will be captured but ignored.", self.line_pattern.pattern)
+				log.debug("Line pattern '%s' does not contain a named capture group '<table>'. The line will be captured but ignored.", self.line_pattern.pattern)
 				return TableRow(row, [])
 		cells = []
 		cell_end = -1
@@ -880,9 +882,7 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		raise NotImplementedError("The base TabnavCommand is not a runnable command.")
 
 	def is_enabled(self, **args):
-		'''Enabled by default, unless explicitly disabled.'''
-		enabled = self.view.settings().get('tabnav.enabled')
-		if enabled is not None and not enabled:
+		if not is_tabnav_enabled(self.view.settings()):
 			return False
 		if len(self.view.sel()) == 0:
 			return False
@@ -1321,7 +1321,7 @@ class TabnavCopyDelimitedMenuCommand(sublime_plugin.TextCommand):
 class TabnavCopyTabSeparatedCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		'''Puts all currently selected regions into the clipboard with columns separated by tabs,
-		and rows separated by the newlins.
+		and rows separated by the newlines.
 
 		This is to facilitate copying table contents to other programs, such as Excel.'''
 		copy_delimited_regions(self.view, '	')
@@ -1333,8 +1333,8 @@ class EnableTabnavCommand(sublime_plugin.TextCommand):
 
 	def is_enabled(self):
 		'''This command is enabled unless TabNav is already explicitly enabled.'''
-		enabled = self.view.settings().get('tabnav.enabled')
-		return enabled is None or not enabled
+		enabled = self.view.settings().get('tabnav.enabled', False)
+		return not enabled
 
 class DisableTabnavCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
@@ -1343,8 +1343,9 @@ class DisableTabnavCommand(sublime_plugin.TextCommand):
 
 	def is_enabled(self):
 		# This command is enabled unless TabNav is already explicitly disabled
-		enabled = self.view.settings().get('tabnav.enabled')
-		return enabled is None or enabled
+		enabled = self.view.settings().get('tabnav.enabled', True)
+		return enabled
+
 
 class TabnavSetCaptureLevelCommand(sublime_plugin.TextCommand):
 	def run(self, edit, capture_level):
@@ -1370,11 +1371,12 @@ class TabnavResetCaptureLevelCommand(sublime_plugin.TextCommand):
 			self.view.settings().erase('tabnav.capture_level')
 
 
-
 def is_other_csv_scope(view):
 		scope = view.scope_name(0)
 		if re.search(r'text\.advanced_csv', scope):
 			return True
+		# We can't use a selector score because there is no base selector
+		# applicable to all Rainbow CSV syntaxes.
 		if re.search(r'text\.rbcsm|tn\d+', scope):
 			return True
 		return False
@@ -1382,7 +1384,7 @@ def is_other_csv_scope(view):
 class TabnavSetCsvDelimiterCommand(sublime_plugin.TextCommand):
 	def run(self, edit, delimiter=None):
 		'''Sets the delimiter to use for CSV files.'''
-		log.debug('TabNav: Setting CSV delimiter: %s', delimiter)
+		log.debug('Setting CSV delimiter: %s', delimiter)
 		if delimiter == '':
 			delimiter = None
 		self.view.settings().set('tabnav.delimiter', delimiter)
@@ -1416,26 +1418,53 @@ class TabnavSetCsvDelimiterMenuCommand(sublime_plugin.TextCommand):
 	def is_visible(self):
 		return not is_other_csv_scope(self.view)
 
-class IsTabnavContextListener(sublime_plugin.ViewEventListener):
-	'''Listener for the 'is_tabnav_context' keybinding context.
+def is_tabnav_enabled(settings):
+	'''Checks the given view `settings` object to determine if TabNav is enabled.
+	
+	TabNav can be enabled either explicitly or implicitly.
+	Explicit overrides implicit.'''
+	explicit = settings.get('tabnav.enabled')
+	if explicit is not None:
+		return explicit
+	return settings.get('tabnav.implicit_enable', False)
 
-	Returns true if a TabNav has not been explicitly disabled on the view,
-	and if a TabnavContext can be succesfully identified in the current view.
-	'''
+def apply_listener_boolean_operator(nominal, operator, operand):
+	if operator == sublime.OP_EQUAL:
+		if operand == True:
+			return nominal
+		else:
+			return not nominal
+	if operator == sublime.OP_NOT_EQUAL:
+		if operand == True:
+			return not nominal
+		else:
+			return nominal
+
+class IsTabnavContextListener(sublime_plugin.ViewEventListener):
+	@classmethod
+	def is_applicable(cls, settings):
+		'''Only listen for the `is_tabnav_context` query context if TabNav is enabled on the view.'''
+		return is_tabnav_enabled(settings)
+
 	def on_query_context(self, key, operator, operand, match_all):
+		'''Listener for the 'is_tabnav_context' keybinding context.
+
+		Returns true if a TabNav has not been explicitly disabled on the view,
+		and if a TabnavContext can be succesfully identified in the current view.
+
+		The name of a particular context can be provided as the `operand` to restrict
+		the check to only that context.
+
+		Provide `match_all = True` to check all current selections for a match.
+		Otherwise, only the first selection is checked.
+		'''
 		if key != 'is_tabnav_context':
 			return None
 		is_context = None
 		if len(self.view.sel()) == 0:
-			log.debug("TabNav: No active selections")
+			log.debug("No active selections")
 			is_context = False
 		else:
-			enabled = self.view.settings().get('tabnav.enabled')
-			if enabled is not None and not enabled:
-				# TabNav is explicitly disabled
-				log.debug("TabNav: Disabled on current view")
-				is_context = False
-		if is_context is None:
 			if isinstance(operand, str):
 				context_key = operand
 			else:
@@ -1458,22 +1487,100 @@ class IsTabnavContextListener(sublime_plugin.ViewEventListener):
 					is_context = False
 				else:
 					is_context = True
-		log.debug("TabNav: Is TabNav Context: %s", is_context)
-		if (operator == sublime.OP_NOT_EQUAL):
+		log.debug("Is TabNav Context: %s", is_context)
+		if isinstance(operand, bool):
+			return apply_listener_boolean_operator(is_context, operator, operand)
+		elif operator == sublime.OP_NOT_EQUAL:
+			# If a particular context context key was provided as the operand
 			return not is_context
-		return is_context
+		else:
+			return is_context
 
-def update_log_level():
+class TabNavViewListener(sublime_plugin.ViewEventListener):
+	'''Monitors a view to determine if it matches an implicitly-enabled TabNav context'''
+	_key = 'tabnav_view_settings_listener'
+
+	@classmethod
+	def is_applicable(cls, settings):
+		global implicit_selectors
+		# No need to monitor the file if there are no implicitly-enabled contexts
+		return implicit_selectors is not None
+
+	def on_load(self):
+		self.add_settings_listener()
+
+	def on_activated(self):
+		self.add_settings_listener()
+
+	def on_close(self):
+		TabNavViewListener.remove_settings_listener(self.view.settings())
+
+	def add_settings_listener(self):
+		global settings_listeners
+		if not self.view.settings().get(self._key, False):
+			self.view.settings().add_on_change(self._key, self.on_settings_changed)
+			settings_listeners.append(self.view.settings())
+			self.view.settings().set(self._key, True)
+			self.on_settings_changed()
+
+	def on_settings_changed(self):
+		global implicit_selectors
+		implicit_enable = self.view.score_selector(0, implicit_selectors) > 0
+		current = self.view.settings().get('tabnav.implicit_enable')
+		if current is None or current != implicit_enable:
+			log.debug("Setting implicit_enable to %s on view %s", implicit_enable, self.view.file_name())
+			self.view.settings().set('tabnav.implicit_enable', implicit_enable)
+
+	@classmethod
+	def remove_settings_listener(cls, settings):
+		if settings.get(cls._key, False):
+			settings.clear_on_change(cls._key)
+			settings.erase(cls._key)
+			settings_listeners.remove(settings)
+
+
+def tabnav_package_settings_listener():
+	global implicit_selectors
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
+	# Set the log level
 	log_level = package_settings.get('log_level', 'WARNING').upper()
 	log.setLevel(log_level)
-	log.info("TabNav: Log level: %s", log_level)
+	log.info("Log level: %s", log_level)
+	# Determine for which scopes TabNav is implicitly enabled
+	enable_explicitly = package_settings.get('enable_explicitly', False)
+	if enable_explicitly:
+		implicit_selectors = None
+		log.debug("Global enable_explicitly flag set to True")
+	else:
+		selectors = []
+		context_configs = get_merged_context_configs()
+		for key in context_configs:
+			config = context_configs[key]
+			enable_explicitly = config.get('enable_explicitly', False)
+			if enable_explicitly:
+				log.debug("Context %s set to enable_explicitly", key)
+				continue
+			selector = config.get('file_selector', None)
+			if selector is None:
+				selector = config.get('selector', None)
+			if selector is None:
+				log.debug("No selectors set for context %s", key)
+				continue
+			selectors.append(selector)
+		if len(selectors) == 0:
+			implicit_selectors = None
+			log.info("No implicit contexts configured")
+		else:
+			implicit_selectors = ' | '.join(selectors)
+			log.info("Implicit selectors: '%s'", implicit_selectors)
 
 def plugin_loaded():
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
-	package_settings.add_on_change('tabnav_settings_listener', update_log_level)
-	update_log_level()
+	package_settings.add_on_change('tabnav_package_settings_listener', tabnav_package_settings_listener)
+	tabnav_package_settings_listener()
 
 def plugin_unloaded():
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
-	package_settings.clear_on_change('tabnav_settings_listener')
+	package_settings.clear_on_change('tabnav_package_settings_listener')
+	for settings in list(settings_listeners):
+		TabNavViewListener.remove_settings_listener(settings)
