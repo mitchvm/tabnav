@@ -1138,6 +1138,7 @@ class TabnavJumpEndCommand(TabnavCommand):
 		try:
 			end_cells = self.tabnav.get_end_cells(direction)
 			select_cells(self.view, end_cells, self.context.capture_level)
+			self.view.show(self.view.sel())
 		except Exception as e:
 			log.info(e)
 
