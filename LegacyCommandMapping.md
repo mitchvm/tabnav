@@ -21,7 +21,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "row",
+    "scope": "column",
     "forward": false,
     "select": false
 }</code>
@@ -35,7 +35,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "row",
+    "scope": "column",
     "select": false
 }</code>
 </pre></td>
@@ -48,7 +48,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "column",
+    "scope": "row",
     "forward": false,
     "select": false
 }</code>
@@ -62,7 +62,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "column",
+    "scope": "row",
     "select": false
 }</code>
 </pre></td>
@@ -75,7 +75,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "row",
+    "scope": "column",
     "forward": false,
     "select": false,
     "extend": 1
@@ -90,7 +90,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "row",
+    "scope": "column",
     "select": false,
     "extend": 1
 }</code>
@@ -104,7 +104,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "column",
+    "scope": "row",
     "forward": false,
     "select": false,
     "extend": 1
@@ -119,7 +119,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "column",
+    "scope": "row",
     "select": false,
     "extend": 1
 }</code>
@@ -133,7 +133,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "row",
+    "scope": "column",
     "forward": false
 }</code>
 </pre></td>
@@ -145,7 +145,7 @@ The table below details the mapping from the legacy commands to the new commands
 </pre></td>
 <td><pre>
 <code>"command": "tabnav_move",
-"args": { "by": "row" }</code>
+"args": { "scope": "column" }</code>
 </pre></td>
 </tr><tr>
 <td>Select cell on left</td>
@@ -156,7 +156,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "column",
+    "scope": "row",
     "forward": false
 }</code>
 </pre></td>
@@ -168,7 +168,7 @@ The table below details the mapping from the legacy commands to the new commands
 </pre></td>
 <td><pre>
 <code>"command": "tabnav_move",
-"args": { "by": "column" }</code>
+"args": { "scope": "row" }</code>
 </pre></td>
 </tr><tr>
 <td>Extend selection to cell above</td>
@@ -179,7 +179,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "row",
+    "scope": "column",
     "forward": false,
     "extend": 1
 }</code>
@@ -193,7 +193,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "row",
+    "scope": "column",
     "extend": 1
 }</code>
 </pre></td>
@@ -206,7 +206,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "column",
+    "scope": "row",
     "forward": false,
     "extend": 1
 }</code>
@@ -220,7 +220,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "column",
+    "scope": "row",
     "extend": 1
 }</code>
 </pre></td>
@@ -233,7 +233,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "row",
+    "scope": "column",
     "forward": false,
     "extend": -1
 }</code>
@@ -247,7 +247,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "row",
+    "scope": "column",
     "extend": -1
 }</code>
 </pre></td>
@@ -260,7 +260,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "column",
+    "scope": "row",
     "forward": false,
     "extend": -1
 }</code>
@@ -274,7 +274,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move",
 "args": {
-    "by": "column",
+    "scope": "row",
     "extend": -1
 }</code>
 </pre></td>
@@ -287,7 +287,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move_end",
 "args": {
-    "by": "row",
+    "scope": "column",
     "forward": false
 }</code>
 </pre></td>
@@ -299,7 +299,7 @@ The table below details the mapping from the legacy commands to the new commands
 </pre></td>
 <td><pre>
 <code>"command": "tabnav_move_end",
-"args": { "by": "row" }</code>
+"args": { "scope": "column" }</code>
 </pre></td>
 </tr><tr>
 <td>Select cell at beginning of row</td>
@@ -310,7 +310,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move_end",
 "args": {
-    "by": "column",
+    "scope": "row",
     "forward": false
 }</code>
 </pre></td>
@@ -322,7 +322,7 @@ The table below details the mapping from the legacy commands to the new commands
 </pre></td>
 <td><pre>
 <code>"command": "tabnav_move_end",
-"args": { "by": "column" }</code>
+"args": { "scope": "row" }</code>
 </pre></td>
 </tr><tr>
 <td>Extend selection to top of column</td>
@@ -333,7 +333,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move_end",
 "args": {
-    "by": "row",
+    "scope": "column",
     "forward": false,
     "extend": true
 }</code>
@@ -347,7 +347,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move_end",
 "args": {
-    "by": "row",
+    "scope": "column",
     "extend": true
 }</code>
 </pre></td>
@@ -360,7 +360,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move_end",
 "args": {
-    "by": "column",
+    "scope": "row",
     "forward": false,
     "extend": true
 }</code>
@@ -374,7 +374,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move_end",
 "args": {
-    "by": "column",
+    "scope": "row",
     "extend": true
 }</code>
 </pre></td>
@@ -432,7 +432,7 @@ The table below details the mapping from the legacy commands to the new commands
 <code>"command": "tabnav_select_current"</code></pre></pre>
 <td><pre>
 <code>"command": "tabnav_select",
-"args": { "by": "cell" }</code>
+"args": { "scope": "cell" }</code>
 </pre></td>
 </tr><tr>
 <td>Select all cells in current row<sup>1</sup></td>
@@ -440,7 +440,7 @@ The table below details the mapping from the legacy commands to the new commands
 <code>"command": "tabnav_select_row"</code></pre></pre>
 <td><pre>
 <code>"command": "tabnav_select",
-"args": { "by": "row" }</code>
+"args": { "scope": "row" }</code>
 </pre></td>
 </tr><tr>
 <td>Select all cells in current column<sup>1</sup></td>
@@ -448,7 +448,7 @@ The table below details the mapping from the legacy commands to the new commands
 <code>"command": "tabnav_select_column"</code></pre></pre>
 <td><pre>
 <code>"command": "tabnav_select",
-"args": { "by": "column" }</code>
+"args": { "scope": "row" }</code>
 </pre></td>
 </tr><tr>
 <td>Select all cells in table<sup>1</sup></td>
@@ -456,7 +456,7 @@ The table below details the mapping from the legacy commands to the new commands
 <code>"command": "tabnav_select_all"</code></pre></pre>
 <td><pre>
 <code>"command": "tabnav_select",
-"args": { "by": "table" }</code>
+"args": { "scope": "table" }</code>
 </pre></td>
 </tr><tr>
 <td>Copy selections as tab-separated values</td>
@@ -475,6 +475,15 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "enable_tabnav",
 "args": { "enable": false }</code>
+</pre></td>
+</tr><tr>
+<td>Reset capture level</td>
+<td><pre>
+<code>"command": "tabnav_reset_capture_level"</code>
+</pre></td>
+<td><pre>
+<code>"command": "tabnav_set_capture_level",
+"args": { "capture_level": null }</code>
 </pre></td>
 </tr></tbody></table>
 
