@@ -39,7 +39,7 @@ When moving/extending the selection, if the current cell is the last cell (at th
     <dd>
         <p><strong>Required</strong>. Indicates if movement should be within the same row (horizontally) or column (vertically).</p>
     </dd>
-    <dt><strong>forward</strong> : bool, default false</dt>
+    <dt><strong>forward</strong> : bool, default true</dt>
     <dd>
         <p>If <code>true</code>, moves to the right or down. If <code>false</code>, moves to the left or up.</p>
     </dd>
@@ -81,7 +81,7 @@ If the current cell is the last cell (at the current capture level) in the direc
     <dd>
         <p><strong>Required</strong>. Indicates if movement should be within the same rows (horizontally) or column (vertically).</p>
     </dd>
-    <dt><strong>forward</strong> : bool, default false</dt>
+    <dt><strong>forward</strong> : bool, default true</dt>
     <dd>
         <p>If <code>true</code>, moves to the right or down. If <code>false</code>, moves to the left or up.</p>
     </dd>
@@ -117,7 +117,7 @@ Selects the current cell, or all cells in the current row, column, or table. A c
     <dd>
         <p><strong>Required</strong>. Indicates the scope of selection.</p>
     </dd>
-    <dt><strong>forward</strong> : bool, default false</dt>
+    <dt><strong>forward</strong> : bool, default true</dt>
     <dd>
         <p>Determines at which end of the cell the cursor is placed. If <code>true</code>, the cursor is placed on the right. If <code>false</code>, it is on the left.</p>
     </dd>
