@@ -32,7 +32,7 @@
 		"command": "tabnav_extend_selection",
 		"args":
 		{
-			"context": "markdown",
+			"context": "auto_csv",
 			"direction": "up"
 		},
 		"file": "csv01_comma_quoted.csv",

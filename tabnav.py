@@ -44,7 +44,7 @@ class TabnavCommand(sublime_plugin.TextCommand):
 			return False
 		if len(self.view.sel()) == 0:
 			return False
-		context_key = args.get('context_key', None)
+		context_key = args.get('context', None)
 		self.context = get_current_context(self.view, context_key)
 		return self.context is not None
 
@@ -53,6 +53,64 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		self.table = TableView(self.view, self.context, cell_direction)
 		self.table.parse_selected_rows()
 		self.tabnav = TableNavigator(self.table, self.context.capture_level, cell_direction)
+
+
+class TabnavMoveCommand(TabnavCommand):
+	def run(self, edit, scope, forward=True, select=True, extend=0, context=None):
+		if forward:
+			delta = 1
+		else:
+			delta = -1
+		if scope == 'row':
+			dr = 0
+			dc = delta
+			move_cursors = not select and extend == 0
+			if extend == 0:
+				if delta > 0:
+					offset = -1
+				else:
+					offset = 0
+			else:
+				offset = None
+		elif scope == 'column':
+			dr = delta
+			dc = 0
+			move_cursors = False
+			offset = None
+		else:
+			log.error("Unknown movement scope '%s'. Acceptable values are: {'row', 'column'}", scope)
+			return
+		try:
+			cell_direction = cell_directions[(dr, dc, select)]
+			self.init_table(cell_direction)
+			if self.tabnav.split_selections(select, move_cursors=move_cursors):
+				return
+			if extend < 0:
+				current_cells = self.table.current_cells()
+				next_cells = self.tabnav.get_next_cells((dr, dc), return_current=False)
+				prev_cells = self.tabnav.get_next_cells((-dr, -dc), return_current=False)
+			else:
+				next_cells = self.tabnav.get_next_cells((dr, dc), offset, return_current=True)
+		except (CursorNotInTableError, RowNotInTableError) as e:
+			log.info(e.err)
+			return
+		if extend == 0:
+			self.view.sel().clear()
+		if extend >= 0:
+			if select:
+				self.view.sel().add_all(next_cells)
+			else:
+				cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in next_cells)))
+				self.view.sel().add_all(cursors)
+		else:
+			# always remove the entire cell, as well as any cursors within the cell (regardless of value of 'select')
+			cells_to_remove = [cell for cell in current_cells if cell in prev_cells and cell not in next_cells]
+			cursors_to_remove = itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in cells_to_remove))
+			regions_to_remove = list(itertools.chain.from_iterable([cells_to_remove, cursors_to_remove]))
+			for region in regions_to_remove:
+				self.view.sel().subtract(region)
+
+
 
 
 class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
@@ -188,7 +246,6 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 	def input(self, args):
 		return TabnavDirectionInputHandler()
 
-
 class TabnavReduceSelectionCommand(TabnavCommand):
 	def run(self, edit, direction, context=None):
 		try:
@@ -196,79 +253,18 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 			self.init_table(cell_direction)
 			if not self.tabnav.split_and_select_current_cells():
 				self._point_from_region = point_from_region_func(cell_direction)
+				current_cells = self.table.current_cells()
 				dr, dc = move_directions[direction]
-				if dc != 0:
-					self.reduce_cell_selection_row(-dc) # reverse the given direction
-				else:
-					self.reduce_cell_selection_col(-dr)
+				next_cells = set(self.tabnav.get_next_cells((-dr, -dc), return_current=False)) # reverse the direction
+				prev_cells = set(self.tabnav.get_next_cells((dr, dc), return_current=False))
+				cells_to_remove = [cell for cell in current_cells if cell in next_cells and cell not in prev_cells]
 		except (CursorNotInTableError, RowNotInTableError) as e:
 			log.info(e.err)
-
-	def reduce_cell_selection_row(self, direction):
-		points = (self._point_from_region(r) for r in self.view.sel())
-		selected_cells = [self.table.cell_at_point(p) for p in points]
-		for i, g in itertools.groupby(selected_cells, lambda c: c.row):
-			cells = list(g)
-			if len(cells) == 1:
-				# Only one cell selected on this row; can't reduce selection further
-				continue
-			seq = 0
-			last = None
-			for cell in cells[::direction]:
-				if seq == 0 or cell.col == last.col + direction:
-					# First cell of a new sequence OR continuing an existing sequence
-					seq = seq + 1
-				else:
-					# Current cell is not part of the same sequence
-					if seq > 1:
-						# The previous sequence had more than one cell, so can be reduced
-						self.view.sel().subtract(last)
-					seq = 1
-				last = cell
-			if seq > 1:
-				# Final sequence ended with more than one cell
-				self.view.sel().subtract(last)
-
-	def reduce_cell_selection_col(self, direction):
-		points = (self._point_from_region(r) for r in self.view.sel())
-		selected_cells = sorted((self.table.cell_at_point(p) for p in points), key=lambda c: c.col)
-		for i, g in itertools.groupby(selected_cells, lambda c: c.col):
-			cells = list(g)
-			if len(cells) == 1:
-				# Only one cell selected on this column; can't reduce selection further
-				continue
-			seq = 0
-			last = None
-			for cell in cells[::direction]:
-				if seq == 0 or cell.row == last.row + direction:
-					# First cell of a new sequence OR continuing an existing sequence
-					seq = seq + 1
-				elif all(self.missing_or_higher_capture_level(r, cell.col) for r in range(last.row+direction, cell.row, direction)):
-					# We've just jumped over a markup cell or a missing cell, so consider the cells a sequence
-					seq = seq + 1
-				else:
-					# Current cell is not part of the same sequence
-					if seq > 1:
-						# The previous sequence had more than one cell, so can be reduced
-						self.view.sel().subtract(last)
-					seq = 1
-				last = cell
-			if seq > 1:
-				# Final sequence ended with more than one cell
-				self.view.sel().subtract(last)
-
-	def missing_or_higher_capture_level(self, r, ic):
-		try:
-			return self.table[(r, ic)].capture_level > self.context.capture_level
-		except ColumnIndexError:
-			# jump across missing cells in the same table
-			return True
-		except RowNotInTableError:
-			# don't jump across disjoint tables
-			return False
-
-	def input(self, args):
-		return TabnavDirectionInputHandler()
+		else:
+			if cells_to_remove is not None:
+				for cell in cells_to_remove:
+					self.view.sel().subtract(cell)
+				self.view.show(self.view.sel())
 
 
 def select_cells(view, selected_cells, capture_level):

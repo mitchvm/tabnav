@@ -1,5 +1,5 @@
 from functools import partial
-from datetime import datetime
+from datetime import datetime, timedelta
 import sublime
 import sublime_plugin
 import re
@@ -190,6 +190,8 @@ def print_test_results():
 	if start_time is not None:
 		duration = datetime.now() - start_time
 		start_time = None
+	else:
+		duration = timedelta()
 	window = sublime.active_window()
 	panelName = 'tabnav_test_results'
 	output_panel = window.create_output_panel(panelName)

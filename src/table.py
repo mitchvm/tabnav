@@ -64,6 +64,9 @@ class TableCell(sublime.Region):
 		'''
 		return self.begin() == other.begin() and self.end() == other.end()
 
+	def __hash__(self):
+		return self.a
+
 	@property
 	def row(self):
 		return self._row
@@ -181,6 +184,12 @@ class TableView:
 	def rows(self):
 		return list(self._rows.values())
 
+	def current_cells(self):
+		'''Gets the cells of the currently selected regions.
+
+		Assumes that each region overlaps a single table cell.'''
+		return list(self.cell_at_region(r) for r in self.view.sel())
+
 	def row(self, r):
 		'''Gets the TableRow the given row index.'''
 		if r not in self._rows:
@@ -197,6 +206,23 @@ class TableView:
 		r = self.view.rowcol(point)[0]
 		return self.row(r)
 
+	def cell_at_region(self, region):
+		cells = self.intersecting_cells(region.b)
+		if len(cells) == 1:
+			return cells[0]
+		# if len(cells) > 0, capture level is cell and r.b is at the point that intersects two cells
+		if region.a == region.b:
+			# region is a cursor
+			if self._cell_direction < 0:
+				return cells[1]
+			else:
+				return cells[0]
+		# return the cell that contains both region.a and region.b
+		common_cells = [cell for cell in cells if cell.intersects(sublime.Region(region.a, region.a))]
+		if len(common_cells) == 1: # this _should_ alwals be true
+			return common_cells[0]
+		return cells[0]
+
 	def cell_at_point(self, point):
 		'''Gets the TableCell that contains the given view point.'''
 		(r, ic) = self.table_coords(point)
@@ -206,10 +232,17 @@ class TableView:
 		'''Gets the column index of the cell at the given view point.'''
 		return self.table_coords(point)[1]
 
+	def intersecting_cells(self, point):
+		'''Gets all of the cells that intersect the given view point.
+
+		With capture level "cell", a single point can intersect two cells.'''
+		r = self.view.rowcol(point)[0]
+		return [c for c in self.row(r) if c.intersects(sublime.Region(point, point), full_extent=True)]
+
 	def table_coords(self, point):
 		'''Gets the row and column indexes of the cell at the given view point.'''
 		r = self.view.rowcol(point)[0]
-		cells = [c for c in self.row(r) if c.intersects(sublime.Region(point, point), full_extent=True)]
+		cells = self.intersecting_cells(point)
 		if len(cells) > 1 and self._cell_direction < 0:
 			cell = cells[1]
 		else:

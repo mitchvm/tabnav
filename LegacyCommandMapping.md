@@ -225,7 +225,7 @@ The table below details the mapping from the legacy commands to the new commands
 }</code>
 </pre></td>
 </tr><tr>
-<td>Reduce selection from the top</td>
+<td>Reduce selection upwards</td>
 <td><pre>
 <code>"command": "tabnav_reduce_selection",
 "args": { "direction": "up" }</code>
@@ -239,7 +239,7 @@ The table below details the mapping from the legacy commands to the new commands
 }</code>
 </pre></td>
 </tr><tr>
-<td>Reduce selection from the bottom</td>
+<td>Reduce selection downwards</td>
 <td><pre>
 <code>"command": "tabnav_reduce_selection",
 "args": { "direction": "down" }</code>
@@ -252,7 +252,7 @@ The table below details the mapping from the legacy commands to the new commands
 }</code>
 </pre></td>
 </tr><tr>
-<td>Reduce selection from the left</td>
+<td>Reduce selection to the left</td>
 <td><pre>
 <code>"command": "tabnav_reduce_selection",
 "args": { "direction": "left" }</code>
@@ -266,7 +266,7 @@ The table below details the mapping from the legacy commands to the new commands
 }</code>
 </pre></td>
 </tr><tr>
-<td>Reduce selection from the right</td>
+<td>Reduce selection to the right</td>
 <td><pre>
 <code>"command": "tabnav_reduce_selection",
 "args": { "direction": "right" }</code>

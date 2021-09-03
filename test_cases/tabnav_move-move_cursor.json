@@ -1,0 +1,1304 @@
+[
+	{
+		"id": "UY4Q",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, cursor in bottom row of file doesn't move",
+		"initial_selections": [{"a": 291, "b": 291}],
+		"expected_selections": [{"a": 291, "b": 291}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "EH6V",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, single cursor in first cell of row",
+		"initial_selections": [{"a": 231, "b": 231}],
+		"expected_selections": [{"a": 286, "b": 286}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "ZLCI",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, single cursor in last cell of row",
+		"initial_selections": [{"a": 136, "b": 136}],
+		"expected_selections": [{"a": 211, "b": 211}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "2A22",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, markup excluded - markup row jumped",
+		"initial_selections": [{"a": 45, "b": 45}],
+		"expected_selections": [{"a": 140, "b": 140}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HDGK",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown05_multiple_markup.md",
+		"description": "Move cursor down, markup excluded - multiple sequential markup rows jumped",
+		"initial_selections": [{"a": 707, "b": 707}],
+		"expected_selections": [{"a": 1043, "b": 1043}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "LCQM",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, markup excluded - multiple cursros, markup only jumped as applicable",
+		"initial_selections": [{"a": 6, "b": 6}, {"a": 116, "b": 116}],
+		"expected_selections": [{"a": 106, "b": 106}, {"a": 196, "b": 196}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "56XK",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, cursor in line markup row moves out",
+		"initial_selections": [{"a": 69, "b": 69}],
+		"expected_selections": [{"a": 118, "b": 118}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "4S3T",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, markup included - moves to markup row",
+		"initial_selections": [{"a": 29, "b": 29}],
+		"expected_selections": [{"a": 79, "b": 79}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "TTSJ",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, move to shorter cell, go to end of cell",
+		"initial_selections": [{"a": 186, "b": 186}],
+		"expected_selections": [{"a": 242, "b": 242}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "K5BJ",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 248, "b": 248}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HJGW",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, target cell is an empty cell",
+		"initial_selections": [{"a": 123, "b": 123}],
+		"expected_selections": [{"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "CBTU",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, relatively aligned cursors, one in bottom row - merged",
+		"initial_selections": [{"a": 245, "b": 245}, {"a": 310, "b": 310}],
+		"expected_selections": [{"a": 310, "b": 310}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "F6QR",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, multiple cursors in a single cell - all move",
+		"initial_selections": [{"a": 253, "b": 253}, {"a": 261, "b": 261}, {"a": 272, "b": 272}],
+		"expected_selections": [{"a": 317, "b": 317}, {"a": 325, "b": 325}, {"a": 336, "b": 336}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "KNM7",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, cursor jumps over row with insufficient columns",
+		"initial_selections": [{"a": 210, "b": 210}],
+		"expected_selections": [{"a": 350, "b": 350}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "PHGP",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, multiple cursors, some move some don't",
+		"initial_selections": [{"a": 108, "b": 108}, {"a": 195, "b": 195}, {"a": 217, "b": 217}, {"a": 310, "b": 310}],
+		"expected_selections": [{"a": 156, "b": 156}, {"a": 246, "b": 246}, {"a": 310, "b": 310}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "UKYW",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor down, target location already selected by another cursor",
+		"initial_selections": [{"a": 152, "b": 152}, {"a": 230, "b": 230}],
+		"expected_selections": [{"a": 230, "b": 230}, {"a": 285, "b": 285}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "SQCF",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor down, cursors in bottom rows of multiple tables",
+		"initial_selections": [{"a": 1817, "b": 1817}, {"a": 2812, "b": 2812}],
+		"expected_selections": [{"a": 1817, "b": 1817}, {"a": 2812, "b": 2812}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "CAO4",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor down, multiple cursors in multiple tables",
+		"initial_selections": [{"a": 777, "b": 777}, {"a": 1309, "b": 1309}, {"a": 1832, "b": 1832}, {"a": 2123, "b": 2123}],
+		"expected_selections": [{"a": 861, "b": 861}, {"a": 1393, "b": 1393}, {"a": 1832, "b": 1832}, {"a": 2153, "b": 2153}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "S6CA",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Move cursor down, cursors in borderless table",
+		"initial_selections": [{"a": 68, "b": 68}, {"a": 117, "b": 117}, {"a": 169, "b": 169}],
+		"expected_selections": [{"a": 102, "b": 102}, {"a": 151, "b": 151}, {"a": 203, "b": 203}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "UOGW",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor down, capture trimmed - Cursor in whitespace after content",
+		"initial_selections": [{"a": 1458, "b": 1458}],
+		"expected_selections": [{"a": 1539, "b": 1539}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "YAGU",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor down, capture trimmed - Cursor in whitespace before content",
+		"initial_selections": [{"a": 1157, "b": 1157}],
+		"expected_selections": [{"a": 1245, "b": 1245}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "S5LF",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor down, entire cell selected forwards",
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1131, "b": 1131}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "2RZB",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor down, entire cell selected in reverse",
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1131, "b": 1131}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "TCHX",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor down, capture cell - cursor before delimiter",
+		"initial_selections": [{"a": 1150, "b": 1150}],
+		"expected_selections": [{"a": 1234, "b": 1234}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "LMXS",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, single cursor in first cell",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 1, "b": 1}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "V3LF",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, single cursor in last cell of row",
+		"initial_selections": [{"a": 138, "b": 138}],
+		"expected_selections": [{"a": 132, "b": 132}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "OK4T",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, single cursor at start of cell in line markup cell",
+		"initial_selections": [{"a": 75, "b": 75}],
+		"expected_selections": [{"a": 63, "b": 63}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VJWT",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, single cursor already at start of first cell of row",
+		"initial_selections": [{"a": 101, "b": 101}],
+		"expected_selections": [{"a": 101, "b": 101}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "3BNL",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, single cursor already at start of cell",
+		"initial_selections": [{"a": 112, "b": 112}],
+		"expected_selections": [{"a": 101, "b": 101}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "CQ5R",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 192, "b": 192}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "H7A7",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, target cell is an empty cell",
+		"initial_selections": [{"a": 207, "b": 207}],
+		"expected_selections": [{"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "6FAY",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, multiple cursors, some at start of cell, some not",
+		"initial_selections": [{"a": 19, "b": 19}, {"a": 112, "b": 112}, {"a": 180, "b": 180}, {"a": 248, "b": 248}],
+		"expected_selections": [{"a": 13, "b": 13}, {"a": 112, "b": 112}, {"a": 149, "b": 149}, {"a": 248, "b": 248}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HXDR",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, multiple cursors, all at the start of their respective cells",
+		"initial_selections": [{"a": 37, "b": 37}, {"a": 132, "b": 132}, {"a": 248, "b": 248}, {"a": 347, "b": 347}],
+		"expected_selections": [{"a": 25, "b": 25}, {"a": 120, "b": 120}, {"a": 243, "b": 243}, {"a": 312, "b": 312}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "JOAA",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, multiple cursors, some at start of first column",
+		"initial_selections": [{"a": 1, "b": 1}, {"a": 120, "b": 120}, {"a": 227, "b": 227}, {"a": 347, "b": 347}],
+		"expected_selections": [{"a": 1, "b": 1}, {"a": 112, "b": 112}, {"a": 227, "b": 227}, {"a": 312, "b": 312}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "FQM6",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, two cursors merging to one at start of first cell of colum",
+		"initial_selections": [{"a": 227, "b": 227}, {"a": 243, "b": 243}],
+		"expected_selections": [{"a": 227, "b": 227}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "OSGK",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor left, multiple cursors same row, one cursor is the target for another",
+		"initial_selections": [{"a": 112, "b": 112}, {"a": 120, "b": 120}],
+		"expected_selections": [{"a": 101, "b": 101}, {"a": 112, "b": 112}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "E45Z",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor left, multiple cursors at start of cells in multiple tables",
+		"initial_selections": [{"a": 97, "b": 97}, {"a": 285, "b": 285}, {"a": 712, "b": 712}, {"a": 1067, "b": 1067}, {"a": 1417, "b": 1417}, {"a": 1683, "b": 1683}, {"a": 1996, "b": 1996}, {"a": 2162, "b": 2162}],
+		"expected_selections": [{"a": 97, "b": 97}, {"a": 265, "b": 265}, {"a": 705, "b": 705}, {"a": 1048, "b": 1048}, {"a": 1403, "b": 1403}, {"a": 1669, "b": 1669}, {"a": 1982, "b": 1982}, {"a": 2162, "b": 2162}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "O5GF",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor left, multiple cursors in multiple line markup rows",
+		"initial_selections": [{"a": 208, "b": 208}, {"a": 1906, "b": 1906}],
+		"expected_selections": [{"a": 201, "b": 201}, {"a": 1892, "b": 1892}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "42D2",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Move cursor left, cursors at start of each column",
+		"initial_selections": [{"a": 0, "b": 0}, {"a": 79, "b": 79}, {"a": 125, "b": 125}],
+		"expected_selections": [{"a": 0, "b": 0}, {"a": 68, "b": 68}, {"a": 113, "b": 113}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "QPAJ",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor left, entire cell selected forwards",
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1131, "b": 1131}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "XJCG",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor left, entire cell selected in reverse",
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1131, "b": 1131}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "3X3Z",
+		"command": "tabnav_move",
+		"args": 
+		{
+			"context": "markdown",
+			"scope": "row",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor left, capture cell - cursor before delimiter",
+		"initial_selections": [{"a": 1150, "b": 1150}],
+		"expected_selections": [{"a": 1131, "b": 1131}],
+		"view_settings": {"tabnav.capture_level": "cell" }
+	},
+		{
+		"id": "SCY5",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, single cursor in first cell",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 12, "b": 12}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VPE6",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, single cursor in last cell of row",
+		"initial_selections": [{"a": 138, "b": 138}],
+		"expected_selections": [{"a": 146, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VZTC",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, single cursor at end of cell in line markup cell",
+		"initial_selections": [{"a": 74, "b": 74}],
+		"expected_selections": [{"a": 86, "b": 86}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "WOUY",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, single cursor already at end of last cell of row",
+		"initial_selections": [{"a": 146, "b": 146}],
+		"expected_selections": [{"a": 146, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HNDE",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, single cursor already at end of cell",
+		"initial_selections": [{"a": 191, "b": 191}],
+		"expected_selections": [{"a": 205, "b": 205}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "SKK7",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 224, "b": 224}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "QIJ3",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, target cell is an empty cell",
+		"initial_selections": [{"a": 205, "b": 205}],
+		"expected_selections": [{"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "EKAA",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, multiple cursors, some at end of cell, some not",
+		"initial_selections": [{"a": 12, "b": 12}, {"a": 114, "b": 114}, {"a": 191, "b": 191}, {"a": 295, "b": 295}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 307, "b": 307}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "YAYG",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, multiple cursors, all at the end of their respective cells",
+		"initial_selections": [{"a": 12, "b": 12}, {"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 307, "b": 307}],
+		"expected_selections": [{"a": 24, "b": 24}, {"a": 131, "b": 131}, {"a": 205, "b": 205}, {"a": 311, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "OU3U",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, multiple cursors, some at end of last column",
+		"initial_selections": [{"a": 36, "b": 36}, {"a": 146, "b": 146}, {"a": 206, "b": 206}, {"a": 279, "b": 279}, {"a": 346, "b": 346}],
+		"expected_selections": [{"a": 48, "b": 48}, {"a": 146, "b": 146}, {"a": 224, "b": 224}, {"a": 279, "b": 279}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "42EM",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, two cursors merging to one at end of last cell of colum",
+		"initial_selections": [{"a": 131, "b": 131}, {"a": 146, "b": 146}],
+		"expected_selections": [{"a": 146, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "IZ6N",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor right, multiple cursors same row, one cursor is the target for another",
+		"initial_selections": [{"a": 111, "b": 111}, {"a": 119, "b": 119}],
+		"expected_selections": [{"a": 119, "b": 119}, {"a": 131, "b": 131}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "AWRT",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor right, multiple cursors at end of cells in multiple tables",
+		"initial_selections": [{"a": 478, "b": 478}, {"a": 704, "b": 704}, {"a": 996, "b": 996}, {"a": 1522, "b": 1522}, {"a": 2055, "b": 2055}, {"a": 2279, "b": 2279}],
+		"expected_selections": [{"a": 492, "b": 492}, {"a": 711, "b": 711}, {"a": 1010, "b": 1010}, {"a": 1522, "b": 1522}, {"a": 2069, "b": 2069}, {"a": 2279, "b": 2279}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "DTUW",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor right, multiple cursors in multiple line markup rows",
+		"initial_selections": [{"a": 207, "b": 207}, {"a": 1905, "b": 1905}],
+		"expected_selections": [{"a": 226, "b": 226}, {"a": 1919, "b": 1919}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HJCV",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Move cursor right, cursors at end of each column",
+		"initial_selections": [{"a": 10, "b": 10}, {"a": 124, "b": 124}, {"a": 203, "b": 203}],
+		"expected_selections": [{"a": 22, "b": 22}, {"a": 135, "b": 135}, {"a": 203, "b": 203}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "WQ3C",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor right, entire cell selected forwards",
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1150, "b": 1150}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "ETHC",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor right, entire cell selected in reverse",
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1150, "b": 1150}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "RALH",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "row",
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor right, capture cell - cursor before delimiter",
+		"initial_selections": [{"a": 1150, "b": 1150}],
+		"expected_selections": [{"a": 1164, "b": 1164}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+		{
+		"id": "HVOO",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, cursor in top row of file doesn't move",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 6, "b": 6}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VMPB",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, single cursor in first cell of row",
+		"initial_selections": [{"a": 231, "b": 231}],
+		"expected_selections": [{"a": 153, "b": 153}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "V7O6",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, single cursor in last cell of row",
+		"initial_selections": [{"a": 215, "b": 215}],
+		"expected_selections": [{"a": 140, "b": 140}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VFZA",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, markup excluded - markup row jumped",
+		"initial_selections": [{"a": 140, "b": 140}],
+		"expected_selections": [{"a": 45, "b": 45}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VRCE",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown05_multiple_markup.md",
+		"description": "Move cursor up, markup excluded - multiple sequential markup rows jumped",
+		"initial_selections": [{"a": 1043, "b": 1043}],
+		"expected_selections": [{"a": 707, "b": 707}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "64EV",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, markup excluded - multiple cursros, markup only jumped as applicable",
+		"initial_selections": [{"a": 106, "b": 106}, {"a": 245, "b": 245}],
+		"expected_selections": [{"a": 6, "b": 6}, {"a": 194, "b": 194}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VW7F",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, cursor in line markup row moves out",
+		"initial_selections": [{"a": 69, "b": 69}],
+		"expected_selections": [{"a": 19, "b": 19}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "2GQ2",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, markup included - moves to markup row",
+		"initial_selections": [{"a": 140, "b": 140}],
+		"expected_selections": [{"a": 95, "b": 95}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "IA5H",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, move to shorter cell, go to end of cell",
+		"initial_selections": [{"a": 186, "b": 186}],
+		"expected_selections": [{"a": 111, "b": 111}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "WIZ5",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 120, "b": 120}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HSLY",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, target cell is an empty cell",
+		"initial_selections": [{"a": 264, "b": 264}],
+		"expected_selections": [{"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "DEUY",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, relatively aligned cursors, one in top row - merged",
+		"initial_selections": [{"a": 40, "b": 40}, {"a": 135, "b": 135}],
+		"expected_selections": [{"a": 40, "b": 40}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "OLCY",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, multiple cursors in a single cell - all move",
+		"initial_selections": [{"a": 230, "b": 230}, {"a": 236, "b": 236}],
+		"expected_selections": [{"a": 152, "b": 152}, {"a": 158, "b": 158}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "UD3H",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, cursor jumps over row with insufficient columns",
+		"initial_selections": [{"a": 350, "b": 350}],
+		"expected_selections": [{"a": 210, "b": 210}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "LHDN",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, multiple cursors, some move some don't",
+		"initial_selections": [{"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 339, "b": 339}, {"a": 352, "b": 352}],
+		"expected_selections": [{"a": 20, "b": 20}, {"a": 111, "b": 111}, {"a": 212, "b": 212}, {"a": 275, "b": 275}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "4QPW",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Move cursor up, target location already selected by another cursor",
+		"initial_selections": [{"a": 152, "b": 152}, {"a": 230, "b": 230}],
+		"expected_selections": [{"a": 104, "b": 104}, {"a": 152, "b": 152}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HIYE",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor up, cursors in top rows of multiple tables",
+		"initial_selections": [{"a": 129, "b": 129}, {"a": 1878, "b": 1878}],
+		"expected_selections": [{"a": 129, "b": 129}, {"a": 1878, "b": 1878}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "PQ6U",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor up, multiple cursors in multiple tables",
+		"initial_selections": [{"a": 148, "b": 148}, {"a": 247, "b": 247}, {"a": 613, "b": 613}, {"a": 720, "b": 720}, {"a": 1869, "b": 1869}, {"a": 2192, "b": 2192}, {"a": 2213, "b": 2213}],
+		"expected_selections": [{"a": 148, "b": 148}, {"a": 163, "b": 163}, {"a": 529, "b": 529}, {"a": 636, "b": 636}, {"a": 1869, "b": 1869}, {"a": 2162, "b": 2162}, {"a": 2183, "b": 2183}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "CZEM",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Move cursor up, cursors in borderless table",
+		"initial_selections": [{"a": 102, "b": 102}, {"a": 151, "b": 151}, {"a": 203, "b": 203}],
+		"expected_selections": [{"a": 68, "b": 68}, {"a": 117, "b": 117}, {"a": 169, "b": 169}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "L3TN",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor up, capture trimmed - Cursor in whitespace after content",
+		"initial_selections": [{"a": 1455, "b": 1455}],
+		"expected_selections": [{"a": 1369, "b": 1369}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "LT5O",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor up, capture trimmed - Cursor in whitespace before content",
+		"initial_selections": [{"a": 1323, "b": 1323}],
+		"expected_selections": [{"a": 1245, "b": 1245}],
+		"view_settings": {"tabnav.capture_level": "trimmed"}
+	},
+	{
+		"id": "XV2U",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor up, entire cell selected forwards",
+		"initial_selections": [{"a": 1131, "b": 1150}],
+		"expected_selections": [{"a": 1131, "b": 1131}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "SJSD",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor up, entire cell selected in reverse",
+		"initial_selections": [{"a": 1150, "b": 1131}],
+		"expected_selections": [{"a": 1131, "b": 1131}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "CKAP",
+		"command": "tabnav_move",
+		"args":
+		{
+			"context": "markdown",
+			"scope": "column",
+			"forward": false,
+			"select": false
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Move cursor up, capture cell - cursor before delimiter",
+		"initial_selections": [{"a": 1150, "b": 1150}],
+		"expected_selections": [{"a": 1066, "b": 1066}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	}
+]

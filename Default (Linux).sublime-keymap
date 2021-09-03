@@ -1,4 +1,4 @@
-[
+// [
 //     // =================== TabNav Key Bindings =========================
 
 //     // #### TabNav: Non-navigation keybindings ####
@@ -10,35 +10,49 @@
 //         // of this keybinding enables TabNav, and the next press selects the current cell.
 //         "keys": ["ctrl+'"],
 //         "command": "enable_tabnav"
-//     }
+//     },
 
 //     // #### TabNav: move cursor ####
 //     { 
 //         // move to cell on left
 //         "keys": ["alt+;"],
-//         "command": "tabnav_move_cursor",
-//         "args": { "direction": "left" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "row",
+//             "forward": false,
+//             "select": false
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // move to cell on right
 //         "keys": ["alt+'"],
-//         "command": "tabnav_move_cursor",
-//         "args": { "direction": "right" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "row",
+//             "select": false
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // move to cell above
 //         "keys": ["alt+["],
-//         "command": "tabnav_move_cursor",
-//         "args": { "direction": "up" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "column",
+//             "forward": false,
+//             "select": false
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // move to cell below
 //         "keys": ["alt+/"],
-//         "command": "tabnav_move_cursor",
-//         "args": { "direction": "down" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "column",
+//             "select": false
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 
@@ -47,29 +61,35 @@
 //     { 
 //         // select cell on left
 //         "keys": ["ctrl+;"],
-//         "command": "tabnav_select_next",
-//         "args": { "direction": "left" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "row",
+//             "forward": false
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // select cell on right
 //         "keys": ["ctrl+'"],
-//         "command": "tabnav_select_next",
-//         "args": { "direction": "right" },
+//         "command": "tabnav_move",
+//         "args": { "scope": "row" },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // select cell above
 //         "keys": ["ctrl+["],
-//         "command": "tabnav_select_next",
-//         "args": { "direction": "up" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "column",
+//             "forward": false
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // select cell below
 //         "keys": ["ctrl+/"],
-//         "command": "tabnav_select_next",
-//         "args": { "direction": "down" },
+//         "command": "tabnav_move",
+//         "args": { "scope": "column" },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 
@@ -109,29 +129,43 @@
 //     { 
 //         // extend selection to cell on left
 //         "keys": ["ctrl+shift+;"],
-//         "command": "tabnav_extend_selection",
-//         "args": { "direction": "left" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "row",
+//             "forward": false,
+//             "extend": 1
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // extend selection to cell on right
 //         "keys": ["ctrl+shift+'"],
-//         "command": "tabnav_extend_selection",
-//         "args": { "direction": "right" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "row",
+//             "extend": 1
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // extend selection to cell above
 //         "keys": ["ctrl+shift+["],
-//         "command": "tabnav_extend_selection",
-//         "args": { "direction": "up" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "column",
+//             "forward": false,
+//             "extend": 1
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // extend selection to cell below
 //         "keys": ["ctrl+shift+/"],
-//         "command": "tabnav_extend_selection",
-//         "args": { "direction": "down" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "column",
+//             "extend": 1
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 
@@ -171,29 +205,43 @@
 //     { 
 //         // reduce selection from the left
 //         "keys": ["alt+shift+;"],
-//         "command": "tabnav_reduce_selection",
-//         "args": { "direction": "left" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "row",
+//             "forward": false,
+//             "extend": -1
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // reduce selection from the right
 //         "keys": ["alt+shift+'"],
-//         "command": "tabnav_reduce_selection",
-//         "args": { "direction": "right" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "row",
+//             "extend": -1
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // reduce selection upwards
 //         "keys": ["alt+shift+["],
-//         "command": "tabnav_reduce_selection",
-//         "args": { "direction": "up" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "column",
+//             "forward": false,
+//             "extend": -1
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // reduce selection downwards
 //         "keys": ["alt+shift+/"],
-//         "command": "tabnav_reduce_selection",
-//         "args": { "direction": "down" },
+//         "command": "tabnav_move",
+//         "args": {
+//             "scope": "column",
+//             "extend": -1
+//         },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 
@@ -218,4 +266,4 @@
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     // =================== End: TabNav Key Bindings =====================
-]
+// ]

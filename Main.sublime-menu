@@ -70,23 +70,37 @@
               },
               {
                 "caption": "Cell on left",
-                "command": "tabnav_move_cursor",
-                "args": { "direction": "left" }
+                "command": "tabnav_move",
+                "args": { 
+                  "scope": "row",
+                  "forward": false,
+                  "select": false
+                }
               },
               {
                 "caption": "Cell on right",
-                "command": "tabnav_move_cursor",
-                "args": { "direction": "right" }
+                "command": "tabnav_move",
+                "args": {
+                    "scope": "row",
+                    "select": false
+                }
               },
               {
                 "caption": "Cell above",
-                "command": "tabnav_move_cursor",
-                "args": { "direction": "up" }
+                "command": "tabnav_move",
+                "args": { 
+                  "scope": "column",
+                  "forward": false,
+                  "select": false
+                }
               },
               {
                 "caption": "Cell below",
-                "command": "tabnav_move_cursor",
-                "args": { "direction": "down" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "select": false
+                }
               }
             ],
           },
@@ -96,23 +110,85 @@
             "children": [
               {
                 "caption": "On left",
-                "command": "tabnav_add_cursor",
-                "args": { "direction": "left" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "row",
+                  "forward": false,
+                  "select": false,
+                  "extend": 1 
+                }
               },
               {
                 "caption": "On right",
-                "command": "tabnav_add_cursor",
-                "args": { "direction": "right" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "row",
+                  "select": false,
+                  "extend": 1 
+                }
               },
               {
                 "caption": "Above",
-                "command": "tabnav_add_cursor",
-                "args": { "direction": "up" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "forward": false,
+                  "select": false,
+                  "extend": 1 
+                }
               },
               {
                 "caption": "Below",
-                "command": "tabnav_add_cursor",
-                "args": { "direction": "down" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "select": false,
+                  "extend": 1 
+                }
+              }
+            ]
+          },
+          {
+            "caption": "Remove cursor from cell...",
+            "id": "tabnav_reduce_selection",
+            "children": [
+              { 
+                "caption": "On left",
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "row",
+                  "extend": -1,
+                  "select": false
+                }
+              },
+              { 
+                "caption": "On right",
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "row",
+                  "forward": false,
+                  "extend": -1,
+                  "select": false
+                }
+              },
+              { 
+                "caption": "On top",
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "extend": -1,
+                  "select": false
+                }
+              },
+              { 
+                "caption": "On bottom",
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "forward": false,
+                  "extend": -1,
+                  "select": false
+                }
               }
             ]
           },
@@ -126,23 +202,29 @@
               },
               {
                 "caption": "On left",
-                "command": "tabnav_select_next",
-                "args": { "direction": "left" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "row",
+                  "forward": false
+                }
               },
               {
                 "caption": "On right",
-                "command": "tabnav_select_next",
-                "args": { "direction": "right" }
+                "command": "tabnav_move",
+                "args": { "scope": "row" }
               },
               {
                 "caption": "Above",
-                "command": "tabnav_select_next",
-                "args": { "direction": "up" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "forward": false
+                }
               },
               {
                 "caption": "Below",
-                "command": "tabnav_select_next",
-                "args": { "direction": "down" }
+                "command": "tabnav_move",
+                "args": { "scope": "column" }
               }
             ]
           },
@@ -178,23 +260,37 @@
             "children": [
               {
                 "caption": "Cell on left",
-                "command": "tabnav_extend_selection",
-                "args": { "direction": "left" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "row",
+                  "forward": false,
+                  "extend": 1
+                }
               },
               {
                 "caption": "Cell on right",
-                "command": "tabnav_extend_selection",
-                "args": { "direction": "right" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "row",
+                  "extend": 1
+                }
               },
               {
                 "caption": "Cell above",
-                "command": "tabnav_extend_selection",
-                "args": { "direction": "up" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "forward": false,
+                  "extend": 1
+                }
               },
               {
                 "caption": "Cell below",
-                "command": "tabnav_extend_selection",
-                "args": { "direction": "down" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "extend": 1
+                }
               },
               {
                 "caption": "Start of row",
@@ -224,23 +320,37 @@
             "children": [
               { 
                 "caption": "To the left",
-                "command": "tabnav_reduce_selection",
-                "args": { "direction": "left" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "row",
+                  "forward": false,
+                  "extend": -1
+                }
               },
               { 
                 "caption": "To the right",
-                "command": "tabnav_reduce_selection",
-                "args": { "direction": "right" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "row",
+                  "extend": -1
+                }
               },
               { 
                 "caption": "Upwards",
-                "command": "tabnav_reduce_selection",
-                "args": { "direction": "up" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "forward": false,
+                  "extend": -1
+                }
               },
               { 
                 "caption": "Downwards",
-                "command": "tabnav_reduce_selection",
-                "args": { "direction": "down" }
+                "command": "tabnav_move",
+                "args": {
+                  "scope": "column",
+                  "extend": -1
+                }
               }
             ]
           },

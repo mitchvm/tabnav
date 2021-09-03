@@ -14,7 +14,6 @@ def get_current_context(view, context_key=None):
 	If a particular context_key is provided, it is the only context configured. If no key is provided,
 	all contexts in the configuration are checked.
 	'''
-	log.debug("Is this thing on?")
 	context_configs = get_merged_context_configs(context_key)
 	if context_key is None:
 		context_key, score = _get_context_by_config_selector(view, context_configs)

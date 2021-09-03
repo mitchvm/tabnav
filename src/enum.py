@@ -18,12 +18,29 @@ cursor_cell_directions = {
 	"left": -1,
 	"right": 1,
 	"up": -1,
-	"down": -1
+	"down": -1,
+	(0,-1): -1,
+	(0,1): 1,
+	(-1,0): -1,
+	(1,0): -1
 }
 
 selection_cell_directions = {
 	"left": -1,
 	"right": 1,
 	"up": 1,
-	"down": 1
+	"down": 1,
+
+}
+
+# Keys: (dr, dc, select). E.g.: (1, 0, True): move to right, select cell
+cell_directions = {
+	(0,-1, True): -1,
+	(0,1, True): 1,
+	(-1,0, True): 1,
+	(1,0, True): 1,
+	(0,-1, False): -1,
+	(0,1, False): 1,
+	(-1,0, False): -1,
+	(1,0, False): -1
 }

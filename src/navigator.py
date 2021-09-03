@@ -21,6 +21,127 @@ class TableNavigator:
 	def view(self):
 		return self._table.view
 
+	def split_selections(self, select=True, capture_level=None, move_cursors=False):
+		if capture_level is None:
+			capture_level = self.capture_level
+		if select:
+			return self._split_selections_into_cells(capture_level)
+		else:
+			return self._split_selections_into_cursors(capture_level, move_cursors)
+
+	def _split_selections_into_cells(self, capture_level):
+		'''Selects all of the cells spanned by the current selection.
+
+		Returns True if the selections changed, or False otherwise.
+		'''
+		selections = list(self.view.sel())
+		selection_lines = list(itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections)))
+		selection_changed = len(selection_lines) != len(selections)
+		cells_by_level = {}
+		for region in selection_lines:
+			point = self._point_from_region(region)
+			r = self.view.rowcol(point)[0]
+			row = self._table[r]
+			line_cells = list(cell for cell in row if cell.intersects(region, full_extent=False))
+			if len(line_cells) == 0:
+				if len(row) > 0:
+					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
+					raise CursorNotInTableError(point)
+				else:
+					# This is a row that contains no cells, but was captured as part of the table.
+					continue
+			exact_match = [cell for cell in line_cells if cell == region]
+			if len(exact_match) == 1:
+				# exact_match != line_cells if the entire cell, including delimiters, is selected
+				line_cells = exact_match
+			else:
+				selection_changed = True
+				if region.size() == 0 and len(line_cells) == 2:
+					# If capturing the entire cell, and a cursor is right before the delimiter
+					line_cells = [self._table.cell_at_point(point)]
+			for cell in line_cells:
+				cells = cells_by_level.get(cell.capture_level, [])
+				cells.append(cell)
+				cells_by_level[cell.capture_level] = cells
+		if selection_changed:
+			cells = []
+			while len(cells) == 0:
+				# If no cells at the desired capture level are selected, go up one level at a time until something is selected
+				cells = list(itertools.chain.from_iterable(c for l, c in cells_by_level.items() if l <= capture_level))
+				capture_level = capture_level + 1
+			self.view.sel().clear()
+			self.view.sel().add_all(list(cells))
+		return selection_changed
+
+	def _split_selections_into_cursors(self, capture_level, move_cursors):
+		'''Puts a cursor in each of the cells spanned by the current selection.
+
+		If move_cursors is True, then all regions in the selection, including 
+		zero-width regions (i.e. cursors) are replaced with new cursors at the
+		"end" of their current cell, based on how that cell's region was
+		constructed. If False, any zero-width regions (cursors) are not moved.
+
+		Returns True if the selections changed, or False otherwise.
+		'''
+		lines = []
+		selection_changed = False
+		for sel in self.view.sel():
+			l = self.view.split_by_newlines(sel)
+			if len(l) > 1:
+				lines.extend(l)
+				selection_changed = True
+			else:
+				# If the selection does not span multiple lines, use the original selection
+				# to maintain the 'direction' of the selection (Comes into play when moving
+				# right, and the current selection is a cell selected in reverse.)
+				lines.append(sel)
+		cursors_by_level = {}
+		for region in lines:
+			point = self._point_from_region(region)
+			r = self.view.rowcol(point)[0]
+			row = self._table[r]
+			line_cells = list(cell for cell in row if cell.intersects(region, full_extent=True))
+			if len(line_cells) == 0:
+				if len(row) > 0:
+					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
+					raise CursorNotInTableError(point)
+				else:
+					# This is a row that contains no cells, but was captured as part of the table.
+					continue
+			exact_match = [cell for cell in line_cells if cell == region]
+			if len(exact_match) == 1:
+				# exact_match != line_cells if the entire cell, including delimiters, is selected
+				line_cells = exact_match
+			if region.size() == 0 and len(line_cells) > 1:
+				# If capture level is cell, and cursor is right between two cells, it intersects both
+				if line_cells[0].direction > 0:
+					line_cells = [line_cells[0]]
+				else:
+					line_cells = [line_cells[1]]
+			if not move_cursors and region.size() == 0:
+				level = line_cells[0].capture_level
+				cursors = cursors_by_level.get(level, [])
+				cursors.append(region)
+				cursors_by_level[level] = cursors
+			else:
+				for cursor, level in ((sublime.Region(cell.b, cell.b), cell.capture_level) for cell in line_cells):
+					cursors = cursors_by_level.get(level, [])
+					cursors.append(cursor)
+					cursors_by_level[level] = cursors
+				if not selection_changed and (region.size() > 0 or len(line_cells) > 1 or line_cells[0].b != point):
+					selection_changed = True
+		if selection_changed:
+			level = capture_level
+			cursors = []
+			while len(cursors) == 0:
+				# If no cells at the desired capture level are selected, go up one level at a time until something is selected
+				cursors = list(itertools.chain.from_iterable(c for l, c in cursors_by_level.items() if l <= level))
+				level = level + 1
+			self.view.sel().clear()
+			self.view.sel().add_all(cursors)
+		return selection_changed
+
+
 	def split_and_move_current_cells(self, move_cursors=True):
 		'''Puts a cursor in each of the cells spanned by the current selection.
 
@@ -136,10 +257,9 @@ class TableNavigator:
 			self.view.sel().add_all(list(cells))
 		return selection_changed
 
-	def get_next_cells(self, direction, offset=None):
+	def get_next_cells(self, direction, offset=None, return_current=True):
 		'''Gets the set of cells that would relative to the currently selected cells
 		in the given direction.
-
 		The new TableCells contain cursor offsets matching the initial selections,
 		unless a specific cursor offset is provided.'''
 		new_cells = []
@@ -152,20 +272,24 @@ class TableNavigator:
 			point = self._point_from_region(region)
 			current_cell = self._table.cell_at_point(point)
 			try:
-				next_cell = self.get_next_cell(current_cell, dr, dc)
+				next_cell = self.get_next_cell(current_cell, dr, dc, return_current)
 			except (RowNotInTableError, RowOutOfFileBounds) as e:
 				log.debug(e.err)
 				# Stop at the last cell in the direction of movement
-				next_cell = current_cell
-			if offset is None: # if not specified, maintain the current cursor's offset within the cell
-				cell_offset = point - current_cell.begin()
-			else:
-				cell_offset = offset
-			next_cell.add_cursor_offset(cell_offset)
-			new_cells.append(next_cell)
+				if return_current:
+					next_cell = current_cell
+				else:
+					next_cell = None
+			if next_cell is not None:
+				if offset is None: # if not specified, maintain the current cursor's offset within the cell
+					cell_offset = point - current_cell.begin()
+				else:
+					cell_offset = offset
+				next_cell.add_cursor_offset(cell_offset)
+				new_cells.append(next_cell)
 		return new_cells
 
-	def get_next_cell(self, current_cell, dr, dc):
+	def get_next_cell(self, current_cell, dr, dc, return_current=True):
 		'''Gets a table cell relative to the given cell.'''
 		# Use current cell's capture level if it is higher than the configured capture level
 		# to allow movement within a higher capture level, if all current selections are 
@@ -177,18 +301,23 @@ class TableNavigator:
 			target_row = target_row + dr
 			target_col = target_col + dc
 			if target_col < 0: # direction == LEFT
-				return current_cell
+				if return_current:
+					return current_cell
+				else:
+					return None
 			try:
 				cell = self._table[(target_row, target_col)]
 				if cell.capture_level <= capture_level: 
 					return cell
 			except ColumnIndexError as e:
 				if dc != 0:
-					return current_cell
+					if return_current:
+						return current_cell
+					else:
+						return None
 				# This row doesn't have enough cells to find the one we're looking for.
 				# In some contexts this is normal; in others, it is a malformed table
 				log.debug(e.err)
-
 
 	def get_end_cells(self, direction):
 		'''Gets the last cells in the current table in the given direction relative to the current cells.'''
