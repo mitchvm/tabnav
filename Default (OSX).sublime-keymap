@@ -250,19 +250,22 @@
 //     { 
 //         // select row cells
 //         "keys": ["command+shift+l"],
-//         "command": "tabnav_select_row",
+//         "command": "tabnav_select",
+//         "args": { "scope": "row" },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // select column cells
 //         "keys": ["command+shift+c"],
-//         "command": "tabnav_select_column",
+//         "command": "tabnav_select",
+//         "args": { "scope": "column" },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
 //         // select all table cells
 //         "keys": ["command+ctrl+shift+c"],
-//         "command": "tabnav_select_all",
+//         "command": "tabnav_select",
+//         "args": { "scope": "table" },
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     // =================== End: TabNav Key Bindings =====================

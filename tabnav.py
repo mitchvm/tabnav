@@ -34,6 +34,20 @@ def apply_listener_boolean_operator(nominal, operator, operand):
 			return nominal
 
 
+def select_cells(view, selected_cells, capture_level, select=True):
+		cells = [c for c in selected_cells if c.capture_level <= capture_level]
+		if len(cells) == 0:
+			# If no cells at the configured capture level are selected, then select everything
+			cells = selected_cells
+		if len(cells) > 0:
+			view.sel().clear()
+			if select:
+				view.sel().add_all(cells)
+			else:
+				cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in cells)))
+				view.sel().add_all(cursors)
+
+
 class TabnavCommand(sublime_plugin.TextCommand):
 	'''Base command for all of the other TabNav commands. Doesn't do anything on its own.'''
 	def run(self, edit, context=None):
@@ -45,7 +59,8 @@ class TabnavCommand(sublime_plugin.TextCommand):
 		if len(self.view.sel()) == 0:
 			return False
 		context_key = args.get('context', None)
-		self.context = get_current_context(self.view, context_key)
+		capture_level = args.get('capture_level', None)
+		self.context = get_current_context(self.view, context_key, capture_level)
 		return self.context is not None
 
 	def init_table(self, cell_direction=1):
@@ -110,7 +125,58 @@ class TabnavMoveCommand(TabnavCommand):
 			for region in regions_to_remove:
 				self.view.sel().subtract(region)
 
+class TabnavSelectCommand(TabnavCommand):
+	def run(self, edit, scope, forward=True, select=True, context=None, capture_level=None):
+		# context and capture_level get used when building the Context object in the TabnavCommand.is_enabled method.
+		if forward:
+			cell_direction = 1
+			offset = -1
+		else:
+			cell_direction = -1
+			offset = 0
+		try:
+			self.init_table(cell_direction)
+			if scope == "cell":
+				self.tabnav.split_selections(select, move_cursors=True)
+				return
+			cells = []
+			if scope == "row":
+				self.tabnav.split_selections(select, move_cursors=True)
+				cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
+			elif scope == "column":
+				cells = self._get_column_cells(select)
+			elif scope == "table":
+				cells = self._get_all_cells(select)
+			if not select:
+				for cell in cells:
+					cell.add_cursor_offset(offset)
+			select_cells(self.view, cells, self.context.capture_level, select)
+		except (CursorNotInTableError, RowNotInTableError) as e:
+			log.info(e.err)
 
+	def _get_column_cells(self, select):
+		max_level = max(v[0] for v in capture_levels.values())
+		self.tabnav.split_selections(select, capture_level=max_level, move_cursors=True)
+		columns = []
+		for region in self.view.sel():
+			cell = self.table.cell_at_point(region.end())
+			containing_columns = [col for col in columns if col.contains(cell)]
+			if len(containing_columns) > 0:
+				continue # This cell is already contained in a previously captured column
+			columns.append(self.tabnav.get_table_column(cell))
+		return [cell for col in columns for cell in col]
+
+	def _get_all_cells(self, select):
+		max_level = max(v[0] for v in capture_levels.values())
+		self.tabnav.split_selections(select, capture_level=max_level, move_cursors=True)
+		columns = []
+		# Expand the first column in each disjoint table to parse all rows of all selected tables
+		for cell in (row[0] for row in self.table.rows):
+			containing_columns = [col for col in columns if col.contains(cell)]
+			if len(containing_columns) > 0:
+				continue # This cell is already contained in a previously captured column
+			columns.append(self.tabnav.get_table_column(cell))
+		return list(itertools.chain.from_iterable(row for row in self.table.rows))
 
 
 class TabnavMoveCursorCurrentCellCommand(TabnavCommand):
@@ -265,16 +331,6 @@ class TabnavReduceSelectionCommand(TabnavCommand):
 				for cell in cells_to_remove:
 					self.view.sel().subtract(cell)
 				self.view.show(self.view.sel())
-
-
-def select_cells(view, selected_cells, capture_level):
-		cells = [c for c in selected_cells if c.capture_level <= capture_level]
-		if len(cells) == 0:
-			# If no cells at the configured capture level are selected, then select everything
-			cells = selected_cells
-		if len(cells) > 0:
-			view.sel().clear()
-			view.sel().add_all(cells)
 
 
 class TabnavJumpEndCommand(TabnavCommand):

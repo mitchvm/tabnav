@@ -247,23 +247,26 @@
 
 //     // #### TabNav: select row/column/table ####
 
-//     { 
-//         // select row cells
-//         "keys": ["ctrl+shift+l"],
-//         "command": "tabnav_select_row",
-//         "context": [ { "key": "is_tabnav_context"} ]
-//     },
-//     { 
-//         // select column cells
-//         "keys": ["ctrl+shift+c"],
-//         "command": "tabnav_select_column",
-//         "context": [ { "key": "is_tabnav_context"} ]
-//     },
-//     { 
-//         // select all table cells
-//         "keys": ["ctrl+alt+shift+c"],
-//         "command": "tabnav_select_all",
-//         "context": [ { "key": "is_tabnav_context"} ]
-//     },
+//    { 
+//        // select row cells
+//        "keys": ["ctrl+shift+l"],
+//        "command": "tabnav_select",
+//        "args": { "scope": "row" },
+//        "context": [ { "key": "is_tabnav_context"} ]
+//    },
+//    { 
+//        // select column cells
+//        "keys": ["ctrl+shift+c"],
+//        "command": "tabnav_select",
+//        "args": { "scope": "column" },
+//        "context": [ { "key": "is_tabnav_context"} ]
+//    },
+//    { 
+//        // select all table cells
+//        "keys": ["ctrl+alt+shift+c"],
+//        "command": "tabnav_select",
+//        "args": { "scope": "table" },
+//        "context": [ { "key": "is_tabnav_context"} ]
+//    },
 //     // =================== End: TabNav Key Bindings =====================
 // ]

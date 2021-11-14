@@ -198,7 +198,8 @@
             "children": [
               {
                 "caption": "Current",
-                "command": "tabnav_select_current"
+                "command": "tabnav_select",
+                "args": { "scope": "cell" }
               },
               {
                 "caption": "On left",
@@ -360,15 +361,18 @@
             "children": [
               {
                 "caption": "Row cells",
-                "command": "tabnav_select_row"
+                "command": "tabnav_select",
+                "args": { "scope": "row" }
               },
               {
                 "caption": "Column cells",
-                "command": "tabnav_select_column"
+                "command": "tabnav_select",
+                "args": { "scope": "column" }
               },
               {
                 "caption": "All table cells",
-                "command": "tabnav_select_all"
+                "command": "tabnav_select",
+                "args": { "scope": "table" }
               }
             ]
           },

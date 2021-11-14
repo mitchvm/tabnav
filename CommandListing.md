@@ -70,14 +70,16 @@ Moves the current selections to the outer-most cell within the table in any dire
 
 When invoked, if the current Sublime Text selections aren't a set of individual cursors (if `select:false`) or regions with full table cells selected (if `select:true`), then the initial invocation splits the current selections to achieve that state &ndash; similar to [`tabnav_select`](#tabnav_select). Subsequent invocations perform the movements.
 
-When moving selections, if the outer-most cell in the given direction is at a higher capture level than the current configuration, then the outer-most cell at the current capture level will be selected. For example, if the current capture level is `content` and the outer-most cell is a markup cell, then the second-to-last cell is selected (provided it is a content cell). Similarly, when extending selections, cells of a higher capture level are omitted from selections, and when reducing selections, gaps in regions due to cells of higher capture levels are spanned.
+The scope `cell`, is provided primarily to allow selecting from the current cursor position to the start/end of the current cell. Using `scope:cell` together with `select:true` and/or `extend:false` results in behaviour equivalent to the [`tabnav_select` command](#command-tabnav_select) with `scope:cell`.
+
+When moving selections, if the outer-most cell in the given direction is at a higher capture level than the current configuration, then the outer-most cell at the current capture level will be selected. For example, if the current capture level is `content` and the outer-most cell is a markup cell, then the second-to-last cell is selected (provided it is a content cell). Similarly, when extending selections, cells of a higher capture level are omitted from selections.
 
 If the current cell is the last cell (at the current capture level) in the direction of movement, then selection of the cell is not changed. However, each cell's movement is determined individually, so some cells may move while others may not. This command is idempotent. That is, regardless of how many consecutive invocations with the same parameters are made, the resulting Sublime Text regions/cursors will not change.s
 
 #### Parameters
 
 <dl>
-    <dt><strong>scope</strong> : { "row", "column" }</dt>
+    <dt><strong>scope</strong> : { "cell", "row", "column" }</dt>
     <dd>
         <p><strong>Required</strong>. Indicates if movement should be within the same rows (horizontally) or column (vertically).</p>
     </dd>

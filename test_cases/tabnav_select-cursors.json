@@ -1,0 +1,986 @@
+[
+	{
+		"id": "MU6E",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select all cursors, first column",
+		"initial_selections": [{"a": 7, "b": 7}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "64ME",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select all cursors, region spanning multiple columns",
+		"initial_selections": [{"a": 105, "b": 116}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "JKHR",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select all cursors, multiple disjoint selections",
+		"initial_selections": [{"a": 106, "b": 106}, {"a": 255, "b": 268}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "QSWV",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select all cursors, markup excluded - multiple selections, one in markup row",
+		"initial_selections": [{"a": 69, "b": 69}, {"a": 106, "b": 106}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "SHSA",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select all cursors, markup excluded - only selection in markup row",
+		"initial_selections": [{"a": 68, "b": 68}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "AGW7",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select all cursors, markup included",
+		"initial_selections": [{"a": 198, "b": 198}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "5BWQ",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select all cursors, selection in column with missing cell",
+		"initial_selections": [{"a": 221, "b": 221}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VQST",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select all cursors, table already selected",
+		"initial_selections": [{"a": 1, "b": 12}, {"a": 13, "b": 24}, {"a": 25, "b": 36}, {"a": 37, "b": 48}, {"a": 101, "b": 111}, {"a": 112, "b": 119}, {"a": 120, "b": 131}, {"a": 132, "b": 146}, {"a": 149, "b": 191}, {"a": 192, "b": 205}, {"a": 206, "b": 206}, {"a": 207, "b": 224}, {"a": 227, "b": 242}, {"a": 243, "b": 247}, {"a": 248, "b": 279}, {"a": 282, "b": 307}, {"a": 308, "b": 311}, {"a": 312, "b": 346}, {"a": 347, "b": 354}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "PL7V",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select all cursors, select multiple tables",
+		"initial_selections": [{"a": 687, "b": 693}, {"a": 1069, "b": 1076}, {"a": 2091, "b": 2095}],
+		"expected_selections": [{"a": 116, "b": 116}, {"a": 123, "b": 123}, {"a": 142, "b": 142}, {"a": 156, "b": 156}, {"a": 170, "b": 170}, {"a": 178, "b": 178}, {"a": 284, "b": 284}, {"a": 291, "b": 291}, {"a": 310, "b": 310}, {"a": 324, "b": 324}, {"a": 338, "b": 338}, {"a": 346, "b": 346}, {"a": 368, "b": 368}, {"a": 375, "b": 375}, {"a": 394, "b": 394}, {"a": 408, "b": 408}, {"a": 422, "b": 422}, {"a": 430, "b": 430}, {"a": 452, "b": 452}, {"a": 459, "b": 459}, {"a": 478, "b": 478}, {"a": 492, "b": 492}, {"a": 506, "b": 506}, {"a": 514, "b": 514}, {"a": 536, "b": 536}, {"a": 543, "b": 543}, {"a": 562, "b": 562}, {"a": 576, "b": 576}, {"a": 590, "b": 590}, {"a": 598, "b": 598}, {"a": 620, "b": 620}, {"a": 627, "b": 627}, {"a": 646, "b": 646}, {"a": 660, "b": 660}, {"a": 674, "b": 674}, {"a": 682, "b": 682}, {"a": 704, "b": 704}, {"a": 711, "b": 711}, {"a": 730, "b": 730}, {"a": 744, "b": 744}, {"a": 758, "b": 758}, {"a": 766, "b": 766}, {"a": 788, "b": 788}, {"a": 795, "b": 795}, {"a": 814, "b": 814}, {"a": 828, "b": 828}, {"a": 842, "b": 842}, {"a": 850, "b": 850}, {"a": 872, "b": 872}, {"a": 879, "b": 879}, {"a": 898, "b": 898}, {"a": 912, "b": 912}, {"a": 926, "b": 926}, {"a": 934, "b": 934}, {"a": 956, "b": 956}, {"a": 963, "b": 963}, {"a": 982, "b": 982}, {"a": 996, "b": 996}, {"a": 1010, "b": 1010}, {"a": 1018, "b": 1018}, {"a": 1040, "b": 1040}, {"a": 1047, "b": 1047}, {"a": 1066, "b": 1066}, {"a": 1080, "b": 1080}, {"a": 1094, "b": 1094}, {"a": 1102, "b": 1102}, {"a": 1124, "b": 1124}, {"a": 1131, "b": 1131}, {"a": 1150, "b": 1150}, {"a": 1164, "b": 1164}, {"a": 1178, "b": 1178}, {"a": 1186, "b": 1186}, {"a": 1208, "b": 1208}, {"a": 1215, "b": 1215}, {"a": 1234, "b": 1234}, {"a": 1248, "b": 1248}, {"a": 1262, "b": 1262}, {"a": 1270, "b": 1270}, {"a": 1292, "b": 1292}, {"a": 1299, "b": 1299}, {"a": 1318, "b": 1318}, {"a": 1332, "b": 1332}, {"a": 1346, "b": 1346}, {"a": 1354, "b": 1354}, {"a": 1376, "b": 1376}, {"a": 1383, "b": 1383}, {"a": 1402, "b": 1402}, {"a": 1416, "b": 1416}, {"a": 1430, "b": 1430}, {"a": 1438, "b": 1438}, {"a": 1460, "b": 1460}, {"a": 1467, "b": 1467}, {"a": 1486, "b": 1486}, {"a": 1500, "b": 1500}, {"a": 1514, "b": 1514}, {"a": 1522, "b": 1522}, {"a": 1544, "b": 1544}, {"a": 1551, "b": 1551}, {"a": 1570, "b": 1570}, {"a": 1584, "b": 1584}, {"a": 1598, "b": 1598}, {"a": 1606, "b": 1606}, {"a": 1628, "b": 1628}, {"a": 1635, "b": 1635}, {"a": 1654, "b": 1654}, {"a": 1668, "b": 1668}, {"a": 1682, "b": 1682}, {"a": 1690, "b": 1690}, {"a": 1712, "b": 1712}, {"a": 1719, "b": 1719}, {"a": 1738, "b": 1738}, {"a": 1752, "b": 1752}, {"a": 1766, "b": 1766}, {"a": 1774, "b": 1774}, {"a": 1796, "b": 1796}, {"a": 1803, "b": 1803}, {"a": 1822, "b": 1822}, {"a": 1836, "b": 1836}, {"a": 1850, "b": 1850}, {"a": 1858, "b": 1858}, {"a": 1875, "b": 1875}, {"a": 1889, "b": 1889}, {"a": 1935, "b": 1935}, {"a": 1949, "b": 1949}, {"a": 1965, "b": 1965}, {"a": 1979, "b": 1979}, {"a": 1995, "b": 1995}, {"a": 2009, "b": 2009}, {"a": 2025, "b": 2025}, {"a": 2039, "b": 2039}, {"a": 2055, "b": 2055}, {"a": 2069, "b": 2069}, {"a": 2085, "b": 2085}, {"a": 2099, "b": 2099}, {"a": 2115, "b": 2115}, {"a": 2129, "b": 2129}, {"a": 2145, "b": 2145}, {"a": 2159, "b": 2159}, {"a": 2175, "b": 2175}, {"a": 2189, "b": 2189}, {"a": 2205, "b": 2205}, {"a": 2219, "b": 2219}, {"a": 2235, "b": 2235}, {"a": 2249, "b": 2249}, {"a": 2265, "b": 2265}, {"a": 2279, "b": 2279}, {"a": 2295, "b": 2295}, {"a": 2309, "b": 2309}, {"a": 2325, "b": 2325}, {"a": 2339, "b": 2339}, {"a": 2355, "b": 2355}, {"a": 2369, "b": 2369}, {"a": 2385, "b": 2385}, {"a": 2399, "b": 2399}, {"a": 2415, "b": 2415}, {"a": 2429, "b": 2429}, {"a": 2445, "b": 2445}, {"a": 2459, "b": 2459}, {"a": 2475, "b": 2475}, {"a": 2489, "b": 2489}, {"a": 2505, "b": 2505}, {"a": 2519, "b": 2519}, {"a": 2535, "b": 2535}, {"a": 2549, "b": 2549}, {"a": 2565, "b": 2565}, {"a": 2579, "b": 2579}, {"a": 2595, "b": 2595}, {"a": 2609, "b": 2609}, {"a": 2625, "b": 2625}, {"a": 2639, "b": 2639}, {"a": 2655, "b": 2655}, {"a": 2669, "b": 2669}, {"a": 2685, "b": 2685}, {"a": 2699, "b": 2699}, {"a": 2715, "b": 2715}, {"a": 2729, "b": 2729}, {"a": 2745, "b": 2745}, {"a": 2759, "b": 2759}, {"a": 2775, "b": 2775}, {"a": 2789, "b": 2789}, {"a": 2805, "b": 2805}, {"a": 2819, "b": 2819}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "ORCC",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Select all cursors, select borderless table",
+		"initial_selections": [{"a": 73, "b": 75}],
+		"expected_selections": [{"a": 10, "b": 10}, {"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 78, "b": 78}, {"a": 90, "b": 90}, {"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 124, "b": 124}, {"a": 135, "b": 135}, {"a": 146, "b": 146}, {"a": 158, "b": 158}, {"a": 169, "b": 169}, {"a": 180, "b": 180}, {"a": 192, "b": 192}, {"a": 203, "b": 203}, {"a": 214, "b": 214}, {"a": 226, "b": 226}, {"a": 237, "b": 237}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "2JBO",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select all cursors, capture cell - select all",
+		"initial_selections": [{"a": 795, "b": 814}],
+		"expected_selections": [{"a": 116, "b": 116}, {"a": 123, "b": 123}, {"a": 142, "b": 142}, {"a": 156, "b": 156}, {"a": 170, "b": 170}, {"a": 178, "b": 178}, {"a": 200, "b": 200}, {"a": 207, "b": 207}, {"a": 226, "b": 226}, {"a": 240, "b": 240}, {"a": 254, "b": 254}, {"a": 262, "b": 262}, {"a": 284, "b": 284}, {"a": 291, "b": 291}, {"a": 310, "b": 310}, {"a": 324, "b": 324}, {"a": 338, "b": 338}, {"a": 346, "b": 346}, {"a": 368, "b": 368}, {"a": 375, "b": 375}, {"a": 394, "b": 394}, {"a": 408, "b": 408}, {"a": 422, "b": 422}, {"a": 430, "b": 430}, {"a": 452, "b": 452}, {"a": 459, "b": 459}, {"a": 478, "b": 478}, {"a": 492, "b": 492}, {"a": 506, "b": 506}, {"a": 514, "b": 514}, {"a": 536, "b": 536}, {"a": 543, "b": 543}, {"a": 562, "b": 562}, {"a": 576, "b": 576}, {"a": 590, "b": 590}, {"a": 598, "b": 598}, {"a": 620, "b": 620}, {"a": 627, "b": 627}, {"a": 646, "b": 646}, {"a": 660, "b": 660}, {"a": 674, "b": 674}, {"a": 682, "b": 682}, {"a": 704, "b": 704}, {"a": 711, "b": 711}, {"a": 730, "b": 730}, {"a": 744, "b": 744}, {"a": 758, "b": 758}, {"a": 766, "b": 766}, {"a": 788, "b": 788}, {"a": 795, "b": 795}, {"a": 814, "b": 814}, {"a": 828, "b": 828}, {"a": 842, "b": 842}, {"a": 850, "b": 850}, {"a": 872, "b": 872}, {"a": 879, "b": 879}, {"a": 898, "b": 898}, {"a": 912, "b": 912}, {"a": 926, "b": 926}, {"a": 934, "b": 934}, {"a": 956, "b": 956}, {"a": 963, "b": 963}, {"a": 982, "b": 982}, {"a": 996, "b": 996}, {"a": 1010, "b": 1010}, {"a": 1018, "b": 1018}, {"a": 1040, "b": 1040}, {"a": 1047, "b": 1047}, {"a": 1066, "b": 1066}, {"a": 1080, "b": 1080}, {"a": 1094, "b": 1094}, {"a": 1102, "b": 1102}, {"a": 1124, "b": 1124}, {"a": 1131, "b": 1131}, {"a": 1150, "b": 1150}, {"a": 1164, "b": 1164}, {"a": 1178, "b": 1178}, {"a": 1186, "b": 1186}, {"a": 1208, "b": 1208}, {"a": 1215, "b": 1215}, {"a": 1234, "b": 1234}, {"a": 1248, "b": 1248}, {"a": 1262, "b": 1262}, {"a": 1270, "b": 1270}, {"a": 1292, "b": 1292}, {"a": 1299, "b": 1299}, {"a": 1318, "b": 1318}, {"a": 1332, "b": 1332}, {"a": 1346, "b": 1346}, {"a": 1354, "b": 1354}, {"a": 1376, "b": 1376}, {"a": 1383, "b": 1383}, {"a": 1402, "b": 1402}, {"a": 1416, "b": 1416}, {"a": 1430, "b": 1430}, {"a": 1438, "b": 1438}, {"a": 1460, "b": 1460}, {"a": 1467, "b": 1467}, {"a": 1486, "b": 1486}, {"a": 1500, "b": 1500}, {"a": 1514, "b": 1514}, {"a": 1522, "b": 1522}, {"a": 1544, "b": 1544}, {"a": 1551, "b": 1551}, {"a": 1570, "b": 1570}, {"a": 1584, "b": 1584}, {"a": 1598, "b": 1598}, {"a": 1606, "b": 1606}, {"a": 1628, "b": 1628}, {"a": 1635, "b": 1635}, {"a": 1654, "b": 1654}, {"a": 1668, "b": 1668}, {"a": 1682, "b": 1682}, {"a": 1690, "b": 1690}, {"a": 1712, "b": 1712}, {"a": 1719, "b": 1719}, {"a": 1738, "b": 1738}, {"a": 1752, "b": 1752}, {"a": 1766, "b": 1766}, {"a": 1774, "b": 1774}, {"a": 1796, "b": 1796}, {"a": 1803, "b": 1803}, {"a": 1822, "b": 1822}, {"a": 1836, "b": 1836}, {"a": 1850, "b": 1850}, {"a": 1858, "b": 1858}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "J4UI",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column cursors, first column",
+		"initial_selections": [{"a": 7, "b": 7}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 111, "b": 111}, {"a": 191, "b": 191}, {"a": 242, "b": 242}, {"a": 307, "b": 307}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "SD5X",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column cursors, region spanning multiple columns",
+		"initial_selections": [{"a": 105, "b": 116}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 307, "b": 307}, {"a": 311, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HK27",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column cursors, multiple disjoint selections",
+		"initial_selections": [{"a": 106, "b": 106}, {"a": 255, "b": 268}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 36, "b": 36}, {"a": 111, "b": 111}, {"a": 131, "b": 131}, {"a": 191, "b": 191}, {"a": 206, "b": 206}, {"a": 242, "b": 242}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 346, "b": 346}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "S2EH",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column cursors, multiple selections, one in markup row",
+		"initial_selections": [{"a": 69, "b": 69}, {"a": 106, "b": 106}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 307, "b": 307}, {"a": 311, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "BMPA",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column cursors, only selection in markup row",
+		"initial_selections": [{"a": 68, "b": 68}],
+		"expected_selections": [{"a": 24, "b": 24}, {"a": 119, "b": 119}, {"a": 205, "b": 205}, {"a": 247, "b": 247}, {"a": 311, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "5SCC",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown05_multiple_markup.md",
+		"description": "Select column cursors, multiple markup in sequence jumped",
+		"initial_selections": [{"a": 581, "b": 581}],
+		"expected_selections": [{"a": 82, "b": 82}, {"a": 166, "b": 166}, {"a": 250, "b": 250}, {"a": 334, "b": 334}, {"a": 418, "b": 418}, {"a": 502, "b": 502}, {"a": 586, "b": 586}, {"a": 670, "b": 670}, {"a": 754, "b": 754}, {"a": 1090, "b": 1090}, {"a": 1174, "b": 1174}, {"a": 1258, "b": 1258}, {"a": 1342, "b": 1342}, {"a": 1426, "b": 1426}, {"a": 1510, "b": 1510}, {"a": 1594, "b": 1594}, {"a": 1678, "b": 1678}, {"a": 1762, "b": 1762}, {"a": 1846, "b": 1846}, {"a": 1930, "b": 1930}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "RGZI",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column cursors, markup included",
+		"initial_selections": [{"a": 198, "b": 198}],
+		"expected_selections": [{"a": 24, "b": 24}, {"a": 74, "b": 74}, {"a": 119, "b": 119}, {"a": 205, "b": 205}, {"a": 247, "b": 247}, {"a": 311, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "3WF4",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column cursors, column with missing cell",
+		"initial_selections": [{"a": 221, "b": 221}],
+		"expected_selections": [{"a": 48, "b": 48}, {"a": 146, "b": 146}, {"a": 224, "b": 224}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "RSWO",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column cursors, column already selected",
+		"initial_selections": [{"a": 13, "b": 24}, {"a": 112, "b": 119}, {"a": 192, "b": 205}, {"a": 243, "b": 247}, {"a": 308, "b": 311}],
+		"expected_selections": [{"a": 24, "b": 24}, {"a": 119, "b": 119}, {"a": 205, "b": 205}, {"a": 247, "b": 247}, {"a": 311, "b": 311}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "SLNT",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select column cursors, last column",
+		"initial_selections": [{"a": 848, "b": 848}],
+		"expected_selections": [{"a": 178, "b": 178}, {"a": 346, "b": 346}, {"a": 430, "b": 430}, {"a": 514, "b": 514}, {"a": 598, "b": 598}, {"a": 682, "b": 682}, {"a": 766, "b": 766}, {"a": 850, "b": 850}, {"a": 934, "b": 934}, {"a": 1018, "b": 1018}, {"a": 1102, "b": 1102}, {"a": 1186, "b": 1186}, {"a": 1270, "b": 1270}, {"a": 1354, "b": 1354}, {"a": 1438, "b": 1438}, {"a": 1522, "b": 1522}, {"a": 1606, "b": 1606}, {"a": 1690, "b": 1690}, {"a": 1774, "b": 1774}, {"a": 1858, "b": 1858}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "BBHI",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select column cursors, non-overlapping columns in multiple tables",
+		"initial_selections": [{"a": 687, "b": 693}, {"a": 1069, "b": 1076}, {"a": 2091, "b": 2095}],
+		"expected_selections": [{"a": 116, "b": 116}, {"a": 156, "b": 156}, {"a": 284, "b": 284}, {"a": 324, "b": 324}, {"a": 368, "b": 368}, {"a": 408, "b": 408}, {"a": 452, "b": 452}, {"a": 492, "b": 492}, {"a": 536, "b": 536}, {"a": 576, "b": 576}, {"a": 620, "b": 620}, {"a": 660, "b": 660}, {"a": 704, "b": 704}, {"a": 744, "b": 744}, {"a": 788, "b": 788}, {"a": 828, "b": 828}, {"a": 872, "b": 872}, {"a": 912, "b": 912}, {"a": 956, "b": 956}, {"a": 996, "b": 996}, {"a": 1040, "b": 1040}, {"a": 1080, "b": 1080}, {"a": 1124, "b": 1124}, {"a": 1164, "b": 1164}, {"a": 1208, "b": 1208}, {"a": 1248, "b": 1248}, {"a": 1292, "b": 1292}, {"a": 1332, "b": 1332}, {"a": 1376, "b": 1376}, {"a": 1416, "b": 1416}, {"a": 1460, "b": 1460}, {"a": 1500, "b": 1500}, {"a": 1544, "b": 1544}, {"a": 1584, "b": 1584}, {"a": 1628, "b": 1628}, {"a": 1668, "b": 1668}, {"a": 1712, "b": 1712}, {"a": 1752, "b": 1752}, {"a": 1796, "b": 1796}, {"a": 1836, "b": 1836}, {"a": 1889, "b": 1889}, {"a": 1949, "b": 1949}, {"a": 1979, "b": 1979}, {"a": 2009, "b": 2009}, {"a": 2039, "b": 2039}, {"a": 2069, "b": 2069}, {"a": 2099, "b": 2099}, {"a": 2129, "b": 2129}, {"a": 2159, "b": 2159}, {"a": 2189, "b": 2189}, {"a": 2219, "b": 2219}, {"a": 2249, "b": 2249}, {"a": 2279, "b": 2279}, {"a": 2309, "b": 2309}, {"a": 2339, "b": 2339}, {"a": 2369, "b": 2369}, {"a": 2399, "b": 2399}, {"a": 2429, "b": 2429}, {"a": 2459, "b": 2459}, {"a": 2489, "b": 2489}, {"a": 2519, "b": 2519}, {"a": 2549, "b": 2549}, {"a": 2579, "b": 2579}, {"a": 2609, "b": 2609}, {"a": 2639, "b": 2639}, {"a": 2669, "b": 2669}, {"a": 2699, "b": 2699}, {"a": 2729, "b": 2729}, {"a": 2759, "b": 2759}, {"a": 2789, "b": 2789}, {"a": 2819, "b": 2819}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "Y2CY",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Select column cursors, select columns in borderless table",
+		"initial_selections": [{"a": 73, "b": 75}, {"a": 95, "b": 97}],
+		"expected_selections": [{"a": 10, "b": 10}, {"a": 33, "b": 33}, {"a": 78, "b": 78}, {"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 135, "b": 135}, {"a": 146, "b": 146}, {"a": 169, "b": 169}, {"a": 180, "b": 180}, {"a": 203, "b": 203}, {"a": 214, "b": 214}, {"a": 237, "b": 237}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "TJSM",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select column cursors, entire cell selected forwards",
+		"initial_selections": [{"a": 1299, "b": 1318}],
+		"expected_selections": [{"a": 142, "b": 142}, {"a": 226, "b": 226}, {"a": 310, "b": 310}, {"a": 394, "b": 394}, {"a": 478, "b": 478}, {"a": 562, "b": 562}, {"a": 646, "b": 646}, {"a": 730, "b": 730}, {"a": 814, "b": 814}, {"a": 898, "b": 898}, {"a": 982, "b": 982}, {"a": 1066, "b": 1066}, {"a": 1150, "b": 1150}, {"a": 1234, "b": 1234}, {"a": 1318, "b": 1318}, {"a": 1402, "b": 1402}, {"a": 1486, "b": 1486}, {"a": 1570, "b": 1570}, {"a": 1654, "b": 1654}, {"a": 1738, "b": 1738}, {"a": 1822, "b": 1822}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "KZAD",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "column"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select column cursors, entire cell selected in reverse",
+		"initial_selections": [{"a": 1318, "b": 1299}],
+		"expected_selections": [{"a": 142, "b": 142}, {"a": 226, "b": 226}, {"a": 310, "b": 310}, {"a": 394, "b": 394}, {"a": 478, "b": 478}, {"a": 562, "b": 562}, {"a": 646, "b": 646}, {"a": 730, "b": 730}, {"a": 814, "b": 814}, {"a": 898, "b": 898}, {"a": 982, "b": 982}, {"a": 1066, "b": 1066}, {"a": 1150, "b": 1150}, {"a": 1234, "b": 1234}, {"a": 1318, "b": 1318}, {"a": 1402, "b": 1402}, {"a": 1486, "b": 1486}, {"a": 1570, "b": 1570}, {"a": 1654, "b": 1654}, {"a": 1738, "b": 1738}, {"a": 1822, "b": 1822}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "EMIH",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "First cell of row",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "HEXC",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Last cell of row",
+		"initial_selections": [{"a": 137, "b": 143}],
+		"expected_selections": [{"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "LLEV",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Multiple disjoint selections",
+		"initial_selections": [{"a": 115, "b": 115}, {"a": 125, "b": 125}, {"a": 318, "b": 318}],
+		"expected_selections": [{"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "K2OW",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "markup excluded - region spanning markup row",
+		"initial_selections": [{"a": 19, "b": 123}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "3IPV",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "markup excluded - only markup row selected",
+		"initial_selections": [{"a": 66, "b": 66}],
+		"expected_selections": [{"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "ISAC",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "markup included - region spanning markup row",
+		"initial_selections": [{"a": 20, "b": 124}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "32SD",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Rows with different numbers of cells",
+		"initial_selections": [{"a": 157, "b": 157}, {"a": 235, "b": 235}],
+		"expected_selections": [{"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "ENXQ",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Row already selected",
+		"initial_selections": [{"a": 149, "b": 191}, {"a": 192, "b": 205}, {"a": 206, "b": 206}, {"a": 207, "b": 224}],
+		"expected_selections": [{"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "VXOI",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Selections cursors in multiple tables",
+		"initial_selections": [{"a": 614, "b": 785}, {"a": 2167, "b": 2167}, {"a": 2376, "b": 2376}],
+		"expected_selections": [{"a": 620, "b": 620}, {"a": 627, "b": 627}, {"a": 646, "b": 646}, {"a": 660, "b": 660}, {"a": 674, "b": 674}, {"a": 682, "b": 682}, {"a": 704, "b": 704}, {"a": 711, "b": 711}, {"a": 730, "b": 730}, {"a": 744, "b": 744}, {"a": 758, "b": 758}, {"a": 766, "b": 766}, {"a": 788, "b": 788}, {"a": 795, "b": 795}, {"a": 814, "b": 814}, {"a": 828, "b": 828}, {"a": 842, "b": 842}, {"a": 850, "b": 850}, {"a": 2175, "b": 2175}, {"a": 2189, "b": 2189}, {"a": 2385, "b": 2385}, {"a": 2399, "b": 2399}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "AVFI",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Select row cursors in borderless table",
+		"initial_selections": [{"a": 83, "b": 152}],
+		"expected_selections": [{"a": 78, "b": 78}, {"a": 90, "b": 90}, {"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 124, "b": 124}, {"a": 135, "b": 135}, {"a": 146, "b": 146}, {"a": 158, "b": 158}, {"a": 169, "b": 169}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "JMKR",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected forwards",
+		"initial_selections": [{"a": 795, "b": 814}],
+		"expected_selections": [{"a": 788, "b": 788}, {"a": 795, "b": 795}, {"a": 814, "b": 814}, {"a": 828, "b": 828}, {"a": 842, "b": 842}, {"a": 850, "b": 850}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "OTWV",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "row"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Entire cell selected in reverse",
+		"initial_selections": [{"a": 814, "b": 795}],
+		"expected_selections": [{"a": 788, "b": 788}, {"a": 795, "b": 795}, {"a": 814, "b": 814}, {"a": 828, "b": 828}, {"a": 842, "b": 842}, {"a": 850, "b": 850}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "V6IP",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, single cursor in first cell",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 12, "b": 12}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "JJMF",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, single cursor in last cell of row",
+		"initial_selections": [{"a": 138, "b": 138}],
+		"expected_selections": [{"a": 146, "b": 146}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "YKPZ",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, single cursor in line markup cell",
+		"initial_selections": [{"a": 56, "b": 56}],
+		"expected_selections": [{"a": 62, "b": 62}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "RYOT",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, single cursor at start of cell",
+		"initial_selections": [{"a": 112, "b": 112}],
+		"expected_selections": [{"a": 119, "b": 119}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "DLGL",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, single cursor at end of cell",
+		"initial_selections": [{"a": 191, "b": 191}],
+		"expected_selections": [{"a": 191, "b": 191}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "Z7XW",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, single cursor in empty cell",
+		"initial_selections": [{"a": 206, "b": 206}],
+		"expected_selections": [{"a": 206, "b": 206}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "6GVD",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, single cursor after last pipe (not in table)",
+		"initial_selections": [{"a": 280, "b": 280}],
+		"expected_selections": [{"a": 280, "b": 280}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "JMVE",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, single cursor before first pipe (not in table)",
+		"initial_selections": [{"a": 100, "b": 100}],
+		"expected_selections": [{"a": 100, "b": 100}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "JAXC",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, multiple cursors single cell",
+		"initial_selections": [{"a": 152, "b": 152}, {"a": 158, "b": 158}, {"a": 163, "b": 163}, {"a": 170, "b": 170}, {"a": 177, "b": 177}, {"a": 184, "b": 184}],
+		"expected_selections": [{"a": 191, "b": 191}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "C4PV",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, cell already selected, forward",
+		"initial_selections": [{"a": 192, "b": 205}],
+		"expected_selections": [{"a": 205, "b": 205}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "4W6C",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, cell already selected, reverse",
+		"initial_selections": [{"a": 205, "b": 192}],
+		"expected_selections": [{"a": 205, "b": 205}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "GXO2",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, region spans a cell plus pipes on either end (3 cells)",
+		"initial_selections": [{"a": 111, "b": 120}],
+		"expected_selections": [{"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "4BHH",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, region spans three body rows",
+		"initial_selections": [{"a": 123, "b": 244}],
+		"expected_selections": [{"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "35JV",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown05_multiple_markup.md",
+		"description": "Select current cursors, region spans three markup rows",
+		"initial_selections": [{"a": 790, "b": 958}],
+		"expected_selections": [{"a": 802, "b": 802}, {"a": 816, "b": 816}, {"a": 830, "b": 830}, {"a": 838, "b": 838}, {"a": 860, "b": 860}, {"a": 867, "b": 867}, {"a": 886, "b": 886}, {"a": 900, "b": 900}, {"a": 914, "b": 914}, {"a": 922, "b": 922}, {"a": 944, "b": 944}, {"a": 951, "b": 951}, {"a": 970, "b": 970}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "I6XF",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, region spans body and markup row, markup excluded",
+		"initial_selections": [{"a": 14, "b": 128}],
+		"expected_selections": [{"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "RQQK",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, region spans body and markup row, markup included",
+		"initial_selections": [{"a": 14, "b": 128}],
+		"expected_selections": [{"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 62, "b": 62}, {"a": 74, "b": 74}, {"a": 86, "b": 86}, {"a": 98, "b": 98}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}],
+		"view_settings": {"tabnav.capture_level": "markup"}
+	},
+	{
+		"id": "4ALJ",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, subset of a cell selected",
+		"initial_selections": [{"a": 162, "b": 171}],
+		"expected_selections": [{"a": 191, "b": 191}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "SQYX",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select current cursors, multiple cursors in multiple tables",
+		"initial_selections": [{"a": 280, "b": 280}, {"a": 763, "b": 763}, {"a": 1395, "b": 1395}, {"a": 1922, "b": 1922}, {"a": 2338, "b": 2338}],
+		"expected_selections": [{"a": 284, "b": 284}, {"a": 766, "b": 766}, {"a": 1402, "b": 1402}, {"a": 1935, "b": 1935}, {"a": 2339, "b": 2339}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "2JPE",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select current cursors, cursor in empty line between tables (not in table)",
+		"initial_selections": [{"a": 1860, "b": 1860}],
+		"expected_selections": [{"a": 1860, "b": 1860}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "FS3V",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select current cursors, multiple cursors in multiple line markup rows",
+		"initial_selections": [{"a": 212, "b": 212}, {"a": 1913, "b": 1913}],
+		"expected_selections": [{"a": 226, "b": 226}, {"a": 1919, "b": 1919}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "Q3MM",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Select current cursors, cursor at start of first column",
+		"initial_selections": [{"a": 68, "b": 68}],
+		"expected_selections": [{"a": 78, "b": 78}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "GNUW",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Select current cursors, cursor at end of last column",
+		"initial_selections": [{"a": 135, "b": 135}],
+		"expected_selections": [{"a": 135, "b": 135}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "OOYY",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Select current cursors, cursor at start of first column of markup",
+		"initial_selections": [{"a": 34, "b": 34}],
+		"expected_selections": [{"a": 44, "b": 44}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "5RA4",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Select current cursors, cursor at end of last column of markup",
+		"initial_selections": [{"a": 67, "b": 67}],
+		"expected_selections": [{"a": 67, "b": 67}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "FHCO",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown03_borderless.md",
+		"description": "Select current cursors, selection spans markup row",
+		"initial_selections": [{"a": 18, "b": 86}],
+		"expected_selections": [{"a": 22, "b": 22}, {"a": 33, "b": 33}, {"a": 78, "b": 78}, {"a": 90, "b": 90}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "ZXTS",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select current cursors, entire cell selected forwards",
+		"initial_selections": [{"a": 795, "b": 814}],
+		"expected_selections": [{"a": 814, "b": 814}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "NMCD",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select current cursors, entire cell selected in reverse",
+		"initial_selections": [{"a": 814, "b": 795}],
+		"expected_selections": [{"a": 814, "b": 814}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "XBCR",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown02_multiple_tables.md",
+		"description": "Select current cursors, capture cell - cursor immediately before delimiter",
+		"initial_selections": [{"a": 1150, "b": 1150}],
+		"expected_selections": [{"a": 1150, "b": 1150}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "PR2Y",
+		"command": "tabnav_select",
+		"args": {
+			"context": "markdown",
+			"select": false,
+			"scope": "cell"
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursors, capture cell - selection ends at cell border",
+		"initial_selections": [{"a": 112, "b": 119}],
+		"expected_selections": [{"a": 119, "b": 119}],
+		"view_settings": {"tabnav.capture_level": "cell"}
+	},
+	{
+		"id": "ILIZ",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "table",
+			"forward": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select all cursors, forward=false",
+		"initial_selections": [{"a": 7, "b": 7}],
+		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "PEDM",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "column",
+			"forward": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select column cursors, forward=false",
+		"initial_selections": [{"a": 7, "b": 7}],
+		"expected_selections": [{"a": 1, "b": 1}, {"a": 101, "b": 101}, {"a": 149, "b": 149}, {"a": 227, "b": 227}, {"a": 282, "b": 282}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "64ZF",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "row",
+			"forward": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select row cursors, forward=false",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 1, "b": 1}, {"a": 13, "b": 13}, {"a": 25, "b": 25}, {"a": 37, "b": 37}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	},
+	{
+		"id": "DLQM",
+		"command": "tabnav_select",
+		"args": { 
+			"context": "markdown",
+			"select": false,
+			"scope": "cell",
+			"forward": false
+		},
+		"file": "markdown01_unformatted_table.md",
+		"description": "Select current cursor forward=false",
+		"initial_selections": [{"a": 6, "b": 6}],
+		"expected_selections": [{"a": 1, "b": 1}],
+		"view_settings": {"tabnav.capture_level": "content"}
+	}
+]

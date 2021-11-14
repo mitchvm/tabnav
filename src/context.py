@@ -8,7 +8,7 @@ import sublime
 log = get_logger(__package__, __name__)
 
 
-def get_current_context(view, context_key=None):
+def get_current_context(view, context_key=None, capture_level=None):
 	'''Attempts to identify the current context and build the corresponding TabnavContext object.
 
 	If a particular context_key is provided, it is the only context configured. If no key is provided,

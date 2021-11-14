@@ -387,7 +387,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move_end",
 "args": {
-    "by": "cell",
+    "scope": "cell",
     "forward": false
 }</code>
 </pre></td>
@@ -399,7 +399,7 @@ The table below details the mapping from the legacy commands to the new commands
 </pre></td>
 <td><pre>
 <code>"command": "tabnav_move_end",
-"args": { "by": "cell" }</code>
+"args": { "scopebscopey": "cell" }</code>
 </pre></td>
 </tr><tr>
 <td>Extend selection to beginning of current cell</td>
@@ -409,7 +409,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move_end",
 "args": {
-    "by": "cell",
+    "scope": "cell",
     "forward": false,
     "extend": true
 }</code>
@@ -422,7 +422,7 @@ The table below details the mapping from the legacy commands to the new commands
 <td><pre>
 <code>"command": "tabnav_move_end",
 "args": {
-    "by": "cell",
+    "scope": "cell",
     "extend": true
 }</code>
 </pre></td>
@@ -448,7 +448,7 @@ The table below details the mapping from the legacy commands to the new commands
 <code>"command": "tabnav_select_column"</code></pre></pre>
 <td><pre>
 <code>"command": "tabnav_select",
-"args": { "scope": "row" }</code>
+"args": { "scope": "column" }</code>
 </pre></td>
 </tr><tr>
 <td>Select all cells in table<sup>1</sup></td>
