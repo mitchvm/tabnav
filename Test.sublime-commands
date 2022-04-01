@@ -26,5 +26,9 @@
   {
     "caption": "TabNav: Set Regions from clipboard",
     "command": "tabnav_set_regions_from_clipboard"
+  },
+  {
+    "caption": "TabNav: Highlight test case",
+    "command": "tabnav_highlight_test_case"
   }
 ]

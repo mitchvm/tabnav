@@ -31,61 +31,25 @@ class TestCase():
 		self.syntax = test_definition.get('syntax')
 		self.view_settings = test_definition.get('view_settings', {})
 		self.package_settings = test_definition.get('package_settings', {})
+		self.initial_syntax = None
+		self.initial_package_settings = {}
+		self.initial_view_settings = {}
 
-	@property
-	def html_preview(self):
-		return "<b>ID:</b> {0}<br><b>Arguments:</b> {1}<br><b>Command:</b> {2}<br><b>Description:</b> {3}".format(self.test_id, self.command_args, self.command_name, self.description)
+
+def html_preview(test):
+	return "<b>ID:</b> {0}<br><b>Arguments:</b> {1}<br><b>Command:</b> {2}<br><b>Description:</b> {3}".format(test.test_id, test.command_args, test.command_name, test.description)
+
 
 class TestResult():
-	def __init__(self, test_case, success, message = None):
+	def __init__(self, test_case, success, message=''):
 		self.test_case = test_case
-		self.success = success
 		self.message = message
-
-	@property
-	def identifier(self):
-		return self.test_case.test_id	
-
-	@property
-	def passed(self):
-		return int(self.success)
-
-	@property
-	def total(self):
-		return 1	
-
-	def as_output(self, width):
-		if self.success:
-			icon = '✔'
+		if success:
+			self.passed = 1
+			self.result = "  PASS"
 		else:
-			icon = '✘'
-		yield '{0} {1}: {2}'.format(icon, self.test_case.test_id, self.test_case.description)
-		if self.message is not None:
-			yield '        ' + self.message
-
-
-class TestSetResults():
-	def __init__(self, identifier, test_results):
-		self.identifier = identifier
-		self.test_results = test_results
-
-	@property
-	def passed(self):
-		return sum((r.passed for r in self.test_results))
-
-	@property
-	def total(self):
-		return sum((r.total for r in self.test_results))
-
-	def as_output(self, width):
-		if self.passed == self.total:
-			icon = '✔'
-		else:
-			icon = '✘'
-		header = '{0} {1} ({2})'.format(icon, self.identifier, self.total)
-		yield '{0: <{3}s}[✔:{1:3}; ✘:{2:3}]'.format(header, self.passed, self.total-self.passed, width-14)
-		for output in (o for r in sorted(self.test_results, key=lambda t:t.identifier.upper()) for o in r.as_output(width-2) ):
-			yield '--' + output
+			self.passed = 0
+			self.result = "█ FAIL"
 
 
 def enumerate_test_cases(command_name=None, file_name=None, test_id=None):
@@ -133,7 +97,12 @@ def run_test_cases(view, close_file=True):
 	for command_name, g in itertools.groupby(command_sorted, commandkey):
 		test_group = list(g)
 		for test in test_group:
-			test_results.append(run_test_case(view, test))
+			result = setup_test_case(view, test)
+			if result is not None:
+				test_results.append(result)
+			else:
+				test_results.append(run_test_case(view, test))
+				clear_test_case(view, test)
 	if close_file:
 		view.close()
 	package_settings.set('user_contexts', initial_user_contexts)
@@ -141,22 +110,26 @@ def run_test_cases(view, close_file=True):
 		print_test_results()
 
 
-def run_test_case(view, test):
-	initial_syntax = view.settings().get('syntax')
+def setup_test_case(view, test):
+	test.initial_syntax = view.settings().get('syntax')
 	if test.syntax is not None:
 		view.set_syntax_file(test.syntax)
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
-	initial_package_settings = {}
-	initial_view_settings = {}
 	try:
 		for setting in test.view_settings:
-			initial_view_settings[setting] = view.settings().get(setting)
+			test.initial_view_settings[setting] = view.settings().get(setting)
 			view.settings().set(setting, test.view_settings[setting])
 		for setting in test.package_settings:
-			initial_package_settings[setting] = package_settings.get(setting)
+			test.initial_package_settings[setting] = package_settings.get(setting)
 			package_settings.set(setting, test.package_settings[setting])
 		view.sel().clear()
 		view.sel().add_all([sublime.Region(a, b) for a,b in test.initial_selections])
+		return None
+	except Exception as e:
+		return TestResult(test, False, e.__str__())
+
+def run_test_case(view, test):
+	try:
 		view.run_command(test.command_name, args=test.command_args)
 		selections = list(view.sel())
 		assert (len(selections) == len(test.expected_selections)), "Expected {0} selections but got {1}: {2}".format(len(test.expected_selections), len(selections), selections)
@@ -166,27 +139,19 @@ def run_test_case(view, test):
 		return TestResult(test, True)
 	except Exception as e:
 		return TestResult(test, False, e.__str__())
-	finally:
-		view.set_syntax_file(initial_syntax)
-		for setting in initial_view_settings:
-			view.settings().set(setting, initial_view_settings[setting])
-		for setting in initial_package_settings:
-			package_settings.set(setting, initial_package_settings[setting])
+
+def result_row(test_result):
+	return '| {0} | {1} | {2} | {3} | '.format(test_result.result, test_result.test_case.test_id, test_result.test_case.command_name, test_result.message)
 
 
 def print_test_results():
 	global start_time
-	commandkey = lambda r:r.test_case.command_name
-	filekey = lambda r:r.test_case.test_case_file
-	test_case_results = sorted(test_results, key=commandkey)
-	command_result_sets = []
-	for command_name, g1 in itertools.groupby(test_case_results, commandkey):
-		command_results = sorted(g1, key=filekey)
-		file_result_sets = []
-		for file_name, g3 in itertools.groupby(command_results, filekey):
-			file_result_sets.append(TestSetResults('File: {0}'.format(file_name), sorted(g3, key=lambda t:t.test_case.test_id.upper())))
-		command_result_sets.append(TestSetResults('Command: {0}'.format(command_name), file_result_sets))
-	result_set = TestSetResults('Cumulative', command_result_sets)
+	total = len(test_results)
+	passed = sum((r.passed for r in test_results))
+	failed = total - passed
+	sorted_results = sorted(test_results, key=lambda r:r.test_case.test_id)
+	sorted_results = sorted(sorted_results, key=lambda r:r.test_case.command_name)
+	sorted_results = sorted(sorted_results, key=lambda r:r.passed)
 	if start_time is not None:
 		duration = datetime.now() - start_time
 		start_time = None
@@ -197,11 +162,90 @@ def print_test_results():
 	output_panel = window.create_output_panel(panelName)
 	window.run_command("show_panel", {"panel": "output." + panelName})
 	output_panel.set_read_only(False)
-	for line in result_set.as_output(100):
-		output_panel.run_command('append', {'characters': line + '\n'})
-	output_panel.run_command('append', {'characters': '\n' + 'Duration: {0:.2f} seconds'.format(duration.total_seconds())})
+	if passed == total:
+		icon = '🟢'
+	else:
+		icon = '❌'
+	output_panel.run_command('set_file_type', {"syntax": "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax"})
+	output_panel.run_command('append', {'characters': '# TabNav Test Summary {0}\n\nTOTAL:{1:8d}\nPASS:{2:9d} 🟢\nFAIL:{3:9d} ❌\nDuration:{4:5.1f}s\n\n'.format(icon, total, passed, failed, duration.total_seconds())})
+	output_panel.run_command('append', {'characters': '## Test Results\n\n'})
+	output_panel.run_command('append', {'characters': '| Result |  ID  | Command | Error |\n'})
+	output_panel.run_command('append', {'characters': '|-------:|:----:|:--------|:------|\n'})
+	for line in sorted_results:
+		output_panel.run_command('append', {'characters': result_row(line) + '\n'})
+	output_panel.run_command('markdown_table_format')
+	output_panel.run_command('move_to', {"extend": False, "to": "bof"})
 	output_panel.set_read_only(True)
 	test_results.clear()
+
+
+	@property
+	def passed(self):
+		return sum((r.passed for r in self.test_results))
+
+	@property
+	def total(self):
+		return sum((r.total for r in self.test_results))
+
+
+def clear_test_case(view, test):
+	package_settings = sublime.load_settings("tabnav.sublime-settings")
+	view.set_syntax_file(test.initial_syntax)
+	for setting in test.initial_view_settings:
+		view.settings().set(setting, test.initial_view_settings[setting])
+	for setting in test.initial_package_settings:
+		package_settings.set(setting, test.initial_package_settings[setting])
+
+control_content = """
+<body id="tabnav-test-control">
+    <style>
+        div {
+        	display:inline;
+        	padding-left:1rem;
+        	padding-right:1rem;
+        }
+    </style>
+	<a href="run"><div>Run</div></a><a href="reset"><div>Reset</div></a><a href="clear"><div>Clear</div></a>
+</body>""";
+
+annotation_template = '''
+	<body id="tabnav-test-annotation">
+	  	{test.description}
+		<br><b>Test ID:</b> {test.test_id}
+		<br><b>command_name:</b> {test.command_name}
+		<br><b>command_args:</b> {test.command_args}
+		<br><b>test_case_file:</b> {test.test_case_file}
+		<br><b>syntax:</b> {test.syntax}
+		<br><b>view_settings:</b> {test.view_settings}
+		<br><b>package_settings:</b> {test.package_settings}
+		<br>
+	</body>'''
+
+def annotation_callback(view, test, href):
+	if href == "run":
+		run_test_case(view, test)
+	elif href == "reset":
+		clear_test_case(view, test)
+		setup_test_case(view, test)
+	elif href == "clear":
+		clear_test_case(view, test)
+		view.erase_regions("tabnav_test_regions")
+		view.erase_regions("tabnav_test_cursors")
+		view.erase_regions("tabnav_test_annotation")
+		view.erase_regions("tabnav_test_controls")
+
+def highlight_expected_selections(view, test):
+	setup_test_case(view, test)
+	regions = list(sublime.Region(a, b) for a,b in test.expected_selections)
+	cursors = list(sublime.Region(b, b) for a,b in test.expected_selections)
+	view.add_regions("tabnav_test_regions", regions, "region.purplish", flags=sublime.DRAW_NO_FILL)
+	view.add_regions("tabnav_test_cursors", cursors, "region.greenish", flags=sublime.DRAW_EMPTY)
+	annotation_color = view.style_for_scope('region.purplish')['foreground']
+	on_navigate = partial(annotation_callback, view, test)
+	view.add_regions("tabnav_test_controls", [sublime.Region(0,0)], control_content, flags=sublime.HIDDEN, annotations=[control_content], annotation_color=annotation_color, on_navigate=on_navigate)
+	second_line = view.line(0).end()+1
+	annotation = annotation_template.format(test=test)
+	view.add_regions("tabnav_test_annotation", [sublime.Region(second_line,second_line)], flags=sublime.HIDDEN, annotations=[annotation], annotation_color=annotation_color)
 
 
 class TestRunnerListener(sublime_plugin.ViewEventListener):
@@ -239,22 +283,39 @@ class TabnavRunSingleTestCommand(sublime_plugin.WindowCommand):
 		launch_tests(self.window, test_id=test_id)
 
 	def input(self, args):
-		return TabnavSingleTestInputHandler()
+		return TabnavSingleTestInputHandler(self.window.active_view())
+
 
 class TabnavSingleTestInputHandler(sublime_plugin.ListInputHandler):
+	def __init__(self, view):
+		self.view = view
+		self.test_cases = list(enumerate_test_cases())
+		
 	def name(self):
 		return "test_id"
 
 	def list_items(self):
-		return [("{0} [{1}; {2}]".format(test.description, test.command_name, test.test_id), test.test_id) for test in enumerate_test_cases()]
+		return [("{0} [{1}; {2}]".format(test.description, test.command_name, test.test_id), test.test_id) for test in self.test_cases]
+
+	def initial_text(self):
+		try:
+			region = self.view.sel()[0]
+			if len(region) != 4:
+				return None
+			text = self.view.substr(region)
+			if any([test.test_id == text for test in self.test_cases]):
+				return text
+		except Exception as e:
+			pass
+		return None
 
 	def preview(self, value):
-		test_cases = list(enumerate_test_cases(test_id=value))
-		if len(test_cases) == 0:
+		tests = list(test for test in self.test_cases if test.test_id==value)
+		if len(tests) == 0:
 			return "Test not found"
 		else:
-			test = test_cases[0]
-			return sublime.Html(test.html_preview)
+			test = tests[0]
+			return sublime.Html(html_preview(test))
 
 
 class TabnavCommandTestsCommand(sublime_plugin.WindowCommand):
@@ -262,7 +323,7 @@ class TabnavCommandTestsCommand(sublime_plugin.WindowCommand):
 		launch_tests(self.window, command_name=command_name)
 
 	def input(self, args):
-		return TabnavCommandTestsInputHandler()
+		return TabnavCommandTestsInputHandler(self.window.active_view())
 
 class TabnavCommandTestsInputHandler(sublime_plugin.ListInputHandler):
 	def name(self):
@@ -288,6 +349,25 @@ class TabnavCommandTestsInputHandler(sublime_plugin.ListInputHandler):
 
 ## Utility commands
 
+
+def delay_until_loaded(view, callback, delay):
+	if not view.is_loading():
+		callback()
+	else:
+		sublime.set_timeout(partial(delay_until_loaded, view, callback, delay), delay)
+
+
+class TabnavHighlightTestCaseCommand(sublime_plugin.WindowCommand):
+	def run(self, test_id):
+		test = next(enumerate_test_cases(test_id=test_id))
+		file_path = os.path.join(test_files_dir, test.file_name)
+		file_view = self.window.open_file(file_path)
+		delay_until_loaded(file_view, partial(highlight_expected_selections, file_view, test), 50)
+
+	def input(self, args):
+		return TabnavSingleTestInputHandler(self.window.active_view())
+
+
 class TabnavNewTestIdsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		existing_ids = set((test.test_id for test in enumerate_test_cases()))
@@ -298,10 +378,12 @@ class TabnavNewTestIdsCommand(sublime_plugin.TextCommand):
 					break
 			self.view.replace(edit, region, new_id)
 
+
 class TabnavCopyRegionCoordsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		regions = [{'a': r.a, 'b': r.b} for r in self.view.sel()]
 		sublime.set_clipboard(json.dumps(regions, sort_keys=True))
+
 
 class TabnavSetRegionsFromClipboardCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
@@ -311,6 +393,7 @@ class TabnavSetRegionsFromClipboardCommand(sublime_plugin.TextCommand):
 			return
 		self.view.sel().clear()
 		self.view.sel().add_all(regions)
+
 
 class TabnavSelectionChangedListener(sublime_plugin.EventListener):
 	def __init__(self):
