@@ -388,7 +388,8 @@ The table below details the mapping from the legacy commands to the new commands
 <code>"command": "tabnav_move_end",
 "args": {
     "scope": "cell",
-    "forward": false
+    "forward": false,
+    "select": true
 }</code>
 </pre></td>
 </tr><tr>
@@ -399,7 +400,10 @@ The table below details the mapping from the legacy commands to the new commands
 </pre></td>
 <td><pre>
 <code>"command": "tabnav_move_end",
-"args": { "scopebscopey": "cell" }</code>
+"args": {
+    "scope": "cell",
+    "select": false
+}</code>
 </pre></td>
 </tr><tr>
 <td>Extend selection to beginning of current cell</td>

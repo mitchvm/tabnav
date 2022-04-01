@@ -1,7 +1,8 @@
 [
 	{
 		"id": "55BH",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Parse Org Mode table row - cells",
 		"initial_selections": [{"a": 954, "b": 980}],
@@ -10,7 +11,8 @@
 	},
 	{
 		"id": "N5IQ",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Parse Org Mode separator markup row - cells",
 		"initial_selections": [{"a": 280, "b": 348}],
@@ -19,7 +21,8 @@
 	},
 	{
 		"id": "MDE2",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Parse Org Mode grouping markup row - cells",
 		"initial_selections": [{"a": 2071, "b": 2108}],
@@ -28,7 +31,8 @@
 	},
 	{
 		"id": "F4AS",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Parse Org Mode column width markup row - cells",
 		"initial_selections": [{"a": 2564, "b": 2571}],
@@ -37,7 +41,8 @@
 	},
 	{
 		"id": "E3NJ",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Parse Org Mode regions spanning markup rows - markup excluded",
 		"initial_selections": [{"a": 221, "b": 390}, {"a": 1980, "b": 2147}, {"a": 2519, "b": 2617}],
@@ -46,7 +51,8 @@
 	},
 	{
 		"id": "GOR2",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Parse Org Mode region spanning markup row cells - markup included",
 		"initial_selections": [{"a": 221, "b": 390}, {"a": 1980, "b": 2147}, {"a": 2519, "b": 2617}],
@@ -55,7 +61,8 @@
 	},
 	{
 		"id": "O7IF",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Single cursor after last pipe (not in table)",
 		"initial_selections": [{"a": 1446, "b": 1446}],
@@ -64,7 +71,8 @@
 	},
 	{
 		"id": "ZX24",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Single cursor before first pipe (not in table)",
 		"initial_selections": [{"a": 1027, "b": 1027}],
@@ -73,7 +81,8 @@
 	},
 	{
 		"id": "UTQ2",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Cursors in whitespace before first pipe (not in table)",
 		"initial_selections": [{"a": 1955, "b": 1955}, {"a": 2011, "b": 2011}, {"a": 2067, "b": 2067}, {"a": 2123, "b": 2123}],
@@ -82,7 +91,8 @@
 	},
 	{
 		"id": "PSHT",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Cursor in empty line between tables (not in table)",
 		"initial_selections": [{"a": 1951, "b": 1951}],
@@ -91,7 +101,8 @@
 	},
 	{
 		"id": "YV7G",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Single region spans multiple tables (no change)",
 		"initial_selections": [{"a": 1557, "b": 2149}],
@@ -100,7 +111,8 @@
 	},
 	{
 		"id": "QNL6",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Cursor in simple literal table (technically not raw scope)",
 		"initial_selections": [{"a": 2949, "b": 2949}],
@@ -109,7 +121,8 @@
 	},
 	{
 		"id": "M5XG",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Cursor in raw scope",
 		"initial_selections": [{"a": 3209, "b": 3209}],
@@ -118,8 +131,11 @@
 	},
 	{
 		"id": "TTGE",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "orgmode01_tables_raw.org",
 		"description": "Multiple cursors - one in raw code scope",
 		"initial_selections": [{"a": 2191, "b": 2191}, {"a": 3239, "b": 3239}],
@@ -128,7 +144,8 @@
 	},
 	{
 		"id": "57CQ",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Region in simple literal table (technically not raw scope)",
 		"initial_selections": [{"a": 2917, "b": 2962}],
@@ -137,7 +154,8 @@
 	},
 	{
 		"id": "R57W",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Region in raw scope",
 		"initial_selections": [{"a": 3151, "b": 3216}],
@@ -146,8 +164,8 @@
 	},
 	{
 		"id": "HQDG",
-		"command": "tabnav_select_next",
-		"args": { "direction": "down" },
+		"command": "tabnav_move",
+		"args": { "scope": "column" },
 		"file": "orgmode02_markup_like.org",
 		"description": "Org Mode non-markup cells that match markup regex",
 		"initial_selections": [{"a": 5, "b": 9}, {"a": 166, "b": 171}, {"a": 236, "b": 245}],
@@ -156,7 +174,8 @@
 	},
 	{
 		"id": "EVM2",
-		"command": "tabnav_select_all",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "orgmode03_all_markups.org",
 		"description": "All styles of Org Mode markup lines in a row - markup excluded",
 		"initial_selections": [{"a": 539, "b": 539}],
@@ -165,7 +184,8 @@
 	},
 	{
 		"id": "76WL",
-		"command": "tabnav_select_all",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "orgmode03_all_markups.org",
 		"description": "All styles of Org Mode markup lines in a row - markup included",
 		"initial_selections": [{"a": 539, "b": 539}],
@@ -174,7 +194,8 @@
 	},
 	{
 		"id": "IKSQ",
-		"command": "tabnav_select_all",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Capture trimmed Org Mode",
 		"initial_selections": [{"a": 1146, "b": 1146}, {"a": 2267, "b": 2267}],
@@ -183,7 +204,8 @@
 	},
 	{
 		"id": "63LB",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode01_tables_raw.org",
 		"description": "Capture trimmed - selection in trimmed whitespace",
 		"initial_selections": [{"a": 2153, "b": 2156}],
@@ -192,7 +214,8 @@
 	},
 	{
 		"id": "QLAI",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode03_all_markups.org",
 		"description": "Capture cell - cursor before first pipe (start of first cell)",
 		"initial_selections": [{"a": 420, "b": 420}],
@@ -201,7 +224,8 @@
 	},
 	{
 		"id": "G4YA",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "orgmode03_all_markups.org",
 		"description": "Capture cell - cursor immediately before delimiter between cells",
 		"initial_selections": [{"a": 634, "b": 634}],
@@ -210,7 +234,8 @@
 	},
 	{
 		"id": "2OSZ",
-		"command": "tabnav_select_all",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "orgmode03_all_markups.org",
 		"description": "Capture cell - entire table",
 		"initial_selections": [{"a": 178, "b": 178}],

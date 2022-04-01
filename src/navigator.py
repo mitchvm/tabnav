@@ -21,21 +21,38 @@ class TableNavigator:
 	def view(self):
 		return self._table.view
 
-	def split_selections(self, select=True, capture_level=None, move_cursors=False):
+	def split_selections(self, select=True, capture_level=None, move_cursors=False, expand_selections=True):
 		if capture_level is None:
 			capture_level = self.capture_level
 		if select:
-			return self._split_selections_into_cells(capture_level)
+			return self._split_selections_into_cells(capture_level, expand_selections)
 		else:
 			return self._split_selections_into_cursors(capture_level, move_cursors)
 
-	def _split_selections_into_cells(self, capture_level):
+	def _split_by_newlines_if_necessary(self, region):
+		'''Splits by newlines only if the region spans more than one line.
+
+		split_by_newlines returns all regions in a 'forward' direction (a > b)
+		but we want to maintain the region's direction if it is contained within
+		a single cell
+		'''
+		lines = self.view.split_by_newlines(region)
+		# not enough to simply check len(lines)>1, since if the region ends at
+		# the newline character (e.g. user used built-in select lines command)
+		# then split_by_newlines only returns one region, but it is smaller
+		# than the initial region
+		if (lines[0].end() != region.end()) or (lines[0].begin() != region.begin()):
+			return lines
+		else:
+			return [region]
+
+	def _split_selections_into_cells(self, capture_level, expand_selections):
 		'''Selects all of the cells spanned by the current selection.
 
 		Returns True if the selections changed, or False otherwise.
 		'''
 		selections = list(self.view.sel())
-		selection_lines = list(itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections)))
+		selection_lines = list(itertools.chain.from_iterable((self._split_by_newlines_if_necessary(r) for r in selections)))
 		selection_changed = len(selection_lines) != len(selections)
 		cells_by_level = {}
 		for region in selection_lines:
@@ -60,6 +77,8 @@ class TableNavigator:
 					# If capturing the entire cell, and a cursor is right before the delimiter
 					line_cells = [self._table.cell_at_point(point)]
 			for cell in line_cells:
+				if cell.contains(region):
+					cell.add_initial_region(region)
 				cells = cells_by_level.get(cell.capture_level, [])
 				cells.append(cell)
 				cells_by_level[cell.capture_level] = cells
@@ -67,10 +86,20 @@ class TableNavigator:
 			cells = []
 			while len(cells) == 0:
 				# If no cells at the desired capture level are selected, go up one level at a time until something is selected
-				cells = list(itertools.chain.from_iterable(c for l, c in cells_by_level.items() if l <= capture_level))
+				cells = list(itertools.chain.from_iterable(cell for level, cell in cells_by_level.items() if level <= capture_level))
 				capture_level = capture_level + 1
+			if expand_selections:
+				regions = cells
+			else:
+				regions = []
+				for cell in cells:
+					cell_regions = cell.initial_regions
+					if len(cell_regions) > 0:
+						regions = list(itertools.chain(regions, cell_regions))
+					else:
+						regions.append(cell)		
 			self.view.sel().clear()
-			self.view.sel().add_all(list(cells))
+			self.view.sel().add_all(regions)
 		return selection_changed
 
 	def _split_selections_into_cursors(self, capture_level, move_cursors):
@@ -353,7 +382,7 @@ class TableNavigator:
 			columns.append(column)
 			# Get the top/bottom cell of the target capture level, if one exists
 			if dr > 0:
-				column_cells = reversed(column)
+				column_cells = list(reversed(column))
 			else:
 				column_cells = column
 			target_cell = None

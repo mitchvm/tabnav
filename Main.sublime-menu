@@ -60,13 +60,16 @@
             "children": [
               {
                 "caption": "Start of current cell",
-                "command": "tabnav_move_cursor_current_cell",
-                "args": { "direction": "left" }
+                "command": "tabnav_move_end",
+                "args": {
+                  "scope": "cell",
+                  "forward": false
+                }
               },
               {
                 "caption": "End of current cell",
-                "command": "tabnav_move_cursor_current_cell",
-                "args": { "direction": "right" } 
+                "command": "tabnav_move_end",
+                "args": { "scope": "cell" }
               },
               {
                 "caption": "Cell on left",
@@ -259,6 +262,23 @@
             "caption": "Extend selection to...",
             "id": "tabnav_extend_selection",
             "children": [
+              {
+                "caption": "Start of current cell",
+                "command": "tabnav_move_end",
+                "args": {
+                  "scope": "cell",
+                  "forward": false,
+                  "extend": true
+                }
+              },
+              {
+                "caption": "End of current cell",
+                "command": "tabnav_move_end",
+                "args": {
+                  "scope": "cell",
+                  "extend": true
+                }
+              },
               {
                 "caption": "Cell on left",
                 "command": "tabnav_move",

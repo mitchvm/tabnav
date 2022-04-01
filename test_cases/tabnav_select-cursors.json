@@ -919,7 +919,7 @@
 		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Select current cursors, capture cell - selection ends at cell border",
-		"initial_selections": [{"a": 112, "b": 119}],
+		"initial_selections": [{"a": 111, "b": 119}],
 		"expected_selections": [{"a": 119, "b": 119}],
 		"view_settings": {"tabnav.capture_level": "cell"}
 	},
@@ -935,7 +935,7 @@
 		"file": "markdown01_unformatted_table.md",
 		"description": "Select all cursors, forward=false",
 		"initial_selections": [{"a": 7, "b": 7}],
-		"expected_selections": [{"a": 12, "b": 12}, {"a": 24, "b": 24}, {"a": 36, "b": 36}, {"a": 48, "b": 48}, {"a": 111, "b": 111}, {"a": 119, "b": 119}, {"a": 131, "b": 131}, {"a": 146, "b": 146}, {"a": 191, "b": 191}, {"a": 205, "b": 205}, {"a": 206, "b": 206}, {"a": 224, "b": 224}, {"a": 242, "b": 242}, {"a": 247, "b": 247}, {"a": 279, "b": 279}, {"a": 307, "b": 307}, {"a": 311, "b": 311}, {"a": 346, "b": 346}, {"a": 354, "b": 354}],
+		"expected_selections": [{"a": 1, "b": 1}, {"a": 13, "b": 13}, {"a": 25, "b": 25}, {"a": 37, "b": 37}, {"a": 101, "b": 101}, {"a": 112, "b": 112}, {"a": 120, "b": 120}, {"a": 132, "b": 132}, {"a": 149, "b": 149}, {"a": 192, "b": 192}, {"a": 206, "b": 206}, {"a": 207, "b": 207}, {"a": 227, "b": 227}, {"a": 243, "b": 243}, {"a": 248, "b": 248}, {"a": 282, "b": 282}, {"a": 308, "b": 308}, {"a": 312, "b": 312}, {"a": 347, "b": 347}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{

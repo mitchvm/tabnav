@@ -1,7 +1,8 @@
 [
 	{
 		"id": "TZGS",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Simple table with only .cell. scope",
 		"initial_selections": [{"a": 1670, "b": 1702}],
@@ -10,7 +11,8 @@
 	},
 	{
 		"id": "GGNR",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile table row without markup",
 		"initial_selections": [{"a": 1333, "b": 1456}],
@@ -19,7 +21,8 @@
 	},
 	{
 		"id": "QCO2",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile table row with row and cell markup",
 		"initial_selections": [{"a": 801, "b": 951}],
@@ -28,7 +31,8 @@
 	},
 	{
 		"id": "KOZQ",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile column grouping row",
 		"initial_selections": [{"a": 423, "b": 465}],
@@ -37,7 +41,8 @@
 	},
 	{
 		"id": "2HI7",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile region spanning markup rows (with and without cells) - markup excluded",
 		"initial_selections": [{"a": 346, "b": 801}],
@@ -46,7 +51,8 @@
 	},
 	{
 		"id": "4ZFB",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Single cursor after last pipe (not in table)",
 		"initial_selections": [{"a": 800, "b": 800}],
@@ -55,7 +61,8 @@
 	},
 	{
 		"id": "GXKS",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Single cursor before first pipe (not in table)",
 		"initial_selections": [{"a": 1141, "b": 1141}],
@@ -64,7 +71,8 @@
 	},
 	{
 		"id": "2ZNX",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Cursor in empty line between tables (not in table)",
 		"initial_selections": [{"a": 1640, "b": 1640}],
@@ -73,7 +81,8 @@
 	},
 	{
 		"id": "KKGN",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Single region spans multiple tables (no change)",
 		"initial_selections": [{"a": 822, "b": 1726}],
@@ -82,8 +91,11 @@
 	},
 	{
 		"id": "7DMN",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile table row - cursors",
 		"initial_selections": [{"a": 801, "b": 950}],
@@ -92,8 +104,11 @@
 	},
 	{
 		"id": "5D2O",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile markup row - cursors",
 		"initial_selections": [{"a": 423, "b": 464}],
@@ -102,8 +117,11 @@
 	},
 	{
 		"id": "6VI4",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile region spanning markup row cursors - markup excluded",
 		"initial_selections": [{"a": 346, "b": 801}],
@@ -112,8 +130,11 @@
 	},
 	{
 		"id": "WLGT",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Parse Textile region spanning markup rows with and without cells cursors - markup include",
 		"initial_selections": [{"a": 346, "b": 801}],
@@ -122,7 +143,8 @@
 	},
 	{
 		"id": "AVK2",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Textile non-markup cells that almost match markup regex",
 		"initial_selections": [{"a": 1843, "b": 2200}],
@@ -131,7 +153,8 @@
 	},
 	{
 		"id": "GDPS",
-		"command": "tabnav_select_all",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Textile paragraph with a comma does not get captured as CSV",
 		"initial_selections": [{"a": 45, "b": 45}],
@@ -140,7 +163,8 @@
 	},
 	{
 		"id": "ROVO",
-		"command": "tabnav_select_all",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Capture Textile trimmed",
 		"initial_selections": [{"a": 973, "b": 973}, {"a": 1864, "b": 1864}],
@@ -149,7 +173,8 @@
 	},
 	{
 		"id": "JOYG",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Capture Textile trimmed - selection in trimmed whitespace",
 		"initial_selections": [{"a": 1477, "b": 1477}],
@@ -158,7 +183,8 @@
 	},
 	{
 		"id": "PJ3S",
-		"command": "tabnav_select_all",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Capture Textile content",
 		"initial_selections": [{"a": 973, "b": 973}, {"a": 1864, "b": 1864}],
@@ -167,7 +193,8 @@
 	},
 	{
 		"id": "KHPV",
-		"command": "tabnav_select_all",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Capture Textile markup",
 		"initial_selections": [{"a": 973, "b": 973}, {"a": 1864, "b": 1864}],
@@ -176,7 +203,8 @@
 	},
 	{
 		"id": "SIES",
-		"command": "tabnav_select_all",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Capture Textile cell",
 		"initial_selections": [{"a": 973, "b": 973}, {"a": 1864, "b": 1864}],
@@ -185,7 +213,8 @@
 	},
 	{
 		"id": "EESP",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Capture cell - cursor before first pipe (start of first cell)",
 		"initial_selections": [{"a": 1141, "b": 1141}],
@@ -194,7 +223,8 @@
 	},
 	{
 		"id": "IP2E",
-		"command": "tabnav_select_current",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "textile01_kitchen_sink.textile",
 		"description": "Capture cell - cursor in row markup - cell not selected",
 		"initial_selections": [{"a": 958, "b": 958}],

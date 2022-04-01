@@ -34,6 +34,7 @@ class TableCell(sublime.Region):
 		self._col = col_index
 		self._capture_level = capture_level
 		self._direction = direction
+		self._initial_regions = []
 
 	def intersects(self, region, full_extent=True):
 		'''Overrides the default `Region.intersects` method.
@@ -83,6 +84,10 @@ class TableCell(sublime.Region):
 	def direction(self):
 		return self._direction
 
+	@property
+	def initial_regions(self):
+		return self._initial_regions
+
 	def add_cursor_offset(self, offset):
 		'''Adds the given offset as the relative position within the cell
 		as a point at which a cursor should be placed.'''
@@ -99,6 +104,9 @@ class TableCell(sublime.Region):
 				point = max(self.begin(), self.end() + offset + 1)
 			cursors.append(sublime.Region(point, point))
 		return cursors
+
+	def add_initial_region(self, region):
+		self._initial_regions.append(region)
 
 
 class TableRow:
@@ -188,7 +196,14 @@ class TableView:
 		'''Gets the cells of the currently selected regions.
 
 		Assumes that each region overlaps a single table cell.'''
-		return list(self.cell_at_region(r) for r in self.view.sel())
+		cells = []
+		for region in self.view.sel():
+			if region.size() == 0:
+				cell = self.cell_at_point(region.a)
+			else:
+				cell = self.cell_at_region(region)
+			cells.append(cell)
+		return cells
 
 	def row(self, r):
 		'''Gets the TableRow the given row index.'''

@@ -1,7 +1,8 @@
 [
 	{
-		"id": "N2BJ",
-		"command": "tabnav_select_current",
+		"id": "A5AR",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Parse Markdown table row - cells",
 		"initial_selections": [{"a": 0, "b": 49}],
@@ -9,8 +10,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "3FIM",
-		"command": "tabnav_select_current",
+		"id": "OAZW",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Parse Markdown markup row - cells",
 		"initial_selections": [{"a": 50, "b": 99}],
@@ -18,8 +20,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "4CHP",
-		"command": "tabnav_select_current",
+		"id": "RF4H",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Parse Markdown region spanning markup row cells - markup excluded",
 		"initial_selections": [{"a": 0, "b": 148}],
@@ -27,8 +30,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "QW6N",
-		"command": "tabnav_select_current",
+		"id": "37LM",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Parse Markdown region spanning markup row cells - markup include",
 		"initial_selections": [{"a": 0, "b": 148}],
@@ -36,8 +40,9 @@
 		"view_settings": {"tabnav.capture_level": "markup"}
 	},
 	{
-		"id": "MSBO",
-		"command": "tabnav_select_current",
+		"id": "6MHC",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor after last pipe (not in table)",
 		"initial_selections": [{"a": 280, "b": 280}],
@@ -45,8 +50,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "2UE4",
-		"command": "tabnav_select_current",
+		"id": "6G7L",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Single cursor before first pipe (not in table)",
 		"initial_selections": [{"a": 100, "b": 100}],
@@ -54,8 +60,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "NKMH",
-		"command": "tabnav_select_current",
+		"id": "LJRV",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Cursor in empty line between tables (not in table)",
 		"initial_selections": [{"a": 1860, "b": 1860}],
@@ -63,8 +70,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "DVNE",
-		"command": "tabnav_select_current",
+		"id": "5FIM",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Single region spans multiple tables (no change)",
 		"initial_selections": [{"a": 1537, "b": 2001}],
@@ -72,8 +80,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "VKIL",
-		"command": "tabnav_select_current",
+		"id": "7O5J",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Cursor in raw scope",
 		"initial_selections": [{"a": 2919, "b": 2919}],
@@ -81,9 +90,12 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "GHMT",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "S5UK",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown02_multiple_tables.md",
 		"description": "Multiple cursors - one in raw code scope",
 		"initial_selections": [{"a": 2682, "b": 2682}, {"a": 2981, "b": 2981}],
@@ -91,8 +103,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "V6U6",
-		"command": "tabnav_select_current",
+		"id": "GZPR",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Region in raw scope",
 		"initial_selections": [{"a": 2916, "b": 2997}],
@@ -100,9 +113,12 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "N2BJ",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "4P2O",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Parse Markdown table row - cursors",
 		"initial_selections": [{"a": 0, "b": 49}],
@@ -110,9 +126,12 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "3FIM",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "ULJA",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Parse Markdown markup row - cursors",
 		"initial_selections": [{"a": 50, "b": 99}],
@@ -120,9 +139,12 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "4CHP",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "XCHL",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Parse Markdown region spanning markup row cursors - markup excluded",
 		"initial_selections": [{"a": 0, "b": 148}],
@@ -130,9 +152,12 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "QW6N",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "OO4H",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown01_unformatted_table.md",
 		"description": "Parse Markdown region spanning markup row cursors - markup include",
 		"initial_selections": [{"a": 0, "b": 148}],
@@ -140,8 +165,9 @@
 		"view_settings": {"tabnav.capture_level": "markup"}
 	},
 	{
-		"id": "NIPV",
-		"command": "tabnav_select_current",
+		"id": "Z2QM",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown03_borderless.md",
 		"description": "Parse Markdown borderless table row - cells",
 		"initial_selections": [{"a": 0, "b": 33}],
@@ -149,8 +175,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "O346",
-		"command": "tabnav_select_current",
+		"id": "3XS2",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown03_borderless.md",
 		"description": "Parse Markdown borderless markup row - cells",
 		"initial_selections": [{"a": 34, "b": 67}],
@@ -158,8 +185,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "J5YO",
-		"command": "tabnav_select_current",
+		"id": "O5H4",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown03_borderless.md",
 		"description": "Parse Markdown region spanning borderless markup row cells - markup excluded",
 		"initial_selections": [{"a": 0, "b": 101}],
@@ -167,8 +195,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "3ZAJ",
-		"command": "tabnav_select_current",
+		"id": "3T4T",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown03_borderless.md",
 		"description": "Parse Markdown region spanning borderless markup row cells - markup include",
 		"initial_selections": [{"a": 0, "b": 101}],
@@ -176,9 +205,12 @@
 		"view_settings": {"tabnav.capture_level": "markup"}
 	},
 	{
-		"id": "FQO6",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "EFUZ",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Parse Markdown borderless table row - cursors",
 		"initial_selections": [{"a": 0, "b": 33}],
@@ -186,9 +218,12 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "UTDU",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "TAQ5",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Parse Markdown borderless markup row - cursors",
 		"initial_selections": [{"a": 34, "b": 67}],
@@ -196,9 +231,12 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "T6RW",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "V7HI",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Parse Markdown region spanning borderless markup row cursors - markup excluded",
 		"initial_selections": [{"a": 0, "b": 101}],
@@ -206,9 +244,12 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "P2TW",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "JYAV",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Parse Markdown region spanning borderless markup row cursors - markup include",
 		"initial_selections": [{"a": 0, "b": 101}],
@@ -216,9 +257,12 @@
 		"view_settings": {"tabnav.capture_level": "markup"}
 	},
 	{
-		"id": "Y7YV",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "CBBN",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Borderless tables ignored - cursor in body cell",
 		"initial_selections": [{"a": 118, "b": 118}],
@@ -245,9 +289,12 @@
 		}
 	},
 	{
-		"id": "LIHC",
-		"command": "tabnav_move_cursor_current_cell",
-		"args": { "direction": "right" },
+		"id": "GHEZ",
+		"command": "tabnav_move_end",
+		"args": {
+			"scope": "cell",
+			"select": false
+		},
 		"file": "markdown03_borderless.md",
 		"description": "Borderless tables ignored - cursor in row markup",
 		"initial_selections": [{"a": 49, "b": 49}],
@@ -255,8 +302,8 @@
 		"view_settings": {"tabnav.capture_level": "markup"},
 		"package_settings": 
 		{ 
-			"user_contexts":
-			{
+			"user_contexts"
+	:		{
 				"markdown":
 				{
 					"patterns": [
@@ -274,9 +321,9 @@
 		}
 	},
 	{
-		"id": "NFNL",
-		"command": "tabnav_select_next",
-		"args": { "direction": "down" },
+		"id": "P777",
+		"command": "tabnav_move",
+		"args": { "scope": "column" },
 		"file": "markdown04_markup_like.md",
 		"description": "Markdown non-markup cells that match line markup regex",
 		"initial_selections": [{"a": 214, "b": 210}],
@@ -284,8 +331,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "P2H2",
-		"command": "tabnav_select_all",
+		"id": "AJ7M",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "markdown03_borderless.md",
 		"description": "Markdown two column borderless table - markup excluded",
 		"initial_selections": [{"a": 300, "b": 300}],
@@ -293,8 +341,9 @@
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
-		"id": "K3UR",
-		"command": "tabnav_select_all",
+		"id": "4KS3",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "markdown03_borderless.md",
 		"description": "Markdown two column borderless table - markup included",
 		"initial_selections": [{"a": 300, "b": 300}],
@@ -302,8 +351,9 @@
 		"view_settings": {"tabnav.capture_level": "markup"}
 	},
 	{
-		"id": "DK25",
-		"command": "tabnav_select_all",
+		"id": "OJ4J",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "markdown04_markup_like.md",
 		"description": "Capture trimmed - bordered",
 		"initial_selections": [{"a": 359, "b": 359}],
@@ -311,8 +361,9 @@
 		"view_settings": {"tabnav.capture_level": "trimmed"}
 	},
 	{
-		"id": "FZEF",
-		"command": "tabnav_select_all",
+		"id": "LVMZ",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "markdown03_borderless.md",
 		"description": "Capture trimmed - borderless",
 		"initial_selections": [{"a": 109, "b": 109}, {"a": 299, "b": 299}],
@@ -320,8 +371,9 @@
 		"view_settings": {"tabnav.capture_level": "trimmed"}
 	},
 	{
-		"id": "C2FV",
-		"command": "tabnav_select_current",
+		"id": "4JHE",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown04_markup_like.md",
 		"description": "Capture trimmed - selection in trimmed whitespace",
 		"initial_selections": [{"a": 555, "b": 555}],
@@ -329,8 +381,9 @@
 		"view_settings": {"tabnav.capture_level": "trimmed"}
 	},
 	{
-		"id": "GLRE",
-		"command": "tabnav_select_current",
+		"id": "AWS5",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown04_markup_like.md",
 		"description": "Capture trimmed - selection in trimmed whitespace - last column",
 		"initial_selections": [{"a": 526, "b": 533}],
@@ -338,8 +391,9 @@
 		"view_settings": {"tabnav.capture_level": "trimmed"}
 	},
 	{
-		"id": "F6AN",
-		"command": "tabnav_select_current",
+		"id": "YODJ",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown03_borderless.md",
 		"description": "Capture trimmed - selection in trimmed whitespace - first column of borderless",
 		"initial_selections": [{"a": 142, "b": 144}],
@@ -347,8 +401,9 @@
 		"view_settings": {"tabnav.capture_level": "trimmed"}
 	},
 	{
-		"id": "ERD7",
-		"command": "tabnav_select_current",
+		"id": "SFJV",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown03_borderless.md",
 		"description": "Capture trimmed - selection in trimmed whitespace - last column of borderless",
 		"initial_selections": [{"a": 194, "b": 199}],
@@ -356,8 +411,9 @@
 		"view_settings": {"tabnav.capture_level": "trimmed"}
 	},
 	{
-		"id": "YPLE",
-		"command": "tabnav_select_current",
+		"id": "KNFL",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown03_borderless.md",
 		"description": "Capture trimmed - selection in empty first column of borderless",
 		"initial_selections": [{"a": 296, "b": 296}],
@@ -365,8 +421,9 @@
 		"view_settings": {"tabnav.capture_level": "trimmed"}
 	},
 	{
-		"id": "IPKB",
-		"command": "tabnav_select_current",
+		"id": "AAI5",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown03_borderless.md",
 		"description": "Capture trimmed - selection in empty last column of borderless",
 		"initial_selections": [{"a": 312, "b": 312}],
@@ -374,8 +431,9 @@
 		"view_settings": {"tabnav.capture_level": "trimmed"}
 	},
 	{
-		"id": "5X32",
-		"command": "tabnav_select_current",
+		"id": "SFO4",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell - cursor before first pipe (start of first cell)",
 		"initial_selections": [{"a": 936, "b": 936}],
@@ -383,8 +441,9 @@
 		"view_settings": {"tabnav.capture_level": "cell"}
 	},
 	{
-		"id": "YYVL",
-		"command": "tabnav_select_current",
+		"id": "4COS",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown02_multiple_tables.md",
 		"description": "Capture cell - cursor immediately before delimiter between cells",
 		"initial_selections": [{"a": 898, "b": 898}],
@@ -392,8 +451,9 @@
 		"view_settings": {"tabnav.capture_level": "cell"}
 	},
 	{
-		"id": "ELQV",
-		"command": "tabnav_select_current",
+		"id": "LRTT",
+		"command": "tabnav_select",
+		"args": { "scope": "cell" },
 		"file": "markdown03_borderless.md",
 		"description": "Capture cell - first cell of borderless (no delimiter)",
 		"initial_selections": [{"a": 266, "b": 266}],
@@ -401,8 +461,9 @@
 		"view_settings": {"tabnav.capture_level": "cell"}
 	},
 	{
-		"id": "ZVVN",
-		"command": "tabnav_select_all",
+		"id": "BLHD",
+		"command": "tabnav_select",
+		"args": { "scope": "table" },
 		"file": "markdown01_unformatted_table.md",
 		"description": "Capture cell - entire table",
 		"initial_selections": [{"a": 178, "b": 178}],

@@ -193,7 +193,7 @@
 //         "context": [ { "key": "is_tabnav_context"} ]
 //     },
 //     { 
-//         // extend selection to bottom of row
+//         // extend selection to bottom of column
 //         "keys": ["ctrl+alt+shift+/"],
 //         "command": "tabnav_extend_end",
 //         "args": { "direction": "down" },

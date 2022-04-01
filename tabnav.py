@@ -35,17 +35,17 @@ def apply_listener_boolean_operator(nominal, operator, operand):
 
 
 def select_cells(view, selected_cells, capture_level, select=True):
-		cells = [c for c in selected_cells if c.capture_level <= capture_level]
-		if len(cells) == 0:
-			# If no cells at the configured capture level are selected, then select everything
-			cells = selected_cells
-		if len(cells) > 0:
-			view.sel().clear()
-			if select:
-				view.sel().add_all(cells)
-			else:
-				cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in cells)))
-				view.sel().add_all(cursors)
+	cells = [c for c in selected_cells if c.capture_level <= capture_level]
+	if len(cells) == 0:
+		# If no cells at the configured capture level are selected, then select everything
+		cells = selected_cells
+	if len(cells) > 0:
+		view.sel().clear()
+		if select:
+			view.sel().add_all(cells)
+		else:
+			cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in cells)))
+			view.sel().add_all(cursors)
 
 
 class TabnavCommand(sublime_plugin.TextCommand):
@@ -71,12 +71,13 @@ class TabnavCommand(sublime_plugin.TextCommand):
 
 
 class TabnavMoveCommand(TabnavCommand):
-	def run(self, edit, scope, forward=True, select=True, extend=0, context=None):
+	def run(self, edit, scope, forward=True, select=True, extend=0, context=None, capture_level=None):
+		# context and capture_level get used when building the Context object in the TabnavCommand.is_enabled method.
 		if forward:
 			delta = 1
 		else:
 			delta = -1
-		if scope == 'row':
+		if scope[0] == 'r': # row
 			dr = 0
 			dc = delta
 			move_cursors = not select and extend == 0
@@ -87,7 +88,7 @@ class TabnavMoveCommand(TabnavCommand):
 					offset = 0
 			else:
 				offset = None
-		elif scope == 'column':
+		elif scope[0] == 'c': # column
 			dr = delta
 			dc = 0
 			move_cursors = False
@@ -125,6 +126,58 @@ class TabnavMoveCommand(TabnavCommand):
 			for region in regions_to_remove:
 				self.view.sel().subtract(region)
 
+
+class TabnavMoveEndCommand(TabnavCommand):
+	def run(self, edit, scope, forward=True, select=True, extend=False, context=None, capture_level=None):
+		# context and capture_level get used when building the Context object in the TabnavCommand.is_enabled method.
+		try:
+			if scope.startswith("ce"): # cell
+				self.init_table(1)
+				# TODO: this case in particular can probably be cleaned up
+				self.tabnav.split_selections(expand_selections=not extend)
+				new_selections = []
+				for region in self.view.sel():
+					if region.size() == 0:
+						cell = self.table.cell_at_point(region.a)
+					else:
+						cell = self.table.cell_at_region(region)
+					if extend:
+						start = region.a
+						if forward:
+							end = cell.end()
+						else:
+							end = cell.begin()
+					else:
+						if forward:
+							start = end = cell.end()
+						else:
+							start = end = cell.begin()
+					new_selections.append(sublime.Region(start, end))
+				self.view.sel().clear()
+				self.view.sel().add_all(new_selections)
+			else:
+				if forward:
+					direction = 1
+				else:
+					direction = -1
+				if scope.startswith("r"): # row
+					self.init_table(cell_directions[(0, direction, select)])
+					self.tabnav.split_selections(select)
+					if extend:
+						cells = self.tabnav.get_row_cells(direction)
+					else:
+						cells = self.tabnav.get_row_end_cells(direction)
+				elif scope.startswith("c"): # column
+					self.init_table(cell_directions[(direction, 0, select)])
+					self.tabnav.split_selections(select)
+					if extend:
+						cells = self.tabnav.get_column_cells(direction)
+					else:
+						cells = self.tabnav.get_column_end_cells(direction)
+				select_cells(self.view, cells, self.context.capture_level, select)
+		except (CursorNotInTableError, RowNotInTableError) as e:
+			log.info(e.err)
+
 class TabnavSelectCommand(TabnavCommand):
 	def run(self, edit, scope, forward=True, select=True, context=None, capture_level=None):
 		# context and capture_level get used when building the Context object in the TabnavCommand.is_enabled method.
@@ -136,16 +189,16 @@ class TabnavSelectCommand(TabnavCommand):
 			offset = 0
 		try:
 			self.init_table(cell_direction)
-			if scope == "cell":
+			if scope.startswith("ce"): # cell
 				self.tabnav.split_selections(select, move_cursors=True)
 				return
 			cells = []
-			if scope == "row":
+			if scope[0] == 'r': # row
 				self.tabnav.split_selections(select, move_cursors=True)
 				cells = list(itertools.chain.from_iterable(row for row in self.table.rows))
-			elif scope == "column":
+			elif scope[0] == 'c': # column
 				cells = self._get_column_cells(select)
-			elif scope == "table":
+			elif scope[0] == 't': # table
 				cells = self._get_all_cells(select)
 			if not select:
 				for cell in cells:
@@ -218,7 +271,7 @@ class TabnavMoveCursorCommand(TabnavCommand):
 		else:	
 			if new_cells is not None:
 				cursors = list(itertools.chain.from_iterable((cell.get_cursors_as_regions() for cell in new_cells)))
-				self.view .sel().clear()
+				self.view.sel().clear()
 				self.view.sel().add_all(cursors)
 				self.view.show(self.view.sel())
 
@@ -314,6 +367,7 @@ class TabnavExtendSelectionCommand(TabnavCommand):
 
 class TabnavReduceSelectionCommand(TabnavCommand):
 	def run(self, edit, direction, context=None):
+		cells_to_remove = None
 		try:
 			cell_direction = selection_cell_directions[direction]
 			self.init_table(cell_direction)

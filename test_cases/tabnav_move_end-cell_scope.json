@@ -1,0 +1,587 @@
+[
+    {
+        "id": "VZFA",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Move cursor to end of cell",
+        "initial_selections": [{"a": 167, "b": 167}],
+        "expected_selections": [{"a": 191, "b": 191}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "EW4D",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Move cursor to end of cell - already at end of cell",
+        "initial_selections": [{"a": 247, "b": 247}],
+        "expected_selections": [{"a": 247, "b": 247}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "3IRW",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Move cursor to end of cell - already at end of cell with cell capture level",
+        "initial_selections": [{"a": 247, "b": 247}],
+        "expected_selections": [{"a": 247, "b": 247}],
+        "view_settings": {"tabnav.capture_level": "cell"}
+    },
+    {
+        "id": "6KDK",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Move cursor to end of cell - empty cell",
+        "initial_selections": [{"a": 206, "b": 206}],
+        "expected_selections": [{"a": 206, "b": 206}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "PSGI",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Move cursor to end of cell - region within cell selected",
+        "initial_selections": [{"a": 172, "b": 179}],
+        "expected_selections": [{"a": 191, "b": 191}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "OC3J",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Move multiple cursors to end of cell",
+        "initial_selections": [{"a": 467, "b": 467}, {"a": 470, "b": 470}, {"a": 779, "b": 779}, {"a": 1044, "b": 1044}, {"a": 2042, "b": 2042}, {"a": 2392, "b": 2392}],
+        "expected_selections": [{"a": 478, "b": 478}, {"a": 788, "b": 788}, {"a": 1047, "b": 1047}, {"a": 2055, "b": 2055}, {"a": 2399, "b": 2399}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "Z4LC",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Move cursor to end of cell - moves back to trimmed region",
+        "initial_selections": [{"a": 814, "b": 814}],
+        "expected_selections": [{"a": 806, "b": 806}],
+        "view_settings": {"tabnav.capture_level": "trimmed"}
+    },
+    {
+        "id": "LOTD",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "forward": false
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Move cursor to start of cell",
+        "initial_selections": [{"a": 167, "b": 167}],
+        "expected_selections": [{"a": 149, "b": 149}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "NXTD",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "forward": false
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Move cursor to start of cell - already at start of cell",
+        "initial_selections": [{"a": 149, "b": 149}],
+        "expected_selections": [{"a": 149, "b": 149}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "DYMA",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "forward": false
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Move cursor to start of cell - already at start of cell with cell capture level, moves to previous cell (not ideal, but side-effect of not maintaining state)",
+        "initial_selections": [{"a": 730, "b": 730}],
+        "expected_selections": [{"a": 711, "b": 711}],
+        "view_settings": {"tabnav.capture_level": "cell"}
+    },
+    {
+        "id": "MKDW",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "textile",
+            "scope": "cell",
+            "forward": false
+        },
+        "file": "textile01_kitchen_sink.textile",
+        "description": "Move cursor to start of content in cell with markup and content",
+        "initial_selections": [{"a": 637, "b": 637}],
+        "expected_selections": [{"a": 629, "b": 629}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "FSVO",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "textile",
+            "scope": "cell",
+            "forward": false
+        },
+        "file": "textile01_kitchen_sink.textile",
+        "description": "Move cursor to start of trimmed content in cell with markup and content",
+        "initial_selections": [{"a": 637, "b": 637}],
+        "expected_selections": [{"a": 630, "b": 630}],
+        "view_settings": {"tabnav.capture_level": "trimmed"}
+    },
+    {
+        "id": "K6BC",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "textile",
+            "scope": "cell",
+            "forward": false
+        },
+        "file": "textile01_kitchen_sink.textile",
+        "description": "Move cursor to start of markup in cell with markup and content",
+        "initial_selections": [{"a": 637, "b": 637}],
+        "expected_selections": [{"a": 617, "b": 617}],
+        "view_settings": {"tabnav.capture_level": "markup"}
+    },
+    {
+        "id": "D47Z",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "textile",
+            "scope": "cell",
+            "forward": false
+        },
+        "file": "textile01_kitchen_sink.textile",
+        "description": "Move cursor to start of cell in cell with markup and content",
+        "initial_selections": [{"a": 781, "b": 781}],
+        "expected_selections": [{"a": 751, "b": 751}],
+        "view_settings": {"tabnav.capture_level": "cell"}
+    },
+    {
+        "id": "EW3X",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "textile",
+            "scope": "cell",
+            "forward": false
+        },
+        "file": "textile01_kitchen_sink.textile",
+        "description": "Move cursor to start of cell in cell with markup and content - moves forward to start of content",
+        "initial_selections": [{"a": 757, "b": 757}],
+        "expected_selections": [{"a": 764, "b": 764}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "4M3C",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Move cursor to end of cell - mix of content and markup cells selected, content capture",
+        "initial_selections": [{"a": 132, "b": 132}, {"a": 216, "b": 216}, {"a": 300, "b": 300}],
+        "expected_selections": [{"a": 142, "b": 142}, {"a": 310, "b": 310}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "VXVI",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Move cursor to end of cell - mix of content and markup cells selected, markup capture",
+        "initial_selections": [{"a": 132, "b": 132}, {"a": 216, "b": 216}, {"a": 300, "b": 300}],
+        "expected_selections": [{"a": 142, "b": 142}, {"a": 226, "b": 226}, {"a": 310, "b": 310}],
+        "view_settings": {"tabnav.capture_level": "markup"}
+    },
+    {
+        "id": "IA46",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell"
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Move cursor to end of cell - region spanning many cells split",
+        "initial_selections": [{"a": 130, "b": 551}],
+        "expected_selections": [{"a": 142, "b": 142}, {"a": 156, "b": 156}, {"a": 170, "b": 170}, {"a": 178, "b": 178}, {"a": 284, "b": 284}, {"a": 291, "b": 291}, {"a": 310, "b": 310}, {"a": 324, "b": 324}, {"a": 338, "b": 338}, {"a": 346, "b": 346}, {"a": 368, "b": 368}, {"a": 375, "b": 375}, {"a": 394, "b": 394}, {"a": 408, "b": 408}, {"a": 422, "b": 422}, {"a": 430, "b": 430}, {"a": 452, "b": 452}, {"a": 459, "b": 459}, {"a": 478, "b": 478}, {"a": 492, "b": 492}, {"a": 506, "b": 506}, {"a": 514, "b": 514}, {"a": 536, "b": 536}, {"a": 543, "b": 543}, {"a": 562, "b": 562}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "4KAH",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to end of cell - region spanning many cells split, selects entire cell",
+        "initial_selections": [{"a": 130, "b": 551}],
+        "expected_selections": [{"a": 124, "b": 142}, {"a": 143, "b": 156}, {"a": 157, "b": 170}, {"a": 171, "b": 178}, {"a": 265, "b": 284}, {"a": 285, "b": 291}, {"a": 292, "b": 310}, {"a": 311, "b": 324}, {"a": 325, "b": 338}, {"a": 339, "b": 346}, {"a": 349, "b": 368}, {"a": 369, "b": 375}, {"a": 376, "b": 394}, {"a": 395, "b": 408}, {"a": 409, "b": 422}, {"a": 423, "b": 430}, {"a": 433, "b": 452}, {"a": 453, "b": 459}, {"a": 460, "b": 478}, {"a": 479, "b": 492}, {"a": 493, "b": 506}, {"a": 507, "b": 514}, {"a": 517, "b": 536}, {"a": 537, "b": 543}, {"a": 544, "b": 562}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "OUMK",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to start of cell - region spanning many cells split, cursor at start of each cell",
+        "initial_selections": [{"a": 130, "b": 551}],
+        "expected_selections": [{"a": 124, "b": 124}, {"a": 143, "b": 143}, {"a": 157, "b": 157}, {"a": 171, "b": 171}, {"a": 265, "b": 265}, {"a": 285, "b": 285}, {"a": 292, "b": 292}, {"a": 311, "b": 311}, {"a": 325, "b": 325}, {"a": 339, "b": 339}, {"a": 349, "b": 349}, {"a": 369, "b": 369}, {"a": 376, "b": 376}, {"a": 395, "b": 395}, {"a": 409, "b": 409}, {"a": 423, "b": 423}, {"a": 433, "b": 433}, {"a": 453, "b": 453}, {"a": 460, "b": 460}, {"a": 479, "b": 479}, {"a": 493, "b": 493}, {"a": 507, "b": 507}, {"a": 517, "b": 517}, {"a": 537, "b": 537}, {"a": 544, "b": 544}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "6PJ3",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to start of cell - final selection from beginning of initial selection, initial slection forward",
+        "initial_selections": [{"a": 1305, "b": 1313}],
+        "expected_selections": [{"a": 1305, "b": 1300}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "IVGE",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to start of cell - final selection from beginning of initial selection, initial slection reverse",
+        "initial_selections": [{"a": 1313, "b": 1305}],
+        "expected_selections": [{"a": 1313, "b": 1300}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "ZZZD",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to end of cell - final selection from beginning of initial selection, initial slection forward",
+        "initial_selections": [{"a": 1305, "b": 1313}],
+        "expected_selections": [{"a": 1305, "b": 1318}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "BOVN",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to end of cell - final selection from beginning of initial selection, initial slection reverse",
+        "initial_selections": [{"a": 1313, "b": 1305}],
+        "expected_selections": [{"a": 1313, "b": 1318}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "QQXA",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Extend selection to end of cell - already at end of cell",
+        "initial_selections": [{"a": 247, "b": 247}],
+        "expected_selections": [{"a": 247, "b": 247}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "Y5OD",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Extend selection to end of cell - empty cell",
+        "initial_selections": [{"a": 206, "b": 206}],
+        "expected_selections": [{"a": 206, "b": 206}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "GLTG",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Extend selection to start of cell - already at start of cell",
+        "initial_selections": [{"a": 248, "b": 248}],
+        "expected_selections": [{"a": 248, "b": 248}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "BCSC",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Extend selection to start of cell - empty cell",
+        "initial_selections": [{"a": 206, "b": 206}],
+        "expected_selections": [{"a": 206, "b": 206}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "DBIP",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Extend selection to end of cell - multiple regions in same cell merged",
+        "initial_selections": [{"a": 254, "b": 258}, {"a": 266, "b": 270}],
+        "expected_selections": [{"a": 254, "b": 279}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "SHCK",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Extend selection to end of cell - multiple regions opposite directions merged",
+        "initial_selections": [{"a": 258, "b": 254}, {"a": 266, "b": 270}],
+        "expected_selections": [{"a": 258, "b": 279}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "E4EW",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Extend selection to start of cell - multiple regions in same cell merged",
+        "initial_selections": [{"a": 254, "b": 258}, {"a": 266, "b": 270}],
+        "expected_selections": [{"a": 266, "b": 248}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "35MQ",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "markdown01_unformatted_table.md",
+        "description": "Extend selection to start of cell - multiple regions opposite directions merged",
+        "initial_selections": [{"a": 254, "b": 258}, {"a": 270, "b": 266}],
+        "expected_selections": [{"a": 270, "b": 248}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "W54Y",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to end of cell - adjacent cells with cell capture level",
+        "initial_selections": [{"a": 712, "b": 712}, {"a": 731, "b": 731}],
+        "expected_selections": [{"a": 712, "b": 730}, {"a": 731, "b": 744}],
+        "view_settings": {"tabnav.capture_level": "cell"}
+    },
+    {
+        "id": "CNYL",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to end of cell - full adjacent cells with cell capture level",
+        "initial_selections": [{"a": 711, "b": 730}, {"a": 730, "b": 744}],
+        "expected_selections": [{"a": 711, "b": 730}, {"a": 730, "b": 744}],
+        "view_settings": {"tabnav.capture_level": "cell"}
+    },
+    {
+        "id": "SJ3Y",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to start of cell - full adjacent cells with cell capture level",
+        "initial_selections": [{"a": 711, "b": 704}, {"a": 730, "b": 711}],
+        "expected_selections": [{"a": 711, "b": 704}, {"a": 730, "b": 711}],
+        "view_settings": {"tabnav.capture_level": "cell"}
+    },
+    {
+        "id": "EF4L",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "textile",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "textile01_kitchen_sink.textile",
+        "description": "Extend selection to end of cell - cursor before content, full content selected",
+        "initial_selections": [{"a": 622, "b": 622}],
+        "expected_selections": [{"a": 629, "b": 651}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "CFH7",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "textile",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "textile01_kitchen_sink.textile",
+        "description": "Extend selection to start of cell - cursor before content, moved to start of content",
+        "initial_selections": [{"a": 622, "b": 622}],
+        "expected_selections": [{"a": 629, "b": 629}],
+        "view_settings": {"tabnav.capture_level": "content"}
+    },
+    {
+        "id": "2OKB",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to end of cell - cursor after trimmed content, full trimmed content selected",
+        "initial_selections": [{"a": 726, "b": 726}],
+        "expected_selections": [{"a": 713, "b": 723}],
+        "view_settings": {"tabnav.capture_level": "trimmed"}
+    },
+    {
+        "id": "GNMM",
+        "command": "tabnav_move_end",
+        "args":
+        {
+            "context": "markdown",
+            "scope": "cell",
+            "extend": true,
+            "forward": false
+        },
+        "file": "markdown02_multiple_tables.md",
+        "description": "Extend selection to start of cell - cursor after trimmed content, moved to start of trimmed content (side-effect of being outside of trimmed content; not by design)",
+        "initial_selections": [{"a": 726, "b": 726}],
+        "expected_selections": [{"a": 713, "b": 713}],
+        "view_settings": {"tabnav.capture_level": "trimmed"}
+    }
+]

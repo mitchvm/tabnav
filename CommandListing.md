@@ -60,6 +60,10 @@ When moving/extending the selection, if the current cell is the last cell (at th
     <dd>
         <p>Specify the name of the TabNav context to use. If not provided, TabNav infers the context based on the current scope.</p>
     </dd>
+    <dt><strong>capture_level</strong> : { "cell", "markup", "content", "trimmed" }, optional</dt>
+    <dd>
+        <p>Sets the capture level to use for the selection. If not provided, the normal rules to determine the capture level apply.</p>
+    </dd>s
 </dl>
 
 [Back to top](#)
@@ -81,7 +85,7 @@ If the current cell is the last cell (at the current capture level) in the direc
 <dl>
     <dt><strong>scope</strong> : { "cell", "row", "column" }</dt>
     <dd>
-        <p><strong>Required</strong>. Indicates if movement should be within the same rows (horizontally) or column (vertically).</p>
+        <p><strong>Required</strong>. Indicates if movement should be within the same rows (horizontally) or columns (vertically) as initial selections. <code>"scope":"cell"</code> moves the cursors to one end of the currently selected cells. </p>
     </dd>
     <dt><strong>forward</strong> : bool, default true</dt>
     <dd>
@@ -89,20 +93,19 @@ If the current cell is the last cell (at the current capture level) in the direc
     </dd>
     <dt><strong>select</strong> : bool, default true</dt>
     <dd>
-        <p>If <code>true</code>, a Sublime Text region is created spanning the entirety of each selected cell. If <code>false</code>, a cursor is placed in each selected cell. When moving <code>"scope":"column"</code> with <code>"select":false</code>, TabNav attempts to maintain the relative position of the cursor within the cell.</p>
+        <p>If <code>true</code>, a Sublime Text region is created spanning the entirety of each selected cell. If <code>false</code>, a cursor is placed in each selected cell. When moving <code>"scope":"column"</code> with <code>"select":false</code>, TabNav attempts to maintain the relative position of the cursor within the cell. Ignored for <code>"scope":"cell"</code>.</p>
     </dd>
-    <dt><strong>extend</strong> : { -1, 0, 1 }, default 0</dt>
+    <dt><strong>extend</strong> : bool, default false</dt>
     <dd>
-        <p>Determines if the cursors/selections are moved, extended, or reduced.</p>
-        <ul>
-            <li><code>1</code> : Add neighbouring cell to existing selections</li>
-            <li><code>0</code> : Move selection to neighbouring cell</li>
-            <li><code>-1</code> : Remove outer-most cell from each contiguous group of selected cells with >1 cell selected</li>
-        </ul>
+        <p>Determines if the cursors/selections are moved to the end (<code>false</code>), or extended to the end (<code>true</code>). With <code>"scope":"cell"</code>, characters within the current cells are selected.</p>
     </dd>
     <dt><strong>context</strong> : string, optional</dt>
     <dd>
         <p>Specify the name of the TabNav context to use. If not provided, TabNav infers the context based on the current scope.</p>
+    </dd>
+    <dt><strong>capture_level</strong> : { "cell", "markup", "content", "trimmed" }, optional</dt>
+    <dd>
+        <p>Sets the capture level to use for the selection. If not provided, the normal rules to determine the capture level apply.</p>
     </dd>
 </dl>
 
