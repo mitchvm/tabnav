@@ -143,6 +143,26 @@ def run_test_case(view, test):
 def result_row(test_result):
 	return '| {0} | {1} | {2} | {3} | '.format(test_result.result, test_result.test_case.test_id, test_result.test_case.command_name, test_result.message)
 
+result_control_template = """
+<body id="tabnav-test-result-control">
+    <style>
+        div {{
+            display:inline;
+            padding-left:1rem;
+            padding-right:1rem;
+        }}
+    </style>
+	<a href="run_{0}"><div>Run</div></a><a href="locate_{0}"><div>Locate</div></a>
+</body>""";
+
+filler = """<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>""";
+
+def navigate_result(window, href):
+	(command, test_id) = href.split('_')
+	if command == "run":
+		window.run_command("tabnav_highlight_test_case", {"test_id": test_id})
+	elif command == "locate":
+		window.run_command("tabnav_locate_test_case", {"test_id": test_id})
 
 def print_test_results():
 	global start_time
@@ -151,7 +171,7 @@ def print_test_results():
 	failed = total - passed
 	sorted_results = sorted(test_results, key=lambda r:r.test_case.test_id)
 	sorted_results = sorted(sorted_results, key=lambda r:r.test_case.command_name)
-	sorted_results = sorted(sorted_results, key=lambda r:r.passed)
+	sorted_results = list(sorted(sorted_results, key=lambda r:r.passed))
 	if start_time is not None:
 		duration = datetime.now() - start_time
 		start_time = None
@@ -160,24 +180,35 @@ def print_test_results():
 	window = sublime.active_window()
 	panelName = 'tabnav_test_results'
 	output_panel = window.create_output_panel(panelName)
-	window.run_command("show_panel", {"panel": "output." + panelName})
+	output_panel.erase_phantoms("tabnav_result_navigation")
 	output_panel.set_read_only(False)
 	if passed == total:
 		icon = '🟢'
 	else:
 		icon = '❌'
-	output_panel.run_command('set_file_type', {"syntax": "Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax"})
+	output_panel.assign_syntax("Packages/MarkdownEditing/syntaxes/Markdown.sublime-syntax")
 	output_panel.run_command('append', {'characters': '# TabNav Test Summary {0}\n\nTOTAL:{1:8d}\nPASS:{2:9d} 🟢\nFAIL:{3:9d} ❌\nDuration:{4:5.1f}s\n\n'.format(icon, total, passed, failed, duration.total_seconds())})
 	output_panel.run_command('append', {'characters': '## Test Results\n\n'})
 	output_panel.run_command('append', {'characters': '| Result |  ID  | Command | Error |\n'})
 	output_panel.run_command('append', {'characters': '|-------:|:----:|:--------|:------|\n'})
-	for line in sorted_results:
-		output_panel.run_command('append', {'characters': result_row(line) + '\n'})
+	for result in sorted_results:
+		output_panel.run_command('append', {'characters': result_row(result) + '\n'})
 	output_panel.run_command('markdown_table_format')
+	point = output_panel.text_point(9, 0)
+	output_panel.add_phantom("tabnav_result_navigation", sublime.Region(point, point), filler, sublime.LAYOUT_INLINE)
+	point = output_panel.text_point(10, 0)
+	output_panel.add_phantom("tabnav_result_navigation", sublime.Region(point, point), filler, sublime.LAYOUT_INLINE)
+	row = 11
+	navigate_callback =  partial(navigate_result, window)
+	for result in sorted_results:
+		point = output_panel.text_point(row, 0)
+		content = result_control_template.format(result.test_case.test_id)
+		output_panel.add_phantom("tabnav_result_navigation", sublime.Region(point, point), content, sublime.LAYOUT_INLINE, navigate_callback)
+		row = row + 1
 	output_panel.run_command('move_to', {"extend": False, "to": "bof"})
 	output_panel.set_read_only(True)
+	window.run_command("show_panel", {"panel": "output." + panelName})
 	test_results.clear()
-
 
 	@property
 	def passed(self):
@@ -247,6 +278,16 @@ def highlight_expected_selections(view, test):
 	annotation = annotation_template.format(test=test)
 	view.add_regions("tabnav_test_annotation", [sublime.Region(second_line,second_line)], flags=sublime.HIDDEN, annotations=[annotation], annotation_color=annotation_color)
 
+def find_and_show_test(view, test_id, start_point=0, flags=0):
+	pattern = '"id"\\s*:\\s*"{0}"'.format(test_id)
+	region = view.find(pattern, start_point, flags)
+	if region.a < 0:
+		return
+	view.sel().clear()
+	view.sel().add(region)
+	view.run_command('expand_selection', {"to": "brackets"})
+	view.run_command('expand_selection', {"to": "brackets"})
+	view.show(view.sel()[0], True)
 
 class TestRunnerListener(sublime_plugin.ViewEventListener):
 	@classmethod
@@ -367,6 +408,15 @@ class TabnavHighlightTestCaseCommand(sublime_plugin.WindowCommand):
 	def input(self, args):
 		return TabnavSingleTestInputHandler(self.window.active_view())
 
+class TabnavLocateTestCaseCommand(sublime_plugin.WindowCommand):
+	def run(self, test_id):
+		test = next(enumerate_test_cases(test_id=test_id))
+		file_path = os.path.join(test_cases_dir, test.test_case_file)
+		file_view = self.window.open_file(file_path)
+		delay_until_loaded(file_view, partial(find_and_show_test, file_view, test_id), 50)
+
+	def input(self, args):
+		return TabnavSingleTestInputHandler(self.window.active_view())
 
 class TabnavNewTestIdsCommand(sublime_plugin.TextCommand):
 	def run(self, edit):

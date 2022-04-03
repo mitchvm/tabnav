@@ -30,5 +30,9 @@
   {
     "caption": "TabNav: Highlight test case",
     "command": "tabnav_highlight_test_case"
+  },
+  {
+    "caption": "TabNav: Locate test case",
+    "command": "tabnav_locate_test_case"
   }
 ]
