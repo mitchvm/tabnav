@@ -1202,7 +1202,7 @@
 		"file": "markdown02_multiple_tables.md",
 		"description": "Move cursor up, multiple cursors in multiple tables",
 		"initial_selections": [{"a": 148, "b": 148}, {"a": 247, "b": 247}, {"a": 613, "b": 613}, {"a": 720, "b": 720}, {"a": 1869, "b": 1869}, {"a": 2192, "b": 2192}, {"a": 2213, "b": 2213}],
-		"expected_selections": [{"a": 148, "b": 148}, {"a": 163, "b": 163}, {"a": 529, "b": 529}, {"a": 636, "b": 636}, {"a": 1869, "b": 1869}, {"a": 2162, "b": 2162}, {"a": 2183, "b": 2183}],
+		"expected_selections": [{"a": 148, "b": 148}, {"a": 529, "b": 529}, {"a": 636, "b": 636}, {"a": 1869, "b": 1869}, {"a": 2162, "b": 2162}, {"a": 2183, "b": 2183}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{

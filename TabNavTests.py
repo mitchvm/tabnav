@@ -8,6 +8,10 @@ import itertools
 import base64
 import uuid
 import json
+import TabNav.src as tabnav
+
+log = tabnav.get_logger(__package__, __name__)
+log.setLevel("ERROR")
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 test_cases_dir = os.path.join(current_dir, "test_cases")
@@ -111,6 +115,7 @@ def run_test_cases(view, close_file=True):
 
 
 def setup_test_case(view, test):
+	log.debug("Setup test case %s", test.test_id)
 	test.initial_syntax = view.settings().get('syntax')
 	if test.syntax is not None:
 		view.set_syntax_file(test.syntax)
@@ -126,9 +131,11 @@ def setup_test_case(view, test):
 		view.sel().add_all([sublime.Region(a, b) for a,b in test.initial_selections])
 		return None
 	except Exception as e:
-		return TestResult(test, False, e.__str__())
+		log.debug("Exception setting-up test case %s: %s", test.test_id, e)
+		return TestResult(test, False, str(e))
 
 def run_test_case(view, test):
+	log.debug("Run test case %s", test.test_id)
 	try:
 		view.run_command(test.command_name, args=test.command_args)
 		selections = list(view.sel())
@@ -138,7 +145,8 @@ def run_test_case(view, test):
 			assert (r in test.expected_selections), "Region {0} not expected".format(r)
 		return TestResult(test, True)
 	except Exception as e:
-		return TestResult(test, False, e.__str__())
+		log.debug("Exception running test case %s: %s", test.test_id, e)
+		return TestResult(test, False, str(e))
 
 def result_row(test_result):
 	return '| {0} | {1} | {2} | {3} | '.format(test_result.result, test_result.test_case.test_id, test_result.test_case.command_name, test_result.message)
@@ -220,6 +228,7 @@ def print_test_results():
 
 
 def clear_test_case(view, test):
+	log.debug("Clearing test case %s", test.test_id)
 	package_settings = sublime.load_settings("tabnav.sublime-settings")
 	view.set_syntax_file(test.initial_syntax)
 	for setting in test.initial_view_settings:

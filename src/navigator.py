@@ -159,15 +159,14 @@ class TableNavigator:
 					cursors_by_level[level] = cursors
 				if not selection_changed and (region.size() > 0 or len(line_cells) > 1 or line_cells[0].b != point):
 					selection_changed = True
-		if selection_changed:
-			level = capture_level
-			cursors = []
-			while len(cursors) == 0:
-				# If no cells at the desired capture level are selected, go up one level at a time until something is selected
-				cursors = list(itertools.chain.from_iterable(c for l, c in cursors_by_level.items() if l <= level))
-				level = level + 1
-			self.view.sel().clear()
-			self.view.sel().add_all(cursors)
+		level = capture_level
+		cursors = []
+		while len(cursors) == 0:
+			# If no cells at the desired capture level are selected, go up one level at a time until something is selected
+			cursors = list(itertools.chain.from_iterable(c for l, c in cursors_by_level.items() if l <= level))
+			level = level + 1
+		self.view.sel().clear()
+		self.view.sel().add_all(cursors)
 		return selection_changed
 
 

@@ -137,9 +137,9 @@
             "forward": false
         },
         "file": "markdown02_multiple_tables.md",
-        "description": "Move cursor to start of cell - already at start of cell with cell capture level, moves to previous cell (not ideal, but side-effect of not maintaining state)",
+        "description": "Move cursor to start of cell - already at start of cell with cell capture level",
         "initial_selections": [{"a": 730, "b": 730}],
-        "expected_selections": [{"a": 711, "b": 711}],
+        "expected_selections": [{"a": 730, "b": 730}],
         "view_settings": {"tabnav.capture_level": "cell"}
     },
     {
@@ -285,9 +285,9 @@
             "forward": false
         },
         "file": "markdown02_multiple_tables.md",
-        "description": "Extend selection to start of cell - region spanning many cells split, cursor at start of each cell",
+        "description": "Extend selection to start of cell - region spanning many cells split, each cell selected in reverse",
         "initial_selections": [{"a": 130, "b": 551}],
-        "expected_selections": [{"a": 124, "b": 124}, {"a": 143, "b": 143}, {"a": 157, "b": 157}, {"a": 171, "b": 171}, {"a": 265, "b": 265}, {"a": 285, "b": 285}, {"a": 292, "b": 292}, {"a": 311, "b": 311}, {"a": 325, "b": 325}, {"a": 339, "b": 339}, {"a": 349, "b": 349}, {"a": 369, "b": 369}, {"a": 376, "b": 376}, {"a": 395, "b": 395}, {"a": 409, "b": 409}, {"a": 423, "b": 423}, {"a": 433, "b": 433}, {"a": 453, "b": 453}, {"a": 460, "b": 460}, {"a": 479, "b": 479}, {"a": 493, "b": 493}, {"a": 507, "b": 507}, {"a": 517, "b": 517}, {"a": 537, "b": 537}, {"a": 544, "b": 544}],
+        "expected_selections": [{"a": 142, "b": 124}, {"a": 156, "b": 143}, {"a": 170, "b": 157}, {"a": 178, "b": 171}, {"a": 284, "b": 265}, {"a": 291, "b": 285}, {"a": 310, "b": 292}, {"a": 324, "b": 311}, {"a": 338, "b": 325}, {"a": 346, "b": 339}, {"a": 368, "b": 349}, {"a": 375, "b": 369}, {"a": 394, "b": 376}, {"a": 408, "b": 395}, {"a": 422, "b": 409}, {"a": 430, "b": 423}, {"a": 452, "b": 433}, {"a": 459, "b": 453}, {"a": 478, "b": 460}, {"a": 492, "b": 479}, {"a": 506, "b": 493}, {"a": 514, "b": 507}, {"a": 536, "b": 517}, {"a": 543, "b": 537}, {"a": 562, "b": 544}],
         "view_settings": {"tabnav.capture_level": "content"}
     },
     {
@@ -548,9 +548,9 @@
             "forward": false
         },
         "file": "textile01_kitchen_sink.textile",
-        "description": "Extend selection to start of cell - cursor before content, moved to start of content",
+        "description": "Extend selection to start of cell - cursor before content, full content selected in reverse (maybe not ideal)",
         "initial_selections": [{"a": 622, "b": 622}],
-        "expected_selections": [{"a": 629, "b": 629}],
+        "expected_selections": [{"a": 651, "b": 629}],
         "view_settings": {"tabnav.capture_level": "content"}
     },
     {
@@ -579,9 +579,9 @@
             "forward": false
         },
         "file": "markdown02_multiple_tables.md",
-        "description": "Extend selection to start of cell - cursor after trimmed content, moved to start of trimmed content (side-effect of being outside of trimmed content; not by design)",
+        "description": "Extend selection to start of cell - cursor after trimmed content, trimmed content selected",
         "initial_selections": [{"a": 726, "b": 726}],
-        "expected_selections": [{"a": 713, "b": 713}],
+        "expected_selections": [{"a": 723, "b": 713}],
         "view_settings": {"tabnav.capture_level": "trimmed"}
     }
 ]

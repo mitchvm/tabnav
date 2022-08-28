@@ -373,7 +373,7 @@
 		"file": "markdown02_multiple_tables.md",
 		"description": "Remove cursor from right, markup excluded - multiple sequences, some in markup",
 		"initial_selections": [{"a": 207, "b": 207}, {"a": 226, "b": 226}, {"a": 240, "b": 240}, {"a": 536, "b": 536}, {"a": 543, "b": 543}],
-		"expected_selections": [{"a": 207, "b": 207}, {"a": 226, "b": 226}, {"a": 536, "b": 536}],
+		"expected_selections": [{"a": 536, "b": 536}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
@@ -551,7 +551,7 @@
 		"file": "markdown02_multiple_tables.md",
 		"description": "Remove cursor from left, markup excluded - multiple sequences, some in markup",
 		"initial_selections": [{"a": 207, "b": 207}, {"a": 226, "b": 226}, {"a": 240, "b": 240}, {"a": 536, "b": 536}, {"a": 543, "b": 543}],
-		"expected_selections": [{"a": 226, "b": 226}, {"a": 240, "b": 240}, {"a": 543, "b": 543}],
+		"expected_selections": [{"a": 543, "b": 543}],
 		"view_settings": {"tabnav.capture_level": "content"}
 	},
 	{
