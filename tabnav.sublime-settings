@@ -158,5 +158,9 @@
 		}
 	},
 
+	// Once command mappings have been migrated to v3.5 commands, set this to false to disable
+	// the legacy commands.
+	"use_legacy_commands": true,
+	
 	"log_level": "WARNING"
 }
