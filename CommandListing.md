@@ -63,7 +63,7 @@ When moving/extending the selection, if the current cell is the last cell (at th
     <dt><strong>capture_level</strong> : { "cell", "markup", "content", "trimmed" }, optional</dt>
     <dd>
         <p>Sets the capture level to use for the selection. If not provided, the normal rules to determine the capture level apply.</p>
-    </dd>s
+    </dd>
 </dl>
 
 [Back to top](#)
@@ -78,7 +78,7 @@ The scope `cell`, is provided primarily to allow selecting from the current curs
 
 When moving selections, if the outer-most cell in the given direction is at a higher capture level than the current configuration, then the outer-most cell at the current capture level will be selected. For example, if the current capture level is `content` and the outer-most cell is a markup cell, then the second-to-last cell is selected (provided it is a content cell). Similarly, when extending selections, cells of a higher capture level are omitted from selections.
 
-If the current cell is the last cell (at the current capture level) in the direction of movement, then selection of the cell is not changed. However, each cell's movement is determined individually, so some cells may move while others may not. This command is idempotent. That is, regardless of how many consecutive invocations with the same parameters are made, the resulting Sublime Text regions/cursors will not change.s
+If the current cell is the last cell (at the current capture level) in the direction of movement, then selection of the cell is not changed. However, each cell's movement is determined individually, so some cells may move while others may not. This command is idempotent. That is, regardless of how many consecutive invocations with the same parameters are made, the resulting Sublime Text regions/cursors will not change.
 
 #### Parameters
 
@@ -151,9 +151,9 @@ Explicitly enables or disables TabNav on the current view. Note that by default,
 #### Parameters
 
 <dl>
-    <dt><strong>enabled</strong> : bool, default true</dt>
+    <dt><strong>enable</strong> : bool, default true</dt>
     <dd>
-        <p>Provide <code>"enabled":false</code> to disable TabNav on the view.</p>
+        <p>Provide <code>"enable":false</code> to disable TabNav on the view.</p>
     </dd>
 </dl>
 
@@ -202,7 +202,7 @@ Copies all current Sublime Text regions as delimited strings to the clipboard. U
     </dd>
     <dt><strong>trim</strong> : bool, default true</dt>
     <dd>
-        <p>If <code>true></code>, all whitespace characters are trimmed from either end of each selection prior to placing it onto the cliboard. The selected Sublime Text regions themselves are not modified.</p>
+        <p>If <code>true</code>, all whitespace characters are trimmed from either end of each selection prior to placing it onto the cliboard. The selected Sublime Text regions themselves are not modified.</p>
     </dd>
 </dl>
 
