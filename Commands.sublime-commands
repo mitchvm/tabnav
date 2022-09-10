@@ -12,8 +12,9 @@
     "command": "tabnav_copy_delimited"
   },
   {
-    "caption": "TabNav: Copy selections as TSV",
-    "command": "tabnav_copy_tab_separated"
+    "caption": "TabNav: Copy selections as TSV (for spreadsheet)",
+    "command": "tabnav_copy_delimited",
+    "args": { "delimiter": "\\t" }
   },
   {
     "caption": "TabNav: Enable on current view",
@@ -21,7 +22,8 @@
   },
   {
     "caption": "TabNav: Disable on current view",
-    "command": "disable_tabnav"
+    "command": "enable_tabnav",
+    "args": { "enable": false }
   },
   {
     "caption": "TabNav: Capture level - Trimmed",
@@ -45,7 +47,8 @@
   },
   {
     "caption": "TabNav: Capture level - Reset to previous",
-    "command": "tabnav_reset_capture_level"
+    "command": "tabnav_set_capture_level",
+    "args": { "capture_level": null }
   },
   {
     "caption": "TabNav: Set CSV delimiter",

@@ -116,16 +116,16 @@ The table navigation commands below only operate within the context of a table. 
 
 As noted [above](#recommended_key_bindings), TabNav has no key bindings enabled by default. The key bindings shown below are the _recommended_ bindings. The core movement and selection key bindings combine one of four basic modifier key combinations together with with one of the four direction keys:
 
-| Name                       | Windows/Linux                                 | macOS                                | Description                                                                                                                                                                |
-|:---------------------------|:----------------------------------------------|:-------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Move cursor to cell...     | <kbd>Alt</kbd>                                | <kbd>^</kbd>                         | Moves all cursors to the next cell in the desired direction.                                                                                                               |
-| Select next cell...        | <kbd>Ctrl</kbd>                               | <kbd>⌘</kbd>                         | Moves all selections to the adjacent cell in the desired direction.                                                                                                        |
-| Select last cell...        | <kbd>Ctrl</kbd><kbd>Alt</kbd>                 | <kbd>⌘</kbd><kbd>^</kbd>             | Moves all selections to the furthest cell in the row/column in the desired direction.                                                                                      |
-| Extend selection...        | <kbd>Ctrl</kbd><kbd>Shift</kbd>               | <kbd>⌘</kbd><kbd>⇧</kbd>             | Adds the next cell in the desired direction to the current selections.                                                                                                     |
-| Extend selection to end... | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd> | Selects all cells in the row/column between the currently selected cell and the end of the row/column in the desired direction.                                            |
-| Reduce selection...        | <kbd>Alt</kbd><kbd>Shift</kbd>                | <kbd>^</kbd><kbd>⇧</kbd>             | When two or more cells in sequence are selected, removes the selection from a cell in the desired direction.                                                               |
-| Add cursor to cell...      |                                               |                                      | For each active cursor, add an additional cursor to the cell in the desired direction. The recommended key bindings do not include these commands.                         |
-| Remove cursor from cell... |                                               |                                      | When two or more cells in sequences contain cursors, removes the cursors from a cell in the desired direction. The recommended key bindings do not include these commands. |
+| Name                                     | Windows/Linux                                 | macOS                                | Description                                                                                                                                                                |
+|:-----------------------------------------|:----------------------------------------------|:-------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Move cursor to cell...                   | <kbd>Alt</kbd>                                | <kbd>^</kbd>                         | Moves all cursors to the next cell in the desired direction.                                                                                                               |
+| Select next cell...                      | <kbd>Ctrl</kbd>                               | <kbd>⌘</kbd>                         | Moves all selections to the adjacent cell in the desired direction.                                                                                                        |
+| Select last cell...                      | <kbd>Ctrl</kbd><kbd>Alt</kbd>                 | <kbd>⌘</kbd><kbd>^</kbd>             | Moves all selections to the furthest cell in the row/column in the desired direction.                                                                                      |
+| Extend selection...                      | <kbd>Ctrl</kbd><kbd>Shift</kbd>               | <kbd>⌘</kbd><kbd>⇧</kbd>             | Adds the next cell in the desired direction to the current selections.                                                                                                     |
+| Extend selection to end of row/column... | <kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>Shift</kbd> | <kbd>⌘</kbd><kbd>^</kbd><kbd>⇧</kbd> | Selects all cells in the row/column between the currently selected cell and the end of the row/column in the desired direction.                                            |
+| Reduce selection...                      | <kbd>Alt</kbd><kbd>Shift</kbd>                | <kbd>^</kbd><kbd>⇧</kbd>             | When two or more cells in sequence are selected, removes the selection from a cell in the desired direction.                                                               |
+| Add cursor to cell...                    |                                               |                                      | For each active cursor, add an additional cursor to the cell in the desired direction. The recommended key bindings do not include these commands.                         |
+| Remove cursor from cell...               |                                               |                                      | When two or more cells in sequences contain cursors, removes the cursors from a cell in the desired direction. The recommended key bindings do not include these commands. |
 
 <table>
 <thead>
@@ -153,6 +153,8 @@ Beyond the core navigation commands, these additional movement and selection com
 |:-------------------------------------------------|-----------------------------------------------------------:|--------------------------------------------------:|
 | Move cursor to start of current cell<sup>1</sup> |                                                            |                                                   |
 | Move cursor to end of current cell<sup>1</sup>   |                                                            |                                                   |
+| Select text to start of current cell             |                                                            |                                                   |
+| Select text to end of current cell               |                                                            |                                                   |
 | Select current cell<sup>2</sup>                  |                                                            |                                                   |
 | Select row cells                                 |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>L</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>L</kbd> |
 | Select column cells                              |               <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>C</kbd> |             <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>C</kbd> |
@@ -189,10 +191,10 @@ TabNav is enabled by default in Markdown documents. Only "pipe" style tables are
 Some flavours of Markdown support "borderless" tables, where pipes are not required on the outer edges of the table. For example, this is a valid table:
 
 ```
- Heading 1 | Heading 2 | Heading 3 
-:----------|:----------|----------:
- 1.1       | 1.2       |       1.3 
- 2.1       | 2.2       |       2.3 
+| Heading 1 | Heading 2 | Heading 3 |
+|:----------|:----------|----------:|
+| 1.1       | 1.2       |       1.3 |
+| 2.1       | 2.2       |       2.3 |
 ```
 
 Alternatively, the same table as a "bordered" table would look like this:
@@ -267,7 +269,7 @@ The default capture level is `content`. The capture level in use on a particular
 
 ## Key Bindings
 
-Simply due to the nature of the package, TabNav requires many key bindings. The [recommended key bindings](#recommended_key_bindings) include several that override built-in Sublime Text key bindings. Effort has been made to minimize the impact on the default Sublime Text key bindings by having the TabNav key bindings take effect only under very specific circumstances. If any of the following conditions are _not_ met, then the TabNav key bindings have no effect. 
+Simply due to the nature of the package, TabNav requires many key bindings. The [recommended key bindings](#recommended_key_bindings) include several that override built-in Sublime Text key bindings. Effort has been made to minimize the impact on the default Sublime Text key bindings by having the TabNav key bindings take effect only under very specific circumstances. Only if _all_ of the following conditions are met will the TabNave key bindings override the built-in key bindings. 
 
 1. There is a TabNav [context](#contexts) configured that matches the current view.
 2. TabNav is enabled on the current view - in most contexts it is enabled by default.
@@ -283,11 +285,11 @@ The following built-in Sublime Text key bindings get overridden by the recommend
 | Windows, Linux   | <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>[</kbd> | Fold selection(s)             | Extend selection(s) up       |
 | Windows, Linux   | <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>/</kbd> | Insert comment                | Extend selection(s) down     |
 | Windows, Linux   | <kbd>Ctrl</kbd><kbd>Shift</kbd>+<kbd>L</kbd> | Split selection(s) into lines | Select cells in table row(s) |
-| macOS            | <kbd>⌘</kbd>+<kbd>[</kbd>                   | Un-indent line(s)             | Select cell(s) up            |
-| macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>[</kbd>    | Fold selection(s)             | Extend selection(s) up       |
-| macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>L</kbd>    | Split selection(s) into lines | Select cells in table row(s) |
+| macOS            | <kbd>⌘</kbd>+<kbd>[</kbd>                    | Un-indent line(s)             | Select cell(s) up            |
+| macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>[</kbd>        | Fold selection(s)             | Extend selection(s) up       |
+| macOS            | <kbd>⌘</kbd><kbd>⇧</kbd>+<kbd>L</kbd>        | Split selection(s) into lines | Select cells in table row(s) |
 
-To temporarily disable most of the recommended TabNav keybindings, it is enough to [disable TabNav](#other-commands) on the current view. The only key (recommended) binding that is not disabled by doing this is the binding to enable TabNav on the view.
+To temporarily disable most of the recommended TabNav keybindings, it is enough to [disable TabNav](#other-commands) on the current view. The only (recommended) key binding that is not disabled by doing this is the binding to enable TabNav on the view.
 
 ### Custom Key Bindings
 
@@ -417,11 +419,11 @@ Here is a visual representation of what the four TabNav capture groups should ca
 
 Alternatively, presented as a table (how meta):
 
-| Capture Group | First Cell Selection                               | Second Cell Selection                       |
-|:--------------|:---------------------------------------------------|:--------------------------------------------|
+| Capture Group | First Cell Selection                 | Second Cell Selection                |
+|:--------------|:-------------------------------------|:-------------------------------------|
 | `cell`        | <code>&vert;_. First Header  </code> | <code>&vert;_. Second Header </code> |
 | `markup`      | `_. First Header  `                  | `_. Second Header `                  |
-| `content`     | ` First Header  `             | ` Second Header `             |
-| `trimmed`     | `First Header`                                     | `Second Header`                             |
+| `content`     | ` First Header  `                    | ` Second Header `                    |
+| `trimmed`     | `First Header`                       | `Second Header`                      |
 
 Notice that the final `|` is not captured as part of any cell - each cell only captures the _preceding_ delimiter.

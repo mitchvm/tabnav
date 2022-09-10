@@ -12,7 +12,8 @@
           },
           {
             "caption": "Disable on current view",
-            "command": "disable_tabnav"
+            "command": "enable_tabnav",
+            "args": { "enable": false }
           },
           {
           	"caption": "Set CSV delimiter",
@@ -47,7 +48,8 @@
               },
               {
                 "caption": "Reset to previous",
-                "command": "tabnav_reset_capture_level"
+                "command": "tabnav_set_capture_level",
+                "args": { "capture_level": null }
               },
             ]
           },
@@ -238,23 +240,29 @@
             "children": [
               {
                 "caption": "Start of row",
-                "command": "tabnav_jump_end",
-                "args": { "direction": "left" }
+                "command": "tabnav_move_end",
+                "args": {
+                    "scope": "row",
+                    "forward": false
+                }
               },
               {
                 "caption": "End of row",
-                "command": "tabnav_jump_end",
-                "args": { "direction": "right" }
+                "command": "tabnav_move_end",
+                "args": { "scope": "row" }
               },
               {
                 "caption": "Top of column",
-                "command": "tabnav_jump_end",
-                "args": { "direction": "up" }
+                "command": "tabnav_move_end",
+                "args": {
+                    "scope": "column",
+                    "forward": false
+                }
               },
               {
                 "caption": "Bottom of column",
-                "command": "tabnav_jump_end",
-                "args": { "direction": "down" }
+                "command": "tabnav_move_end",
+                "args": { "scope": "column" }
               }
             ]
           },
@@ -315,23 +323,37 @@
               },
               {
                 "caption": "Start of row",
-                "command": "tabnav_extend_end",
-                "args": { "direction": "left" }
+                "command": "tabnav_move_end",
+                "args": {
+                    "scope": "row",
+                    "forward": false,
+                    "extend": true
+                }
               },
               {
                 "caption": "End of row",
-                "command": "tabnav_extend_end",
-                "args": { "direction": "right" }
+                "command": "tabnav_move_end",
+                "args": {
+                    "scope": "row",
+                    "extend": true
+                }
               },
               {
                 "caption": "Top of column",
-                "command": "tabnav_extend_end",
-                "args": { "direction": "up" }
+                "command": "tabnav_move_end",
+                "args": {
+                    "scope": "column",
+                    "forward": false,
+                    "extend": true
+                }
               },
               {
                 "caption": "Bottom of row",
-                "command": "tabnav_extend_end",
-                "args": { "direction": "down" }
+                "command": "tabnav_move_end",
+                "args": {
+                    "scope": "column",
+                    "extend": true
+                }
               }
             ]
           },
@@ -408,8 +430,9 @@
             "command": "tabnav_merge_adjacent_selections"
           },
           {
-            "caption": "Copy selections as TSV",
-            "command": "tabnav_copy_tab_separated"
+            "caption": "Copy selections as TSV (for spreadsheet)",
+            "command": "tabnav_copy_delimited",
+            "args": { "delimiter": "\\t" }
           },
           {
             "caption": "Copy selections with delimiter",
