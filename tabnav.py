@@ -233,14 +233,6 @@ class TabnavSelectCommand(TabnavCommand):
 
 # Other Commands
 
-class TabnavDirectionInputHandler(sublime_plugin.ListInputHandler):
-	def name(self):
-		return "direction"
-
-	def list_items(self):
-		return ["left", "right", "up", "down"]
-
-
 class TabnavTrimWhitespaceFromSelectionCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		'''Reduces all currently selected regions to exclude any whitespace characters on either end.'''
@@ -332,35 +324,14 @@ class TabnavCopyDelimitedMenuCommand(sublime_plugin.TextCommand):
 		self.view.window().run_command("show_overlay", args={"overlay":"command_palette", "text":"TabNav: Copy selections with delimiter"})
 
 
-class TabnavCopyTabSeparatedCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		'''Puts all currently selected regions into the clipboard with columns separated by tabs,
-		and rows separated by the newlines.
-
-		This is to facilitate copying table contents to other programs, such as Excel.'''
-		copy_delimited_regions(self.view, '	')
-
-
 class EnableTabnavCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
+	def run(self, edit, enable=True):
 		'''Enables TabNav in the current view.'''
-		self.view.settings().set('tabnav.enabled', True)
+		self.view.settings().set('tabnav.enabled', enable)
 
-	def is_enabled(self):
-		'''This command is enabled unless TabNav is already explicitly enabled.'''
-		enabled = self.view.settings().get('tabnav.enabled', False)
-		return not enabled
-
-
-class DisableTabnavCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
-		'''Disables TabNav in the current view.'''
-		self.view.settings().set('tabnav.enabled', False)
-
-	def is_enabled(self):
-		# This command is enabled unless TabNav is already explicitly disabled
-		enabled = self.view.settings().get('tabnav.enabled', True)
-		return enabled
+	def is_enabled(self, enable=True):
+		enabled = is_tabnav_enabled(self.view.settings())
+		return enable != enabled
 
 
 class TabnavSetCaptureLevelCommand(sublime_plugin.TextCommand):
@@ -368,24 +339,32 @@ class TabnavSetCaptureLevelCommand(sublime_plugin.TextCommand):
 		'''Sets the capture level used by TabNav. 
 
 		Available capture levels are defined in the global capture_levels dictionary.'''
+		if capture_level is not None:
+			self._push_capture_level()
+		else:
+			capture_level = self._pop_capture_level()
+		
+		if capture_level is not None:
+			self.view.settings().set('tabnav.capture_level', capture_level)
+		else:
+			self.view.settings().erase('tabnav.capture_level')
+
+	def _push_capture_level():
 		stack = self.view.settings().get('tabnav.capture_level_stack', [])
 		current_level = self.view.settings().get('tabnav.capture_level')
 		if current_level is not None:
 			stack.append(current_level)
 			self.view.settings().set('tabnav.capture_level_stack', stack)
-		self.view.settings().set('tabnav.capture_level', capture_level)
 
-
-class TabnavResetCaptureLevelCommand(sublime_plugin.TextCommand):
-	def run(self, edit):
+	def _pop_capture_level():
 		'''Resets the capture level to the previous capture level on the stack.'''
 		stack = self.view.settings().get('tabnav.capture_level_stack', [])
 		try:
 			previous_level = stack.pop()
 			self.view.settings().set('tabnav.capture_level_stack', stack)
-			self.view.settings().set('tabnav.capture_level', previous_level)
+			return previous_level
 		except IndexError:
-			self.view.settings().erase('tabnav.capture_level')
+			return None
 
 
 def is_other_csv_scope(view):
@@ -689,3 +668,22 @@ class TabnavSelectAllCommand(LegacyCommand):
 	def __init__(self, view):
 		super().__init__(view)
 		self._legacy_command = 'tabnav_select_all'
+
+class TabnavCopyTabSeparatedCommand(LegacyCommand):
+	def __init__(self, view):
+		super().__init__(view)
+		self._legacy_command = 'tabnav_copy_tab_separated'
+
+class DisableTabnavCommand(LegacyCommand):
+	def __init__(self, view):
+		super().__init__(view)
+		self._legacy_command = 'disable_tabnav'
+
+	def is_enabled(self):
+		# This command is enabled unless TabNav is already explicitly disabled
+		return super.is_enabled() and self.view.settings().get('tabnav.enabled', True)
+
+class TabnavResetCaptureLevelCommand(LegacyCommand):
+	def __init__(self, view):
+		super().__init__(view)
+		self._legacy_command = 'tabnav_reset_capture_level'

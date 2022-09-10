@@ -11,10 +11,11 @@
         "description": "Legacy command mapping - config unset = disabled",
         "initial_selections": [{"a": 157, "b": 157}, {"a": 235, "b": 235}],
         "expected_selections": [{"a": 157, "b": 157}, {"a": 235, "b": 235}],
-        "view_settings": {"tabnav.capture_level": "content"}
+        "view_settings": {"tabnav.capture_level": "content"},
+        "package_settings": {"use_legacy_commands": null}
     },
     {
-        "id": "6FPA",
+        "id": "LIY6",
         "command": "tabnav_select_row",
         "args":
         {
