@@ -7,31 +7,6 @@ capture_levels = OrderedDict([
 	('cell',    (3, '3: Cell - the entire cell, potentially including a delimiter'))
 ])
 
-move_directions = {
-	"left": (0,-1),
-	"right": (0,1),
-	"up": (-1,0),
-	"down": (1,0)
-}
-
-cursor_cell_directions = {
-	"left": -1,
-	"right": 1,
-	"up": -1,
-	"down": -1,
-	(0,-1): -1,
-	(0,1): 1,
-	(-1,0): -1,
-	(1,0): -1
-}
-
-selection_cell_directions = {
-	"left": -1,
-	"right": 1,
-	"up": 1,
-	"down": 1,
-
-}
 
 # Keys: (dr, dc, select). E.g.: (1, 0, True): move to right, select cell
 cell_directions = {

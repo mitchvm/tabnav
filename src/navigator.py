@@ -167,123 +167,7 @@ class TableNavigator:
 			level = level + 1
 		self.view.sel().clear()
 		self.view.sel().add_all(cursors)
-		return selection_changed
-
-
-	def split_and_move_current_cells(self, move_cursors=True):
-		'''Puts a cursor in each of the cells spanned by the current selection.
-
-		If move_cursors is True, then all regions in the selection, including 
-		zero-width regions (i.e. cursors) are replaced with new cursors at the
-		"end" of their current cell, based on how that cell's region was
-		constructed. If False, any zero-width regions (cursors) are not moved.
-
-		Returns True if the selections changed, or False otherwise.
-		'''
-		lines = []
-		selection_changed = False
-		for sel in self.view.sel():
-			l = self.view.split_by_newlines(sel)
-			if len(l) > 1:
-				lines.extend(l)
-				selection_changed = True
-			else:
-				# If the selection does not span multiple lines, use the original selection
-				# to maintain the 'direction' of the selection (Comes into play when moving
-				# right, and the current selection is a cell selected in reverse.)
-				lines.append(sel)
-		cursors_by_level = {}
-		for region in lines:
-			point = self._point_from_region(region)
-			r = self.view.rowcol(point)[0]
-			row = self._table[r]
-			line_cells = list(cell for cell in row if cell.intersects(region, full_extent=True))
-			if len(line_cells) == 0:
-				if len(row) > 0:
-					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
-					raise CursorNotInTableError(point)
-				else:
-					# This is a row that contains no cells, but was captured as part of the table.
-					continue
-			exact_match = [cell for cell in line_cells if cell == region]
-			if len(exact_match) == 1:
-				# exact_match != line_cells if the entire cell, including delimiters, is selected
-				line_cells = exact_match
-			if region.size() == 0 and len(line_cells) > 1:
-				# If capture level is cell, and cursor is right between two cells, it intersects both
-				if line_cells[0].direction > 0:
-					line_cells = [line_cells[0]]
-				else:
-					line_cells = [line_cells[1]]
-			if not move_cursors and region.size() == 0:
-				level = line_cells[0].capture_level
-				cursors = cursors_by_level.get(level, [])
-				cursors.append(region)
-				cursors_by_level[level] = cursors
-			else:
-				for cursor, level in ((sublime.Region(cell.b, cell.b), cell.capture_level) for cell in line_cells):
-					cursors = cursors_by_level.get(level, [])
-					cursors.append(cursor)
-					cursors_by_level[level] = cursors
-				if not selection_changed and (region.size() > 0 or len(line_cells) > 1 or line_cells[0].b != point):
-					selection_changed = True
-		if selection_changed:
-			level = self.capture_level
-			cursors = []
-			while len(cursors) == 0:
-				# If no cells at the desired capture level are selected, go up one level at a time until something is selected
-				cursors = list(itertools.chain.from_iterable(c for l, c in cursors_by_level.items() if l <= level))
-				level = level + 1
-			self.view.sel().clear()
-			self.view.sel().add_all(cursors)
-		return selection_changed
-
-
-	def split_and_select_current_cells(self, capture_level=None):
-		'''Selects all of the cells spanned by the current selection.
-
-		Returns True if the selections changed, or False otherwise.
-		'''
-		if capture_level is None:
-			capture_level = self.capture_level
-		selections = list(self.view.sel())
-		selection_lines = list(itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in selections)))
-		selection_changed = len(selection_lines) != len(selections)
-		cells_by_level = {}
-		for region in selection_lines:
-			point = self._point_from_region(region)
-			r = self.view.rowcol(point)[0]
-			row = self._table[r]
-			line_cells = list(cell for cell in row if cell.intersects(region, full_extent=False))
-			if len(line_cells) == 0:
-				if len(row) > 0:
-					# This happens if the cursor is immediately after the final pipe in a Markdown table and there are no further characters, for example
-					raise CursorNotInTableError(point)
-				else:
-					# This is a row that contains no cells, but was captured as part of the table.
-					continue
-			exact_match = [cell for cell in line_cells if cell == region]
-			if len(exact_match) == 1:
-				# exact_match != line_cells if the entire cell, including delimiters, is selected
-				line_cells = exact_match
-			else:
-				selection_changed = True
-				if region.size() == 0 and len(line_cells) == 2:
-					# If capturing the entire cell, and a cursor is right before the delimiter
-					line_cells = [self._table.cell_at_point(point)]
-			for cell in line_cells:
-				cells = cells_by_level.get(cell.capture_level, [])
-				cells.append(cell)
-				cells_by_level[cell.capture_level] = cells
-		if selection_changed:
-			cells = []
-			while len(cells) == 0:
-				# If no cells at the desired capture level are selected, go up one level at a time until something is selected
-				cells = list(itertools.chain.from_iterable(c for l, c in cells_by_level.items() if l <= capture_level))
-				capture_level = capture_level + 1
-			self.view.sel().clear()
-			self.view.sel().add_all(list(cells))
-		return selection_changed
+		return selection_changed		
 
 	def get_next_cells(self, direction, offset=None, return_current=True):
 		'''Gets the set of cells that would relative to the currently selected cells
@@ -346,16 +230,6 @@ class TableNavigator:
 				# This row doesn't have enough cells to find the one we're looking for.
 				# In some contexts this is normal; in others, it is a malformed table
 				log.debug(e.err)
-
-	def get_end_cells(self, direction):
-		'''Gets the last cells in the current table in the given direction relative to the current cells.'''
-		try:
-			if direction[1] != 0:
-				return self.get_row_end_cells(direction[1])
-			else:
-				return self.get_column_end_cells(direction[0])
-		except (RowNotInTableError, RowOutOfFileBounds) as e:
-			log.debug(e.err)
 
 	def get_row_end_cells(self, dc):
 		'''Gets the cell at the far left/right end of each selected table row.'''
