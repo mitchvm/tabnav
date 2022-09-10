@@ -106,7 +106,7 @@ See the [Key Bindings](#key-bindings) section for more details on the recommende
 
 ## Commands
 
-TabNav adds the following commands to Sublime Text. They are all accessible via the Command Palette, as well as the _TabNav_ submenu under the _Selection_ menu.
+TabNav adds the following commands to Sublime Text. They are all accessible via the _TabNav_ submenu under the _Selection_ menu.
 
 > Note: If you're reading this on packagecontrol.io, the tables render more clearly when read on [GitHub](https://github.com/mitchvm/tabnav/blob/main/README.md).
 
@@ -166,7 +166,7 @@ Beyond the core navigation commands, these additional movement and selection com
 
 ### Other Commands
 
-These commands will operate even outside the context of a table.
+These commands will operate even outside the context of a table. They are accessible via the Command Palette.
 
 | Name                            |    Windows/Linux Key Binding |         macOS Key Binding | Description                                                                                                                                                                                                                 |
 |:--------------------------------|-----------------------------:|--------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
