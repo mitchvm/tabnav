@@ -275,45 +275,41 @@ class TabnavMergeAdjacentSelectionsCommand(sublime_plugin.TextCommand):
 			self.view.sel().add_all(merged)
 
 
-def copy_delimited_regions(view, delimiter):
-	settings = sublime.load_settings("tabnav.sublime-settings")
-	trim = settings.get("trim_on_copy")
-	result = ''
-	row = None
-	for region in itertools.chain.from_iterable((view.split_by_newlines(r) for r in view.sel())):
-		text = view.substr(region)
-		if trim:
-			text = re.match(r'^\s*(.*?)\s*$',text).group(1)
-		r = view.rowcol(region.begin())[0]
-		if row is None:
-			result = text
-			row = r
-		elif r > row:
-			result = result + '\n' + text
-			row = r
-		else:
-			result = result + delimiter + text
-	sublime.set_clipboard(result)
-
-
 class TabnavCopyDelimitedCommand(sublime_plugin.TextCommand):
-	def run(self, edit, delimiter):
+	def run(self, edit, delimiter, trim=None):
 		'''Puts all currently selected regions into the clipboard with columns separated by the
 		given delimiter, and rows separated by the newlins.
 
 		This is to facilitate copying table contents to other programs, such as Excel.'''
-		copy_delimited_regions(self.view, delimiter)
+		if trim is None:
+			trim = sublime.load_settings("tabnav.sublime-settings").get("trim_on_copy")
+		result = ''
+		row = None
+		for region in itertools.chain.from_iterable((self.view.split_by_newlines(r) for r in self.view.sel())):
+			text = self.view.substr(region)
+			if trim:
+				text = re.match(r'^\s*(.*?)\s*$',text).group(1)
+			r = self.view.rowcol(region.begin())[0]
+			if row is None:
+				result = text
+				row = r
+			elif r > row:
+				result = result + '\n' + text
+				row = r
+			else:
+				result = result + delimiter + text
+		sublime.set_clipboard(result)
 
 	def input(self, args):
+		if args.get('delimiter') is not None:
+			return None
 		return TabnavCopyDelimitedInputHandler()
-
 
 class TabnavCopyDelimitedInputHandler(sublime_plugin.TextInputHandler):
 	'''Input handler to get the delimiter when the TabnavCopyDelimited
 	is run from the command palette.'''
 	def name(self):
 		return "delimiter"
-
 
 class TabnavCopyDelimitedMenuCommand(sublime_plugin.TextCommand):
 	'''Shows the command palette to trigger the copy selections with delimiter command, 
@@ -333,6 +329,9 @@ class EnableTabnavCommand(sublime_plugin.TextCommand):
 		enabled = is_tabnav_enabled(self.view.settings())
 		return enable != enabled
 
+	def is_visible(self, enable=True):
+		return self.is_enabled(enable)
+
 
 class TabnavSetCaptureLevelCommand(sublime_plugin.TextCommand):
 	def run(self, edit, capture_level):
@@ -349,14 +348,14 @@ class TabnavSetCaptureLevelCommand(sublime_plugin.TextCommand):
 		else:
 			self.view.settings().erase('tabnav.capture_level')
 
-	def _push_capture_level():
+	def _push_capture_level(self):
 		stack = self.view.settings().get('tabnav.capture_level_stack', [])
 		current_level = self.view.settings().get('tabnav.capture_level')
 		if current_level is not None:
 			stack.append(current_level)
 			self.view.settings().set('tabnav.capture_level_stack', stack)
 
-	def _pop_capture_level():
+	def _pop_capture_level(self):
 		'''Resets the capture level to the previous capture level on the stack.'''
 		stack = self.view.settings().get('tabnav.capture_level_stack', [])
 		try:
@@ -681,7 +680,7 @@ class DisableTabnavCommand(LegacyCommand):
 
 	def is_enabled(self):
 		# This command is enabled unless TabNav is already explicitly disabled
-		return super.is_enabled() and self.view.settings().get('tabnav.enabled', True)
+		return super().is_enabled() and self.view.settings().get('tabnav.enabled', True)
 
 class TabnavResetCaptureLevelCommand(LegacyCommand):
 	def __init__(self, view):

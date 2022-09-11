@@ -14,7 +14,7 @@
   {
     "caption": "TabNav: Copy selections as TSV (for spreadsheet)",
     "command": "tabnav_copy_delimited",
-    "args": { "delimiter": "\\t" }
+    "args": { "delimiter": "\t" }
   },
   {
     "caption": "TabNav: Enable on current view",

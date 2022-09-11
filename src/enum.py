@@ -62,7 +62,7 @@ legacy_command_map = {
 	('tabnav_select_all', 'left'): ("tabnav_select", { "scope": "table", "forward": False }),
 	# The next three commands don't actually take a direction. I only put 'right' here to make the mapping easier.
 	# All of the other commands took an optional 'direction' parameter that defaults to 'right'
-	("tabnav_copy_tab_separated", "right"): ("tabnav_copy_delimited", { "delimiter": "\\t" }),
+	("tabnav_copy_tab_separated", "right"): ("tabnav_copy_delimited", { "delimiter": "\t" }),
 	("disable_tabnav", "right"): ("enable_tabnav", { "enable": False }),
 	("tabnav_reset_capture_level", "right"): ("tabnav_set_capture_level", { "capture_level": None })
 }

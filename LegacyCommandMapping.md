@@ -469,7 +469,7 @@ The table below details the mapping from the legacy commands to the new commands
 </pre></td>
 <td><pre>
 <code>"command": "tabnav_copy_delimited",
-"args": { "delimiter": "\\t" }</code>
+"args": { "delimiter": "\t" }</code>
 </pre></td>
 </tr><tr>
 <td>Disable TabNav on view</td>

@@ -432,7 +432,7 @@
           {
             "caption": "Copy selections as TSV (for spreadsheet)",
             "command": "tabnav_copy_delimited",
-            "args": { "delimiter": "\\t" }
+            "args": { "delimiter": "\t" }
           },
           {
             "caption": "Copy selections with delimiter",

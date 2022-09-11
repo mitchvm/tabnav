@@ -196,13 +196,13 @@ Copies all current Sublime Text regions as delimited strings to the clipboard. U
 #### Parameters
 
 <dl>
-    <dt><strong>delimiter</strong> : string, default "\\\\t" (tab)</dt>
+    <dt><strong>delimiter</strong> : string</dt>
     <dd>
-        <p>The delimiter to insert between selections on the same line of text.</p>
+        <p><strong>Required</strong>. The delimiter to insert between selections on the same line of text. If not explicitly provided, an input prompt is displayed to the user for them to enter the delimiter.</p>
     </dd>
-    <dt><strong>trim</strong> : bool, default true</dt>
+    <dt><strong>trim</strong> : bool, optional</dt>
     <dd>
-        <p>If <code>true</code>, all whitespace characters are trimmed from either end of each selection prior to placing it onto the cliboard. The selected Sublime Text regions themselves are not modified.</p>
+        <p>If <code>true</code>, all whitespace characters are trimmed from either end of each selection prior to placing it onto the cliboard. The selected Sublime Text regions themselves are not modified. If not provided, the value of the TabNav <code>trim_on_copy</code> setting is used.</p>
     </dd>
 </dl>
 
