@@ -401,6 +401,14 @@ class TabnavCsvDelimiterInputHandler(sublime_plugin.TextInputHandler):
 	def placeholder(self):
 		return ','
 
+	def preview(self, text):
+		if not self.validate(text):
+			return "Delimeter may not be a space"
+		return None
+
+	def validate(self, text):
+		return re.match('^ +$', text) is None
+
 
 class TabnavSetCsvDelimiterMenuCommand(sublime_plugin.TextCommand):
 	'''Shows the command palette to trigger the set CSV delimiter command, 
