@@ -1,5 +1,5 @@
 {
-	// The default capture level to use. Options are, in order from narrowest to broadest, are:
+	// The default capture level to use. Options are, in order from narrowest to broadest:
 	// trimmed, content, markup, cell
 	"capture_level": "content",
 
@@ -8,9 +8,12 @@
 	// are not altered.
 	"trim_on_copy": true,
 	
-	// To override individual context configs or add new contexts without
-	// overriding everything, place overrides in a "user_contexts" element,
-	// not "contexts".
+
+	// To override individual context configs or add new contexts without overriding
+	// everything, place overrides in "user_contexts", not "contexts".
+	"user_contexts": { },
+
+	// To fully override the core TabNav contexts, populate your own "contexts" element.
 	"contexts":
 	{
 		"markdown": 

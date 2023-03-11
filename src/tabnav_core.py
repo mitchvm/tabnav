@@ -3,6 +3,8 @@ from TabNav.src.table import TableView
 from TabNav.src.navigator import TableNavigator
 import sublime_plugin
 
+implicit_selectors = None # The selectors for which TabNav gets implicitly enabled (pipe-delimited string)
+settings_listeners = [] # The view settings objects being listened to for changes
 
 def is_tabnav_enabled(settings):
     '''Checks the given view `settings` object to determine if TabNav is enabled.

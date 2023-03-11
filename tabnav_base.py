@@ -6,9 +6,6 @@ import re
 
 log = get_logger(__package__, __name__)
 
-implicit_selectors = None # The selectors for which TabNav gets implicitly enabled (pipe-delimited string)
-settings_listeners = [] # The view settings objects being listened to for changes
-
 
 def select_cells(view, selected_cells, capture_level, select=True):
 	cells = [c for c in selected_cells if c.capture_level <= capture_level]
@@ -191,7 +188,7 @@ class TabnavSelectCommand(TabnavCommand):
 
 class EnableTabnavCommand(sublime_plugin.TextCommand):
     def run(self, edit, enable=True):
-        '''Enables TabNav in the current view.'''
+        '''Enables or disables TabNav in the current view.'''
         self.view.settings().set('tabnav.enabled', enable)
 
     def is_enabled(self, enable=True):
@@ -200,7 +197,7 @@ class EnableTabnavCommand(sublime_plugin.TextCommand):
 
     def is_visible(self, enable=True):
         return self.is_enabled(enable)
-
+        
 
 class TabnavSetCaptureLevelCommand(sublime_plugin.TextCommand):
     def run(self, edit, capture_level):

@@ -3,53 +3,6 @@ from TabNav.src import *
 log = get_logger(__package__, __name__)
 
 class TabnavEditCellCommand(TabnavCommand):
-    def run(self, edit, direction="left", character=None):
-        '''Enters Cell Edit mode on the currently selected cells.
-
-        If a character is provided, the existing cell content is replaced with the given character.
-        (Used for wildcard key binding.)
-        '''
-        try:
-            self.init_table(cursor_cell_directions[direction])
-            if character is None:
-                # Place a cursor at the start of each cell
-                self.tabnav.split_and_move_current_cells(True)
-            else:
-                # Replace all cells with the given character
-                self.tabnav.split_and_select_current_cells()
-                cursors = []
-                for region in self.view.sel():
-                    self.view.replace(edit, region, character)
-                    cursors.append(region.b)
-                self.view.sel().clear()
-                self.view.sel().add_all(cursors)
-            self.view.settings().set('tabnav.cell_edit', True)
-        except (CursorNotInTableError, RowNotInTableError) as e:
-            log.info(e.err)
-
-    def is_enabled(self):
-        cell_nav = self.view.settings().get('tabnav.cell_nav', False)
-        cell_edit = self.view.settings().get('tabnav.cell_edit', False)
-        return super().is_enabled() and cell_nav and not cell_edit
-
-
-class TabnavExitCellCommand(TabnavCommand):
-    def run(self, edit, direction="right"):
-        '''Exits Cell Edit mode and selects the current cells.'''
-        try:
-            self.init_table(cursor_cell_directions[direction])
-            self.tabnav.split_and_select_current_cells()
-            self.view.settings().set('tabnav.cell_edit', False)
-        except (CursorNotInTableError, RowNotInTableError) as e:
-            log.info(e.err)
-
-    def is_enabled(self):
-        cell_nav = self.view.settings().get('tabnav.cell_nav', False)
-        cell_edit = self.view.settings().get('tabnav.cell_edit', False)
-        return super().is_enabled() and cell_nav and cell_edit
-
-
-class TabnavEditCellCommand(TabnavCommand):
     def run(self, edit, forward=False, character=None):
         '''Enters Cell Edit mode on the currently selected cells.
 
@@ -106,42 +59,17 @@ class TabnavExitCellCommand(TabnavCommand):
 
 
 class TabnavEnableCellNavModeCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        '''Enables TabNav's Cell Nav mode on the current view.'''
+    def run(self, edit, enable=True):
+        '''Enables or disables TabNav's Cell Nav mode on the current view.'''
         self.view.settings().set('tabnav.cell_nav', True)
 
-    def is_enabled(self):
-        tabnav_enabled = self.view.settings().get('tabnav.enabled', True)
+    def is_enabled(self, enable=True):
+        tabnav_enabled = is_tabnav_enabled(self.view.settings())
         cell_nav = self.view.settings().get('tabnav.cell_nav', False)
         return tabnav_enabled and not cell_nav
 
-class TabnavDisableCellNavModeCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        '''Enables TabNav's Cell Nav mode on the current view.'''
-        self.view.settings().set('tabnav.cell_nav', True)
-
-    def is_enabled(self):
-        tabnav_enabled = self.view.settings().get('tabnav.enabled', True)
-        cell_nav = self.view.settings().get('tabnav.cell_nav', False)
-        return tabnav_enabled and cell_nav
-
-class TabnavEnableCellNavModeCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        '''Enables TabNav's Cell Nav mode on the current view.'''
-        self.view.settings().set('tabnav.cell_nav', True)
-
-    def is_enabled(self):
-        cell_nav = self.view.settings().get('tabnav.cell_nav', False)
-        return is_tabnav_enabled(self.view.settings()) and not cell_nav
-
-class TabnavDisableCellNavModeCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        '''Enables TabNav's Cell Nav mode on the current view.'''
-        self.view.settings().set('tabnav.cell_nav', True)
-
-    def is_enabled(self):
-        cell_nav = self.view.settings().get('tabnav.cell_nav', False)
-        return is_tabnav_enabled(self.view.settings()) and cell_nav
+    def is_visible(self, enable=True):
+        return self.is_enabled(enable)
 
 
 class IsTabnavCellNavModeListener(sublime_plugin.ViewEventListener):
