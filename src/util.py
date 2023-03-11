@@ -13,6 +13,9 @@ def get_logger(package, name):
     return logging.getLogger(name)
 
 
+log = get_logger(__package__, __name__)
+
+
 def merge_dictionaries(base, override, keys=None):
     '''Recursively merges the two given dictionaries. A new dictionary is returned.
 
@@ -73,3 +76,16 @@ def point_from_region_func(cell_direction):
         return sublime.Region.end
     else:
         return sublime.Region.begin
+
+
+def apply_listener_boolean_operator(nominal, operator, operand):
+    op_bool = operand == True
+    nom_bool = nominal == True
+    if operator == sublime.OP_EQUAL:
+        op_name = "OP_EQUAL"
+        result = op_bool == nom_bool
+    if operator == sublime.OP_NOT_EQUAL:
+        op_name = "OP_NOT_EQUAL"
+        result = op_bool != nom_bool
+    log.debug("apply_listener_boolean_operator: nominal: %s (bool: %s), operator: %i (%s), operand: %s (bool: %s), result: %s", nominal, nom_bool, operator, op_name, operand, op_bool, result)
+    return result
