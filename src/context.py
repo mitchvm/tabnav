@@ -144,7 +144,7 @@ class TabnavContext:
 		excluded_levels = ((k,v[0]) for k,v in capture_levels.items() if v[0] > self._capture_level)
 		ordered_levels = list(itertools.chain(included_levels, excluded_levels))
 		if isinstance(patterns, dict):
-			patterns = [content_patterns]
+			patterns = [patterns]
 		self._parsers = [RowParser(p.get('cell'), p.get('line'), ordered_levels) for p in patterns]
 	
 	@property
