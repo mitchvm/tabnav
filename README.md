@@ -191,10 +191,10 @@ TabNav is enabled by default in Markdown documents. Only "pipe" style tables are
 Some flavours of Markdown support "borderless" tables, where pipes are not required on the outer edges of the table. For example, this is a valid table:
 
 ```
-| Heading 1 | Heading 2 | Heading 3 |
-|:----------|:----------|----------:|
-| 1.1       | 1.2       |       1.3 |
-| 2.1       | 2.2       |       2.3 |
+Heading 1 | Heading 2 | Heading 3
+:---------|:----------|---------:
+1.1       | 1.2       |       1.3
+2.1       | 2.2       |       2.3
 ```
 
 Alternatively, the same table as a "bordered" table would look like this:
